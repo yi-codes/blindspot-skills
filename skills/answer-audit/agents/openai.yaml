@@ -1,0 +1,4 @@
+interface:
+  display_name: "Answer Audit"
+  short_description: "Audit an AI answer for weak claims and blind spots"
+  default_prompt: "Use $answer-audit to audit the previous answer for weak claims and blind spots."

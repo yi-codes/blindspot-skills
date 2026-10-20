@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cross Check"
+  short_description: "Blind-ask another model and compare disagreements"
+  default_prompt: "Use $cross-check to verify this conclusion with an independent model."

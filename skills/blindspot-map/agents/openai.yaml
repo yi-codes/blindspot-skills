@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blindspot Map"
+  short_description: "Map the problem space to surface unknown unknowns"
+  default_prompt: "Use $blindspot-map to map my unknown unknowns before answering this question."
