@@ -1,0 +1,195 @@
+/* ============================================================
+   Terminal Mono · 终端感
+   用法：给任意容器加 class="ds-terminal-mono"
+   ------------------------------------------------------------
+   变量前缀 --tm-
+   设计意图：命令行界面搬进正文。等宽是骨架，深底是前提，
+   强调色只用来标记「可操作的东西」和「状态」。
+   注意：深色风格，不要往浅色背景上套。
+   ============================================================ */
+
+:where(.ds-terminal-mono) {
+  /* ---- 颜色：深底 + 三级灰阶 + 两个语义色 ---- */
+  --tm-bg:          #0E1116;  /* 比纯黑软，长时间看不刺眼 */
+  --tm-surface:     #161B22;
+  --tm-surface-alt: #1F262E;
+  --tm-ink:         #C9D1D9;
+  --tm-ink-strong:  #F0F6FC;
+  --tm-ink-muted:   #7D8590;
+  --tm-ink-faint:   #5C646E;
+  --tm-line:        #30363D;
+  --tm-line-strong: #444C56;
+  --tm-accent:      #3FB950;  /* 绿：成功 / 可执行 */
+  --tm-accent-weak: #12261A;
+  --tm-warn:        #D29922;  /* 琥珀：警告 / 高亮 */
+  --tm-danger:      #F85149;  /* 红：错误 */
+  --tm-info:        #58A6FF;  /* 蓝：链接 */
+
+  /* ---- 字体：等宽为主，中文配等宽黑体 ---- */
+  --tm-font-mono:  "JetBrains Mono", "SF Mono", "Cascadia Code", "Sarasa Mono SC", "Menlo", ui-monospace, monospace;
+  --tm-font-body:  "Inter", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;  /* 长段落用，缓解等宽疲劳 */
+
+  /* ---- 字号阶：等宽字形偏宽，基准放到 15 ---- */
+  --tm-text-xs:  0.75rem;   /* 12 */
+  --tm-text-sm:  0.8125rem; /* 13 */
+  --tm-text-md:  0.9375rem; /* 15 */
+  --tm-text-lg:  1.125rem;  /* 18 */
+  --tm-text-xl:  1.375rem;  /* 22 */
+  --tm-text-2xl: 1.75rem;   /* 28 */
+
+  --tm-leading-tight: 1.3;
+  --tm-leading-body:  1.75;
+  --tm-tracking-mono: 0.02em;  /* 等宽字略放开更像终端 */
+  --tm-tracking-caps: 0.08em;
+
+  /* ---- 间距：8 的倍数，讲究规整 ---- */
+  --tm-space-1: 0.5rem;   /* 8 */
+  --tm-space-2: 1rem;     /* 16 */
+  --tm-space-3: 1.5rem;   /* 24 */
+  --tm-space-4: 2rem;     /* 32 */
+  --tm-space-5: 3rem;     /* 48 */
+  --tm-space-6: 4rem;     /* 64 */
+
+  /* ---- 形状：小圆角 + 1px 实线边，线条是主要装饰 ---- */
+  --tm-radius: 4px;
+  --tm-border: 1px solid var(--tm-line);
+  --tm-border-strong: 1px solid var(--tm-line-strong);
+
+  /* ---- 光效：用内发光代替投影 ---- */
+  --tm-glow-accent: 0 0 0 1px rgba(63, 185, 80, 0.35), 0 0 16px rgba(63, 185, 80, 0.12);
+  --tm-shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+  /* ---- 代码块专用 ---- */
+  --tm-code-bg: #0A0D12;
+  --tm-selection: rgba(88, 166, 255, 0.25);
+
+  /* ---- 动效：快，像终端回显 ---- */
+  --tm-duration: 120ms;
+  --tm-ease: steps(3, end);  /* 刻意用阶梯，模仿字符刷新 */
+}
+
+:where(.ds-terminal-mono) {
+  background: var(--tm-bg);
+  color: var(--tm-ink);
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-md);
+  line-height: var(--tm-leading-body);
+  letter-spacing: var(--tm-tracking-mono);
+  font-variant-ligatures: none;  /* 关连字，避免代码歧义 */
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-terminal-mono) ::selection { background: var(--tm-selection); }
+
+:where(.ds-terminal-mono) :where(h1, h2, h3, h4) {
+  font-family: var(--tm-font-mono);
+  font-weight: 700;
+  line-height: var(--tm-leading-tight);
+  letter-spacing: var(--tm-tracking-mono);
+  color: var(--tm-ink-strong);
+  margin: 0 0 var(--tm-space-2);
+}
+:where(.ds-terminal-mono) :where(h1) { font-size: var(--tm-text-2xl); }
+:where(.ds-terminal-mono) :where(h2) { font-size: var(--tm-text-xl); }
+:where(.ds-terminal-mono) :where(h3) { font-size: var(--tm-text-lg); }
+:where(.ds-terminal-mono) :where(h4) { font-size: var(--tm-text-md); color: var(--tm-accent); }
+
+/* 段落用无衬线，等宽只留给标题、代码、数据 */
+:where(.ds-terminal-mono) :where(p) {
+  font-family: var(--tm-font-body);
+  letter-spacing: 0;
+  margin: 0 0 var(--tm-space-2);
+  max-width: 40em;
+  color: var(--tm-ink);
+}
+
+:where(.ds-terminal-mono) :where(a) { color: var(--tm-info); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+:where(.ds-terminal-mono) :where(code, kbd, pre) {
+  font-family: var(--tm-font-mono);
+  font-size: 0.9375em;
+  background: var(--tm-code-bg);
+  border: var(--tm-border);
+  border-radius: var(--tm-radius);
+  padding: 0.15em 0.4em;
+  color: var(--tm-ink-strong);
+}
+:where(.ds-terminal-mono) :where(pre) { padding: var(--tm-space-2); overflow-x: auto; line-height: 1.6; }
+
+/* 按钮：像可点的命令，悬停时描边亮起 */
+:where(.ds-terminal-mono) :where(button, .ds-btn) {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-sm);
+  letter-spacing: var(--tm-tracking-mono);
+  padding: 0.6em 1.2em;
+  border-radius: var(--tm-radius);
+  border: var(--tm-border-strong);
+  background: var(--tm-surface);
+  color: var(--tm-ink);
+  cursor: pointer;
+  transition: border-color var(--tm-duration) var(--tm-ease),
+              color var(--tm-duration) var(--tm-ease),
+              box-shadow var(--tm-duration) var(--tm-ease);
+}
+:where(.ds-terminal-mono) :where(button, .ds-btn):hover {
+  border-color: var(--tm-accent);
+  color: var(--tm-accent);
+  box-shadow: var(--tm-glow-accent);
+}
+
+/* 面板：像一块终端窗口 */
+:where(.ds-terminal-mono) :where(.ds-card) {
+  background: var(--tm-surface);
+  border: var(--tm-border);
+  border-radius: var(--tm-radius);
+  padding: var(--tm-space-3);
+}
+
+/* 提示符：正文里的命令感锚点 */
+:where(.ds-terminal-mono) :where(.ds-prompt)::before {
+  content: "$ ";
+  color: var(--tm-accent);
+  font-family: var(--tm-font-mono);
+}
+
+/* 状态标记 */
+:where(.ds-terminal-mono) :where(.ds-tag) {
+  display: inline-block;
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-xs);
+  letter-spacing: var(--tm-tracking-caps);
+  text-transform: uppercase;
+  padding: 0.2em 0.55em;
+  border-radius: var(--tm-radius);
+  border: 1px solid var(--tm-accent);
+  color: var(--tm-accent);
+  background: var(--tm-accent-weak);
+}
+:where(.ds-terminal-mono) :where(.ds-tag-warn) { border-color: var(--tm-warn); color: var(--tm-warn); background: transparent; }
+:where(.ds-terminal-mono) :where(.ds-tag-danger) { border-color: var(--tm-danger); color: var(--tm-danger); background: transparent; }
+
+/* 指标：像一行输出，等宽 + 绿值 */
+:where(.ds-terminal-mono) :where(.ds-stat-value) {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-xl);
+  line-height: var(--tm-leading-tight);
+  color: var(--tm-ink-strong);
+  font-variant-numeric: tabular-nums;
+}
+:where(.ds-terminal-mono) :where(.ds-stat-label) {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-xs);
+  letter-spacing: var(--tm-tracking-caps);
+  color: var(--tm-ink-muted);
+  text-transform: lowercase;
+}
+
+:where(.ds-terminal-mono) :where(.ds-eyebrow) {
+  font-family: var(--tm-font-mono);
+  font-size: var(--tm-text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tm-ink-faint);
+}
+
+:where(.ds-terminal-mono) :where(hr) { border: 0; border-top: var(--tm-border); margin: var(--tm-space-3) 0; }

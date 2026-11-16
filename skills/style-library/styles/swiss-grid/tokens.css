@@ -1,0 +1,186 @@
+/* ============================================================
+   Swiss Grid · 瑞士网格
+   用法：给任意容器加 class="ds-swiss-grid"
+   ------------------------------------------------------------
+   变量前缀 --sw-
+   设计意图：理性的秩序感。字体一族到底、颜色一个强调色、
+   所有对齐都能追溯到 8px 基线。装饰即噪音，一律去掉。
+   ============================================================ */
+
+:where(.ds-swiss-grid) {
+  /* ---- 颜色：纯白 + 近黑 + 一个电蓝，别的不许有 ---- */
+  --sw-bg:          #FFFFFF;
+  --sw-surface:     #FAFAFA;
+  --sw-surface-alt: #F2F2F2;
+  --sw-ink:         #111111;
+  --sw-ink-muted:   #6B6B6B;
+  --sw-ink-faint:   #8F8F8F;
+  --sw-line:        #E0E0E0;
+  --sw-line-strong: #111111;
+  --sw-accent:      #2557D6;  /* 唯一彩色 */
+  --sw-accent-weak: #EAF0FD;
+
+  /* ---- 字体：无衬线一族，标题正文同族不同重 ---- */
+  --sw-font-display: "Inter", "Helvetica Neue", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --sw-font-body:    "Inter", "Helvetica Neue", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --sw-font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  /* ---- 字号阶：1.25 律，比编辑感克制 ---- */
+  --sw-text-xs:  0.75rem;   /* 12 */
+  --sw-text-sm:  0.8125rem; /* 13 */
+  --sw-text-md:  1rem;      /* 16 */
+  --sw-text-lg:  1.25rem;   /* 20 */
+  --sw-text-xl:  1.5625rem; /* 25 */
+  --sw-text-2xl: 1.953rem;  /* 31 */
+  --sw-text-3xl: 2.441rem;  /* 39 */
+  --sw-text-4xl: 3.052rem;  /* 49 */
+
+  --sw-leading-tight: 1.12;
+  --sw-leading-snug:  1.35;
+  --sw-leading-body:  1.6;
+  --sw-tracking-display: -0.022em;  /* 大字收紧，大小字反而要放开 */
+  --sw-tracking-body:    -0.006em;
+  --sw-tracking-caps:     0.06em;
+
+  /* ---- 间距：8px 基线，4px 允许做微调 ---- */
+  --sw-space-1: 0.25rem;  /* 4 */
+  --sw-space-2: 0.5rem;   /* 8 */
+  --sw-space-3: 0.75rem;  /* 12 */
+  --sw-space-4: 1rem;     /* 16 */
+  --sw-space-5: 1.5rem;   /* 24 */
+  --sw-space-6: 2rem;     /* 32 */
+  --sw-space-7: 3rem;     /* 48 */
+  --sw-space-8: 4.5rem;   /* 72 */
+  --sw-space-9: 7rem;     /* 112 */
+
+  /* ---- 形状：极小圆角，几乎方 ---- */
+  --sw-radius: 2px;
+  --sw-radius-pill: 999px;
+  --sw-border: 1px solid var(--sw-line);
+  --sw-border-strong: 1px solid var(--sw-line-strong);
+
+  /* ---- 阴影：只给浮层，且要浅到几乎看不见 ---- */
+  --sw-shadow-pop: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+
+  /* ---- 网格 ---- */
+  --sw-columns: 12;
+  --sw-gutter: 1.5rem;
+  --sw-measure: 38em;
+
+  /* ---- 动效：短、线性偏缓出 ---- */
+  --sw-duration: 160ms;
+  --sw-ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+:where(.ds-swiss-grid) {
+  background: var(--sw-bg);
+  color: var(--sw-ink);
+  font-family: var(--sw-font-body);
+  font-size: var(--sw-text-md);
+  line-height: var(--sw-leading-body);
+  letter-spacing: var(--sw-tracking-body);
+  font-feature-settings: "tnum" 1, "cv05" 1;  /* 表格数字等宽 */
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-swiss-grid) :where(h1, h2, h3, h4) {
+  font-family: var(--sw-font-display);
+  font-weight: 600;
+  line-height: var(--sw-leading-tight);
+  letter-spacing: var(--sw-tracking-display);
+  margin: 0 0 var(--sw-space-4);
+  text-wrap: balance;
+}
+:where(.ds-swiss-grid) :where(h1) { font-size: var(--sw-text-4xl); font-weight: 700; }
+:where(.ds-swiss-grid) :where(h2) { font-size: var(--sw-text-2xl); }
+:where(.ds-swiss-grid) :where(h3) { font-size: var(--sw-text-lg); }
+:where(.ds-swiss-grid) :where(h4) { font-size: var(--sw-text-md); font-weight: 600; }
+
+:where(.ds-swiss-grid) :where(p) {
+  margin: 0 0 var(--sw-space-4);
+  max-width: var(--sw-measure);
+  color: var(--sw-ink);
+}
+
+:where(.ds-swiss-grid) :where(a) {
+  color: var(--sw-accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+/* 按钮：实心主按钮 + 描边次按钮，圆角 2px */
+:where(.ds-swiss-grid) :where(button, .ds-btn) {
+  font-family: var(--sw-font-body);
+  font-size: var(--sw-text-sm);
+  font-weight: 500;
+  letter-spacing: var(--sw-tracking-caps);
+  padding: 0.75em 1.5em;
+  border-radius: var(--sw-radius);
+  border: var(--sw-border-strong);
+  background: var(--sw-ink);
+  color: var(--sw-bg);
+  cursor: pointer;
+  transition: background var(--sw-duration) var(--sw-ease);
+}
+:where(.ds-swiss-grid) :where(button, .ds-btn):hover { background: var(--sw-accent); border-color: var(--sw-accent); }
+
+:where(.ds-swiss-grid) :where(.ds-btn-ghost) {
+  background: transparent;
+  color: var(--sw-ink);
+  border: var(--sw-border-strong);
+}
+:where(.ds-swiss-grid) :where(.ds-btn-ghost):hover { background: var(--sw-surface-alt); border-color: var(--sw-ink); }
+
+/* 卡片：白底 + 1px 边，靠留白呼吸，不靠阴影 */
+:where(.ds-swiss-grid) :where(.ds-card) {
+  background: var(--sw-bg);
+  border: var(--sw-border);
+  border-radius: var(--sw-radius);
+  padding: var(--sw-space-5);
+}
+
+/* 数据行：等宽数字 + 顶线，适合表格与指标 */
+:where(.ds-swiss-grid) :where(.ds-stat) {
+  border-top: 2px solid var(--sw-line-strong);
+  padding-top: var(--sw-space-2);
+}
+:where(.ds-swiss-grid) :where(.ds-stat-value) {
+  font-size: var(--sw-text-2xl);
+  font-weight: 700;
+  letter-spacing: var(--sw-tracking-display);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--sw-leading-tight);
+}
+:where(.ds-swiss-grid) :where(.ds-stat-label) {
+  font-size: var(--sw-text-xs);
+  letter-spacing: var(--sw-tracking-caps);
+  text-transform: uppercase;
+  color: var(--sw-ink-muted);
+}
+
+:where(.ds-swiss-grid) :where(.ds-eyebrow) {
+  display: inline-block;
+  font-size: var(--sw-text-xs);
+  font-weight: 500;
+  letter-spacing: var(--sw-tracking-caps);
+  text-transform: uppercase;
+  color: var(--sw-accent);
+  margin-bottom: var(--sw-space-3);
+}
+
+:where(.ds-swiss-grid) :where(.ds-tag) {
+  display: inline-block;
+  font-size: var(--sw-text-xs);
+  letter-spacing: var(--sw-tracking-caps);
+  text-transform: uppercase;
+  padding: 0.25em 0.6em;
+  border-radius: var(--sw-radius);
+  background: var(--sw-accent-weak);
+  color: var(--sw-accent);
+}
+
+:where(.ds-swiss-grid) :where(hr) {
+  border: 0;
+  border-top: var(--sw-border);
+  margin: var(--sw-space-6) 0;
+}

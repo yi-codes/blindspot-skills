@@ -1,0 +1,177 @@
+/* ============================================================
+   Editorial Serif · 编辑感
+   用法：给任意容器加 class="ds-editorial-serif"
+   ------------------------------------------------------------
+   变量前缀 --ed-
+   设计意图：像纸质杂志。安静、有重量、值得信任。
+   颜色收敛到「纸 / 墨 / 一点赭红」，装饰全部让位给文字。
+   ============================================================ */
+
+:where(.ds-editorial-serif) {
+  /* ---- 颜色：只有一个强调色家族 ---- */
+  --ed-bg:          #FBF8F3;  /* 纸白，带一点暖，不用纯白 */
+  --ed-surface:     #FFFFFF;
+  --ed-surface-alt: #F5F1E9;
+  --ed-ink:         #1A1714;  /* 墨黑，不用纯黑 */
+  --ed-ink-muted:   #5C5449;
+  --ed-ink-faint:   #8C8478;
+  --ed-line:        #E3DCD0;
+  --ed-accent:      #A63D2F;  /* 赭红：唯一彩色 */
+  --ed-accent-weak: #F1E4DE;
+  --ed-accent-ink:  #7A2A1F;
+
+  /* ---- 字体：衬线标题 + 黑体正文（中文最稳的一组） ---- */
+  --ed-font-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --ed-font-body:    "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --ed-font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  /* ---- 字号阶：1.333 律（大三度），只跳不渐进 ---- */
+  --ed-text-xs:  0.75rem;   /* 12 */
+  --ed-text-sm:  0.875rem;  /* 14 */
+  --ed-text-md:  1.0625rem; /* 17 正文基准，中文比 16 舒服 */
+  --ed-text-lg:  1.375rem;  /* 22 */
+  --ed-text-xl:  1.875rem;  /* 30 */
+  --ed-text-2xl: 2.5rem;    /* 40 */
+  --ed-text-3xl: 3.375rem;  /* 54 */
+
+  --ed-leading-tight: 1.25;
+  --ed-leading-snug:  1.45;
+  --ed-leading-body:  1.85;  /* 中文正文必须松 */
+  --ed-tracking-display: -0.01em;
+  --ed-tracking-body:    0.005em;
+
+  /* ---- 间距：主节奏 8，留白给得比你以为的更多 ---- */
+  --ed-space-1: 0.25rem;  /* 4 */
+  --ed-space-2: 0.5rem;   /* 8 */
+  --ed-space-3: 1rem;     /* 16 */
+  --ed-space-4: 1.5rem;   /* 24 */
+  --ed-space-5: 2.5rem;   /* 40 */
+  --ed-space-6: 4rem;     /* 64 */
+  --ed-space-7: 6.5rem;   /* 104 */
+
+  /* ---- 形状：不用圆角，不用阴影，用线 ---- */
+  --ed-radius: 0;
+  --ed-border: 1px solid var(--ed-line);
+  --ed-border-strong: 1px solid var(--ed-ink);
+
+  /* ---- 阅读宽度 ---- */
+  --ed-measure: 34em;      /* 约 34 个汉字，长文最佳 */
+  --ed-measure-wide: 52em;
+
+  /* ---- 动效：几乎察觉不到 ---- */
+  --ed-duration: 200ms;
+  --ed-ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* ---- 以下为最小应用样式：加了 class 就有基本观感 ---- */
+:where(.ds-editorial-serif) {
+  background: var(--ed-bg);
+  color: var(--ed-ink);
+  font-family: var(--ed-font-body);
+  font-size: var(--ed-text-md);
+  line-height: var(--ed-leading-body);
+  letter-spacing: var(--ed-tracking-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-editorial-serif) :where(h1, h2, h3, h4) {
+  font-family: var(--ed-font-display);
+  font-weight: 700;
+  line-height: var(--ed-leading-tight);
+  letter-spacing: var(--ed-tracking-display);
+  margin: 0 0 var(--ed-space-3);
+  text-wrap: balance;
+}
+
+:where(.ds-editorial-serif) :where(h1) { font-size: var(--ed-text-3xl); }
+:where(.ds-editorial-serif) :where(h2) { font-size: var(--ed-text-2xl); }
+:where(.ds-editorial-serif) :where(h3) { font-size: var(--ed-text-xl); }
+:where(.ds-editorial-serif) :where(h4) { font-size: var(--ed-text-lg); }
+
+:where(.ds-editorial-serif) :where(p) {
+  margin: 0 0 var(--ed-space-3);
+  max-width: var(--ed-measure);
+}
+
+:where(.ds-editorial-serif) :where(a) {
+  color: var(--ed-accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+:where(.ds-editorial-serif) :where(hr) {
+  border: 0;
+  border-top: var(--ed-border);
+  margin: var(--ed-space-5) 0;
+}
+
+/* 按钮：方角、细线、悬停才出现底色 */
+:where(.ds-editorial-serif) :where(button, .ds-btn) {
+  font-family: var(--ed-font-body);
+  font-size: var(--ed-text-sm);
+  letter-spacing: 0.08em;
+  padding: 0.75em 1.75em;
+  border: var(--ed-border-strong);
+  border-radius: var(--ed-radius);
+  background: transparent;
+  color: var(--ed-ink);
+  cursor: pointer;
+  transition: background var(--ed-duration) var(--ed-ease),
+              color var(--ed-duration) var(--ed-ease);
+}
+:where(.ds-editorial-serif) :where(button, .ds-btn):hover {
+  background: var(--ed-ink);
+  color: var(--ed-bg);
+}
+
+/* 卡片：靠一条顶线分隔，不靠阴影 */
+:where(.ds-editorial-serif) :where(.ds-card) {
+  background: var(--ed-surface);
+  border-top: 2px solid var(--ed-ink);
+  padding: var(--ed-space-4) 0 var(--ed-space-3);
+}
+
+/* 小标签：全大写 + 宽字距，用于栏目名 */
+:where(.ds-editorial-serif) :where(.ds-eyebrow) {
+  font-family: var(--ed-font-body);
+  font-size: var(--ed-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent);
+}
+
+/* 数字：衬线数字，带老式字重感 */
+:where(.ds-editorial-serif) :where(.ds-figure) {
+  font-family: var(--ed-font-display);
+  font-size: var(--ed-text-2xl);
+  font-variant-numeric: oldstyle-nums;
+  line-height: var(--ed-leading-tight);
+}
+
+/* 指标：数字用衬线，标签用小型大写感的宽字距 */
+:where(.ds-editorial-serif) :where(.ds-stat-value) {
+  font-family: var(--ed-font-display);
+  font-size: var(--ed-text-xl);
+  line-height: var(--ed-leading-tight);
+  font-variant-numeric: oldstyle-nums;
+  color: var(--ed-ink);
+}
+:where(.ds-editorial-serif) :where(.ds-stat-label) {
+  font-size: var(--ed-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint);
+}
+
+/* 标签：赭红弱底、方角，不抢正文 */
+:where(.ds-editorial-serif) :where(.ds-tag) {
+  display: inline-block;
+  font-size: var(--ed-text-xs);
+  letter-spacing: 0.1em;
+  padding: 0.3em 0.7em;
+  border-radius: var(--ed-radius);
+  background: var(--ed-accent-weak);
+  color: var(--ed-accent-ink);
+}
