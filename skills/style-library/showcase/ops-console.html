@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FlowUP 运维 AI 控制台风格示例</title>
+  <link rel="stylesheet" href="../styles/signal-console/tokens.css" />
+  <link rel="stylesheet" href="../styles/incident-room/tokens.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--bg, #171717);
+      font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    }
+    .case + .case { margin-top: 40px; }
+    .case-label {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 0 0 12px;
+      color: var(--text-fg, #f4f4f4);
+    }
+    .case-label strong { font-size: 17px; font-weight: 600; }
+    .case-label span { color: var(--text-muted, #9b9b9b); font-size: 13px; }
+    .si-demo,
+    .in-demo {
+      width: 1520px;
+      min-height: 900px;
+      overflow: hidden;
+    }
+    .demo-topbar {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      border-bottom: 1px solid;
+    }
+    .si-demo .demo-topbar { border-color: var(--si-hairline); background: var(--si-surface); }
+    .in-demo .demo-topbar { border-color: var(--in-hairline); background: var(--in-surface); }
+    .demo-brand {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .demo-topmeta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      color: inherit;
+      font-size: 12px;
+    }
+    .demo-spacer { flex: 1; }
+    .si-demo .demo-topbar { color: var(--si-ink-muted); }
+    .si-demo .demo-brand { color: var(--si-ink); }
+    .in-demo .demo-topbar { color: var(--in-ink-muted); }
+    .in-demo .demo-brand { color: var(--in-ink); }
+    .demo-chip {
+      display: inline-flex;
+      min-height: 24px;
+      align-items: center;
+      gap: 5px;
+      padding: 0 8px;
+      border: 1px solid;
+      border-radius: 4px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .si-demo .demo-chip { border-color: var(--si-hairline); color: var(--si-ink-muted); background: var(--si-surface-alt); }
+    .in-demo .demo-chip { border-color: var(--in-hairline); color: var(--in-ink-muted); background: var(--in-surface-alt); }
+    .demo-live {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+    }
+    .si-demo .demo-live { background: var(--si-success); }
+    .in-demo .demo-live { background: var(--in-danger); }
+    .si-layout {
+      display: grid;
+      min-height: 852px;
+      grid-template-columns: 218px minmax(0, 1fr) 348px;
+    }
+    .si-rail {
+      padding: 14px 10px;
+      border-right: 1px solid var(--si-hairline);
+      background: var(--si-surface-input);
+    }
+    .si-rail-title {
+      padding: 0 8px 10px;
+      color: var(--si-ink-faint);
+      font-size: 11px;
+    }
+    .si-service {
+      display: grid;
+      gap: 3px;
+      padding: 9px 10px;
+      border-radius: var(--si-radius-sm);
+      color: var(--si-ink-muted);
+    }
+    .si-service.is-active {
+      background: var(--si-primary-soft);
+      box-shadow: inset 2px 0 0 var(--si-primary);
+    }
+    .si-service strong { color: var(--si-ink); font-size: 13px; font-weight: 500; }
+    .si-service small { color: var(--si-ink-faint); font-size: 11px; }
+    .si-main { min-width: 0; padding: 20px; }
+    .si-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .si-heading h1 {
+      margin: 0;
+      color: var(--si-ink);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+    .si-heading p {
+      margin: 6px 0 0;
+      color: var(--si-ink-muted);
+      font-size: 13px;
+    }
+    .si-actions { display: flex; gap: 8px; }
+    .si-metrics {
+      display: grid;
+      margin-top: 18px;
+      border: 1px solid var(--si-hairline);
+      border-radius: var(--si-radius-md);
+      background: var(--si-surface);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .si-metric {
+      padding: 12px 14px;
+      border-left: 1px solid var(--si-hairline);
+    }
+    .si-metric:first-child { border-left: 0; }
+    .si-metric span { display: block; color: var(--si-ink-faint); font-size: 11px; }
+    .si-metric strong {
+      display: block;
+      margin-top: 4px;
+      color: var(--si-ink);
+      font: 600 20px var(--si-font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .si-metric em {
+      display: block;
+      margin-top: 3px;
+      color: var(--si-warning);
+      font-size: 11px;
+      font-style: normal;
+    }
+    .si-chart {
+      margin-top: 12px;
+      border: 1px solid var(--si-hairline);
+      border-radius: var(--si-radius-md);
+      background: var(--si-surface);
+    }
+    .si-chart-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--si-hairline);
+      color: var(--si-ink-muted);
+      font-size: 12px;
+    }
+    .si-chart-head strong { color: var(--si-ink); font-size: 13px; font-weight: 500; }
+    .si-chart-head span { margin-left: auto; }
+    .si-chart-body { padding: 14px 16px 10px; }
+    .si-chart svg { display: block; width: 100%; height: 238px; }
+    .si-log {
+      margin-top: 12px;
+      border: 1px solid var(--si-hairline);
+      border-radius: var(--si-radius-md);
+      background: var(--si-surface-input);
+      overflow: hidden;
+    }
+    .si-log-head {
+      display: flex;
+      min-height: 40px;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--si-hairline);
+      color: var(--si-ink-muted);
+      font-size: 12px;
+    }
+    .si-log-head strong { color: var(--si-ink); font-weight: 500; }
+    .si-log-line {
+      display: grid;
+      min-height: 26px;
+      align-items: center;
+      padding: 2px 14px;
+      color: var(--si-ink-muted);
+      font: 12px/1.55 var(--si-font-mono);
+      grid-template-columns: 76px 88px 1fr;
+      gap: 8px;
+    }
+    .si-log-line .time { color: var(--si-ink-faint); }
+    .si-log-line .warn { color: var(--si-warning); }
+    .si-copilot {
+      padding: 18px;
+      border-left: 1px solid var(--si-hairline);
+      background: var(--si-surface-alt);
+    }
+    .si-copilot h2 { margin: 0; color: var(--si-ink); font-size: 18px; font-weight: 600; }
+    .si-copilot p { margin: 8px 0 0; color: var(--si-ink-muted); font-size: 13px; }
+    .si-copilot-block {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--si-hairline);
+    }
+    .si-copilot-label {
+      color: var(--si-ink-faint);
+      font-size: 11px;
+    }
+    .si-copilot-block ul {
+      display: grid;
+      gap: 8px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .si-copilot-block li {
+      padding-left: 12px;
+      border-left: 2px solid var(--si-primary);
+      color: var(--si-ink-muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .si-recommendation {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, var(--si-warning) 44%, var(--si-hairline));
+      border-radius: var(--si-radius-sm);
+      background: color-mix(in srgb, var(--si-warning) 8%, var(--si-surface-alt));
+    }
+    .si-recommendation strong { color: var(--si-ink); font-size: 13px; font-weight: 500; }
+    .si-recommendation p { color: var(--si-ink-muted); }
+    .si-recommendation-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .in-layout {
+      min-height: 852px;
+      padding: 18px;
+      background:
+        linear-gradient(var(--in-hairline) 1px, transparent 1px),
+        linear-gradient(90deg, var(--in-hairline) 1px, transparent 1px),
+        var(--in-canvas);
+      background-size: 48px 48px;
+    }
+    .in-banner {
+      display: grid;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 20px;
+      border: 1px solid color-mix(in srgb, var(--in-danger) 48%, var(--in-hairline));
+      border-radius: var(--in-radius-md);
+      background: color-mix(in srgb, var(--in-danger) 7%, var(--in-surface));
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .in-banner-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .in-banner h1 {
+      margin: 0;
+      color: var(--in-ink);
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -.025em;
+    }
+    .in-banner p { margin: 6px 0 0; color: var(--in-ink-muted); font-size: 13px; }
+    .in-banner-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      color: var(--in-ink-faint);
+      font-size: 11px;
+    }
+    .in-banner-actions { display: flex; gap: 8px; }
+    .in-grid {
+      display: grid;
+      margin-top: 12px;
+      grid-template-columns: 280px minmax(0, 1fr) 336px;
+      gap: 12px;
+    }
+    .in-column { display: flex; min-width: 0; flex-direction: column; gap: 12px; }
+    .in-panel {
+      border: 1px solid var(--in-hairline);
+      border-radius: var(--in-radius-md);
+      background: var(--in-surface);
+    }
+    .in-panel-head {
+      display: flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--in-hairline);
+      color: var(--in-ink-muted);
+      font-size: 12px;
+    }
+    .in-panel-head strong { color: var(--in-ink); font-size: 13px; font-weight: 500; }
+    .in-panel-body { padding: 12px 14px; }
+    .in-impact {
+      display: grid;
+      gap: 10px;
+    }
+    .in-impact-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--in-hairline);
+      color: var(--in-ink-muted);
+      font-size: 12px;
+    }
+    .in-impact-row:last-child { padding-bottom: 0; border-bottom: 0; }
+    .in-impact-row strong { display: block; color: var(--in-ink); font-weight: 500; }
+    .in-impact-row small { display: block; margin-top: 2px; color: var(--in-ink-faint); }
+    .in-timeline { display: grid; gap: 8px; }
+    .in-entry {
+      position: relative;
+      padding: 9px 12px 9px 24px;
+      border-left: 1px solid var(--in-hairline-strong);
+      color: var(--in-ink-muted);
+    }
+    .in-entry::before {
+      position: absolute;
+      top: 14px;
+      left: -4px;
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background: var(--in-ink-faint);
+      content: "";
+    }
+    .in-entry.is-danger::before { background: var(--in-danger); }
+    .in-entry.is-active { border-left: 2px solid var(--in-primary); }
+    .in-entry.is-active::before { background: var(--in-primary); }
+    .in-entry.is-success::before { background: var(--in-success); }
+    .in-entry time { color: var(--in-ink-faint); font: 11px var(--in-font-mono); }
+    .in-entry strong { display: block; margin-top: 4px; color: var(--in-ink); font-size: 13px; font-weight: 500; }
+    .in-entry p { margin: 4px 0 0; font-size: 12px; line-height: 1.55; }
+    .in-evidence {
+      padding: 10px 12px;
+      border: 1px solid var(--in-hairline);
+      border-radius: var(--in-radius-sm);
+      background: var(--in-surface-input);
+      color: var(--in-ink-muted);
+      font: 11px/1.65 var(--in-font-mono);
+    }
+    .in-next {
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, var(--in-primary) 48%, var(--in-hairline));
+      border-radius: var(--in-radius-sm);
+      background: color-mix(in srgb, var(--in-primary) 7%, var(--in-surface));
+    }
+    .in-next strong { color: var(--in-ink); font-size: 13px; font-weight: 500; }
+    .in-next p { margin-top: 6px; color: var(--in-ink-muted); font-size: 12px; line-height: 1.55; }
+    .in-next-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .in-mono { font-family: var(--in-font-mono); font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <section class="case">
+    <div class="case-label"><strong>日常可观测性与 AI 排障</strong><span>Signal Console · 高密度、统一时间窗、证据相邻</span></div>
+    <div class="si-demo ds-signal-console">
+      <header class="demo-topbar">
+        <div class="demo-brand">Nebula Ops</div>
+        <span class="demo-chip">prod-cn-east</span>
+        <span class="demo-chip">最近 30 分钟</span>
+        <span class="demo-chip"><i class="demo-live"></i><span>数据延迟 4s</span></span>
+        <span class="demo-spacer"></span>
+        <span class="demo-chip">自动刷新</span>
+        <span class="demo-chip">⌘K 查询</span>
+      </header>
+      <div class="si-layout">
+        <aside class="si-rail">
+          <div class="si-rail-title">服务</div>
+          <div class="si-service is-active"><strong>checkout-api</strong><small>生产 · 12 个实例</small></div>
+          <div class="si-service"><strong>payment-gateway</strong><small>生产 · 8 个实例</small></div>
+          <div class="si-service"><strong>order-worker</strong><small>生产 · 16 个实例</small></div>
+          <div class="si-service"><strong>redis-cluster</strong><small>生产 · 6 个节点</small></div>
+          <div class="si-rail-title" style="margin-top:16px">保存视图</div>
+          <div class="si-service"><strong>P99 异常</strong><small>最近 2 小时</small></div>
+          <div class="si-service"><strong>错误预算</strong><small>最近 7 天</small></div>
+        </aside>
+        <main class="si-main">
+          <div class="si-heading">
+            <div>
+              <h1>Checkout 延迟异常</h1>
+              <p>过去 8 分钟 P99 从 420 ms 升至 1.8 s；错误率仍低于阈值。</p>
+            </div>
+            <div class="si-actions">
+              <button class="si-button">查看拓扑</button>
+              <button class="si-button si-button-primary">创建事件</button>
+            </div>
+          </div>
+          <div class="si-metrics">
+            <div class="si-metric"><span>P99 延迟</span><strong>1.82 s</strong><em>Baseline 420 ms</em></div>
+            <div class="si-metric"><span>错误率</span><strong>0.38%</strong><em>阈值 1.0%</em></div>
+            <div class="si-metric"><span>QPS</span><strong>3.4k</strong><em>与昨日接近</em></div>
+            <div class="si-metric"><span>受影响请求</span><strong>18.6%</strong><em>过去 8 分钟</em></div>
+          </div>
+          <section class="si-chart">
+            <header class="si-chart-head">
+              <strong>延迟</strong>
+              <span>P50 / P95 / P99</span>
+              <span>最近 30 分钟</span>
+            </header>
+            <div class="si-chart-body">
+              <svg viewBox="0 0 820 238" role="img" aria-label="过去 30 分钟的延迟趋势，P99 在最后 8 分钟明显升高">
+                <g stroke="currentColor" opacity=".18" style="color:var(--si-ink)">
+                  <line x1="0" y1="20" x2="820" y2="20" />
+                  <line x1="0" y1="78" x2="820" y2="78" />
+                  <line x1="0" y1="136" x2="820" y2="136" />
+                  <line x1="0" y1="194" x2="820" y2="194" />
+                </g>
+                <polyline fill="none" stroke="var(--si-series-4)" stroke-width="2" points="0,160 70,158 140,162 210,157 280,164 350,158 420,160 490,155 560,160 630,157 700,161 820,158" />
+                <polyline fill="none" stroke="var(--si-series-1)" stroke-width="2" points="0,148 70,146 140,151 210,143 280,147 350,145 420,148 490,141 560,145 630,139 700,141 820,144" />
+                <polyline fill="none" stroke="var(--si-warning)" stroke-width="2.5" points="0,134 70,132 140,136 210,128 280,133 350,126 420,132 490,122 560,118 630,78 700,53 820,38" />
+                <line x1="560" y1="0" x2="560" y2="210" stroke="var(--si-danger)" stroke-width="1.5" stroke-dasharray="4 5" />
+                <text x="568" y="18" fill="var(--si-danger)" font-size="11">部署 payment-gateway@8f31</text>
+                <g fill="var(--si-ink-faint)" font-size="10">
+                  <text x="0" y="231">14:00</text><text x="196" y="231">14:10</text><text x="392" y="231">14:20</text><text x="588" y="231">14:30</text><text x="780" y="231">14:40</text>
+                </g>
+              </svg>
+            </div>
+          </section>
+          <section class="si-log">
+            <header class="si-log-head"><strong>相关日志</strong><span>service=checkout-api env=prod</span><span style="margin-left:auto">5 / 1,284</span></header>
+            <div class="si-log-line"><span class="time">14:31:42</span><span class="warn">WARN</span><span>upstream payment-gateway timeout after 1200ms</span></div>
+            <div class="si-log-line"><span class="time">14:31:39</span><span class="warn">WARN</span><span>retry budget exhausted; request_id=4d71…</span></div>
+            <div class="si-log-line"><span class="time">14:31:36</span><span>INFO</span><span>deployment payment-gateway@8f31 reached 100% traffic</span></div>
+          </section>
+        </main>
+        <aside class="si-copilot">
+          <h2>AI 调查</h2>
+          <p>延迟异常与一次支付网关发布高度重合。先核对发布窗口，再决定是否回滚。</p>
+          <section class="si-copilot-block">
+            <div class="si-copilot-label">支持证据</div>
+            <ul>
+              <li>P99 跃升发生在 payment-gateway@8f31 全量流量后 2 分钟。</li>
+              <li>错误日志集中在连接池等待，数据库自身延迟无变化。</li>
+              <li>受影响请求仅经过 refresh-token 链路。</li>
+            </ul>
+          </section>
+          <section class="si-copilot-block">
+            <div class="si-copilot-label">尚不确定</div>
+            <ul><li>当前无法区分连接池容量不足与新版本超时参数变化。</li></ul>
+          </section>
+          <div class="si-recommendation">
+            <strong>建议：暂停发布并回滚 8f31</strong>
+            <p style="margin-top:5px">影响范围是 payment-gateway 的全部生产流量，动作可由当前值班负责人批准。</p>
+            <div class="si-recommendation-actions">
+              <button class="si-button">查看变更</button>
+              <button class="si-button si-button-primary">准备回滚</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="case">
+    <div class="case-label"><strong>事故响应与交接</strong><span>Incident Room · 单一事故叙事、时间线、动作和证据</span></div>
+    <div class="in-demo ds-incident-room">
+      <header class="demo-topbar">
+        <div class="demo-brand">FlowUP Incident</div>
+        <span class="demo-chip">P1</span>
+        <span class="demo-chip">北京时间 14:32:08</span>
+        <span class="demo-spacer"></span>
+        <span class="demo-chip"><i class="demo-live"></i><span>事故仍在持续</span></span>
+        <span class="demo-chip">共享时间线</span>
+      </header>
+      <div class="in-layout">
+        <section class="in-banner">
+          <div>
+            <div class="in-banner-line"><span class="in-status is-danger">调查中</span><span class="in-meta in-mono">INC-2026-1116-03</span></div>
+            <h1>Checkout P99 延迟超过 1.5 秒</h1>
+            <p>支付网关发布后，部分地区的结算请求持续变慢；错误率尚未越过 SLO。</p>
+            <div class="in-banner-meta"><span>开始 14:24:18</span><span>负责人 陈晓</span><span>影响 2 个服务</span><span>相关变更 1 项</span></div>
+          </div>
+          <div class="in-banner-actions">
+            <button class="in-button">交接</button>
+            <button class="in-button in-button-danger">确认回滚</button>
+          </div>
+        </section>
+        <div class="in-grid">
+          <div class="in-column">
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>影响范围</strong><span>实时</span></header>
+              <div class="in-panel-body">
+                <div class="in-impact">
+                  <div class="in-impact-row"><span><strong>checkout-api</strong><small>杭州 / 生产</small></span><span class="in-status is-warning">受影响</span></div>
+                  <div class="in-impact-row"><span><strong>payment-gateway</strong><small>杭州 / 生产</small></span><span class="in-status is-danger">变更来源</span></div>
+                  <div class="in-impact-row"><span><strong>order-worker</strong><small>杭州 / 生产</small></span><span class="in-status is-success">正常</span></div>
+                </div>
+              </div>
+            </section>
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>验证指标</strong><span>最近 15 分钟</span></header>
+              <div class="in-panel-body">
+                <div class="in-impact">
+                  <div class="in-impact-row"><span><strong>P99</strong><small>基线 420 ms</small></span><strong class="in-mono">1.82 s</strong></div>
+                  <div class="in-impact-row"><span><strong>错误率</strong><small>阈值 1.0%</small></span><strong class="in-mono">0.38%</strong></div>
+                  <div class="in-impact-row"><span><strong>受影响订单</strong><small>过去 8 分钟</small></span><strong class="in-mono">18.6%</strong></div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="in-column">
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>事故时间线</strong><span>按发生时间排序</span></header>
+              <div class="in-panel-body">
+                <div class="in-timeline">
+                  <article class="in-entry is-danger">
+                    <time>14:24:18</time>
+                    <strong>监控告警触发</strong>
+                    <p>checkout-api P99 在 3 分钟内从 420 ms 升至 1.6 s。</p>
+                  </article>
+                  <article class="in-entry">
+                    <time>14:26:04</time>
+                    <strong>陈晓接领事故</strong>
+                    <p>已锁定杭州生产环境，开始核对最近变更。</p>
+                  </article>
+                  <article class="in-entry is-active">
+                    <time>14:29:37</time>
+                    <strong>AI 调查返回</strong>
+                    <p>异常与 payment-gateway@8f31 全量发布高度重合；连接池等待显著上升。</p>
+                  </article>
+                  <article class="in-entry">
+                    <time>14:31:12</time>
+                    <strong>等待回滚批准</strong>
+                    <p>动作将恢复上一版本支付网关，无需修改数据库。</p>
+                    <div class="in-evidence" style="margin-top:8px">change=8f31<br>service=payment-gateway<br>scope=hz-prod<br>rollback_to=7d0a</div>
+                  </article>
+                </div>
+              </div>
+            </section>
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>证据</strong><span>只读</span></header>
+              <div class="in-panel-body">
+                <div class="in-evidence">14:31:42 WARN upstream payment-gateway timeout after 1200ms<br>14:31:46 WARN retry budget exhausted request_id=4d71<br>14:32:01 INFO p99=1.82s error_rate=0.38% qps=3.4k</div>
+              </div>
+            </section>
+          </div>
+          <div class="in-column">
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>下一步</strong><span>需要负责人批准</span></header>
+              <div class="in-panel-body">
+                <div class="in-next">
+                  <strong>回滚 payment-gateway 到 7d0a</strong>
+                  <p>影响范围：杭州生产全部支付流量。数据库和消息队列不变；预计 2 分钟完成。</p>
+                  <div class="in-next-actions">
+                    <button class="in-button">查看变更</button>
+                    <button class="in-button in-button-danger">确认回滚</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>AI 摘要</strong><span>基于 4 条证据</span></header>
+              <div class="in-panel-body">
+                <p style="margin:0;color:var(--in-ink-muted);font-size:13px;line-height:1.65">最可能原因是支付网关新版本的连接池配置降低并发容量。建议先回滚，再在隔离环境比较连接池参数与超时阈值。</p>
+                <div class="in-evidence" style="margin-top:12px">事实：发布后 2 分钟内出现异常<br>推断：连接池容量不足<br>不确定：新版本是否还修改了超时策略</div>
+              </div>
+            </section>
+            <section class="in-panel">
+              <header class="in-panel-head"><strong>交接摘要</strong><span>自动生成</span></header>
+              <div class="in-panel-body">
+                <p style="margin:0;color:var(--in-ink-muted);font-size:12px;line-height:1.65">现状：P99 异常，错误率未越线。<br>待决策：是否立即回滚 8f31。<br>下一步：批准后执行回滚并观察 5 分钟。</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

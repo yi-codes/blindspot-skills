@@ -1,0 +1,318 @@
+/* Incident Room · 进行中事故的工作台
+   用法：容器 class="ds-incident-room"
+   范围：事故响应、回滚决策、时间线、值班交接 */
+
+:where(.ds-incident-room) {
+  color-scheme: dark;
+  --in-canvas: #11100F;
+  --in-surface: #191816;
+  --in-surface-alt: #23211E;
+  --in-surface-hover: #2B2824;
+  --in-surface-input: #0D0C0B;
+  --in-ink: #F2EEE7;
+  --in-ink-muted: #B8B1A7;
+  --in-ink-faint: #857F77;
+  --in-hairline: #37332E;
+  --in-hairline-strong: #514A43;
+  --in-primary: #F3B64D;
+  --in-primary-soft: #332713;
+  --in-success: #61C79C;
+  --in-warning: #E4A83E;
+  --in-danger: #FF7165;
+  --in-info: #82B9FF;
+  --in-shadow-float: 0 14px 40px rgba(0, 0, 0, 0.5);
+  --in-font-sans: Inter, "SF Pro Text", "PingFang SC", system-ui, sans-serif;
+  --in-font-mono: "Geist Mono", "SF Mono", ui-monospace, monospace;
+  --in-text-xs: 0.6875rem;
+  --in-text-sm: 0.75rem;
+  --in-text-code: 0.8125rem;
+  --in-text-md: 0.875rem;
+  --in-text-lg: 0.9375rem;
+  --in-text-xl: 1.125rem;
+  --in-text-2xl: 1.875rem;
+  --in-weight-body: 400;
+  --in-weight-medium: 500;
+  --in-weight-strong: 600;
+  --in-leading-tight: 1.2;
+  --in-leading-snug: 1.4;
+  --in-leading-body: 1.6;
+  --in-space-xs: 4px;
+  --in-space-sm: 8px;
+  --in-space-md: 12px;
+  --in-space-lg: 16px;
+  --in-space-xl: 24px;
+  --in-space-2xl: 32px;
+  --in-space-section: 48px;
+  --in-measure: 72ch;
+  --in-radius-xs: 2px;
+  --in-radius-sm: 4px;
+  --in-radius-md: 6px;
+  --in-radius-lg: 8px;
+  --in-radius-full: 9999px;
+  --in-border: 1px solid var(--in-hairline);
+  --in-border-strong: 1px solid var(--in-hairline-strong);
+  --in-duration: 140ms;
+  --in-ease: cubic-bezier(0.2, 0, 0, 1);
+  background: var(--in-canvas);
+  color: var(--in-ink);
+  font-family: var(--in-font-sans);
+  font-size: var(--in-text-md);
+  font-weight: var(--in-weight-body);
+  line-height: var(--in-leading-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-incident-room) ::selection {
+  background: color-mix(in srgb, var(--in-primary) 34%, transparent);
+}
+
+:where(.ds-incident-room) :where(h1, h2, h3, h4) {
+  margin: 0 0 var(--in-space-sm);
+  color: var(--in-ink);
+  font-weight: var(--in-weight-strong);
+  line-height: var(--in-leading-tight);
+}
+:where(.ds-incident-room) h1 { font-size: var(--in-text-2xl); letter-spacing: -0.025em; }
+:where(.ds-incident-room) h2 { font-size: var(--in-text-xl); }
+:where(.ds-incident-room) h3 { font-size: var(--in-text-lg); }
+:where(.ds-incident-room) h4 { font-size: var(--in-text-md); }
+
+:where(.ds-incident-room) p {
+  max-width: var(--in-measure);
+  margin: 0 0 var(--in-space-md);
+  color: var(--in-ink-muted);
+}
+
+:where(.ds-incident-room) a {
+  color: var(--in-info);
+  text-decoration: none;
+}
+:where(.ds-incident-room) a:hover { text-decoration: underline; }
+
+:where(.ds-incident-room) :where(code, kbd, pre) {
+  font-family: var(--in-font-mono);
+  font-size: var(--in-text-code);
+}
+:where(.ds-incident-room) pre {
+  margin: var(--in-space-md) 0;
+  padding: var(--in-space-md);
+  overflow-x: auto;
+  border: var(--in-border);
+  border-radius: var(--in-radius-sm);
+  background: var(--in-surface-input);
+  color: var(--in-ink);
+  line-height: 1.55;
+}
+:where(.ds-incident-room) code:not(pre code) {
+  padding: 1px 5px;
+  border-radius: var(--in-radius-xs);
+  background: var(--in-surface-input);
+  color: var(--in-ink);
+}
+
+:where(.ds-incident-room) :where(button, .in-button) {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--in-space-xs);
+  padding: 0 var(--in-space-md);
+  border: var(--in-border);
+  border-radius: var(--in-radius-sm);
+  background: var(--in-surface-alt);
+  color: var(--in-ink);
+  font-family: var(--in-font-sans);
+  font-size: var(--in-text-sm);
+  font-weight: var(--in-weight-medium);
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--in-duration) var(--in-ease),
+              border-color var(--in-duration) var(--in-ease);
+}
+:where(.ds-incident-room) :where(button, .in-button):hover {
+  border-color: var(--in-hairline-strong);
+  background: var(--in-surface-hover);
+}
+:where(.ds-incident-room) .in-button-primary {
+  border-color: var(--in-primary);
+  background: var(--in-primary);
+  color: var(--in-canvas);
+}
+:where(.ds-incident-room) .in-button-danger {
+  border-color: var(--in-danger);
+  background: var(--in-danger);
+  color: var(--in-canvas);
+}
+
+:where(.ds-incident-room) input,
+:where(.ds-incident-room) textarea,
+:where(.ds-incident-room) select {
+  width: 100%;
+  min-height: 32px;
+  padding: var(--in-space-sm) var(--in-space-md);
+  border: var(--in-border-strong);
+  border-radius: var(--in-radius-sm);
+  outline: none;
+  background: var(--in-surface-input);
+  color: var(--in-ink);
+  font-family: var(--in-font-sans);
+  font-size: var(--in-text-md);
+}
+:where(.ds-incident-room) :where(input, textarea, select):focus {
+  border-color: var(--in-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--in-primary) 30%, transparent);
+}
+
+:where(.ds-incident-room) .in-surface {
+  border: var(--in-border);
+  border-radius: var(--in-radius-md);
+  background: var(--in-surface);
+}
+:where(.ds-incident-room) .in-surface-header {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--in-space-md);
+  padding: 0 var(--in-space-lg);
+  border-bottom: var(--in-border);
+}
+:where(.ds-incident-room) .in-surface-body {
+  padding: var(--in-space-lg);
+}
+
+:where(.ds-incident-room) .in-banner {
+  display: grid;
+  align-items: center;
+  gap: var(--in-space-lg);
+  padding: var(--in-space-lg) var(--in-space-xl);
+  border: 1px solid color-mix(in srgb, var(--in-danger) 45%, var(--in-hairline));
+  border-radius: var(--in-radius-md);
+  background: color-mix(in srgb, var(--in-danger) 7%, var(--in-surface));
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+:where(.ds-incident-room) .in-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--in-space-md);
+  color: var(--in-ink-muted);
+  font-size: var(--in-text-sm);
+}
+
+:where(.ds-incident-room) .in-timeline {
+  position: relative;
+  display: grid;
+  gap: var(--in-space-sm);
+  padding-left: var(--in-space-xl);
+}
+:where(.ds-incident-room) .in-timeline::before {
+  position: absolute;
+  inset-block: var(--in-space-sm);
+  left: 3px;
+  width: 1px;
+  background: var(--in-hairline-strong);
+  content: "";
+}
+:where(.ds-incident-room) .in-entry {
+  position: relative;
+  padding: var(--in-space-sm) var(--in-space-md);
+  border: var(--in-border);
+  border-radius: var(--in-radius-sm);
+  background: var(--in-canvas);
+}
+:where(.ds-incident-room) .in-entry::before {
+  position: absolute;
+  top: 13px;
+  left: calc(-1 * var(--in-space-xl) + 0px);
+  width: 7px;
+  height: 7px;
+  border-radius: var(--in-radius-full);
+  background: var(--in-ink-faint);
+  content: "";
+}
+:where(.ds-incident-room) .in-entry.is-active {
+  border-left: 2px solid var(--in-primary);
+  background: var(--in-surface);
+}
+:where(.ds-incident-room) .in-entry.is-active::before {
+  background: var(--in-primary);
+}
+:where(.ds-incident-room) .in-entry.is-danger::before {
+  background: var(--in-danger);
+}
+:where(.ds-incident-room) .in-entry.is-success::before {
+  background: var(--in-success);
+}
+:where(.ds-incident-room) .in-entry-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--in-space-sm);
+  color: var(--in-ink-faint);
+  font-size: var(--in-text-sm);
+}
+
+:where(.ds-incident-room) .in-status {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  gap: var(--in-space-xs);
+  padding: 0 var(--in-space-sm);
+  border: var(--in-border);
+  border-radius: var(--in-radius-xs);
+  background: var(--in-surface-alt);
+  color: var(--in-ink-muted);
+  font-size: var(--in-text-sm);
+  font-weight: var(--in-weight-medium);
+  line-height: 1;
+}
+:where(.ds-incident-room) .in-status::before {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--in-radius-full);
+  background: currentColor;
+  content: "";
+}
+:where(.ds-incident-room) .in-status.is-success { color: var(--in-success); }
+:where(.ds-incident-room) .in-status.is-warning { color: var(--in-warning); }
+:where(.ds-incident-room) .in-status.is-danger { color: var(--in-danger); }
+:where(.ds-incident-room) .in-status.is-info { color: var(--in-info); }
+
+:where(.ds-incident-room) .in-evidence {
+  padding: var(--in-space-md);
+  border: var(--in-border);
+  border-radius: var(--in-radius-sm);
+  background: var(--in-surface-input);
+}
+:where(.ds-incident-room) .in-decision {
+  border: 1px solid color-mix(in srgb, var(--in-primary) 50%, var(--in-hairline));
+  border-radius: var(--in-radius-sm);
+  background: color-mix(in srgb, var(--in-primary) 7%, var(--in-surface));
+}
+:where(.ds-incident-room) .in-overlay {
+  border: var(--in-border-strong);
+  border-radius: var(--in-radius-lg);
+  background: var(--in-surface);
+  box-shadow: var(--in-shadow-float);
+}
+:where(.ds-incident-room) .in-mono {
+  font-family: var(--in-font-mono);
+  font-size: var(--in-text-code);
+  font-variant-numeric: tabular-nums;
+}
+:where(.ds-incident-room) .in-meta {
+  color: var(--in-ink-faint);
+  font-size: var(--in-text-sm);
+}
+
+@media (max-width: 720px) {
+  :where(.ds-incident-room) .in-banner {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+  :where(.ds-incident-room) .in-surface-body {
+    padding: var(--in-space-md);
+  }
+}

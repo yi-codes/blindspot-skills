@@ -26,6 +26,34 @@
     "has_css": true
   },
   {
+    "slug": "incident-room",
+    "name": "Incident Room",
+    "description": "面向进行中事故的协作控制台。暖黑画布、窄圆角、明确的严重度高亮和单一事故叙事： 左侧证据与时间线，中间处置记录，右侧负责人、影响范围和 AI 调查建议； 页面像值班房间的共享工作台，强调时间、决策和交接。",
+    "register": "operations",
+    "surface": "dark",
+    "cues": [
+      "事故响应",
+      "故障处置",
+      "war room",
+      "值班交接",
+      "回滚决策",
+      "根因排查",
+      "AI 事故分析"
+    ],
+    "avoid": [
+      "日常数据看板",
+      "营销落地页",
+      "长文阅读",
+      "公开状态页",
+      "多人社交聊天"
+    ],
+    "prefix": "--in-*",
+    "canvas": "#11100F",
+    "ink": "#F2EEE7",
+    "has_prompt": true,
+    "has_css": true
+  },
+  {
     "slug": "quiet-dark",
     "name": "Quiet Dark",
     "description": "原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的 叠加边框分层，大圆角（16px 起）、系统无衬线字体、紧凑的行高。整个界面只有一处彩色： 焦点环和信息蓝；代码差异（diff）是唯一被放行的第二处。 适合需要长时间盯着、且不该抢内容风头的工具界面。",
@@ -47,6 +75,34 @@
     "prefix": "--qd-*",
     "canvas": "#0d0d0d",
     "ink": "#f7f7f7",
+    "has_prompt": true,
+    "has_css": true
+  },
+  {
+    "slug": "signal-console",
+    "name": "Signal Console",
+    "description": "面向 AI 运维控制台的高密度界面。中性石墨底、蓝色运行信号与低饱和状态色， 信息按“发生了什么、证据是什么、AI 建议做什么、批准后留下什么回执”组织； 卡片像网络和日志工作区一样扁平，浮层才使用阴影。",
+    "register": "operations",
+    "surface": "mixed",
+    "cues": [
+      "运维控制台",
+      "告警分诊",
+      "可观测性",
+      "日志指标追踪",
+      "服务拓扑",
+      "AI SRE 助手",
+      "长期值守"
+    ],
+    "avoid": [
+      "营销落地页",
+      "长文阅读",
+      "消费级应用",
+      "公开状态页",
+      "创意作品集"
+    ],
+    "prefix": "--si-*",
+    "canvas": "#0B0F14",
+    "ink": "#E6EDF5",
     "has_prompt": true,
     "has_css": true
   },

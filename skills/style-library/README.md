@@ -18,7 +18,7 @@
 
 ## 快速看效果
 
-直接打开 `preview/index.html`（浏览器双击即可）。同一份内容渲染三遍，一眼看出差别。
+直接打开 `preview/index.html`（浏览器双击即可）。同一份内容会为每个风格渲染一次，方便对比。
 
 ## 目录
 
@@ -41,7 +41,10 @@ style-library/
 │   ├── ollama/
 │   ├── bergside-codex/     #   自称 Codex 风格的那份 —— 反面样本
 │   ├── chatgpt-ios/        #   ChatGPT iOS 拆解，验证了 quiet-dark 的色值
-│   └── hallmark/           #   反 slop 闸门表：AI 味儿怎么枚举（→ principles.md §11）
+│   ├── hallmark/           #   反 slop 闸门表：AI 味儿怎么枚举（→ principles.md §11）
+│   ├── grafana/            #   可观测性 token、密度和浮层阴影
+│   ├── signoz/             #   日志、表格、语义色和紧凑字号
+│   └── kiali/              #   服务拓扑、节点状态和上下文面板
 │
 ├── inbox/                  # 原料入口：截图、链接、随手记
 │
@@ -50,9 +53,10 @@ style-library/
 │   └── negative.md         # 负向词通用清单
 │
 ├── showcase/
-│   ├── web.html            # 三风格 × 网页整页样张
-│   ├── app.html            # 三风格 × 手机端样张
-│   └── codex.html          # quiet-dark × 桌面 app 三屏（线程 / diff / 空状态）
+│   ├── web.html            # editorial / swiss / terminal 网页整页样张
+│   ├── app.html            # editorial / swiss / terminal 手机端样张
+│   ├── codex.html          # quiet-dark × 桌面 app 三屏（线程 / diff / 空状态）
+│   └── ops-console.html    # signal-console 与 incident-room 运维场景
 │
 ├── preview/index.html      # 【自动生成】全风格对照预览（覆盖全部风格）
 └── scripts/
@@ -115,10 +119,10 @@ style-library/
 ./scripts/build-preview.py       # 自动进对照页
 ```
 
-**加一个风格 = 动一个目录。** SKILL.md / README / 索引 / 预览，一个字都不用改。
+**加一个风格 = 只加一个风格目录。** `SKILL.md` 与 `README.md` 不用改；再运行 `build-index.py` 和 `build-preview.py` 更新生成物。
 
 但先看 `principles.md` 第 8 节：**要不要加，判断标准是"新场景是否必须违反现有风格的硬约束"**，不是"想换个感觉"。
-风格库的价值在少而准。四个各司其职的风格，比二十个互相打架的强。
+风格库的价值在少而准。每个风格承担清楚职责，比二十个互相打架的强。
 
 ## 让本地 Agent 用上
 

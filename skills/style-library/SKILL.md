@@ -127,7 +127,7 @@ python3 scripts/build-preview.py # 自动进对照预览页
 cues: 用它的场景1、场景2、场景3      # 触发信号
 avoid: 绝对别用的场景1、场景2        # 排他条件
 surface: light | dark | mixed
-register: story | professional | technical | tool   # 职守
+register: story | professional | technical | tool | operations   # 职守
 ```
 
 要加新的选择维度（比如 `density: loose | dense`），改 `scripts/build-index.py` 顶部的 `FIELDS` 表，索引自动多一列。**加维度不改任何风格的正文。**

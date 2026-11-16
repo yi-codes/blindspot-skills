@@ -9,7 +9,7 @@ description: >-
 cues: 用它的场景1、场景2、场景3
 avoid: 绝对别用的场景1、场景2
 surface: light | dark | mixed
-register: story | professional | technical | tool
+register: story | professional | technical | tool | operations
 
 colors:
   canvas: "#FFFFFF"
