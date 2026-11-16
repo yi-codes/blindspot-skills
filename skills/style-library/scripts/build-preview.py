@@ -56,7 +56,7 @@ SHELL = """<!DOCTYPE html>
 <title>风格库 · 对照预览</title>
 {links}
 <style>
-  /* 页面外壳：中性化，不干扰三个风格的展示 */
+  /* 页面外壳：中性化，不干扰各风格的展示 */
   * {{ box-sizing: border-box; }}
   body {{
     margin: 0;

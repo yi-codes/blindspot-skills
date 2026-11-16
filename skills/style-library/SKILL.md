@@ -92,7 +92,7 @@ python3 scripts/slop.py <产物.html>      # 产物层：AI 味儿
 | 中文排版出事（行高、标点、混排） | `principles.md` §6 + 该风格 `DESIGN.md` 的 `## Chinese Typography` |
 | 想新开一个风格 | `principles.md` §8，然后 `scripts/new-style.sh` |
 | 有人给你看他喜欢的设计/网站 | `references/README.md`（三层漏斗：inbox → references → styles） |
-| 要做深色 / 双模 | `principles.md` §11.3 + `references/hallmark/dark-mode.md` |
+| 要做深色 / 双模 | `principles.md` §11.3 + `references/hallmark/NOTES.md` |
 | 要写界面文案、元信息、日期 | `principles.md` §11.2 第 5 条（中点、箭头、状态点） |
 | 要生图 | 该风格 `prompt.md` + `prompts/style-words.md` + `prompts/negative.md` |
 | 不确定某个风格怎么来的、可不可信 | `references/*/NOTES.md`（"弃"那一栏比"取"重要） |

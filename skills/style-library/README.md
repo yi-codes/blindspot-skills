@@ -18,7 +18,7 @@
 
 ## 快速看效果
 
-直接打开 `preview/index.html`（浏览器双击即可）。同一份内容渲染三遍，一眼看出差别。
+直接打开 `preview/index.html`（浏览器双击即可）。同一份内容渲染四遍，一眼看出差别。
 
 ## 目录
 
@@ -37,11 +37,11 @@ style-library/
 │
 ├── references/             # 外部样本（别人的，不是我的）
 │   ├── README.md           #   怎么拆解一份外部设计
-│   ├── claude/             #   原始 DESIGN.md + 提炼卡 NOTES.md
-│   ├── ollama/
+│   ├── claude/             #   提炼卡 NOTES.md
+│   ├── ollama/             #   提炼卡 NOTES.md
 │   ├── bergside-codex/     #   自称 Codex 风格的那份 —— 反面样本
 │   ├── chatgpt-ios/        #   ChatGPT iOS 拆解，验证了 quiet-dark 的色值
-│   └── hallmark/           #   反 slop 闸门表：AI 味儿怎么枚举（→ principles.md §11）
+│   └── hallmark/           #   反 slop 闸门提炼卡（→ principles.md §11）
 │
 ├── inbox/                  # 原料入口：截图、链接、随手记
 │
@@ -50,8 +50,8 @@ style-library/
 │   └── negative.md         # 负向词通用清单
 │
 ├── showcase/
-│   ├── web.html            # 三风格 × 网页整页样张
-│   ├── app.html            # 三风格 × 手机端样张
+│   ├── web.html            # editorial / swiss / terminal 三风格 × 网页整页样张
+│   ├── app.html            # editorial / swiss / terminal 三风格 × 手机端样张
 │   └── codex.html          # quiet-dark × 桌面 app 三屏（线程 / diff / 空状态）
 │
 ├── preview/index.html      # 【自动生成】全风格对照预览（覆盖全部风格）
@@ -115,7 +115,7 @@ style-library/
 ./scripts/build-preview.py       # 自动进对照页
 ```
 
-**加一个风格 = 动一个目录。** SKILL.md / README / 索引 / 预览，一个字都不用改。
+**加一个风格 = 只加一个风格目录。** `SKILL.md` 与 `README.md` 不用改；再跑 `build-index.py` 和 `build-preview.py` 更新生成物。
 
 但先看 `principles.md` 第 8 节：**要不要加，判断标准是"新场景是否必须违反现有风格的硬约束"**，不是"想换个感觉"。
 风格库的价值在少而准。四个各司其职的风格，比二十个互相打架的强。
@@ -125,16 +125,15 @@ style-library/
 仓库放 GitHub，Agent 读的是本机路径。做法是软链，不是复制（复制会产生两份真相）：
 
 ```bash
-ln -sfn <本仓库路径>/style-library ~/.workbuddy/skills/style-library
+ln -sfn <本仓库路径>/skills/style-library ~/.codex/skills/style-library
 ```
 
-改完仓库内容，Agent 下次会话自动读到最新版。
-如果用的是别的 Agent（比如 Claude Code），软链到它对应的 skills 目录即可，这个库不绑定任何一个。
+改完仓库内容，Agent 下次会话自动读到最新版。如果用的是别的 Agent（比如 Claude Code），把目标换成对应的 skills 目录即可，这个库不绑定任何一个。
 
 ## 维护约定
 
 - 风格目录名用小写短横线（`editorial-serif`），中文名写 `DESIGN.md` 的 `name` 字段
-- 每个风格必须三个文件齐全，缺 `prompt.md` 的只能用于网页、不能用于配图，lint 会警告
+- 每个风格必须 `DESIGN.md` / `tokens.css` / `prompt.md` 三个文件齐全，并且 front matter 要有 `cues` / `avoid` / `surface` / `register`。缺选择字段或 `prompt.md` 时，lint 会报错或警告
 - **改了 `DESIGN.md` 的色值/字号/圆角/间距，必须同步改 `tokens.css`**，否则 lint 报错——这是防漂移的唯一手段
 - 新值先进 token，再进组件。**组件里不许出现裸值**
 - 改完跑两个脚本，它们查的东西不重叠，少跑一个等于没查：

@@ -38,13 +38,13 @@ cream canvas → cream card → dark navy mockup，三个表面模式**逐段交
 
 它诚实标注"字体是授权的买不到""动效没覆盖""产品面没覆盖"。
 
-→ **已吸收为范式**：我三个风格的 DESIGN.md 都加了 `## Known Gaps`。这一节让文件可信——因为读者知道边界在哪。
+→ **已吸收为范式**：早期三个风格的 DESIGN.md 都加了 `## Known Gaps`，后来新增的 quiet-dark 也沿用。这一节让文件可信——因为读者知道边界在哪。
 
 ### 6. Iteration Guide 的命令式写法
 
 "Focus on ONE component at a time""Use token.refs everywhere — never inline hex"。
 
-→ **已吸收**：三个风格都有 `## Iteration Guide`，写成给下一个人（或 agent）的操作指令，不是描述。
+→ **已吸收**：早期三个风格都有 `## Iteration Guide`，后来新增的 quiet-dark 也沿用。它写成给下一个人（或 agent）的操作指令，不是描述。
 
 ## 弃（明确不吸收，为什么）
 
