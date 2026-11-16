@@ -4,11 +4,12 @@ name: __NAME__
 description: >-
   __一句话说清气质，再补两句"为什么这些数值长这样"——这是 agent 判断的依据。__
 # ---------------------------------------------------------------- 选择条件
-# 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
+# 这五项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
 # 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
 cues: 用它的场景1、场景2、场景3
 avoid: 绝对别用的场景1、场景2
 surface: light | dark | mixed
+density: tight | medium | roomy   # 这一屏要塞多少东西，不是留白多少。tight=信息密度优先
 register: story | professional | technical | tool
 
 colors:

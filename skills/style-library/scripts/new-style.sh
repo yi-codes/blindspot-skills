@@ -146,11 +146,11 @@ cat > "$dir/tokens.css" <<EOF
   color: var(--${prefix}-accent);
 }
 
-:where(.ds-${slug}) :where(.ds-eyebrow) {
-  font-size: var(--${prefix}-text-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--${prefix}-accent);
+:where(.ds-${slug}) :where(.ds-lead) {
+  font-size: var(--${prefix}-text-lg);
+  line-height: 1.5;
+  color: var(--${prefix}-ink-muted);
+  max-width: 28em;
 }
 
 :where(.ds-${slug}) :where(.ds-stat-value) {
@@ -210,7 +210,12 @@ echo "  变量前缀 --${prefix}-"
 echo "  class 名 .ds-${slug}"
 echo ""
 echo "下一步："
-echo "  1. 填 $dir/DESIGN.md（先写 Overview 和 Colors，那是这个风格的定义）"
-echo "  2. 填 $dir/tokens.css"
-echo "  3. 填 $dir/prompt.md"
-echo "  4. ./scripts/build-preview.py 重新生成预览"
+echo "  1. 填 $dir/DESIGN.md 的 front matter：cues / avoid / surface / density / register"
+echo "     —— 少写一项，这个风格在 INDEX.md 里就选不出来"
+echo "  2. 填 $dir/DESIGN.md 正文（Overview 和 Colors 是核心，其余照模板八节写）"
+echo "  3. 填 $dir/tokens.css"
+echo "  4. 填 $dir/prompt.md"
+echo "  5. python3 scripts/lint.py            # 0 错误才往下走"
+echo "  6. python3 scripts/build-index.py     # 重排 INDEX.md，它会告诉你少没少字段"
+echo "  7. python3 scripts/build-preview.py   # 八加一个风格，对照页里多一块"
+echo "  8. python3 scripts/slop.py showcase/<你的样例>.html   # 有 E 就改，或写 slop-ok 说明理由"
