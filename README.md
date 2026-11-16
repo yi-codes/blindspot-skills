@@ -33,13 +33,16 @@ skill 要你开口或被模型判断匹配才会启用，但"未知的未知"往
 
 把一套视觉风格写成 agent 能精确执行的 `DESIGN.md`（[Google Stitch 规范](https://github.com/google-labs-code/design.md)），每个风格同时给出两个出口：`tokens.css`（网页实现，容器加个 class 就切换）和 `prompt.md`（生图模板）。
 
-三个风格各司其职：
+现有风格按页面职责分工：
 
 | 风格 | 讲什么 | 用在哪 |
 | --- | --- | --- |
 | `editorial-serif` | 讲故事 | 长文、博客、白皮书、品牌页 |
+| `quiet-dark` | 讲工具 | 桌面应用、Agent 对话界面、长时间使用的工具 |
 | `swiss-grid` | 讲专业 | 产品页、案例、数据看板、B 端界面 |
 | `terminal-mono` | 讲技术 | 技术文档、开发者工具、CLI 配套界面 |
+| `signal-console` | 讲运行 | 运维控制台、可观测性、服务拓扑、AI SRE 助手 |
+| `incident-room` | 讲处置 | 事故响应、回滚决策、时间线与值班交接 |
 
 配套 `scripts/lint.py`（零依赖）检查 token 引用是否有效、颜色与 CSS 是否一致、WCAG 对比度是否达标；还有一条收集外部设计的三层流程 `inbox/` → `references/` → `styles/`，方法在 `references/README.md`。
 

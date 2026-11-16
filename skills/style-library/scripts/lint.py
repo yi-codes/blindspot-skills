@@ -28,7 +28,7 @@ from _designmd import (  # noqa: E402
 
 # 选择条件：build-index.py 靠这几个字段把风格摆进索引。缺一个 = 这个风格选不出来。
 SELECTION_FIELDS = ("cues", "avoid", "surface", "register")
-REGISTERS = {"story", "professional", "technical", "tool"}
+REGISTERS = {"story", "professional", "technical", "tool", "operations"}
 SURFACES = {"light", "dark", "mixed"}
 
 LEN_RE = re.compile(r"^\s*(-?[\d.]+)\s*(px|rem)?\s*$")

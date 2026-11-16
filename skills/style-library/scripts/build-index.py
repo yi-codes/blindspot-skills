@@ -40,6 +40,7 @@ REGISTER_ZH = {
     "professional": "讲专业",
     "technical": "讲技术",
     "tool": "讲工具",
+    "operations": "讲运行",
 }
 SURFACE_ZH = {"light": "浅色", "dark": "深色", "mixed": "双模"}
 
@@ -109,7 +110,7 @@ def main():
     out.append("")
     out.append("| 读者要确认的 | 职守 | 风格 |")
     out.append("|---|---|---|")
-    for reg in ("story", "professional", "technical", "tool", "未分类"):
+    for reg in ("story", "professional", "technical", "tool", "operations", "未分类"):
         if reg not in by_register:
             continue
         items = by_register[reg]
@@ -118,6 +119,7 @@ def main():
             "professional": "「这东西好用 / 这公司专业」",
             "technical": "「这人技术过硬」",
             "tool": "「这是给专业人做的」",
+            "operations": "「系统是否健康，下一步怎么处置」",
             "未分类": "—",
         }[reg]
         cells = "、".join(f"`{i['slug']}`" for i in items)
@@ -160,7 +162,7 @@ def main():
     out.append("`avoid` 里列的不是「不推荐」，是「**别用**」。")
     out.append("一个风格用在它 avoid 的场景里，出来的东西一定像模板 —— 因为它没为那个场景做过约束。")
     out.append("")
-    out.append("四个都排除了，说明这里该开一个新风格（见 `principles.md` §8），而不是硬套。")
+    out.append("所有风格都排除了，说明这里该开一个新风格（见 `principles.md` §8），而不是硬套。")
     out.append("")
 
     if problems:

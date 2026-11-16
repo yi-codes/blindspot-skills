@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>风格库 · 对照预览</title>
 <link rel="stylesheet" href="../styles/editorial-serif/tokens.css">
+<link rel="stylesheet" href="../styles/incident-room/tokens.css">
 <link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
+<link rel="stylesheet" href="../styles/signal-console/tokens.css">
 <link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
 <link rel="stylesheet" href="../styles/terminal-mono/tokens.css">
 <style>
-  /* 页面外壳：中性化，不干扰三个风格的展示 */
+  /* 页面外壳：中性化，不干扰各风格的展示 */
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -64,7 +66,7 @@
   <div class="hd">
     <h1>风格库 · 对照预览</h1>
     <p>
-      同一份内容，4 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
+      同一份内容，6 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
       新增风格后重跑 <code>scripts/build-preview.py</code> 就会多一块。
       本页由脚本生成，不要手改。
     </p>
@@ -106,11 +108,79 @@
 
   <section class="demo-block">
     <div class="demo-meta">
+      <span class="demo-name">Incident Room</span>
+      <span class="demo-slug">incident-room</span>
+      <span class="demo-note">面向进行中事故的协作控制台。暖黑画布、窄圆角、明确的严重度高亮和单一事故叙事： 左侧…</span>
+    </div>
+    <div class="stage ds-incident-room">
+      <span class="ds-group-label">Case Study · 案例</span>
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 · Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
       <span class="demo-name">Quiet Dark</span>
       <span class="demo-slug">quiet-dark</span>
       <span class="demo-note">原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的 …</span>
     </div>
     <div class="stage ds-quiet-dark">
+      <span class="ds-group-label">Case Study · 案例</span>
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 · Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Signal Console</span>
+      <span class="demo-slug">signal-console</span>
+      <span class="demo-note">面向 AI 运维控制台的高密度界面。中性石墨底、蓝色运行信号与低饱和状态色， 信息按…</span>
+    </div>
+    <div class="stage ds-signal-console">
       <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
