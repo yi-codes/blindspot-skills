@@ -2,8 +2,8 @@
 version: alpha
 name: Quiet Dark
 description: >-
-  原生桌面应用的深色界面。纯灰阶、无彩色相，靠明度差和 8% 白的叠加边框分层，
-  大圆角（16px 起）、系统无衬线字体、紧凑的行高。整个界面只有一处彩色：
+  原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的
+  叠加边框分层，大圆角（16px 起）、系统无衬线字体、紧凑的行高。整个界面只有一处彩色：
   焦点环和信息蓝；代码差异（diff）是唯一被放行的第二处。
   适合需要长时间盯着、且不该抢内容风头的工具界面。
 # ---------------------------------------------------------------- 选择条件
@@ -15,6 +15,7 @@ surface: dark
 register: tool
 
 colors:
+  # ---- 深色（从桌面客户端 app.asar 提取）----
   canvas: "#0d0d0d"
   surface: "#181818"
   surface-raised: "#212121"
@@ -34,6 +35,27 @@ colors:
   danger: "#d9534f"
   diff-add: "#4ea870"
   diff-del: "#cf6b6b"
+  # ---- 浅色（从 ChatGPT iOS 拆解移植，部分值做过对比度修正）----
+  light-canvas: "#FFFFFF"
+  light-surface: "#F9F9F9"
+  light-surface-hover: "#F0F0F0"
+  light-surface-raised: "#ECECEC"
+  light-surface-input: "#F7F7F7"
+  light-ink: "#0D0D0D"
+  light-ink-secondary: "#676767"
+  light-ink-tertiary: "#6E6E6E"
+  light-ink-faint: "#8E8E8E"
+  light-hairline: "#E5E5E5"
+  light-hairline-strong: "#D4D4D4"
+  light-primary: "#0B62D6"
+  light-primary-soft: "#E8F0FE"
+  light-focus-ring: "#2A7FFF"
+  light-success: "#0A7A5E"
+  light-warning: "#B45309"
+  light-danger: "#C53030"
+  light-diff-add: "#1B7A4B"
+  light-diff-del: "#B4322F"
+  on-danger: "#FBF7F6"
 typography:
   headline-lg:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, PingFang SC, system-ui, sans-serif"
@@ -135,6 +157,45 @@ components:
     backgroundColor: "{colors.surface-input}"
     rounded: "{rounded.md}"
     padding: 14px
+  field:
+    backgroundColor: "{colors.surface-input}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.lg}"
+    padding: 10px 14px
+  icon-button:
+    textColor: "{colors.ink-tertiary}"
+    rounded: "{rounded.sm}"
+    size: 32px
+  nav-item:
+    textColor: "{colors.ink-secondary}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    height: 40px
+  menu-item:
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.ink-secondary}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.sm}"
+    padding: 8px 10px
+  dialog:
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.xl}"
+    width: 420px
+    padding: 24px
+  toast:
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.ink-secondary}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.full}"
+    padding: 8px 12px
+  segmented:
+    backgroundColor: "{colors.surface-input}"
+    textColor: "{colors.ink-tertiary}"
+    typography: "{typography.label-md}"
+    rounded: "{rounded.md}"
+    padding: 2px
 ---
 
 ## Overview
@@ -155,6 +216,9 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 - 行高紧凑：正文 1.5，标题 1.25。桌面 app 的密度比网页高，因为屏幕就在眼前。
 - **正文字重 350，不是 400**。深色底上的亮字视觉上更粗（光渗），浅色界面用 400 的地方这里要减 50。
 - 层次全部靠**明度差**：canvas #0d0d0d → surface #181818 → raised #212121，三档每档差约 8-13 个亮度值。
+- **深浅两套色板，一套结构**。字号、间距、圆角、动效、图标规格完全共用，只有颜色分两套——所以同一个组件在两种模式下形状一模一样。
+- **表单有四个明确状态**（默认 / 聚焦 / 错误 / 禁用，另外只读是第五个），每个状态用不同手段表达，不混用。
+- **动效是可枚举的**：五档时长、三种缓动，且只允许动 `transform` / `opacity` / `background` / `color` 四样。
 
 ## Colors
 
@@ -200,6 +264,26 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 3. **饱和度和明度都对半砍过。** 直接拿 GitHub 的 `#2ea043` / `#f85149` 会在这套灰阶里像贴了两块胶布。这里给的绿和红都被压到与 `ink-secondary` 同一明度档，所以它们"融"在灰阶里，只做区分不做强调。
 
 反过来：**如果产出的界面里没有代码差异，就一个像素的这两个色都不要用。**
+
+### Light（第二套色板）
+
+浅色不是把深色反过来。它是一套独立的灰阶，只是共用同一组变量名。
+
+**来源要说清楚**：深色的每一个值都从桌面客户端的 `app.asar` 里抠出来，可复现。桌面版没有可提取的浅色值，所以浅色这一套是从 **ChatGPT iOS 的拆解**移植的——同一个设计语言的另一个 surface。这意味着一部分值必须改：iOS 的浅色文字是给高环境光下的小屏幕调的，搬到白底桌面上过不了对比度。
+
+| 位置 | iOS 源值 | 这里用 | 为什么改 |
+|---|---|---|---|
+| 三级文字 | `#8E8E8E` | `#6E6E6E` | 源值对白底只有 3.28:1，做不了标签文字 |
+| 链接蓝 | `#2A7FFF` | `#0B62D6` | 源值 3.76:1，链接是文字，必须 ≥4.5 |
+| 错误红 | `#E53E3E` | `#C53030` | 源值 4.13:1，同上 |
+| 警告橙 | `#D97706` | `#B45309` | 源值 3.19:1，同上 |
+| 成功绿 | `#10A37F` | `#0A7A5E` | 源值 3.20:1，同上 |
+
+**一个方向反转，不是笔误。** 深色下侧栏 `#181818` 比画布 `#0d0d0d` **亮**；浅色下侧栏 `#F9F9F9` 比画布 `#FFFFFF` **暗**。深色的侧栏是嵌进画布里的凹槽，浅色的侧栏是从纸上推开的一层。两种都对，别试图统一。
+
+**浅色下正文字重回到 400。** 深色用 350 是因为光渗让亮字显粗；浅色没有这个问题，减重反而显虚。
+
+**浅色下投影可以回来一点。** 深色用阴影会变成灰雾，浅色不会。但只用一档：`0 4px 12px rgba(0,0,0,0.08)`。仍然不许两层叠加。
 
 ## Typography
 
@@ -247,6 +331,55 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 
 不要混：卡片 16、按钮 pill，这两个是固定搭配。中间档（10px）只给列表行和代码块。
 
+## Motion
+
+**动效的目的不是"好看"，是让人知道发生了什么。** 这套界面的目标性格是"安静"，所以动效只有一条原则：**东西从哪来、往哪去，一次说清，然后消失。**
+
+### 时长
+
+| 档位 | 值 | 用在哪 |
+|---|---|---|
+| instant | 120ms | 按下反馈、退出。**出去永远比进来快** |
+| fast | 150ms | 交叉淡入、hover 底色、描边换色 |
+| base | 200ms | 单元素淡出、颜色过渡 |
+| slow | 250ms | 位移、弹层进入 |
+| long | 400ms | 整屏转场。**一个界面最多出现一次** |
+
+### 缓动
+
+- `ease-out` `cubic-bezier(0.2, 0, 0, 1)` — 默认。进入、位移、几乎所有交互。
+- `ease-in-out` `cubic-bezier(0.4, 0, 0.2, 1)` — 循环、呼吸、加载指示。
+- `ease-spring` `cubic-bezier(0.34, 1.4, 0.64, 1)` — 阻尼约 0.8 的轻微过冲。只给"确认"类反馈（发送成功、勾选、收藏）。**不要给布局元素用，过冲会让相邻内容抖一下。**
+
+`ease-in` 一次都不要用。它让东西"先慢后快"，在界面上读起来像卡了一下。
+
+### 只许动这四样
+
+`transform` / `opacity` / `background` / `color`。
+
+**不许动** `width` `height` `top` `left` `filter` `backdrop-filter` `box-shadow` 的模糊半径。这些会触发重排或重绘整层，在长列表里直接掉帧——而且"糊一下再清楚"这个观感本身就是"不安静"。
+
+### 三条具体规矩
+
+1. **文字不做入场动画。** 流式输出就一个字符一个字符地追加，不要淡入、不要上浮。文字移动会让人以为内容在变。
+2. **列表不做交错（stagger）入场。** 那是营销页的手法。工具界面里列表是"已经在那儿"的。
+3. **超过 400ms 的动效等于没有动效**，用户已经去看别处了。要表达"正在处理"，用状态点或进度，不要用更长的动画。
+
+## Icons
+
+线性图标，1.5px 描边，**颜色永远是 `currentColor`**。
+
+| 尺寸 | 用在哪 |
+|---|---|
+| 16px | 13px 文字旁边的行内图标 |
+| 20px | 默认。按钮内、列表行内、菜单项内 |
+| 24px | 顶栏动作、侧栏折叠按钮 |
+
+- **不给图标单独设色。** 用 `currentColor`，让它自动跟随文字的四级灰阶。单独设色的图标一定会在某个状态下和旁边的字对不上。
+- **可点区域最小 32×32。** 视觉尺寸可以只有 16，但热区必须撑到 32——这是手指和触控板的下限，不是审美。
+- **不用实心彩色图标。** 全库唯一允许的填充色是主按钮里那个箭头/图标，因为它是反色的。
+- **不用 emoji 当图标。** emoji 不受 `currentColor` 控制，在深色底上会自己发光。
+
 ## Components
 
 ### card
@@ -265,9 +398,61 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 
 `{colors.surface}` 底 + `ink` 文字 + 全圆 + 8% 白边框。次级操作。
 
-### input
+### field
 
-`{colors.surface-input}` 底 + 16px 圆角 + `rgba(255,255,255,0.16)` 边框。聚焦时换成 `{colors.focus-ring}`。
+一个字段 = 标签 + 控件 + 提示，三者间距固定 6px。标签 12px `ink-secondary`，提示 12px `ink-tertiary`。**提示永远占位**：没有提示时留空，不要把控件上下间距压缩——那会让表单在报错时整体跳一下。
+
+控件本身：`{colors.surface-input}` 底 + 16px 圆角 + `rgba(255,255,255,0.16)` 描边（用 `box-shadow: inset` 实现，不是 `border`，这样描边不占布局宽度）。
+
+四个状态各有各的表达，**不许混用**：
+
+| 状态 | 描边 | 外光 | 其它 |
+|---|---|---|---|
+| 默认 | `hairline-strong` | 无 | — |
+| 聚焦 | `focus-ring` | `0 0 0 3px` 焦点色 34% | 只有 box-shadow 在动 |
+| 错误 | `danger` | `0 0 0 3px` 红色 30% | 同时把提示文字换成 `ds-hint-error` |
+| 禁用 | `hairline-strong` | 无 | 整体 `opacity: .4` |
+| 只读 | 无 | 无 | 去掉底色，左右内边距归零 |
+
+三条容易做错的地方：
+
+1. **错误态不要加红底。** 红底 + 红字 + 红描边是三份强调，看起来像在骂人。只要描边和外光。
+2. **禁用态不要改底色。** 改底色会让它看起来"还没填"，而不是"不能填"。降透明度是正确的语义。
+3. **只读态要看起来像普通文字。** 它的意思是"能选中复制，但别改"，所以应该安静地融进版面，而不是变成一个灰盒子。
+
+占位符用 `ink-faint`。占位符不是标签——**如果标签只能靠占位符表达，这个表单在填完后就是不可读的**。
+
+### icon-button
+
+32×32 热区 + 6px 圆角，透明底，图标色 `ink-tertiary`。悬停底色 `surface-hover`、图标转 `ink`。用于工具栏、列表行尾、弹层关闭。**不加边框，不加阴影。**
+
+### nav-item
+
+高度 40px，左右内边距 12px，10px 圆角，13px/500 文字。默认 `ink-secondary`，悬停 `surface-hover`，选中 `surface-raised` + `ink`。**选中态不加左侧色条**——那是一条用来"指示"的装饰，这套语言里没有装饰。
+
+### menu
+
+`surface-raised` 底 + 10px 圆角 + 4px 内边距 + `strong` 1px 内描边。菜单项 8/10 内边距、6px 圆角。危险项悬停时整行 `danger` 实底 + 白字——这是全库唯一允许的彩色实底，因为"删除"需要一次确认级别的红。
+
+### dialog
+
+420px 宽，20px 圆角，24px 内边距，`surface-raised` 底。背后 `rgba(0,0,0,0.5)` + `blur(2px)`。按钮在右下，间距 8px。**不加关闭按钮**——点遮罩或按 Esc 关，右上角那个 × 是网页的习惯。
+
+### toast
+
+胶囊形，8/12 内边距，`surface-raised` 底 + 内描边。13px `ink-secondary`。出现在底部居中，**2 秒后自己消失，不带关闭按钮**。超过 2 秒还没看完的提示，说明它不该是 toast。
+
+### segmented
+
+外层 `surface-input` 底 + 2px 内边距 + 10px 圆角，内层选中项 `surface-raised` + 6px 圆角。这是"三选一"的控件，不是标签页——标签页换的是内容区，分段切换的是同一个视图的参数。
+
+### kbd
+
+最小 18px 宽，`surface-raised` 底，4px 圆角，12px 等宽文字。**高度靠行高撑，不设固定高度**，否则和相邻文字的基线对不齐。
+
+### avatar
+
+32px 圆形，`surface-raised` 底，12px/600 文字。没有头像图时用姓名首字，不要用灰色人形剪影——那是个占位图标，看起来像加载失败。
 
 ### tag
 
@@ -279,7 +464,7 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 
 ### code-block
 
-`{colors.surface-input}` 底 + 10px 圆角，比周围"暗一档"。
+`{colors.surface-input}` 底 + 10px 圆角，比周围"暗一档"。加一条 `hairline` 内描边——代码块是唯一需要明确边界的容器，因为它和周围文字的密度差太大。
 
 ## Do's and Don'ts
 
@@ -292,6 +477,10 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 - 正文 15px、行高 1.5。桌面 app 比网页紧一档。
 - 主按钮用高明度实底（#f7f7f7 + 深字），这是全屏唯一的"亮点"。
 - 图标用 1.5px 描边线性图标，不用实心彩色图标。
+- 图标颜色一律 `currentColor`，让它跟着文字的四级灰阶走。
+- 动画只动 `transform` / `opacity` / `background` / `color`。退出比进入快（120 vs 250）。
+- 表单的四个状态用不同手段表达：聚焦换描边+外光，错误换红描边+红外光，禁用降透明度，只读去底去边。不许混着用。
+- 浅色和深色共用同一套结构令牌（字号、间距、圆角、动效），只有颜色分两套。
 
 ### Don't
 
@@ -299,10 +488,14 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 - 不要用 8px 圆角。16px 是这套风格的身份，改小了就变回普通网页。
 - 不要用纯黑 #000 或纯白 #fff 做大面积。会显得廉价且刺眼。
 - 不要给卡片加边框。卡片靠底色浮起，加边框就变成"盒子"。
-- 不要用投影表达层级。
+- 不要用投影表达层级。浅色下可以回一点（`0 4px 12px rgba(0,0,0,0.08)`），深色下一律不许。
 - 不要用衬线字体或装饰字体。
 - 不要把间距放大到网页那种松度（24/32/48）。app 就该是密的。
 - 不要用大面积彩色区块（长条 banner、彩色卡片底）。这里没有"品牌色铺底"这个概念。
+- 不要给文字做入场动画，不要给列表做交错入场。文字动起来会被读成"内容在变"。
+- 不要用 `ease-in`。它在界面上读起来像卡了一下。
+- 不要给图标单独设色，也不要拿 emoji 当图标。
+- 不要在错误态上加红底，不要在禁用态上改底色。
 
 ## Chinese Typography
 
@@ -329,8 +522,10 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 
 ## Known Gaps
 
-- 只定义了深色。浅色版本需要另一套灰阶（#fcfcfc 到 #0d0d0d 反向），本文件不覆盖。
-- 没有定义完整的表单状态（error / disabled / readonly 的边框与底色组合）。
-- 没有定义图标规格。建议 1.5px 描边、16/20px 两档，但未固化。
-- 动画时长未定义。参考值是 120-160ms，缓动用 ease-out。
+- **浅色是移植值，不是提取值。** 深色每一个十六进制都能从桌面客户端 `app.asar` 复现；浅色来自 ChatGPT iOS 的拆解，且有五个值因对比度不达标被改过。如果不接受这个来源差异，就只用深色。
+- 没有定义空状态（empty state）的构图。目前只在 `showcase/codex.html` 里有一版示范，没抽成规则。
+- 没有定义加载态：骨架屏（skeleton）和不确定进度条（indeterminate）。动效章节只覆盖了状态切换，没覆盖"持续等待"。
+- 没有定义表格（table）。数据表格需要单独的密度、对齐、行悬停规则，目前建议直接用 `swiss-grid`。
+- 没有定义多选、下拉选择器（select 的原生外观还没做过）的定制样式。
+- 响应式只在"窗口缩放"这一个维度上成立。窄到 720px 以下时侧栏怎么收，没有规则。
 - 生图侧说明在 `prompt.md`——但这套风格本质是"界面"，生图只适合做氛围图，不适合做 UI 效果图（UI 请直接用 tokens.css 渲染）。

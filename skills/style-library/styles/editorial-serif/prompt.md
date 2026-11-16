@@ -5,9 +5,9 @@
 ## 主模板（可直接用）
 
 ```
-editorial still life, [你的主体], resting on textured cream paper,
+editorial still life, [你的主体], resting on textured cool grey paper,
 single soft window light from the left, gentle falloff into shadow,
-muted earth palette of bone white, warm grey and one small rust-red accent,
+muted palette of bone white, cool grey and one small rust-red accent,
 analog film grain, medium format look, shallow depth of field,
 generous negative space on the right for text,
 quiet and considered mood, no text
@@ -24,14 +24,15 @@ quiet and considered mood, no text
 - **主体选材质，不选场景**：纸、布、陶、木、金属的质感是这个风格的灵魂，不要"一个人坐在咖啡馆"这类叙事画面。
 - **必须留白**：右侧或上方留出一大块空地给标题用，`negative space on the right for text` 这句别删。
 - **要一个赭红小物件**：面积控制在画面 5% 以内，起到视觉锚点的作用。
+- **纸是冷的**：这个风格的画布是冷灰白（`#F2F3F0`），配图的纸也必须偏冷。米黄色的图放在冷纸上会像从别的站搬来的。
 - **颗粒感**是必需的：这个风格靠"不完美"建立真实感，太干净会变成影棚产品图。
 
 ## 变体
 
 **给长文做纹理底图（无主体）**
 ```
-seamless texture of aged cream paper, subtle fiber and foxing spots,
-raking light revealing surface relief, warm neutral, high resolution scan look
+seamless texture of cool grey handmade paper, subtle fiber and foxing spots,
+raking light revealing surface relief, neutral high-key, high resolution scan look
 ```
 
 **人物版（作者头像位、访谈配图）**
@@ -56,6 +57,6 @@ stock photo smile, busy composition, centered symmetrical layout
 |---|---|
 | 画幅 | 头图 16:9 或 21:9；配图 4:5 或 1:1 |
 | 光线 | 单侧自然光，柔，别用柔光箱（太均匀就死了） |
-| 色温 | 略暖（4800-5200K） |
+| 色温 | 中性（5300-5600K），别往暖里推 |
 | 后期 | 降饱和 10-15%，加颗粒，抬黑位一点点（不要纯黑） |
-| 禁忌 | 不要 HDR、不要锐化过度、不要纯白背景 |
+| 禁忌 | 不要 HDR、不要锐化过度、不要纯白背景、不要把纸调成米黄 |

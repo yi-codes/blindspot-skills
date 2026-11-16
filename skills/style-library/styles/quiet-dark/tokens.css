@@ -1,47 +1,22 @@
 /* ============================================================
-   Quiet Dark · 安静的深色
-   用法：给任意容器加 class="ds-quiet-dark"
+   Quiet Dark · 安静的深色（含浅色模式）
+   用法：深色 → class="ds-quiet-dark"
+        浅色 → class="ds-quiet-light"
    ------------------------------------------------------------
    变量前缀 --qd-
-   色值来源：从 OpenAI 桌面客户端（ChatGPT / Codex）的 app.asar
-   中提取的 CSS 自定义属性，非臆测。
+   深色色值来源：OpenAI 桌面客户端（ChatGPT / Codex）app.asar 中
+   提取的 CSS 自定义属性，非臆测。
+   浅色色值来源：references/chatgpt-ios 的 iOS 拆解（同设计语言的
+   另一个 surface），部分值因对比度不达标做过调整，见 DESIGN.md。
    设计意图：纯灰阶、零彩色相，靠明度差和半透明叠加分层。
    ============================================================ */
 
-:where(.ds-quiet-dark) {
-  /* ---- 表面：三档，每档差 8-13 个亮度值 ---- */
-  --qd-canvas:        #0d0d0d;
-  --qd-surface:       #181818;
-  --qd-surface-hover: #1c1c1c;
-  --qd-surface-raised:#212121;
-  --qd-surface-input: #131313;
-
-  /* ---- 文字：从亮到暗四级 ---- */
-  --qd-ink:           #f7f7f7;
-  --qd-ink-secondary: #a6a6a6;
-  --qd-ink-tertiary:  #767676;
-  --qd-ink-faint:     #6b6b6b;
-
-  /* ---- 线：半透明白，在任何底色上都是"提亮一档" ---- */
-  --qd-hairline:        rgba(255, 255, 255, 0.08);   /* 等效实色 #2a2a2a */
-  --qd-hairline-strong: rgba(255, 255, 255, 0.16);   /* 等效实色 #3a3a3a */
-  --qd-hairline-subtle: rgba(255, 255, 255, 0.05);
-
-  /* ---- 强调：只有一个蓝 ---- */
-  --qd-primary:      #3a83f7;
-  --qd-primary-soft: #16233a;
-  --qd-focus-ring:   #339cff;
-
-  /* ---- 状态：只用于小圆点和图标，不做底色 ---- */
-  --qd-success: #3a843f;
-  --qd-warning: #c9a227;
-  --qd-danger:  #d9534f;
-
-  /* ---- Diff：全库唯一允许的第二种色彩 ----
-     且只准出现在代码差异块里。绝不用于任何 UI 表面。 */
-  --qd-diff-add: #4ea870;
-  --qd-diff-del: #cf6b6b;
-
+/* ============================================================
+   第 1 层 · 结构令牌：深浅两套完全共用
+   字体、字号、字重、行高、间距、圆角、动效、图标 —— 这些不该
+   跟着明暗变。放在这里，两种模式就永远量一致。
+   ============================================================ */
+:where(.ds-quiet-dark), :where(.ds-quiet-light) {
   /* ---- 字体：系统无衬线，等宽只给代码 ---- */
   --qd-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro",
                   "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
@@ -54,11 +29,6 @@
   --qd-text-lg:  1.0625rem;  /* 17 */
   --qd-text-xl:  1.375rem;   /* 22 */
   --qd-text-2xl: 1.75rem;    /* 28 */
-
-  /* 深色底上的亮字视觉上更粗（光渗），所以正文字重比浅色少 50 —— 400 → 350。
-     这条来自 references/hallmark/dark-mode.md，四个风格里原来一处都没有。 */
-  --qd-weight-body: 350;
-  --qd-weight-strong: 600;
 
   --qd-leading-tight: 1.25;
   --qd-leading-snug:  1.4;
@@ -83,19 +53,124 @@
   --qd-radius-xl: 20px;
   --qd-radius-full: 9999px;
 
-  --qd-border: 1px solid var(--qd-hairline);
-  --qd-border-strong: 1px solid var(--qd-hairline-strong);
+  /* ---- 动效：三档时长 + 三种缓动，别再加 ----
+     数值取自 iOS 拆解的 Motion 一节，取整到桌面习惯的档位。
+     硬规矩：只动 transform / opacity / background / color。
+     动 width / height / top / left / filter 会触发重排并让界面"不安静"。 */
+  --qd-dur-instant: 120ms;  /* 按下、退出——出去永远比进来快 */
+  --qd-dur-fast:    150ms;  /* 交叉淡入、hover 底色 */
+  --qd-dur-base:    200ms;  /* 单元素淡出、颜色过渡 */
+  --qd-dur-slow:    250ms;  /* 位移、弹层进入 */
+  --qd-dur-long:    400ms;  /* 整屏转场，一个界面最多出现一次 */
+  --qd-ease-out:    cubic-bezier(0.2, 0, 0, 1);        /* 默认：进入 */
+  --qd-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);      /* 循环、呼吸 */
+  --qd-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);  /* 阻尼 0.8 的轻微过冲，仅用于"确认"类反馈 */
 
-  /* ---- 阴影：几乎不用，弹层才用 ---- */
-  --qd-shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.55);
+  /* ---- 图标：三档尺寸，描边恒定，颜色永远是 currentColor ----
+     不让图标单独设色，是为了让它自动跟随文字的四个灰阶。 */
+  --qd-icon-sm: 16px;   /* 行内，13px 文字旁边 */
+  --qd-icon-md: 20px;   /* 默认 */
+  --qd-icon-lg: 24px;   /* 顶栏动作 */
+  --qd-icon-stroke: 1.5;
+  --qd-icon-hit: 32px;  /* 可点区域最小边长，视觉尺寸可以更小 */
 
-  /* ---- 动效 ---- */
-  --qd-duration: 140ms;
-  --qd-ease: cubic-bezier(0.2, 0, 0, 1);
+  /* ---- 表单几何 ---- */
+  --qd-ring-focus: 0 0 0 3px color-mix(in srgb, var(--qd-focus-ring) 34%, transparent);
+  --qd-ring-error: 0 0 0 3px color-mix(in srgb, var(--qd-danger) 30%, transparent);
+  --qd-disabled-opacity: 0.4;
+
+  /* 红底上的字：不用纯白。纯白压在饱和红上会有光晕（halation），
+     掺 2% 的红能把它压回去，肉眼几乎看不出差别，但在小字号上更干净。 */
+  --qd-on-danger: #fbf7f6;
 }
 
-/* ---- 最小应用样式 ---- */
+/* ============================================================
+   第 2 层 · 深色色板 ============================================ */
 :where(.ds-quiet-dark) {
+  /* 表面：三档，每档差 8-13 个亮度值 */
+  --qd-canvas:        #0d0d0d;
+  --qd-surface:       #181818;
+  --qd-surface-hover: #1c1c1c;
+  --qd-surface-raised:#212121;
+  --qd-surface-input: #131313;
+
+  /* 文字：从亮到暗四级 */
+  --qd-ink:           #f7f7f7;
+  --qd-ink-secondary: #a6a6a6;
+  --qd-ink-tertiary:  #767676;
+  --qd-ink-faint:     #6b6b6b;
+
+  /* 线：半透明白，在任何底色上都是"提亮一档" */
+  --qd-hairline:        rgba(255, 255, 255, 0.08);   /* 等效实色 #2a2a2a */
+  --qd-hairline-strong: rgba(255, 255, 255, 0.16);   /* 等效实色 #3a3a3a */
+  --qd-hairline-subtle: rgba(255, 255, 255, 0.05);
+
+  /* 强调：只有一个蓝 */
+  --qd-primary:      #3a83f7;
+  --qd-primary-soft: #16233a;
+  --qd-focus-ring:   #339cff;
+
+  /* 状态：只用于小圆点和图标，不做底色 */
+  --qd-success: #3a843f;
+  --qd-warning: #c9a227;
+  --qd-danger:  #d9534f;
+
+  /* Diff：全库唯一允许的第二种色彩，只准出现在代码差异块里 */
+  --qd-diff-add: #4ea870;
+  --qd-diff-del: #cf6b6b;
+
+  /* 深色底上的亮字视觉上更粗（光渗），所以正文字重比浅色少 50 —— 400 → 350。
+     这条来自 references/hallmark，四个风格里原来一处都没有。 */
+  --qd-weight-body: 350;
+  --qd-weight-strong: 600;
+
+  --qd-shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* ============================================================
+   第 3 层 · 浅色色板 ============================================
+   来源是 ChatGPT iOS 的拆解，不是桌面版。桌面版没有可提取的浅色值。
+   凡与来源不同处，都是在源值上做了对比度修正，逐条标在原处。
+   ------------------------------------------------------------
+   注意一个方向反转：深色下"侧栏比画布亮"，浅色下"侧栏比画布暗"。
+   这不是笔误。深色的侧栏是嵌进去的，浅色的侧栏是从纸上推开的一层。
+   ============================================================ */
+:where(.ds-quiet-light) {
+  --qd-canvas:        #ffffff;
+  --qd-surface:       #f9f9f9;   /* 侧栏/卡片：比画布暗一档 */
+  --qd-surface-hover: #f0f0f0;
+  --qd-surface-raised:#ececec;   /* 选中态。深色里它是变亮，浅色里是变暗 */
+  --qd-surface-input: #f7f7f7;
+
+  --qd-ink:           #0d0d0d;
+  --qd-ink-secondary: #676767;   /* 对白底 5.66:1 */
+  --qd-ink-tertiary:  #6e6e6e;   /* 源值 #8E8E8E 只有 3.28:1，不够，压深 */
+  --qd-ink-faint:     #8e8e8e;   /* 3.28:1，只给占位符和禁用态，不给正文 */
+
+  --qd-hairline:        #e5e5e5;
+  --qd-hairline-strong: #d4d4d4;
+  --qd-hairline-subtle: #f0f0f0;
+
+  --qd-primary:      #0b62d6;   /* 源值 #2A7FFF 只有 3.76:1，压深才能当链接文字 */
+  --qd-primary-soft: #e8f0fe;
+  --qd-focus-ring:   #2a7fff;
+
+  --qd-success: #0a7a5e;
+  --qd-warning: #b45309;
+  --qd-danger:  #c53030;
+
+  --qd-diff-add: #1b7a4b;
+  --qd-diff-del: #b4322f;
+
+  --qd-weight-body: 400;
+  --qd-weight-strong: 600;
+
+  --qd-shadow-pop: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   第 4 层 · 基础应用样式 ========================================= */
+:where(.ds-quiet-dark), :where(.ds-quiet-light) {
   background: var(--qd-canvas);
   color: var(--qd-ink);
   font-family: var(--qd-font-sans);
@@ -107,55 +182,101 @@
   font-variant-numeric: tabular-nums;
 }
 
-:where(.ds-quiet-dark) ::selection {
-  background: rgba(58, 131, 247, 0.35);
-}
+:where(.ds-quiet-dark) ::selection { background: rgba(58, 131, 247, 0.35); }
+:where(.ds-quiet-light) ::selection { background: rgba(42, 127, 255, 0.22); }
 
-:where(.ds-quiet-dark) :where(h1, h2, h3, h4) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(h1, h2, h3, h4) {
   font-family: var(--qd-font-sans);
-  font-weight: 600;
+  font-weight: var(--qd-weight-strong);
   line-height: var(--qd-leading-tight);
   letter-spacing: var(--qd-tracking-display);
   color: var(--qd-ink);
   margin: 0 0 var(--qd-space-sm);
 }
-:where(.ds-quiet-dark) :where(h1) { font-size: var(--qd-text-2xl); }
-:where(.ds-quiet-dark) :where(h2) { font-size: var(--qd-text-xl); }
-:where(.ds-quiet-dark) :where(h3) { font-size: var(--qd-text-lg); }
-:where(.ds-quiet-dark) :where(h4) { font-size: var(--qd-text-md); font-weight: 600; }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(h1) { font-size: var(--qd-text-2xl); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(h2) { font-size: var(--qd-text-xl); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(h3) { font-size: var(--qd-text-lg); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(h4) { font-size: var(--qd-text-md); font-weight: var(--qd-weight-strong); }
 
-:where(.ds-quiet-dark) :where(p) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(p) {
   margin: 0 0 var(--qd-space-md);
   max-width: 42em;
   color: var(--qd-ink);
 }
 
-:where(.ds-quiet-dark) :where(a) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(a) {
   color: var(--qd-primary);
   text-decoration: none;
 }
-:where(.ds-quiet-dark) :where(a):hover { text-decoration: underline; }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(a):hover { text-decoration: underline; }
 
-:where(.ds-quiet-dark) :where(code, kbd, pre) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(code, kbd, pre) {
   font-family: var(--qd-font-mono);
   font-size: var(--qd-text-sm);
 }
-:where(.ds-quiet-dark) :where(pre) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(pre) {
   background: var(--qd-surface-input);
   border-radius: var(--qd-radius-md);
   padding: var(--qd-space-md) var(--qd-space-lg);
   overflow-x: auto;
   line-height: 1.55;
   margin: var(--qd-space-md) 0;
+  box-shadow: inset 0 0 0 1px var(--qd-hairline);
 }
-:where(.ds-quiet-dark) :where(code):not(pre code) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(code):not(pre code) {
   background: var(--qd-surface-input);
   border-radius: var(--qd-radius-xs);
   padding: 0.1em 0.35em;
 }
 
-/* 按钮：全圆是签名之一 */
-:where(.ds-quiet-dark) :where(button, .ds-btn) {
+/* ============================================================
+   第 5 层 · 组件 ================================================ */
+
+/* ---- 图标：尺寸三档，颜色继承，永不单独设色 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon) {
+  width: var(--qd-icon-md);
+  height: var(--qd-icon-md);
+  stroke: currentColor;
+  stroke-width: var(--qd-icon-stroke);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+  vertical-align: -0.15em;
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon-sm) { width: var(--qd-icon-sm); height: var(--qd-icon-sm); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon-lg) { width: var(--qd-icon-lg); height: var(--qd-icon-lg); }
+
+/* ---- 图标按钮：视觉 28，热区 32 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--qd-icon-hit);
+  height: var(--qd-icon-hit);
+  padding: 0;
+  border: 0;
+  border-radius: var(--qd-radius-sm);
+  background: transparent;
+  color: var(--qd-ink-tertiary);
+  cursor: pointer;
+  transition: background var(--qd-dur-fast) var(--qd-ease-out),
+              color var(--qd-dur-fast) var(--qd-ease-out);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon-btn):hover {
+  background: var(--qd-surface-hover);
+  color: var(--qd-ink);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-icon-btn):active {
+  background: var(--qd-surface-raised);
+}
+
+/* ---- 按钮：全圆是签名之一 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(button, .ds-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--qd-space-sm);
   font-family: var(--qd-font-sans);
   font-size: var(--qd-text-xs);
   font-weight: 500;
@@ -166,37 +287,76 @@
   background: var(--qd-ink);
   color: var(--qd-canvas);
   cursor: pointer;
-  transition: opacity var(--qd-duration) var(--qd-ease),
-              background var(--qd-duration) var(--qd-ease);
+  transition: opacity var(--qd-dur-fast) var(--qd-ease-out),
+              transform var(--qd-dur-instant) var(--qd-ease-out);
 }
-:where(.ds-quiet-dark) :where(button, .ds-btn):hover { opacity: 0.88; }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(button, .ds-btn):hover { opacity: 0.88; }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(button, .ds-btn):active { transform: scale(0.97); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(button, .ds-btn):disabled {
+  opacity: var(--qd-disabled-opacity);
+  cursor: not-allowed;
+  transform: none;
+}
 
-:where(.ds-quiet-dark) :where(.ds-btn-secondary) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-btn-secondary) {
   background: var(--qd-surface);
   color: var(--qd-ink);
   box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
 }
-:where(.ds-quiet-dark) :where(.ds-btn-secondary):hover {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-btn-secondary):hover {
   background: var(--qd-surface-hover);
   opacity: 1;
 }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-btn-ghost) {
+  background: transparent;
+  color: var(--qd-ink-secondary);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-btn-ghost):hover {
+  background: var(--qd-surface-hover);
+  color: var(--qd-ink);
+  opacity: 1;
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-btn-danger) {
+  background: var(--qd-danger);
+  color: var(--qd-on-danger);
+}
 
-/* 卡片：靠底色浮起，无边框无阴影 */
-:where(.ds-quiet-dark) :where(.ds-card) {
+/* ---- 卡片 / 面板 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-card) {
   background: var(--qd-surface);
   border-radius: var(--qd-radius-lg);
   padding: var(--qd-space-lg);
 }
-
-/* 面板：抬升一层 */
-:where(.ds-quiet-dark) :where(.ds-panel) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-panel) {
   background: var(--qd-surface-raised);
   border-radius: var(--qd-radius-xl);
   padding: var(--qd-space-xl);
 }
 
-/* 输入框 */
-:where(.ds-quiet-dark) :where(input, textarea) {
+/* ---- 表单：一个字段 = 标签 + 控件 + 提示/错误，三者间距固定 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-field) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-label) {
+  font-size: var(--qd-text-xs);
+  font-weight: 500;
+  line-height: var(--qd-leading-snug);
+  color: var(--qd-ink-secondary);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-hint) {
+  font-size: var(--qd-text-xs);
+  line-height: var(--qd-leading-snug);
+  color: var(--qd-ink-tertiary);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-hint-error) {
+  font-size: var(--qd-text-xs);
+  line-height: var(--qd-leading-snug);
+  color: var(--qd-danger);
+}
+
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea, select) {
   font-family: var(--qd-font-sans);
   font-size: var(--qd-text-sm);
   width: 100%;
@@ -207,24 +367,207 @@
   color: var(--qd-ink);
   box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
   outline: none;
+  transition: box-shadow var(--qd-dur-fast) var(--qd-ease-out);
 }
-:where(.ds-quiet-dark) :where(input, textarea):focus {
-  box-shadow: inset 0 0 0 1px var(--qd-focus-ring);
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea)::placeholder {
+  color: var(--qd-ink-faint);
+}
+/* 焦点：描边换色 + 一圈外光，两件事同时发生，只有 box-shadow 在动 */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea, select):focus {
+  box-shadow: inset 0 0 0 1px var(--qd-focus-ring), var(--qd-ring-focus);
+}
+/* 错误：红色描边 + 红色外光。不要同时用红底，那是另一个风格 */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea, select)[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--qd-danger), var(--qd-ring-error);
+}
+/* 禁用：降透明度，不改底色。改底色会让它看起来"没填"而不是"不能填" */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea, select):disabled {
+  opacity: var(--qd-disabled-opacity);
+  cursor: not-allowed;
+}
+/* 只读：保留正常外观，只去掉描边——它在说"能选中复制，但别改" */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(input, textarea)[readonly] {
+  background: transparent;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+  color: var(--qd-ink-secondary);
 }
 
-/* 列表行：不加分隔线，靠圆角和间距 */
-:where(.ds-quiet-dark) :where(.ds-row) {
+/* ---- 侧栏导航项 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-nav-item) {
+  display: flex;
+  align-items: center;
+  gap: var(--qd-space-sm);
+  height: 40px;
+  padding: 0 var(--qd-space-md);
+  border-radius: var(--qd-radius-md);
+  font-size: var(--qd-text-sm);
+  font-weight: 500;
+  color: var(--qd-ink-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background var(--qd-dur-fast) var(--qd-ease-out),
+              color var(--qd-dur-fast) var(--qd-ease-out);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-nav-item):hover {
+  background: var(--qd-surface-hover);
+  color: var(--qd-ink);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-nav-item[aria-current]) {
+  background: var(--qd-surface-raised);
+  color: var(--qd-ink);
+}
+
+/* ---- 菜单 / 弹层 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-menu) {
+  min-width: 180px;
+  padding: var(--qd-space-xs);
+  border-radius: var(--qd-radius-md);
+  background: var(--qd-surface-raised);
+  box-shadow: var(--qd-shadow-pop), inset 0 0 0 1px var(--qd-hairline);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-menu-item) {
+  display: flex;
+  align-items: center;
+  gap: var(--qd-space-sm);
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--qd-radius-sm);
+  background: transparent;
+  font-family: var(--qd-font-sans);
+  font-size: var(--qd-text-sm);
+  text-align: left;
+  color: var(--qd-ink-secondary);
+  cursor: pointer;
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-menu-item):hover {
+  background: var(--qd-surface-hover);
+  color: var(--qd-ink);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-menu-item):where(.is-danger):hover {
+  background: var(--qd-danger);
+  color: var(--qd-on-danger);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-menu-sep) {
+  height: 1px;
+  margin: var(--qd-space-xs) 0;
+  background: var(--qd-hairline);
+}
+
+/* ---- 对话框 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-backdrop) {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  /* slop-ok S7: 模态遮罩虚化背景，不是发光光斑 */
+  backdrop-filter: blur(2px);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-dialog) {
+  width: 420px;
+  max-width: calc(100vw - 48px);
+  padding: var(--qd-space-xl);
+  border-radius: var(--qd-radius-xl);
+  background: var(--qd-surface-raised);
+  box-shadow: var(--qd-shadow-pop), inset 0 0 0 1px var(--qd-hairline);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-dialog-footer) {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--qd-space-sm);
+  margin-top: var(--qd-space-xl);
+}
+
+/* ---- 轻提示 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-toast) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--qd-space-sm);
+  padding: 8px var(--qd-space-md);
+  border-radius: var(--qd-radius-full);
+  background: var(--qd-surface-raised);
+  box-shadow: var(--qd-shadow-pop), inset 0 0 0 1px var(--qd-hairline);
+  font-size: var(--qd-text-sm);
+  color: var(--qd-ink-secondary);
+}
+
+/* ---- 分段控件 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-seg) {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: var(--qd-radius-md);
+  background: var(--qd-surface-input);
+  box-shadow: inset 0 0 0 1px var(--qd-hairline);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-seg-item) {
+  padding: 5px 12px;
+  border: 0;
+  border-radius: var(--qd-radius-sm);
+  background: transparent;
+  font-family: var(--qd-font-sans);
+  font-size: var(--qd-text-xs);
+  font-weight: 500;
+  color: var(--qd-ink-tertiary);
+  cursor: pointer;
+  transition: background var(--qd-dur-fast) var(--qd-ease-out),
+              color var(--qd-dur-fast) var(--qd-ease-out);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-seg-item[aria-selected="true"]) {
+  background: var(--qd-surface-raised);
+  color: var(--qd-ink);
+  /* 只靠明度差在浅色下分不出来（#ECECEC on #F7F7F7 只有 1.08:1），
+     所以补一条 strong 内描边。深色下这条几乎看不见，但不需要它。 */
+  box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
+}
+
+/* ---- 提示气泡 / 键帽 / 头像 / 标签 / 列表行 ---- */
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-tooltip) {
+  padding: 4px 8px;
+  border-radius: var(--qd-radius-sm);
+  background: var(--qd-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--qd-hairline);
+  font-size: var(--qd-text-xs);
+  color: var(--qd-ink-secondary);
+  white-space: nowrap;
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(kbd) {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: var(--qd-radius-xs);
+  background: var(--qd-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--qd-hairline);
+  font-size: var(--qd-text-xs);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--qd-ink-secondary);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-avatar) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--qd-icon-hit);
+  height: var(--qd-icon-hit);
+  border-radius: var(--qd-radius-full);
+  background: var(--qd-surface-raised);
+  font-size: var(--qd-text-xs);
+  font-weight: 600;
+  color: var(--qd-ink-secondary);
+}
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-row) {
   display: flex;
   align-items: center;
   gap: var(--qd-space-md);
   padding: 10px 12px;
   border-radius: var(--qd-radius-md);
-  transition: background var(--qd-duration) var(--qd-ease);
+  transition: background var(--qd-dur-fast) var(--qd-ease-out);
 }
-:where(.ds-quiet-dark) :where(.ds-row):hover { background: var(--qd-surface-hover); }
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-row):hover { background: var(--qd-surface-hover); }
 
-/* 标签 */
-:where(.ds-quiet-dark) :where(.ds-tag) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-tag) {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -237,36 +580,33 @@
   color: var(--qd-ink-secondary);
 }
 
-/* 小标题 / 分组名 */
-:where(.ds-quiet-dark) :where(.ds-group-label) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-group-label) {
   font-size: var(--qd-text-xs);
   font-weight: 500;
   letter-spacing: 0.01em;
   color: var(--qd-ink-tertiary);
 }
 
-/* 指标 */
-:where(.ds-quiet-dark) :where(.ds-stat-value) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-stat-value) {
   font-size: var(--qd-text-xl);
-  font-weight: 600;
+  font-weight: var(--qd-weight-strong);
   line-height: var(--qd-leading-tight);
   letter-spacing: -0.015em;
   font-variant-numeric: tabular-nums;
   color: var(--qd-ink);
 }
-:where(.ds-quiet-dark) :where(.ds-stat-label) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-stat-label) {
   font-size: var(--qd-text-xs);
   color: var(--qd-ink-tertiary);
 }
 
-:where(.ds-quiet-dark) :where(hr) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(hr) {
   border: 0;
-  border-top: var(--qd-border);
+  border-top: 1px solid var(--qd-hairline);
   margin: var(--qd-space-lg) 0;
 }
 
-/* 状态点 */
-:where(.ds-quiet-dark) :where(.ds-dot) {
+:where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-dot) {
   display: inline-block;
   width: 6px; height: 6px;
   border-radius: var(--qd-radius-full);

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet Dark · 组件实测（深 / 浅）</title>
+<link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 44px 28px 64px;
+    background: #e8e8e5;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    color: #2c2c29;
+  }
+  .page { max-width: 1280px; margin: 0 auto; }
+
+  .intro { margin-bottom: 32px; max-width: 62em; }
+  .intro h1 { font-size: 21px; font-weight: 650; margin: 0 0 10px; letter-spacing: -.01em; }
+  .intro p { font-size: 13.5px; line-height: 1.85; color: #5b5b56; margin: 0 0 8px; }
+  .intro code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px; background: #dbdbd6; padding: 1px 5px; border-radius: 3px;
+  }
+
+  .stage { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .frame { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 2px rgba(20,20,18,.10), 0 10px 28px rgba(20,20,18,.10); }
+  .cap {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 9px 16px; background: #2b2b28; color: #cfcfc9;
+    font-size: 11.5px;
+  }
+  .cap b { font-weight: 600; color: #f2f2ee; }
+  .cap span { margin-left: auto; font-family: ui-monospace, monospace; font-size: 10.5px; color: #8d8d86; }
+
+  .box { padding: 24px 22px 26px; font-size: 13px; }
+  .box + .box { border-top: 1px solid rgba(0,0,0,.06); }
+  .sec { margin-bottom: 22px; }
+  .sec:last-child { margin-bottom: 0; }
+  .sec-h {
+    font-size: 11.5px; font-weight: 600; letter-spacing: .01em;
+    color: var(--qd-ink-tertiary); margin: 0 0 10px;
+  }
+
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+  .stack { display: flex; flex-direction: column; gap: 9px; }
+  .hstack { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* 假装聚焦：不能靠 :focus 同时展示五个输入框 */
+  .force-focus { box-shadow: inset 0 0 0 1px var(--qd-focus-ring), var(--qd-ring-focus) !important; }
+
+  .dlg-wrap { display: flex; justify-content: center; }
+  .box .ds-dialog { width: 100%; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="intro">
+    <h1>Quiet Dark · 组件实测</h1>
+    <p>
+      左右两边是<strong>同一段 HTML</strong>，只有最外层 class 不同（<code>ds-quiet-dark</code> /
+      <code>ds-quiet-light</code>）。所有尺寸、圆角、字重、动效来自同一组结构令牌，只有颜色分两套。
+    </p>
+    <p>
+      这张页是为了验证 <code>tokens.css</code> 里新补的四类东西真的能用：表单五个状态、动效档位、
+      图标规格、以及一批 app 外壳组件（导航项 / 菜单 / 对话框 / 轻提示 / 分段控件 / 键帽 / 头像）。
+      <code>showcase/codex.html</code> 那三屏是"成品长什么样"，这一页是"零件能不能拼上"。
+    </p>
+  </div>
+
+  <div class="stage">
+
+    <!-- ================= 深色 ================= -->
+    <div class="frame">
+      <div class="cap"><b>深色</b><span>ds-quiet-dark</span></div>
+      <div class="box ds-quiet-dark">
+
+        <div class="sec">
+          <div class="sec-h">表单 · 五个状态</div>
+          <div class="cols2">
+            <div class="ds-field">
+              <label class="ds-label">工作目录</label>
+              <input value="~/projects/quiet">
+              <div class="ds-hint">相对于用户主目录</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">聚焦态</label>
+              <input class="force-focus" value="~/projects/quiet">
+              <div class="ds-hint">描边换色 + 一圈外光</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">模型名称</label>
+              <input aria-invalid="true" value="gpt-5 codx">
+              <div class="ds-hint-error">这个模型不存在，检查拼写</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">分支</label>
+              <input disabled value="main（由仓库决定）">
+              <div class="ds-hint">禁用：只降透明度，不改底色</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">只读</label>
+              <input readonly value="a3f9c1e">
+              <div class="ds-hint">只读：去底色去描边，像普通文字</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">提示占位不塌陷</label>
+              <input placeholder="占位符用 ink-faint">
+              <div class="ds-hint" style="visibility:hidden">占位</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">按钮</div>
+          <div class="hstack">
+            <button>开始生成</button>
+            <button class="ds-btn-secondary">取消</button>
+            <button class="ds-btn-ghost">跳过</button>
+            <button class="ds-btn-danger">删除分支</button>
+            <button disabled>不可用</button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">图标按钮 · 20px 图标 / 32px 热区</div>
+          <div class="hstack" style="gap:2px">
+            <button class="ds-icon-btn" aria-label="新建">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="搜索">
+              <svg class="ds-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="文件夹">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h3l2 2.5h8A2.5 2.5 0 0 1 21 11v6.5A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="设置">
+              <svg class="ds-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="删除">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M4 7h16M10 7V5h4v2M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">分段控件、键帽、标签、头像</div>
+          <div class="hstack" style="gap:12px">
+            <div class="ds-seg">
+              <button class="ds-seg-item" aria-selected="true">差异</button>
+              <button class="ds-seg-item">全文</button>
+              <button class="ds-seg-item">提交</button>
+            </div>
+            <span><kbd>⌘</kbd> <kbd>K</kbd></span>
+            <span class="ds-tag">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+              已通过
+            </span>
+            <span class="ds-avatar">王</span>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">导航项</div>
+          <div class="stack" style="gap:2px">
+            <div class="ds-nav-item" aria-current="page">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+              正在跑的会话
+            </div>
+            <div class="ds-nav-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+              昨天
+            </div>
+            <div class="ds-nav-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+              更早
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">菜单</div>
+          <div class="ds-menu" style="width:200px">
+            <button class="ds-menu-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/></svg>
+              重命名
+            </button>
+            <button class="ds-menu-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M12 16V4M8 8l4-4 4 4M5 20h14"/></svg>
+              导出为补丁
+            </button>
+            <div class="ds-menu-sep"></div>
+            <button class="ds-menu-item is-danger">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M10 7V5h4v2M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7"/></svg>
+              删除会话
+            </button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">轻提示</div>
+          <div class="hstack" style="gap:8px">
+            <span class="ds-toast">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+              已复制到剪贴板
+            </span>
+            <span class="ds-tooltip">⌘⇧C 复制全部</span>
+          </div>
+        </div>
+
+        <div class="sec" style="margin-bottom:0">
+          <div class="sec-h">对话框</div>
+          <div class="dlg-wrap">
+            <div class="ds-dialog">
+              <h3 style="margin:0 0 6px; font-size:17px">丢弃这些改动？</h3>
+              <p style="margin:0; font-size:13px; color:var(--qd-ink-secondary); line-height:1.55">
+                3 个文件里还有未提交的修改。丢弃之后没法从这边恢复。
+              </p>
+              <div class="ds-dialog-footer">
+                <button class="ds-btn-secondary">保留</button>
+                <button class="ds-btn-danger">丢弃</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= 浅色 ================= -->
+    <div class="frame">
+      <div class="cap"><b>浅色</b><span>ds-quiet-light</span></div>
+      <div class="box ds-quiet-light">
+
+        <div class="sec">
+          <div class="sec-h">表单 · 五个状态</div>
+          <div class="cols2">
+            <div class="ds-field">
+              <label class="ds-label">工作目录</label>
+              <input value="~/projects/quiet">
+              <div class="ds-hint">相对于用户主目录</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">聚焦态</label>
+              <input class="force-focus" value="~/projects/quiet">
+              <div class="ds-hint">描边换色 + 一圈外光</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">模型名称</label>
+              <input aria-invalid="true" value="gpt-5 codx">
+              <div class="ds-hint-error">这个模型不存在，检查拼写</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">分支</label>
+              <input disabled value="main（由仓库决定）">
+              <div class="ds-hint">禁用：只降透明度，不改底色</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">只读</label>
+              <input readonly value="a3f9c1e">
+              <div class="ds-hint">只读：去底色去描边，像普通文字</div>
+            </div>
+            <div class="ds-field">
+              <label class="ds-label">提示占位不塌陷</label>
+              <input placeholder="占位符用 ink-faint">
+              <div class="ds-hint" style="visibility:hidden">占位</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">按钮</div>
+          <div class="hstack">
+            <button>开始生成</button>
+            <button class="ds-btn-secondary">取消</button>
+            <button class="ds-btn-ghost">跳过</button>
+            <button class="ds-btn-danger">删除分支</button>
+            <button disabled>不可用</button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">图标按钮 · 20px 图标 / 32px 热区</div>
+          <div class="hstack" style="gap:2px">
+            <button class="ds-icon-btn" aria-label="新建">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="搜索">
+              <svg class="ds-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="文件夹">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h3l2 2.5h8A2.5 2.5 0 0 1 21 11v6.5A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="设置">
+              <svg class="ds-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/></svg>
+            </button>
+            <button class="ds-icon-btn" aria-label="删除">
+              <svg class="ds-icon" viewBox="0 0 24 24"><path d="M4 7h16M10 7V5h4v2M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">分段控件、键帽、标签、头像</div>
+          <div class="hstack" style="gap:12px">
+            <div class="ds-seg">
+              <button class="ds-seg-item" aria-selected="true">差异</button>
+              <button class="ds-seg-item">全文</button>
+              <button class="ds-seg-item">提交</button>
+            </div>
+            <span><kbd>⌘</kbd> <kbd>K</kbd></span>
+            <span class="ds-tag">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+              已通过
+            </span>
+            <span class="ds-avatar">王</span>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">导航项</div>
+          <div class="stack" style="gap:2px">
+            <div class="ds-nav-item" aria-current="page">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+              正在跑的会话
+            </div>
+            <div class="ds-nav-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+              昨天
+            </div>
+            <div class="ds-nav-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+              更早
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">菜单</div>
+          <div class="ds-menu" style="width:200px">
+            <button class="ds-menu-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/></svg>
+              重命名
+            </button>
+            <button class="ds-menu-item">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M12 16V4M8 8l4-4 4 4M5 20h14"/></svg>
+              导出为补丁
+            </button>
+            <div class="ds-menu-sep"></div>
+            <button class="ds-menu-item is-danger">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M10 7V5h4v2M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7"/></svg>
+              删除会话
+            </button>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-h">轻提示</div>
+          <div class="hstack" style="gap:8px">
+            <span class="ds-toast">
+              <svg class="ds-icon ds-icon-sm" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+              已复制到剪贴板
+            </span>
+            <span class="ds-tooltip">⌘⇧C 复制全部</span>
+          </div>
+        </div>
+
+        <div class="sec" style="margin-bottom:0">
+          <div class="sec-h">对话框</div>
+          <div class="dlg-wrap">
+            <div class="ds-dialog">
+              <h3 style="margin:0 0 6px; font-size:17px">丢弃这些改动？</h3>
+              <p style="margin:0; font-size:13px; color:var(--qd-ink-secondary); line-height:1.55">
+                3 个文件里还有未提交的修改。丢弃之后没法从这边恢复。
+              </p>
+              <div class="ds-dialog-footer">
+                <button class="ds-btn-secondary">保留</button>
+                <button class="ds-btn-danger">丢弃</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
