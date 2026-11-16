@@ -56,7 +56,7 @@
   --qd-text-2xl: 1.75rem;    /* 28 */
 
   /* 深色底上的亮字视觉上更粗（光渗），所以正文字重比浅色少 50 —— 400 → 350。
-     这条来自 references/hallmark/dark-mode.md，四个风格里原来一处都没有。 */
+    这条来自 references/hallmark/NOTES.md，四个风格里原来一处都没有。 */
   --qd-weight-body: 350;
   --qd-weight-strong: 600;
 
