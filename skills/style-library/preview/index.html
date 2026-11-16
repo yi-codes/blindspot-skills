@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
 <link rel="stylesheet" href="../styles/soft-pastel/tokens.css">
 <link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
+<link rel="stylesheet" href="../styles/tactile-3d/tokens.css">
 <link rel="stylesheet" href="../styles/terminal-mono/tokens.css">
 <style>
   /* 页面外壳：中性化，不干扰三个风格的展示 */
@@ -68,7 +69,7 @@
   <div class="hd">
     <h1>风格库 · 对照预览</h1>
     <p>
-      同一份内容，8 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
+      同一份内容，9 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
       新增风格后重跑 <code>scripts/build-preview.py</code> 就会多一块。
       本页由脚本生成，不要手改。
     </p>
@@ -302,6 +303,81 @@
           <div class="ds-stat-label">全文 3,400 字</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Tactile 3D</span>
+      <span class="demo-slug">tactile-3d</span>
+      <span class="demo-note">会动的卡片。透视 800px，倾角 12°，弹簧 ω=7.6/ζ=0.82——数值全…</span>
+    </div>
+    <div class="stage ds-tactile-3d"><style>
+  /* 静态快照：给 preview/index.html 的对照页用。
+     真实手感在 showcase/tactile-3d.html（那一页有拖拽和弹簧）。 */
+  .t3-demo { transform: translateZ(0); }
+  .t3-demo .t3-row {
+    display: flex;
+    gap: var(--t3-space-lg);
+    margin: var(--t3-space-xl) 0 0;
+    perspective: var(--t3-perspective);
+    transform-style: preserve-3d;
+  }
+  .t3-demo .t3-row > .ds-box {
+    width: 168px;
+    flex: 0 0 auto;
+    box-shadow:
+      inset 0 1px 0 var(--t3-rim-top),
+      inset 0 0 0 1px var(--t3-rim-edge),
+      0 22px 44px -14px rgba(0, 0, 0, 0.85);
+  }
+  .t3-demo .ds-box h3 {
+    margin: 0;
+    font-size: var(--t3-text-lg);
+    letter-spacing: -0.02em;
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .t3-demo .ds-box p {
+    margin: 4px 0 0;
+    font-size: var(--t3-text-xs);
+    color: var(--t3-ink-faint);
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .t3-demo .t3-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--t3-space-md);
+    margin-top: var(--t3-space-xl);
+  }
+</style>
+
+<div class="t3-demo">
+  <h1>三件东西，一层光</h1>
+  <p>厚度不靠描边，靠明暗交界。左上角一盏灯，上沿一条高光，地面一条接触阴影——三句话就能说清立体感从哪来。少一句就变贴纸。</p>
+
+  <div class="t3-row">
+    <div class="ds-box" style="transform: rotateY(-16deg) rotateX(4deg) translateZ(0)">
+      <span class="ds-box-no">01</span>
+      <h3>盒面</h3>
+      <p>4:5 实体比例</p>
+    </div>
+    <div class="ds-box" style="transform: rotateY(0deg) rotateX(0deg) translateZ(24px)">
+      <span class="ds-box-no">02</span>
+      <h3>受光面</h3>
+      <p>高光 0.34 上限</p>
+    </div>
+    <div class="ds-box" style="transform: rotateY(16deg) rotateX(4deg) translateZ(0)">
+      <span class="ds-box-no">03</span>
+      <h3>阴影</h3>
+      <p>跟倾角走</p>
+    </div>
+  </div>
+
+  <div class="t3-actions">
+    <button>拖一下试试</button>
+    <span class="ds-tag">ω 7.6，ζ 0.82</span>
+  </div>
+</div>
     </div>
   </section>
 

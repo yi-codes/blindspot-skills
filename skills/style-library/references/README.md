@@ -18,13 +18,15 @@ references/
 |---|---|---|
 | `claude` | ① 二手 | `editorial-serif`（墨色不纯黑） |
 | `ollama` | ① 二手 | `terminal-mono` |
-| `bergside-codex` | ① 二手 | `quiet-dark` |
+| `bergside-codex` | ① 二手 | `quiet-dark`（反面样本，存证） |
 | `chatgpt-ios` | ② 一手（拆包） | `quiet-dark` 动效与浅色板 |
 | `hallmark` | ① 二手 | 促成 `principles.md` 的版式规则 |
 | `govuk` | ② 一手（SCSS） | → `civic` |
 | `latex-css` | ② 一手（CSS + 推导注释） | → `academic` |
 | `neobrutalism` | ③ 组件库（CSS + TSX） | → `neobrutalist` |
 | `catppuccin` | ④ 纯调色板 | → `soft-pastel`（**形状是补的**） |
+| `react-bits` | ③ 组件库（JSX + CSS） | → `tactile-3d`（弹簧参数、高光衰减） |
+| `atropos` | ③ 组件库（JS + SCSS） | → `tactile-3d`（倾角上限、归一化公式） |
 
 注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
 
@@ -141,3 +143,5 @@ gh api "repos/alphagov/govuk-frontend/contents/packages/govuk-frontend/src/govuk
 - [vincentdoerig/latex-css](https://github.com/vincentdoerig/latex-css) —— 单文件 CSS，把 LaTeX 的排版参数逐条推导
 - [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components) —— 带 TSX，交互行为也能抄
 - [catppuccin/palette](https://github.com/catppuccin/palette) —— 纯色板，用来压力测试方法（见上表 ④）
+- [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits) —— 200+ 动效组件，**动效参数的金矿**（弹簧 ω/ζ、衰减曲线都写在代码里）
+- [nolimits4web/atropos](https://github.com/nolimits4web/atropos) —— 5KB 视差倾斜，参数少而干净，适合当"标定值"

@@ -7,7 +7,7 @@
 > python3 scripts/build-index.py
 > ```
 
-当前 **8** 个风格。
+当前 **9** 个风格。
 
 ## 决定表
 
@@ -15,7 +15,7 @@
 
 | 读者要确认的 | 职守 | 风格 |
 |---|---|---|
-| 「这人靠谱 / 这东西有品」 | 讲故事 | `editorial-serif`、`neobrutalist` |
+| 「这人靠谱 / 这东西有品」 | 讲故事 | `editorial-serif`、`neobrutalist`、`tactile-3d` |
 | 「这东西好用 / 这公司专业」 | 讲专业 | `civic`、`swiss-grid` |
 | 「这人技术过硬」 | 讲技术 | `academic`、`terminal-mono` |
 | 「这是给专业人做的」 | 讲工具 | `quiet-dark`、`soft-pastel` |
@@ -27,12 +27,12 @@
 
 | 职守 | 紧 | 中 | 松 |
 |---|---|---|---|
-| 讲故事 | — | `neobrutalist` | `editorial-serif` |
+| 讲故事 | — | `neobrutalist` | `editorial-serif`、`tactile-3d` |
 | 讲专业 | — | `civic`、`swiss-grid` | — |
 | 讲技术 | `terminal-mono` | — | `academic` |
 | 讲工具 | `quiet-dark` | — | `soft-pastel` |
 
-有 1 个格子塞了不止一个风格 —— 那些格子还得往下看「明暗」，或者干脆各写各的场景。
+有 2 个格子塞了不止一个风格 —— 那些格子还得往下看「明暗」，或者干脆各写各的场景。
 
 ## 全表
 
@@ -45,6 +45,7 @@
 | **Quiet Dark** `quiet-dark` | 讲工具 | 深色 | 紧 | 桌面应用、编辑器面板、内部后台、Agent 对话界面、需要长时间注视的工具 | 营销落地页、长文阅读、品牌表达、打印 | `#0d0d0d` |
 | **Soft Pastel** `soft-pastel` | 讲工具 | 双模 | 松 | 消费级 app、陪伴型产品、笔记与阅读工具、社区、需要"温和不催促"的界面 | 数据看板、高密度后台、需要紧迫感的场景、对色觉障碍要求严格的场景 | `#EFF1F5` |
 | **Swiss Grid** `swiss-grid` | 讲专业 | 浅色 | 中 | 落地页、产品页、案例研究、数据看板、B 端界面、需要显得专业的页面 | 长文阅读、需要情绪的场景、桌面应用外壳 | `#FFFFFF` |
+| **Tactile 3D** `tactile-3d` | 讲故事 | 深色 | 松 | 游戏/影视产品页、硬件开箱、作品集、发布会主视觉、可拖拽的选择器、需要"手感"的展示型界面 | 长文阅读、表单、后台管理、需要快速扫读的列表、打印、任何以读字为主的地方 | `#0A0A0B` |
 | **Terminal Mono** `terminal-mono` | 讲技术 | 深色 | 紧 | 技术文档、开发者工具、CLI 配套界面、以日志和代码为主体的页面 | 消费级产品、品牌表达、需要温度的场景 | `#0E1116` |
 
 ## 用法速查
