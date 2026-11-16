@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>陈列室 · wangyi 和他的 Jarvis</title>
+<title>陈列室 · wangyi</title>
 <link rel="stylesheet" href="../../styles/tactile-3d/tokens.css">
 <style>
   * { box-sizing: border-box; }
@@ -180,6 +180,10 @@
       inset 0 0 0 1px rgba(255, 236, 200, 0.12),
       0 12px 30px -14px rgba(0, 0, 0, 0.95);
   }
+  /* tokens 里 :where(p){max-width:32em} 是用来限制正文行长的，在铜牌上却是错的：
+     它按各自字号算出 320/368/336 三种宽度，块本身又靠左排，于是段内居中 ≠ 牌面居中，
+     四行中心能差 150px。名字一缩短就全露出来了。铜牌是铭牌，不是正文，解除限制。 */
+  .plaque > p { max-width: none; }
   .plaque .lab {
     font-family: var(--t3-font-mono);
     font-size: 10px;
@@ -189,9 +193,11 @@
   }
   .plaque .who {
     margin: 0;
-    font-size: 26px;
+    /* 去掉"和他的"之后这一行只剩下一个词，26px 撑不住 660px 的牌面，
+       右侧会空出一大块。放大到 32px，让名字自己占住这块铜牌。 */
+    font-size: 32px;
     font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     color: #EFE8DA;
   }
@@ -202,6 +208,28 @@
     line-height: 1.5;
     color: #7F7869;
   }
+  /* 职员表。人是一等署名，工具进脚注——电影片尾就是这个层级。
+     比"wangyi 和他的 Jarvis"好在：署名该回答"谁做的"，
+     而"和他的"回答的是"谁和谁是什么关系"，那是合影的语法，不是铭牌的语法。 */
+  .plaque .cred {
+    margin: 14px 0 0;
+    font-family: var(--t3-font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    /* 原来写 #6B6457，在铜牌的下半段（那里已经被渐变压暗）几乎读不出来。
+       职员表可以小，但不能看不见。 */
+    color: #8A8071;
+  }
+  /* 一道短横，把"署名"和"职员表"分开。有了它这一行才像片尾，而不是漏排的一行小字。 */
+  .plaque .cred::before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 1px;
+    margin: 0 auto 9px;
+    background: rgba(255, 236, 200, 0.18);
+  }
+  .plaque .cred em { font-style: normal; color: #FF6B3D; }
 
   /* ---------- 盒子内容 ---------- */
   .cover {
@@ -385,7 +413,7 @@
 </div>
 
 <div class="sign">
-  <div><b>wangyi</b> 和他的 <em>Jarvis</em></div>
+  <div><b>wangyi</b></div>
   <div>纯 CSS 3D，零依赖</div>
 </div>
 
@@ -455,8 +483,11 @@
   var plaqueHTML =
     '<div class="plinth-front"><div class="plaque">' +
       '<p class="lab">EXHIBITION / 2026</p>' +
-      '<p class="who">wangyi 和他的 <em>Jarvis</em></p>' +
+      '<p class="who">wangyi</p>' +
       '<p class="note">六个盒子，一盏灯。没有贴图，没有图片——侧面、顶面、明暗，都是每帧算出来的。</p>' +
+      /* 工具不并列署名，进职员表。而且"照明设计"在这里是字面意思：
+         明暗不是 CSS 里的渐变，是每一帧按面法线算出来的。 */
+      '<p class="cred">照明设计 <em>Jarvis</em></p>' +
     '</div></div>';
 
   var plinth = solid(PLINTH_W, PLINTH_H, PLINTH_D, {
