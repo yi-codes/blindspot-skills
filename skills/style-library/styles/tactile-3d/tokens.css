@@ -287,7 +287,8 @@
   background: var(--t3-accent);
   color: var(--t3-accent-ink);
   cursor: pointer;
-  box-shadow: 0 6px 16px -8px rgba(255, 107, 61, 0.5);
+  /* 中性投影，不用彩色：橙底 + 橙色光晕 = 自己发光，违反「受光」的判据 */
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.9);
   transition:
     transform 150ms var(--t3-ease-out),
     box-shadow 150ms var(--t3-ease-out);
@@ -295,7 +296,7 @@
 :where(.ds-tactile-3d) :where(button, .ds-btn):hover { transform: translate3d(0, -1px, var(--t3-lift-press)); }
 :where(.ds-tactile-3d) :where(button, .ds-btn):active {
   transform: translate3d(0, 1px, 0) scale(var(--t3-press-scale));
-  box-shadow: 0 4px 12px -8px rgba(255, 107, 61, 0.6);
+  box-shadow: 0 4px 10px -8px rgba(0, 0, 0, 0.9);
 }
 
 :where(.ds-tactile-3d) :where(.ds-tag) {

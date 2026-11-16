@@ -70,9 +70,11 @@
   /* ---- 线：这是这套风格的骨架 ---- */
   --cv-border: 1px solid var(--cv-line);
   --cv-border-form: 2px solid var(--cv-line-strong);
-  --cv-rule: 5px solid var(--cv-line-strong);   /* 区块分隔 */
-  --cv-rule-wide: 10px solid var(--cv-line-strong);
-  --cv-rule-narrow: 4px solid var(--cv-line-strong);
+  /* 线宽只存宽度。颜色和样式在用的地方写，
+     否则 "var(--cv-rule) solid X" 会拼成 "5px solid #000 solid X"，整条声明作废。 */
+  --cv-rule: 5px;          /* 区块分隔 */
+  --cv-rule-wide: 10px;
+  --cv-rule-narrow: 4px;
   --cv-focus-width: 3px;
 
   /* ---- 形状：零圆角、零阴影。整个系统没有例外 ---- */
@@ -135,7 +137,7 @@
 
 /* 段落分隔：5px 粗黑线。这是全系统唯一的分隔手段 */
 :where(.ds-civic) :where(.ds-section) {
-  border-top: var(--cv-rule-narrow);
+  border-top: var(--cv-rule-narrow) solid var(--cv-line-strong);
   padding-top: var(--cv-space-4);
   margin-top: var(--cv-space-6);
 }
@@ -147,8 +149,9 @@
 }
 
 /* ---- 标题上方的引导语：19px、次要色，和标题贴得很近 ---- */
+/* 不写 display:block —— 加到 <caption> 上会把表题挤到表头下面去。
+   <p class="ds-caption"> 本来就是块级。 */
 :where(.ds-civic) :where(.ds-caption) {
-  display: block;
   font-size: var(--cv-text-md1);
   line-height: var(--cv-leading-sm);
   color: var(--cv-ink-secondary);
@@ -249,7 +252,7 @@
 }
 
 /* ---- 标签（tag）：方角、蓝底、全大写 ---- */
-:where(.ds-civic) :where(.ds-tag) {
+:where(.ds-civic) :where(.ds-tag) { /* slop-ok S3: GOV.UK 的 tag 组件本来就是 uppercase，这是它的真实长相，不是装饰 */
   display: inline-block;
   max-width: 100%;
   font-size: var(--cv-text-sm);

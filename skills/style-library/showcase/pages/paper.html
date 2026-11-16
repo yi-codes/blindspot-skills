@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中文网页排版的基线推导 · 预印本</title>
+<link rel="stylesheet" href="../../styles/academic/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #E7E7E4;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+  }
+  .sheet {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 72px 56px 96px;
+    background: var(--ac-canvas);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  }
+  .article { max-width: 34em; margin: 0 auto; }  /* 中文版心：34 字左右 */
+  .running {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11.5px;
+    color: var(--ac-ink-muted);
+    border-bottom: 1px solid var(--ac-rule);
+    padding-bottom: 8px;
+    margin-bottom: 46px;
+  }
+  .article h1 { margin-bottom: 18px; }
+  .byline {
+    font-size: 14px;
+    color: var(--ac-ink-muted);
+    text-indent: 0;
+    margin: 0 0 4px;
+  }
+  .affil {
+    font-size: 12.5px;
+    color: var(--ac-ink-faint);
+    text-indent: 0;
+    margin: 0 0 30px;
+  }
+  .abstract {
+    margin: 0 0 6px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    text-indent: 0;
+  }
+  .abstract-label { font-weight: 700; }
+  .keywords {
+    font-size: 13.5px;
+    color: var(--ac-ink-muted);
+    text-indent: 0;
+    margin: 0 0 40px;
+  }
+  .article table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 10px 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .article th, .article td {
+    text-align: left;
+    padding: 6px 10px 6px 0;
+    border-bottom: 1px solid var(--ac-rule);
+  }
+  .article thead th { border-bottom: 2px solid var(--ac-ink); }
+  .article td.num, .article th.num { text-align: right; padding-right: 0; }
+  .article figure { margin: 22px 0 18px; }
+  .references {
+    font-size: 13px;
+    line-height: 1.7;
+    text-indent: 0;
+    padding-left: 1.6em;
+  }
+  .references li { margin-bottom: 7px; }
+  code {
+    font-family: var(--ac-font-mono);
+    font-size: 0.88em;
+    background: var(--ac-surface-code);
+    padding: 1px 0.25em;
+  }
+  /* 边注：这个页面版心只有 34em，没有留出负外边距的余地。
+     改成版心内右侧浮动，左侧一条细线——同一个作用，不压正文。 */
+  .article .ds-sidenote {
+    width: 31%;
+    margin-right: 0;
+    margin-left: 16px;
+    padding-left: 10px;
+    border-left: 1px solid var(--ac-rule);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ac-ink-muted);
+  }
+  .subtitle {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ac-ink-muted);
+    text-indent: 0;
+    margin: 0 0 20px;
+    font-family: var(--ac-font-mono);
+  }
+  .article th:last-child, .article td:last-child { padding-left: 18px; }
+  .article .ds-sidenote code { font-size: 0.82em; padding: 0 0.1em; }
+  .article h2 code { background: none; padding: 0; font-size: 0.86em; }
+  .article thead th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="sheet ds-academic">
+  <article class="article">
+
+    <div class="running">
+      <span>排版研究 · 预印本</span>
+      <span>2026 年 11 月</span>
+    </div>
+
+    <h1>中文首行缩进的基线推导</h1>
+    <p class="subtitle">从 TeX 的 \parindent 到 CSS 的 1.463rem</p>
+    <p class="byline">王一</p>
+    <p class="affil">独立研究者 · wangyi@example.com</p>
+
+    <p class="abstract">
+      <span class="abstract-label">摘要　</span>中文网页正文长期缺少可复现的首行缩进基准：多数实现直接取 <code>2em</code>，
+      少数取 <code>1.5rem</code>，两者相差最多 12%。本文把 LaTeX 的 <code>\parindent</code> 默认值还原为
+      一个从 TeX 点制到 CSS 长度的完整推导链，得到 <code>1.463rem</code>；随后给出一个判据，说明在什么条件下
+      应当采用这个值、在什么条件下应当退回 <code>2em</code>。结论是：缩进量应当由字号与版心宽度共同决定，
+      而不是由一个固定倍数决定。
+    </p>
+    <p class="keywords">关键词：中文排版，首行缩进，TeX 点制，版心，可复现性</p>
+
+    <h2>问题的来源</h2>
+    <p>
+      中文正文的传统缩进是两个字符。在纸面排版里这不是一个"约等于"的量：两个字宽由字号唯一确定，
+      所以 12pt 正文对应 24pt 缩进，10.5pt 正文对应 21pt 缩进，随字号线性变化，不存在争议。
+      转到网页之后这个确定性丢了——因为 CSS 的 <code>em</code> 在中文语境下有两种解释：
+      按当前字号算，还是按字面宽度算。
+    </p>
+    <p>
+      LaTeX 的做法值得借鉴：它不写"两个字符"，而写一个绝对长度 <code>\parindent = 17.625pt</code>，
+      再由字号反推出"这大约是两个字宽"。这个方向更稳——先固定长度，再解释它为什么看起来对。
+      <span class="ds-sidenote">17.625pt 是 <code>article</code> 文档类 10pt 选项下的默认值，见 <code>article.cls</code> 第 78 行附近。</span>
+      本文沿用这个方向，把 17.625pt 换算成 CSS 长度。
+    </p>
+
+    <h2>推导</h2>
+    <p>
+      换算涉及两个点制：TeX 的 <code>pt</code> 与 PostScript 的 <code>bp</code>。二者的比值是固定的
+      <code>72/72.27</code>，约等于 <code>0.99626</code>。把它与字号相除，即得到以 em 为单位的缩进比例。
+    </p>
+
+    <p class="ds-theorem">
+      设正文字号为 <em>S</em>（单位 pt），则首行缩进折合为 <em>r</em> 个 <code>rem</code> 时，
+      有 <em>r</em> = 17.625 × (72/72.27) / <em>S</em>。当 <em>S</em> = 12 时，<em>r</em> ≈ 1.463。
+    </p>
+    <p class="ds-proof">
+      代入 <em>S</em> = 12：17.625 × 0.99626 = 17.5591；17.5591 / 12 = 1.46326。
+      取三位小数即 1.463rem。中间的 0.99626 不可省略——省略后结果为 1.46875rem，
+      在 19px 正文上会多出 0.1px，肉眼不可见，但它意味着推导链断了一环，无法复现。
+    </p>
+
+    <p>
+      值得注意的是，这个结果与"两个字符"几乎相等却不完全相等。差异来自 TeX 点制与 CSS 像素的基准不同：
+      前者以 72.27 分之一英寸为单位，后者以 96 分之一英寸为单位。这个 0.37% 的偏差在单行上无法察觉，
+      但在整段缩进对齐时会累积成可见的参差——这也是为什么很多"看起来没问题"的中文网页，
+      在段落与列表混排时会显出轻微的错位。
+    </p>
+
+    <h2>与 <code>2em</code> 的比较</h2>
+    <p>
+      下表在同一版心、同一字号下比较三种常见取值。判断依据不是"哪个更接近两个字符"，
+      而是缩进与行末留白的关系：缩进过大时，段首会与上一段的行末形成一条视觉上的斜线，破坏阅读节奏。
+    </p>
+
+    <table>
+      <caption>三种缩进取值在 12pt 正文、34 字版心下的表现</caption>
+      <thead>
+        <tr>
+          <th>取值</th>
+          <th class="num">实际长度</th>
+          <th class="num">折合字数</th>
+          <th>段首视觉</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>1.463rem</code></td><td class="num">17.56pt</td><td class="num">1.98</td><td>齐平，与两字缩进几乎无差</td></tr>
+        <tr><td><code>2em</code></td><td class="num">24.00pt</td><td class="num">2.00</td><td>略宽，窄版心下偏重</td></tr>
+        <tr><td><code>2rem</code></td><td class="num">24.00pt</td><td class="num">2.00</td><td>同上，且不随字号缩放</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      结论比预想的弱：在 34 字版心上，<code>1.463rem</code> 与 <code>2em</code> 的差异不足以构成阅读体验上的差别。
+      真正的分界在版心宽度——当每行超过 40 字时，按字符计算的缩进开始显得不足，因为行越长，
+      段首的"锚点"作用越弱；此时应当加大缩进，而不是坚持两个字符。
+    </p>
+
+    <h2>局限</h2>
+    <p>
+      本文只处理了段落首行。列表项、引文、图表题注的缩进规则各自独立，且在中西文混排时另有约束，
+      这些留待后续。另一个未解决的问题是纵向节奏：首行缩进只影响水平方向，
+      而中文网页的段落间距普遍偏大，两者叠加会产生"缩进很小、间距很大"的失衡感。
+    </p>
+
+    <div class="ds-footnotes">
+      <p style="text-indent:0; font-size:12.5px;">
+        1. 本文的所有数值均可在仓库的 <code>styles/academic/tokens.css</code> 中复核，
+        变量名为 <code>--ac-indent</code>。
+      </p>
+    </div>
+
+    <h2>参考文献</h2>
+    <ol class="references">
+      <li>Lamport, L. <em>LaTeX: A Document Preparation System</em>. 2nd ed. Addison-Wesley, 1994.</li>
+      <li>Knuth, D. E. <em>The TeXbook</em>. Addison-Wesley, 1984, 附录 A（点制换算）。</li>
+      <li>W3C. <em>Requirements for Chinese Text Layout</em>. W3C Working Group Note, 2019, §3.1。</li>
+    </ol>
+
+  </article>
+</div>
+</body>
+</html>

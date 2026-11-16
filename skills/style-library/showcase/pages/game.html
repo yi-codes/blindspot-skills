@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>暗房 · 一个关于显影的叙事解谜游戏</title>
+<link rel="stylesheet" href="../../styles/tactile-3d/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  body.ds-tactile-3d { min-height: 100vh; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- 顶栏 ---------- */
+  .bar {
+    /* slop-ok S7: 吸顶栏的毛玻璃，作用是压住滚动内容，不是发光 */
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(10, 10, 11, 0.72);
+    border-bottom: 1px solid var(--t3-line);
+  }
+  .bar .wrap {
+    display: flex; align-items: center; gap: 26px;
+    height: 60px;
+  }
+  .brand {
+    font-family: var(--t3-font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--t3-ink);
+    text-decoration: none;
+  }
+  .bar nav { display: flex; gap: 22px; margin-left: auto; }
+  .bar nav a {
+    font-size: 13px;
+    color: var(--t3-ink-soft);
+    text-decoration: none;
+  }
+  .bar nav a:hover { color: var(--t3-ink); }
+  .bar button { padding: 0.55em 1.15em; font-size: 13px; }
+
+  /* ---------- 主视觉 ---------- */
+  .hero { padding: 96px 0 8px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 56px;
+    align-items: end;
+  }
+  .hero h1 {
+    font-size: clamp(3.2rem, 9vw, 5.6rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin: 0 0 8px;
+  }
+  .hero .en {
+    font-family: var(--t3-font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--t3-accent);
+    margin: 0 0 26px;
+  }
+  .hero .lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--t3-ink-soft);
+    max-width: 26em;
+    margin: 0 0 18px;
+  }
+  .hero .meta {
+    font-family: var(--t3-font-mono);
+    font-size: 12px;
+    color: var(--t3-ink-faint);
+    margin: 0 0 30px;
+  }
+  .hero .meta b { color: var(--t3-ink-soft); font-weight: 500; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .ghost {
+    background: transparent !important;
+    color: var(--t3-ink) !important;
+    box-shadow: inset 0 0 0 1px var(--t3-line-hi) !important;
+  }
+  .ghost:hover { background: var(--t3-surface-hi) !important; }
+
+  /* 封面盒：主视觉右侧那张会 tilt 的大卡 */
+  .cover-stage {
+    position: relative;
+    height: 420px;
+    perspective: var(--t3-perspective);
+    display: grid;
+    place-items: center;
+  }
+  .cover {
+    width: 300px; height: 380px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    transform-style: preserve-3d;
+    transition: none;
+    will-change: transform;
+  }
+  .cover .art {
+    position: absolute; inset: 0;
+    border-radius: var(--t3-radius-lg);
+    overflow: hidden;
+    /* 只有一盏灯，从左上来。没有"氛围光斑"——光斑指认不出光源，那就是气氛不是材质 */
+    background:
+      linear-gradient(155deg, #3D3833 0%, #1B1815 40%, #0C0A08 100%);
+    transform: translateZ(var(--t3-z-image));
+  }
+  /* 胶片齿孔：让盒面像一卷真的 35mm，而不是一块渐变色 */
+  .cover .art::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 20px;
+    background: repeating-linear-gradient(180deg,
+      rgba(245, 245, 247, 0.11) 0 9px,
+      rgba(0, 0, 0, 0) 9px 21px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .cover .art::before {
+    /* 显影盘边缘反射上来的一道窄光。
+       四个边都要衰减到 0，否则那片半透明的矩形会留下一条硬边，看着像折痕。 */
+    content: "";
+    position: absolute;
+    left: -30%; top: 44%;
+    width: 160%; height: 42%;
+    background: linear-gradient(96deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.085) 46%,
+      rgba(255,255,255,0) 74%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 62%, transparent 96%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 62%, transparent 96%);
+    transform: rotate(-8deg);
+  }
+  .cover .frame {
+    position: absolute; inset: 0;
+    border-radius: var(--t3-radius-lg);
+    box-shadow:
+      inset 0 1px 0 var(--t3-rim-top),
+      inset 0 0 0 1px var(--t3-rim-edge);
+    transform: translateZ(var(--t3-z-face));
+    pointer-events: none;
+  }
+  .cover::before { display: none; }
+  .cover .label {
+    position: absolute;
+    left: 26px; right: 26px; bottom: 26px;
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .cover .label h2 {
+    font-size: 40px;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .cover .label p {
+    margin: 8px 0 0;
+    font-family: var(--t3-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--t3-accent);
+  }
+  .cover .no {
+    position: absolute; top: -4px; left: 36px;
+    font-size: 64px; font-weight: 700; line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(245, 245, 247, 0.14);
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .cover-shadow { /* slop-ok S7: 地面接触阴影，随倾角移动，不是氛围光斑 */
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 250px; height: 26px;
+    margin: 16px 0 0 -125px;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(18px);
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  /* ---------- 章节架：可拖拽 ---------- */
+  .shelf { padding: 26px 0 10px; }
+  .shelf-hd {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 4px;
+  }
+  .shelf-hd h2 { font-size: 20px; margin: 0; letter-spacing: -0.02em; }
+  .shelf-hd span {
+    font-family: var(--t3-font-mono);
+    font-size: 11.5px;
+    color: var(--t3-ink-faint);
+  }
+  .dragger {
+    position: relative;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    margin-top: -10px;
+  }
+  .dragger.grabbing { cursor: grabbing; }
+  .dragger .ds-ring { height: 360px; }
+  .dragger::after {
+    content: "";
+    position: absolute;
+    left: 10%; right: 10%; bottom: 52px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%, var(--t3-line-hi) 16%, var(--t3-line-hi) 84%, transparent 100%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .dragger .ds-box { padding: 14px; pointer-events: none; }
+  .dragger .ds-box-no { font-size: 40px; }
+  .dragger .ds-box h3 {
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .dragger .ds-box p {
+    margin: 2px 0 0;
+    font-family: var(--t3-font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    color: var(--t3-ink-faint);
+    transform: translateZ(var(--t3-z-overlay));
+  }
+
+  /* ---------- 特性：三张会 tilt 的卡 ---------- */
+  .features { padding: 60px 0 20px; }
+  .features h2 { font-size: 28px; margin: 0 0 8px; }
+  .features .sub {
+    color: var(--t3-ink-soft);
+    font-size: 15px;
+    margin: 0 0 34px;
+    max-width: 32em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    perspective: var(--t3-perspective);
+  }
+  .cards .ds-card {
+    height: 300px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transform-style: preserve-3d;
+    transition: none;
+    will-change: transform;
+  }
+  .cards .ds-card .big {
+    position: absolute;
+    top: 22px; left: 24px;
+    font-family: var(--t3-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--t3-accent);
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .cards .ds-card .glyph {
+    position: absolute;
+    top: 56px; left: 24px;
+    width: 30px; height: 30px;
+    color: var(--t3-ink-faint);
+    transform: translateZ(calc(var(--t3-z-overlay) + 8px));
+  }
+  .cards .ds-card h3 {
+    margin: 0 0 8px;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .cards .ds-card p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--t3-ink-faint);
+    transform: translateZ(var(--t3-z-overlay));
+  }
+  .cards .ds-card::before { display: none; }
+
+  /* ---------- 规格表 ---------- */
+  .specs { padding: 66px 0 20px; }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
+  }
+  .specs h2 { font-size: 28px; margin: 0 0 14px; }
+  .specs p { font-size: 14.5px; color: var(--t3-ink-soft); }
+  .specs dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 7em 1fr;
+    gap: 0;
+  }
+  .specs dt, .specs dd {
+    margin: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--t3-line);
+    font-size: 13.5px;
+  }
+  .specs dt { color: var(--t3-ink-faint); font-family: var(--t3-font-mono); font-size: 11.5px; letter-spacing: 0.02em; }
+  .specs dd { color: var(--t3-ink); }
+
+  /* ---------- 收尾 ---------- */
+  .end {
+    margin-top: 76px;
+    padding: 56px 0 72px;
+    border-top: 1px solid var(--t3-line);
+  }
+  .end-grid {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .end h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 10px;
+    letter-spacing: -0.035em;
+  }
+  .end p { margin: 0; color: var(--t3-ink-faint); font-size: 13px; }
+  .price { font-family: var(--t3-font-mono); font-size: 12.5px; color: var(--t3-ink-soft); margin-right: 6px; }
+
+  @media (max-width: 860px) {
+    .hero-grid, .specs-grid { grid-template-columns: 1fr; gap: 36px; }
+    .cover-stage { height: 380px; }
+    .bar nav { display: none; }
+  }
+</style>
+</head>
+<body class="ds-tactile-3d">
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#">DARKROOM</a>
+    <nav>
+      <a href="#chapters">章节</a>
+      <a href="#features">玩法</a>
+      <a href="#specs">规格</a>
+    </nav>
+    <button>预购</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>暗房</h1>
+        <p class="en">DARKROOM</p>
+        <p class="lead">
+          你在一间没有窗的暗房里醒来，只有一盏可以移动的红灯，和七卷没冲洗的胶卷。
+          每冲出一张照片，你就想起一段不属于自己的记忆。
+        </p>
+        <p class="meta"><b>2027 年 3 月 12 日</b>，PC 与 PS5，单人叙事解谜</p>
+        <div class="cta">
+          <button>预购，¥198</button>
+          <button class="ghost">看预告片</button>
+        </div>
+      </div>
+
+      <div class="cover-stage" id="coverStage">
+        <div class="cover-shadow" id="coverShadow"></div>
+        <div class="ds-card cover" id="cover">
+          <div class="art"></div>
+          <div class="frame"></div>
+          <span class="no">01</span>
+          <div class="label">
+            <h2>暗房</h2>
+            <p>CHAPTER 01 · DEVELOP</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shelf" id="chapters">
+    <div class="wrap">
+      <div class="shelf-hd">
+        <h2>七道工序</h2>
+        <span>可以拖动</span>
+      </div>
+      <div class="dragger" id="dragger">
+        <div class="ds-ring">
+          <div class="ds-ring-inner" id="ringInner">
+            <div class="ds-box" style="--i:0"><span class="ds-box-no">01</span><h3>显影</h3><p>DEVELOP</p></div>
+            <div class="ds-box" style="--i:1"><span class="ds-box-no">02</span><h3>停显</h3><p>STOP</p></div>
+            <div class="ds-box" style="--i:2"><span class="ds-box-no">03</span><h3>定影</h3><p>FIX</p></div>
+            <div class="ds-box" style="--i:3"><span class="ds-box-no">04</span><h3>水洗</h3><p>WASH</p></div>
+            <div class="ds-box" style="--i:4"><span class="ds-box-no">05</span><h3>干燥</h3><p>DRY</p></div>
+            <div class="ds-box" style="--i:5"><span class="ds-box-no">06</span><h3>放大</h3><p>ENLARGE</p></div>
+            <div class="ds-box" style="--i:6"><span class="ds-box-no">07</span><h3>归档</h3><p>ARCHIVE</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <h2>三件事，只有光能做</h2>
+      <p class="sub">
+        整套玩法只围绕一个动作：把灯挪到别的位置。挪动之后，阴影会重新排布，房间的形状也就变了。
+      </p>
+      <div class="cards">
+        <div class="ds-card tilt" data-tilt>
+          <span class="big">01</span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.6"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"/></svg>
+          <h3>光是一个角色</h3>
+          <p>全场景只有一盏灯。它能被拿走、被遮挡、被放进抽屉里。你放下它的位置，决定了这一段能不能过去。</p>
+        </div>
+        <div class="ds-card tilt" data-tilt>
+          <span class="big">02</span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.8" width="18.4" height="14.4" rx="1.4"/><path d="M2.8 16l5-4.2 4 3.2 3-2.4 6 4.6"/><circle cx="8.4" cy="9.2" r="1.5"/></svg>
+          <h3>照片是门</h3>
+          <p>冲出来的照片不是道具，是入口。把照片贴在墙上，走进它拍下的那一刻——但你只能改变镜头里的东西。</p>
+        </div>
+        <div class="ds-card tilt" data-tilt>
+          <span class="big">03</span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="8" stroke-dasharray="2.4 3.6"/><path d="M9.2 13.6l1.9-1.9 1.7 1.6 2-2.1"/></svg>
+          <h3>没有失败状态</h3>
+          <p>没有血条，没有读档。做错的胶卷会一起冲出来，成为下一章的开头。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="specs" id="specs">
+    <div class="wrap specs-grid">
+      <div>
+        <h2>规格</h2>
+        <p>
+          引擎是自研的，只为了做一件事：让一盏点光源在 12 平米的房间里产生准确的软阴影。
+          代价是场景很小，七章加起来只有九个房间。
+        </p>
+      </div>
+      <dl>
+        <dt>发售</dt><dd>2027 年 3 月 12 日</dd>
+        <dt>平台</dt><dd>PC（Steam、Epic），PlayStation 5</dd>
+        <dt>语言</dt><dd>简中、繁中、英、日、法、德</dd>
+        <dt>时长</dt><dd>主线 9–11 小时，全收集 14 小时</dd>
+        <dt>分级</dt><dd>16+，含幽闭场景与闪烁画面</dd>
+        <dt>价格</dt><dd>¥198，含原声带与设定集 PDF</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="end">
+    <div class="wrap end-grid">
+      <div>
+        <h2>把灯挪一下，房间就变了</h2>
+        <p>预购者可提前两周拿到第一章「显影」的试玩版。</p>
+      </div>
+      <div class="cta">
+        <span class="price">¥198</span>
+        <button>加入愿望单</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SUB = 1 / 240;
+  var RAD = Math.PI / 180;
+
+  /* 半隐式欧拉 + 1/240 子步进。和 tokens.css 里 --t3-omega / --t3-zeta 对应。 */
+  function spring(s, key, target, omega, zeta, dt) {
+    var vk = key + 'V';
+    var n = Math.max(1, Math.ceil(dt / SUB));
+    var h = dt / n;
+    for (var i = 0; i < n; i++) {
+      s[vk] += (omega * omega * (target - s[key]) - 2 * zeta * omega * s[vk]) * h;
+      s[key] += s[vk] * h;
+    }
+  }
+
+  /* ---------- 章节架 ---------- */
+  var dragger = document.getElementById('dragger');
+  var inner = document.getElementById('ringInner');
+  var boxes = Array.prototype.slice.call(inner.children);
+  var N = boxes.length, STEP = 360 / N;
+  var ring = { rot: 0, rotV: 0 };
+  var target = 0, dragging = false, lastX = 0, lastT = 0, fling = 0;
+
+  dragger.addEventListener('pointerdown', function (e) {
+    dragging = true;
+    dragger.classList.add('grabbing');
+    if (dragger.setPointerCapture) dragger.setPointerCapture(e.pointerId);
+    lastX = e.clientX; lastT = performance.now(); fling = 0; ring.rotV = 0;
+  });
+  dragger.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var now = performance.now();
+    var move = -(e.clientX - lastX) * 0.22;
+    lastX = e.clientX;
+    target += move;
+    fling = move / Math.max(8, now - lastT);
+    lastT = now;
+  });
+  function drop() {
+    if (!dragging) return;
+    dragging = false;
+    dragger.classList.remove('grabbing');
+    target += fling * 140;
+    target = Math.round(target / STEP) * STEP;
+  }
+  dragger.addEventListener('pointerup', drop);
+  dragger.addEventListener('pointercancel', drop);
+
+  /* ---------- 倾斜 ---------- */
+  function makeTilt(el, maxDeg, omega, zeta) {
+    var s = { rx: 0, rxV: 0, ry: 0, ryV: 0, lift: 0, liftV: 0 };
+    var tx = 0, ty = 0, lift = 0;
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect();
+      ty = ((e.clientX - r.left) / r.width * 2 - 1) * maxDeg;
+      tx = -((e.clientY - r.top) / r.height * 2 - 1) * maxDeg;
+      lift = 1;
+    });
+    el.addEventListener('pointerleave', function () { tx = 0; ty = 0; lift = 0; });
+    return { s: s, read: function () { return { tx: tx, ty: ty, lift: lift }; }, omega: omega, zeta: zeta };
+  }
+
+  var tilts = [];
+  var cover = document.getElementById('cover');
+  var coverShadow = document.getElementById('coverShadow');
+  var coverTilt = makeTilt(document.getElementById('coverStage'), 12, 7.6, 0.82);
+  var coverState = coverTilt.s;
+
+  document.querySelectorAll('[data-tilt]').forEach(function (el) {
+    tilts.push({ el: el, ctl: makeTilt(el, 10, 7.6, 0.82) });
+  });
+
+  /* ---------- 帧循环 ---------- */
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000));
+    last = now;
+
+    var omega = dragging ? 18 : 12;
+    var zeta = dragging ? 1 : 0.85;
+    if (RM) { omega = 30; zeta = 1; }
+    spring(ring, 'rot', target, omega, zeta, dt);
+    inner.style.setProperty('--t3-spin', ring.rot.toFixed(2) + 'deg');
+
+    for (var i = 0; i < N; i++) {
+      var a = ((i * STEP + ring.rot) % 360 + 540) % 360 - 180;
+      var front = Math.max(0, Math.cos(a * RAD));
+      var el = boxes[i];
+      el.style.setProperty('--t3-pop', (front * 40).toFixed(1) + 'px');
+      el.style.setProperty('--t3-glare', (front * 0.2).toFixed(3));
+      el.style.setProperty('--t3-gx', (50 + Math.sin(a * RAD) * 46).toFixed(1) + '%');
+      el.style.setProperty('--t3-gy', '4%');
+      el.style.opacity = (0.4 + 0.6 * front).toFixed(3);
+      el.style.zIndex = String(Math.round(front * 100));
+    }
+
+    /* 封面 */
+    var c = coverTilt.read();
+    spring(coverState, 'rx', c.tx, RM ? 30 : 7.6, RM ? 1 : 0.82, dt);
+    spring(coverState, 'ry', c.ty, RM ? 30 : 7.6, RM ? 1 : 0.82, dt);
+    spring(coverState, 'lift', c.lift, 7.6, 0.9, dt);
+    cover.style.transform =
+      'rotateX(' + coverState.rx.toFixed(2) + 'deg) rotateY(' + coverState.ry.toFixed(2) + 'deg)' +
+      ' translateZ(' + (coverState.lift * 24).toFixed(1) + 'px) scale(' + (1 + 0.04 * coverState.lift).toFixed(3) + ')';
+    var ce = Math.min(1, Math.sqrt(coverState.rx * coverState.rx + coverState.ry * coverState.ry) / 12);
+    cover.style.setProperty('--t3-glare', (0.95 * Math.max(coverState.lift, ce)).toFixed(3));
+    cover.style.setProperty('--t3-gx', (50 + coverState.ry / 12 * 46).toFixed(1) + '%');
+    cover.style.setProperty('--t3-gy', (44 - coverState.rx / 12 * 40).toFixed(1) + '%');
+    coverShadow.style.transform =
+      'translate3d(' + (-Math.sin(coverState.ry * RAD) * 26).toFixed(1) + 'px, ' +
+      (10 + 14 * coverState.lift + Math.sin(coverState.rx * RAD) * 16).toFixed(1) + 'px, 0) scale(' +
+      (0.9 + 0.06 * coverState.lift).toFixed(3) + ')';
+    coverShadow.style.opacity = (0.55 + 0.3 * coverState.lift).toFixed(2);
+
+    /* 三张特性卡 */
+    for (var k = 0; k < tilts.length; k++) {
+      var t = tilts[k], s = t.ctl.s, v = t.ctl.read();
+      spring(s, 'rx', v.tx, RM ? 30 : 7.6, RM ? 1 : 0.82, dt);
+      spring(s, 'ry', v.ty, RM ? 30 : 7.6, RM ? 1 : 0.82, dt);
+      spring(s, 'lift', v.lift, 7.6, 0.9, dt);
+      t.el.style.transform =
+        'rotateX(' + s.rx.toFixed(2) + 'deg) rotateY(' + s.ry.toFixed(2) + 'deg)' +
+        ' translateZ(' + (s.lift * 20).toFixed(1) + 'px)';
+      var e2 = Math.min(1, Math.sqrt(s.rx * s.rx + s.ry * s.ry) / 10);
+      t.el.style.setProperty('--t3-glare', (0.9 * Math.max(s.lift, e2)).toFixed(3));
+      t.el.style.setProperty('--t3-gx', (50 + s.ry / 10 * 42).toFixed(1) + '%');
+      t.el.style.setProperty('--t3-gy', (50 - s.rx / 10 * 42).toFixed(1) + '%');
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

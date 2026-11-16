@@ -47,7 +47,8 @@ def line_of(text, index):
     return text.count("\n", 0, index) + 1
 
 
-def hex_hue(h):
+def hex_hs(h):
+    """返回 (色相, 饱和度)。饱和度低于 0.12 的算中性色，色相无意义。"""
     h = h.lstrip("#")
     if len(h) == 3:
         h = "".join(c * 2 for c in h)
@@ -55,14 +56,33 @@ def hex_hue(h):
     mx, mn = max(r, g, b), min(r, g, b)
     d = mx - mn
     if d == 0:
-        return None
+        return None, 0.0
+    sat = d / mx if mx else 0.0
     if mx == r:
         hue = ((g - b) / d) % 6
     elif mx == g:
         hue = (b - r) / d + 2
     else:
         hue = (r - g) / d + 4
-    return hue * 60
+    return hue * 60, sat
+
+
+def hex_hue(h):
+    return hex_hs(h)[0]
+
+
+def hue_gap(hues):
+    """色相环上的最大间距。中性色（饱和度 < 0.12）不参与——
+    近黑 #0B0B0D 这种值算出来的"色相"是噪声，会把单光源渐变误判成多色相渐变。"""
+    hs = [h for h, sat in hues if h is not None and sat >= 0.12]
+    if len(hs) < 2:
+        return 0.0
+    best = 0.0
+    for i in range(len(hs)):
+        for j in range(i + 1, len(hs)):
+            d = abs(hs[i] - hs[j])
+            best = max(best, min(d, 360 - d))
+    return best
 
 
 def px_value(v):
@@ -162,13 +182,15 @@ def check_css(css, fname, rep, line_offset=0, strict=False):
         for prop in ("background", "background-image"):
             val = decls.get(prop, "")
             if "gradient(" in val:
-                hues = [hex_hue(h) for h in re.findall(r"#[0-9A-Fa-f]{3,6}\b", val)]
-                hues = [h for h in hues if h is not None]
-                purple = any(248 <= h <= 305 for h in hues)
+                hues = [hex_hs(h) for h in re.findall(r"#[0-9A-Fa-f]{3,6}\b", val)]
+                colored = [(h, sat) for h, sat in hues if h is not None and sat >= 0.12]
+                purple = any(248 <= h <= 305 for h, _ in colored)
                 if purple:
                     hit.append(("E", "S1", f"渐变里有紫色相（{val[:60]}），这是第一号 AI 特征", f"{fname}:{ln} {sel}"))
-                elif len(hues) >= 2:
-                    hit.append(("W", "S1", f"多色相渐变（{val[:60]}）—— 确认它是否承担了语义", f"{fname}:{ln} {sel}"))
+                elif hue_gap(colored) >= 20:
+                    hit.append(("W", "S1",
+                                f"多色相渐变（色相跨 {hue_gap(colored):.0f}°）—— 确认它是否承担了语义",
+                                f"{fname}:{ln} {sel}"))
         if "text" in decls.get("background-clip", "").lower() or "text" in decls.get("-webkit-background-clip", "").lower():
             hit.append(("E", "S1", "渐变文字（background-clip: text）", f"{fname}:{ln} {sel}"))
 
