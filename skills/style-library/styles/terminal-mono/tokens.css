@@ -33,6 +33,7 @@
   --tm-text-xs:  0.75rem;   /* 12 */
   --tm-text-sm:  0.8125rem; /* 13 */
   --tm-text-md:  0.9375rem; /* 15 */
+  --tm-text-code: 0.875rem; /* 14 —— 等宽正文，比正文小一档 */
   --tm-text-lg:  1.125rem;  /* 18 */
   --tm-text-xl:  1.375rem;  /* 22 */
   --tm-text-2xl: 1.75rem;   /* 28 */
@@ -107,7 +108,7 @@
 
 :where(.ds-terminal-mono) :where(code, kbd, pre) {
   font-family: var(--tm-font-mono);
-  font-size: 0.9375em;
+  font-size: var(--tm-text-code);
   background: var(--tm-code-bg);
   border: var(--tm-border);
   border-radius: var(--tm-radius);
@@ -184,7 +185,7 @@
   text-transform: lowercase;
 }
 
-:where(.ds-terminal-mono) :where(.ds-eyebrow) {
+:where(.ds-terminal-mono) :where(.ds-group-label) {
   font-family: var(--tm-font-mono);
   font-size: var(--tm-text-xs);
   letter-spacing: 0.12em;

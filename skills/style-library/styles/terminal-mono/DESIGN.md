@@ -4,6 +4,14 @@ name: Terminal Mono
 description: >-
   把命令行搬进正文。深灰蓝画布、等宽为骨架、语义四色只用来标记状态。
   标题和代码走等宽，长段落退回无衬线——满屏等宽中文是读不下去的。
+# ---------------------------------------------------------------- 选择条件
+# 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
+# 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+cues: 技术文档、开发者工具、CLI 配套界面、以日志和代码为主体的页面
+avoid: 消费级产品、品牌表达、需要温度的场景
+surface: dark
+register: technical
+
 colors:
   canvas: "#0E1116"
   surface: "#161B22"

@@ -1,0 +1,274 @@
+/* ============================================================
+   Quiet Dark · 安静的深色
+   用法：给任意容器加 class="ds-quiet-dark"
+   ------------------------------------------------------------
+   变量前缀 --qd-
+   色值来源：从 OpenAI 桌面客户端（ChatGPT / Codex）的 app.asar
+   中提取的 CSS 自定义属性，非臆测。
+   设计意图：纯灰阶、零彩色相，靠明度差和半透明叠加分层。
+   ============================================================ */
+
+:where(.ds-quiet-dark) {
+  /* ---- 表面：三档，每档差 8-13 个亮度值 ---- */
+  --qd-canvas:        #0d0d0d;
+  --qd-surface:       #181818;
+  --qd-surface-hover: #1c1c1c;
+  --qd-surface-raised:#212121;
+  --qd-surface-input: #131313;
+
+  /* ---- 文字：从亮到暗四级 ---- */
+  --qd-ink:           #f7f7f7;
+  --qd-ink-secondary: #a6a6a6;
+  --qd-ink-tertiary:  #767676;
+  --qd-ink-faint:     #6b6b6b;
+
+  /* ---- 线：半透明白，在任何底色上都是"提亮一档" ---- */
+  --qd-hairline:        rgba(255, 255, 255, 0.08);   /* 等效实色 #2a2a2a */
+  --qd-hairline-strong: rgba(255, 255, 255, 0.16);   /* 等效实色 #3a3a3a */
+  --qd-hairline-subtle: rgba(255, 255, 255, 0.05);
+
+  /* ---- 强调：只有一个蓝 ---- */
+  --qd-primary:      #3a83f7;
+  --qd-primary-soft: #16233a;
+  --qd-focus-ring:   #339cff;
+
+  /* ---- 状态：只用于小圆点和图标，不做底色 ---- */
+  --qd-success: #3a843f;
+  --qd-warning: #c9a227;
+  --qd-danger:  #d9534f;
+
+  /* ---- Diff：全库唯一允许的第二种色彩 ----
+     且只准出现在代码差异块里。绝不用于任何 UI 表面。 */
+  --qd-diff-add: #4ea870;
+  --qd-diff-del: #cf6b6b;
+
+  /* ---- 字体：系统无衬线，等宽只给代码 ---- */
+  --qd-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro",
+                  "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --qd-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---- 字号：偏小偏密，这是 app 不是落地页 ---- */
+  --qd-text-xs:  0.75rem;    /* 12 */
+  --qd-text-sm:  0.8125rem;  /* 13 */
+  --qd-text-md:  0.9375rem;  /* 15 */
+  --qd-text-lg:  1.0625rem;  /* 17 */
+  --qd-text-xl:  1.375rem;   /* 22 */
+  --qd-text-2xl: 1.75rem;    /* 28 */
+
+  /* 深色底上的亮字视觉上更粗（光渗），所以正文字重比浅色少 50 —— 400 → 350。
+     这条来自 references/hallmark/dark-mode.md，四个风格里原来一处都没有。 */
+  --qd-weight-body: 350;
+  --qd-weight-strong: 600;
+
+  --qd-leading-tight: 1.25;
+  --qd-leading-snug:  1.4;
+  --qd-leading-body:  1.5;
+  --qd-tracking-display: -0.02em;
+  --qd-tracking-body:    0;
+
+  /* ---- 间距：8 基数，密度高 ---- */
+  --qd-space-xs: 0.25rem;  /* 4 */
+  --qd-space-sm: 0.5rem;   /* 8 */
+  --qd-space-md: 0.75rem;  /* 12 */
+  --qd-space-lg: 1rem;     /* 16 */
+  --qd-space-xl: 1.5rem;   /* 24 */
+  --qd-space-2xl: 2rem;    /* 32 */
+  --qd-space-section: 3rem;
+
+  /* ---- 圆角：大圆角是签名，16px 起 ---- */
+  --qd-radius-xs: 4px;
+  --qd-radius-sm: 6px;
+  --qd-radius-md: 10px;
+  --qd-radius-lg: 16px;
+  --qd-radius-xl: 20px;
+  --qd-radius-full: 9999px;
+
+  --qd-border: 1px solid var(--qd-hairline);
+  --qd-border-strong: 1px solid var(--qd-hairline-strong);
+
+  /* ---- 阴影：几乎不用，弹层才用 ---- */
+  --qd-shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.55);
+
+  /* ---- 动效 ---- */
+  --qd-duration: 140ms;
+  --qd-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ---- 最小应用样式 ---- */
+:where(.ds-quiet-dark) {
+  background: var(--qd-canvas);
+  color: var(--qd-ink);
+  font-family: var(--qd-font-sans);
+  font-size: var(--qd-text-md);
+  font-weight: var(--qd-weight-body);
+  line-height: var(--qd-leading-body);
+  letter-spacing: var(--qd-tracking-body);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-quiet-dark) ::selection {
+  background: rgba(58, 131, 247, 0.35);
+}
+
+:where(.ds-quiet-dark) :where(h1, h2, h3, h4) {
+  font-family: var(--qd-font-sans);
+  font-weight: 600;
+  line-height: var(--qd-leading-tight);
+  letter-spacing: var(--qd-tracking-display);
+  color: var(--qd-ink);
+  margin: 0 0 var(--qd-space-sm);
+}
+:where(.ds-quiet-dark) :where(h1) { font-size: var(--qd-text-2xl); }
+:where(.ds-quiet-dark) :where(h2) { font-size: var(--qd-text-xl); }
+:where(.ds-quiet-dark) :where(h3) { font-size: var(--qd-text-lg); }
+:where(.ds-quiet-dark) :where(h4) { font-size: var(--qd-text-md); font-weight: 600; }
+
+:where(.ds-quiet-dark) :where(p) {
+  margin: 0 0 var(--qd-space-md);
+  max-width: 42em;
+  color: var(--qd-ink);
+}
+
+:where(.ds-quiet-dark) :where(a) {
+  color: var(--qd-primary);
+  text-decoration: none;
+}
+:where(.ds-quiet-dark) :where(a):hover { text-decoration: underline; }
+
+:where(.ds-quiet-dark) :where(code, kbd, pre) {
+  font-family: var(--qd-font-mono);
+  font-size: var(--qd-text-sm);
+}
+:where(.ds-quiet-dark) :where(pre) {
+  background: var(--qd-surface-input);
+  border-radius: var(--qd-radius-md);
+  padding: var(--qd-space-md) var(--qd-space-lg);
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: var(--qd-space-md) 0;
+}
+:where(.ds-quiet-dark) :where(code):not(pre code) {
+  background: var(--qd-surface-input);
+  border-radius: var(--qd-radius-xs);
+  padding: 0.1em 0.35em;
+}
+
+/* 按钮：全圆是签名之一 */
+:where(.ds-quiet-dark) :where(button, .ds-btn) {
+  font-family: var(--qd-font-sans);
+  font-size: var(--qd-text-xs);
+  font-weight: 500;
+  line-height: 1;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: var(--qd-radius-full);
+  background: var(--qd-ink);
+  color: var(--qd-canvas);
+  cursor: pointer;
+  transition: opacity var(--qd-duration) var(--qd-ease),
+              background var(--qd-duration) var(--qd-ease);
+}
+:where(.ds-quiet-dark) :where(button, .ds-btn):hover { opacity: 0.88; }
+
+:where(.ds-quiet-dark) :where(.ds-btn-secondary) {
+  background: var(--qd-surface);
+  color: var(--qd-ink);
+  box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
+}
+:where(.ds-quiet-dark) :where(.ds-btn-secondary):hover {
+  background: var(--qd-surface-hover);
+  opacity: 1;
+}
+
+/* 卡片：靠底色浮起，无边框无阴影 */
+:where(.ds-quiet-dark) :where(.ds-card) {
+  background: var(--qd-surface);
+  border-radius: var(--qd-radius-lg);
+  padding: var(--qd-space-lg);
+}
+
+/* 面板：抬升一层 */
+:where(.ds-quiet-dark) :where(.ds-panel) {
+  background: var(--qd-surface-raised);
+  border-radius: var(--qd-radius-xl);
+  padding: var(--qd-space-xl);
+}
+
+/* 输入框 */
+:where(.ds-quiet-dark) :where(input, textarea) {
+  font-family: var(--qd-font-sans);
+  font-size: var(--qd-text-sm);
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--qd-radius-lg);
+  background: var(--qd-surface-input);
+  color: var(--qd-ink);
+  box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
+  outline: none;
+}
+:where(.ds-quiet-dark) :where(input, textarea):focus {
+  box-shadow: inset 0 0 0 1px var(--qd-focus-ring);
+}
+
+/* 列表行：不加分隔线，靠圆角和间距 */
+:where(.ds-quiet-dark) :where(.ds-row) {
+  display: flex;
+  align-items: center;
+  gap: var(--qd-space-md);
+  padding: 10px 12px;
+  border-radius: var(--qd-radius-md);
+  transition: background var(--qd-duration) var(--qd-ease);
+}
+:where(.ds-quiet-dark) :where(.ds-row):hover { background: var(--qd-surface-hover); }
+
+/* 标签 */
+:where(.ds-quiet-dark) :where(.ds-tag) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--qd-text-xs);
+  font-weight: 500;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: var(--qd-radius-sm);
+  background: var(--qd-surface-raised);
+  color: var(--qd-ink-secondary);
+}
+
+/* 小标题 / 分组名 */
+:where(.ds-quiet-dark) :where(.ds-group-label) {
+  font-size: var(--qd-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--qd-ink-tertiary);
+}
+
+/* 指标 */
+:where(.ds-quiet-dark) :where(.ds-stat-value) {
+  font-size: var(--qd-text-xl);
+  font-weight: 600;
+  line-height: var(--qd-leading-tight);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  color: var(--qd-ink);
+}
+:where(.ds-quiet-dark) :where(.ds-stat-label) {
+  font-size: var(--qd-text-xs);
+  color: var(--qd-ink-tertiary);
+}
+
+:where(.ds-quiet-dark) :where(hr) {
+  border: 0;
+  border-top: var(--qd-border);
+  margin: var(--qd-space-lg) 0;
+}
+
+/* 状态点 */
+:where(.ds-quiet-dark) :where(.ds-dot) {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: var(--qd-radius-full);
+  background: var(--qd-success);
+}

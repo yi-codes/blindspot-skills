@@ -1,0 +1,101 @@
+[
+  {
+    "slug": "editorial-serif",
+    "name": "Editorial Serif",
+    "description": "暖纸白画布上的编辑体。标题走衬线、正文走黑体，全系统只有一个赭红强调色， 所有装饰让位给文字。目标是让人愿意把一篇长文读完，而不是被界面惊艳一下。",
+    "register": "story",
+    "surface": "light",
+    "cues": [
+      "长文",
+      "博客",
+      "白皮书",
+      "品牌故事",
+      "需要慢慢读的页面",
+      "杂志式栏目"
+    ],
+    "avoid": [
+      "工具界面",
+      "高密度数据",
+      "桌面应用",
+      "需要速度感的场景"
+    ],
+    "prefix": "--ed-*",
+    "canvas": "#FBF8F3",
+    "ink": "#1A1714",
+    "has_prompt": true,
+    "has_css": true
+  },
+  {
+    "slug": "quiet-dark",
+    "name": "Quiet Dark",
+    "description": "原生桌面应用的深色界面。纯灰阶、无彩色相，靠明度差和 8% 白的叠加边框分层， 大圆角（16px 起）、系统无衬线字体、紧凑的行高。整个界面只有一处彩色： 焦点环和信息蓝；代码差异（diff）是唯一被放行的第二处。 适合需要长时间盯着、且不该抢内容风头的工具界面。",
+    "register": "tool",
+    "surface": "dark",
+    "cues": [
+      "桌面应用",
+      "编辑器面板",
+      "内部后台",
+      "Agent 对话界面",
+      "需要长时间注视的工具"
+    ],
+    "avoid": [
+      "营销落地页",
+      "长文阅读",
+      "品牌表达",
+      "打印"
+    ],
+    "prefix": "--qd-*",
+    "canvas": "#0d0d0d",
+    "ink": "#f7f7f7",
+    "has_prompt": true,
+    "has_css": true
+  },
+  {
+    "slug": "swiss-grid",
+    "name": "Swiss Grid",
+    "description": "理性的秩序感。纯白画布、无衬线一族到底、只留一个电蓝强调色， 所有对齐都能追溯到一个 8px 的基线格。装饰即噪音，一律去掉。",
+    "register": "professional",
+    "surface": "light",
+    "cues": [
+      "落地页",
+      "产品页",
+      "案例研究",
+      "数据看板",
+      "B 端界面",
+      "需要显得专业的页面"
+    ],
+    "avoid": [
+      "长文阅读",
+      "需要情绪的场景",
+      "桌面应用外壳"
+    ],
+    "prefix": "--sw-*",
+    "canvas": "#FFFFFF",
+    "ink": "#111111",
+    "has_prompt": true,
+    "has_css": true
+  },
+  {
+    "slug": "terminal-mono",
+    "name": "Terminal Mono",
+    "description": "把命令行搬进正文。深灰蓝画布、等宽为骨架、语义四色只用来标记状态。 标题和代码走等宽，长段落退回无衬线——满屏等宽中文是读不下去的。",
+    "register": "technical",
+    "surface": "dark",
+    "cues": [
+      "技术文档",
+      "开发者工具",
+      "CLI 配套界面",
+      "以日志和代码为主体的页面"
+    ],
+    "avoid": [
+      "消费级产品",
+      "品牌表达",
+      "需要温度的场景"
+    ],
+    "prefix": "--tm-*",
+    "canvas": "#0E1116",
+    "ink": "#C9D1D9",
+    "has_prompt": true,
+    "has_css": true
+  }
+]

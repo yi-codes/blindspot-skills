@@ -4,6 +4,14 @@ name: Editorial Serif
 description: >-
   暖纸白画布上的编辑体。标题走衬线、正文走黑体，全系统只有一个赭红强调色，
   所有装饰让位给文字。目标是让人愿意把一篇长文读完，而不是被界面惊艳一下。
+# ---------------------------------------------------------------- 选择条件
+# 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
+# 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+cues: 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目
+avoid: 工具界面、高密度数据、桌面应用、需要速度感的场景
+surface: light
+register: story
+
 colors:
   canvas: "#FBF8F3"
   surface: "#FFFFFF"

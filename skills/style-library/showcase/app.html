@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>风格库 · App 界面样张</title>
+<link rel="stylesheet" href="../styles/editorial-serif/tokens.css">
+<link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
+<link rel="stylesheet" href="../styles/terminal-mono/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 32px 80px;
+    background: #E8E7E4;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    color: #2B2B2B;
+  }
+  .wrap { max-width: 1320px; margin: 0 auto; }
+
+  .hd { margin-bottom: 40px; }
+  .hd h1 { font-size: 26px; font-weight: 650; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .hd p { font-size: 13.5px; line-height: 1.8; color: #5F5F5F; margin: 0; max-width: 46em; }
+
+  .row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+
+  .phone-wrap { width: 390px; }
+  .phone-label { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+  .phone-label b { font-size: 13.5px; font-weight: 650; }
+  .phone-label span {
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 10.5px; color: #86847E;
+    border: 1px solid #D5D3CE; border-radius: 3px; padding: 1px 5px;
+  }
+
+  .phone {
+    height: 780px;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 24px 60px rgba(0,0,0,.14);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 状态栏：用系统字体，各风格通用 */
+  .statusbar {
+    flex: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px 6px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0;
+  }
+  .statusbar .icons { display: flex; gap: 5px; align-items: center; font-size: 10px; }
+
+  .tabbar {
+    flex: none;
+    display: flex; justify-content: space-around;
+    padding: 12px 0 22px;
+  }
+  .tabbar div { font-size: 10px; letter-spacing: .04em; }
+  .tabbar div.active { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <h1>App 界面 · 同一套 token 在手机上</h1>
+    <p>
+      三个界面用的是各自的 <code>tokens.css</code>，没有为移动端另设变量。做法是<b>取小一档的字号、收紧一档的间距</b>，
+      而不是发明新数值 —— 这是 token 体系的正常用法。
+    </p>
+  </div>
+
+  <div class="row">
+
+    <!-- ═══════════ 1. Editorial · 阅读 App ═══════════ -->
+    <div class="phone-wrap">
+      <div class="phone-label"><b>阅读 App</b><span>editorial-serif</span></div>
+      <div class="phone ds-editorial-serif" style="background:var(--ed-bg);">
+
+        <div class="statusbar" style="color:var(--ed-ink);">
+          <span>9:41</span>
+          <span class="icons">●●●  ⌁  ▮</span>
+        </div>
+
+        <!-- 头部 -->
+        <div style="padding: 8px 28px 0;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--ed-font-display); font-size:19px; font-weight:700; letter-spacing:-0.01em;">砚 · 今天</span>
+            <span style="font-size:11px; letter-spacing:0.14em; color:var(--ed-accent);">11 / 16</span>
+          </div>
+        </div>
+
+        <!-- 头条 -->
+        <div style="padding: 26px 28px 0;">
+          <div class="ds-group-label" style="font-size:10px;">Editor's pick</div>
+          <h1 style="font-size:29px; line-height:1.25; margin:10px 0 10px;">把复杂的事<br>说清楚</h1>
+          <p style="font-size:14px; line-height:1.75; color:var(--ed-ink-muted); margin:0 0 12px;">
+            好的排版不负责让人惊艳，它负责让人读下去。
+          </p>
+          <div style="font-size:11px; color:var(--ed-ink-faint); letter-spacing:0.06em;
+                      padding-bottom:18px; border-bottom:1px solid var(--ed-line);">
+            王 一 · 12 分钟
+          </div>
+        </div>
+
+        <!-- 列表 -->
+        <div style="flex:1; overflow:hidden; padding: 4px 28px 0;">
+          <div style="padding:18px 0; border-bottom:1px solid var(--ed-line);">
+            <div style="display:flex; gap:12px; align-items:baseline; justify-content:space-between;">
+              <h3 style="font-size:16.5px; margin:0; font-family:var(--ed-font-display);">留白是一种语气</h3>
+              <span style="font-size:10px; color:var(--ed-ink-faint); flex:none;">5 分</span>
+            </div>
+            <p style="font-size:12.5px; line-height:1.7; color:var(--ed-ink-muted); margin:6px 0 0;">
+              行高从 1.5 加到 1.85，同样的字会产生完全不同的速度。
+            </p>
+          </div>
+
+          <div style="padding:18px 0; border-bottom:1px solid var(--ed-line);">
+            <div style="display:flex; gap:12px; align-items:baseline; justify-content:space-between;">
+              <h3 style="font-size:16.5px; margin:0; font-family:var(--ed-font-display);">纸张的重量</h3>
+              <span style="font-size:10px; color:var(--ed-ink-faint); flex:none;">8 分</span>
+            </div>
+            <p style="font-size:12.5px; line-height:1.7; color:var(--ed-ink-muted); margin:6px 0 0;">
+              真实的白纸从来不白。一点暖，就是一点可以信任。
+            </p>
+          </div>
+
+          <div style="padding:18px 0;">
+            <div style="display:flex; gap:12px; align-items:baseline; justify-content:space-between;">
+              <h3 style="font-size:16.5px; margin:0; font-family:var(--ed-font-display);">衬线的分寸</h3>
+              <span style="font-size:10px; color:var(--ed-ink-faint); flex:none;">6 分</span>
+            </div>
+            <p style="font-size:12.5px; line-height:1.7; color:var(--ed-ink-muted); margin:6px 0 0;">
+              标题衬线、正文黑体，中文排版最稳的一组搭配。
+            </p>
+          </div>
+        </div>
+
+        <div class="tabbar" style="border-top:1px solid var(--ed-line);">
+          <div class="active" style="color:var(--ed-accent);">阅 读</div>
+          <div style="color:var(--ed-ink-faint);">收 藏</div>
+          <div style="color:var(--ed-ink-faint);">我 的</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ 2. Swiss · 数据看板 App ═══════════ -->
+    <div class="phone-wrap">
+      <div class="phone-label"><b>数据看板 App</b><span>swiss-grid</span></div>
+      <div class="phone ds-swiss-grid" style="background:var(--sw-canvas);">
+
+        <div class="statusbar" style="color:var(--sw-ink);">
+          <span>9:41</span>
+          <span class="icons">●●●  ⌁  ▮</span>
+        </div>
+
+        <div style="padding: 6px 24px 0;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:17px; font-weight:700; letter-spacing:-0.02em;">Overview</span>
+            <span style="font-size:11px; color:var(--sw-accent); letter-spacing:.06em;">近 7 天 ▾</span>
+          </div>
+        </div>
+
+        <!-- 指标 2x2 -->
+        <div style="padding: 20px 24px 0; display:grid; grid-template-columns:1fr 1fr; gap:16px 12px;">
+          <div class="ds-stat">
+            <div class="ds-stat-label" style="font-size:9.5px;">请求量</div>
+            <div class="ds-stat-value" style="font-size:25px;">2.4M</div>
+            <div style="font-size:10px; color:var(--sw-accent);">+18.2%</div>
+          </div>
+          <div class="ds-stat">
+            <div class="ds-stat-label" style="font-size:9.5px;">P99 延迟</div>
+            <div class="ds-stat-value" style="font-size:25px;">84ms</div>
+            <div style="font-size:10px; color:var(--sw-ink-muted);">−6ms</div>
+          </div>
+          <div class="ds-stat">
+            <div class="ds-stat-label" style="font-size:9.5px;">错误率</div>
+            <div class="ds-stat-value" style="font-size:25px;">0.02%</div>
+            <div style="font-size:10px; color:var(--sw-ink-muted);">持平</div>
+          </div>
+          <div class="ds-stat">
+            <div class="ds-stat-label" style="font-size:9.5px;">活跃源</div>
+            <div class="ds-stat-value" style="font-size:25px;">160</div>
+            <div style="font-size:10px; color:var(--sw-ink-muted);">+3 新增</div>
+          </div>
+        </div>
+
+        <!-- 列表 -->
+        <div style="flex:1; overflow:hidden; padding: 24px 24px 0;">
+          <div style="font-size:9.5px; letter-spacing:.06em; color:var(--sw-ink-muted);
+                      text-transform:uppercase; padding-bottom:8px; border-bottom:2px solid var(--sw-line-strong);">
+            数据源
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between;
+                      padding:13px 0; border-bottom:1px solid var(--sw-line);">
+            <div>
+              <div style="font-size:13px; font-weight:600;">postgres-prod</div>
+              <div style="font-size:11px; color:var(--sw-ink-muted); font-variant-numeric:tabular-nums;">48,201 行 · 1.2s</div>
+            </div>
+            <span class="ds-tag" style="font-size:9px; padding:2px 6px;">同步中</span>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between;
+                      padding:13px 0; border-bottom:1px solid var(--sw-line);">
+            <div>
+              <div style="font-size:13px; font-weight:600;">stripe-events</div>
+              <div style="font-size:11px; color:var(--sw-ink-muted); font-variant-numeric:tabular-nums;">12,884 行 · 0.4s</div>
+            </div>
+            <span class="ds-tag" style="font-size:9px; padding:2px 6px;">完成</span>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between;
+                      padding:13px 0; border-bottom:1px solid var(--sw-line);">
+            <div>
+              <div style="font-size:13px; font-weight:600;">s3-archive</div>
+              <div style="font-size:11px; color:var(--sw-ink-muted); font-variant-numeric:tabular-nums;">— · 待重试</div>
+            </div>
+            <span class="ds-tag" style="font-size:9px; padding:2px 6px; background:var(--sw-surface-alt); color:var(--sw-ink-faint);">暂停</span>
+          </div>
+        </div>
+
+        <div class="tabbar" style="border-top:1px solid var(--sw-line);">
+          <div class="active" style="color:var(--sw-ink);">概览</div>
+          <div style="color:var(--sw-ink-faint);">数据</div>
+          <div style="color:var(--sw-ink-faint);">设置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ 3. Terminal · 开发工具 App ═══════════ -->
+    <div class="phone-wrap">
+      <div class="phone-label"><b>开发工具 App</b><span>terminal-mono</span></div>
+      <div class="phone ds-terminal-mono" style="background:var(--tm-bg);">
+
+        <div class="statusbar" style="color:var(--tm-ink-strong);">
+          <span>9:41</span>
+          <span class="icons">●●●  ⌁  ▮</span>
+        </div>
+
+        <div style="padding: 6px 24px 0; display:flex; align-items:center; gap:10px;">
+          <span style="font-size:14px; font-weight:700; color:var(--tm-ink-strong);">gridbase</span>
+          <span class="ds-tag" style="font-size:9px; padding:2px 6px;">connected</span>
+          <span style="margin-left:auto; font-size:11px; color:var(--tm-ink-muted);">prod</span>
+        </div>
+
+        <!-- 终端输出 -->
+        <div style="flex:1; overflow:hidden; padding: 18px 24px 0; font-size:12px; line-height:1.85;">
+          <div style="color:var(--tm-ink-muted);">$ gridbase sync --watch</div>
+          <div style="color:var(--tm-ink);">connecting to postgres-prod…</div>
+          <div style="color:var(--tm-accent);">✓ connected  84ms</div>
+
+          <div style="margin-top:14px; color:var(--tm-ink-muted);">→ scanning tables</div>
+          <div style="color:var(--tm-ink);">
+            &nbsp;&nbsp;orders&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--tm-accent);">✓</span> 12,884
+          </div>
+          <div style="color:var(--tm-ink);">
+            &nbsp;&nbsp;customers&nbsp;&nbsp;&nbsp;<span style="color:var(--tm-accent);">✓</span> 3,204
+          </div>
+          <div style="color:var(--tm-ink);">
+            &nbsp;&nbsp;events&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--tm-accent);">✓</span> 32,113
+          </div>
+          <div style="color:var(--tm-ink);">
+            &nbsp;&nbsp;invoices&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--tm-warn);">!</span> retrying
+          </div>
+
+          <div style="margin-top:14px; color:var(--tm-ink-muted);">→ backoff 2s (attempt 2/5)</div>
+
+          <div style="margin-top:16px; padding:10px 12px; background:var(--tm-surface);
+                      border:1px solid var(--tm-warn); border-radius:4px; font-size:11.5px; line-height:1.7;">
+            <span style="color:var(--tm-warn);">warn</span> invoices: 字段 updated_at 缺失，
+            本次退回全量同步。
+          </div>
+
+          <div style="margin-top:14px; color:var(--tm-ink-faint);">▌</div>
+        </div>
+
+        <!-- 输入框 -->
+        <div style="padding: 12px 24px 8px;">
+          <div style="display:flex; align-items:center; gap:8px; padding:11px 14px;
+                      background:var(--tm-surface); border:1px solid var(--tm-line-strong); border-radius:4px;">
+            <span style="color:var(--tm-accent); font-size:12.5px;">$</span>
+            <span style="font-size:12.5px; color:var(--tm-ink-muted);">输入命令…</span>
+          </div>
+        </div>
+
+        <div class="tabbar" style="border-top:1px solid var(--tm-line);">
+          <div class="active" style="color:var(--tm-accent);">logs</div>
+          <div style="color:var(--tm-ink-faint);">metrics</div>
+          <div style="color:var(--tm-ink-faint);">config</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -54,8 +54,9 @@
   --sw-space-9: 7rem;     /* 112 */
 
   /* ---- 形状：极小圆角，几乎方 ---- */
+  --sw-radius-none: 0;
   --sw-radius: 2px;
-  --sw-radius-pill: 999px;
+  --sw-radius-pill: 9999px;
   --sw-border: 1px solid var(--sw-line);
   --sw-border-strong: 1px solid var(--sw-line-strong);
 
@@ -158,7 +159,7 @@
   color: var(--sw-ink-muted);
 }
 
-:where(.ds-swiss-grid) :where(.ds-eyebrow) {
+:where(.ds-swiss-grid) :where(.ds-group-label) {
   display: inline-block;
   font-size: var(--sw-text-xs);
   font-weight: 500;

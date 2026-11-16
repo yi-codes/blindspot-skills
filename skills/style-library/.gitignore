@@ -1,6 +1,9 @@
 # 外部样本原文不入库 —— 版权是别人的，且体积大、无二次价值
 # 提炼结论在 NOTES.md 里，来源 URL 也在那里
 references/*/DESIGN.md
+references/*/SKILL.md
+references/hallmark/*.md
+!references/hallmark/NOTES.md
 
 # Python 缓存
 __pycache__/

@@ -22,7 +22,7 @@ OUT = ROOT / "preview" / "index.html"
 
 # ---- 默认演示内容：三种风格用同一份，差异才可比 ----
 DEFAULT_DEMO = """
-      <span class="ds-eyebrow">Case Study · 案例</span>
+      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>

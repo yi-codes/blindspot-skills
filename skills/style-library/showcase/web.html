@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>风格库 · Web 页面样张</title>
+<link rel="stylesheet" href="../styles/editorial-serif/tokens.css">
+<link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
+<link rel="stylesheet" href="../styles/terminal-mono/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px 80px;
+    background: #E8E7E4;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    color: #2B2B2B;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  .page-label {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 0 0 10px 2px;
+  }
+  .page-label b { font-size: 14px; font-weight: 650; }
+  .page-label span {
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 11px; color: #86847E;
+    border: 1px solid #D5D3CE; border-radius: 3px; padding: 1px 6px;
+  }
+  .page-label em { font-style: normal; font-size: 12.5px; color: #86847E; margin-left: auto; }
+
+  .frame {
+    border-radius: 6px; overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 12px 32px rgba(0,0,0,.06);
+    margin-bottom: 56px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══════════════════ 1. Editorial · 博客文章页 ══════════════════ -->
+<div class="page-label">
+  <b>Web · 博客文章页</b><span>editorial-serif</span>
+  <em>长文阅读 / 品牌故事</em>
+</div>
+<div class="frame ds-editorial-serif" style="padding: 0 0 64px;">
+
+  <!-- 导航 -->
+  <header style="display:flex; align-items:center; justify-content:space-between;
+                 padding: 22px 64px; border-bottom: 1px solid var(--ed-line);">
+    <div style="font-family: var(--ed-font-display); font-size: 20px; font-weight:700; letter-spacing:-0.01em;">
+      砚 · Yàn
+    </div>
+    <nav style="display:flex; gap:32px; font-size:13.5px; letter-spacing:0.08em;">
+      <a href="#" style="color:var(--ed-ink); text-decoration:none;">文 章</a>
+      <a href="#" style="color:var(--ed-ink); text-decoration:none;">关 于</a>
+      <a href="#" style="color:var(--ed-ink-muted); text-decoration:none;">订 阅</a>
+    </nav>
+  </header>
+
+  <!-- 正文 -->
+  <article style="padding: 72px 64px 0; max-width: 860px;">
+    <div class="ds-group-label">Case Study · 案例</div>
+    <h1 style="font-size:54px; margin:18px 0 24px;">把复杂的事<br>说清楚</h1>
+
+    <div style="display:flex; gap:18px; align-items:center; font-size:13px;
+                color:var(--ed-ink-faint); letter-spacing:0.06em; padding-bottom:28px;
+                border-bottom:1px solid var(--ed-line);">
+      <span>王 一</span><span>·</span><span>2026 年 11 月 16 日</span><span>·</span><span>12 分钟</span>
+    </div>
+
+    <p style="margin-top:36px; font-size:17px; line-height:1.85;">
+      好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。
+    </p>
+    <p style="font-size:17px; line-height:1.85;">
+      行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，这件事是设计出来的，不是读者自己决定的。
+    </p>
+
+    <h2 style="font-size:40px; margin-top:52px;">留白是一种语气</h2>
+    <p style="font-size:17px; line-height:1.85;">
+      中文是满方块。拉丁字母因为字形收窄，行距紧一点反而精神；汉字每一格都填满，行距一紧就闷成一堵墙。这不是审美偏好，是几何问题。
+    </p>
+
+    <!-- 引用块 -->
+    <blockquote style="margin:40px 0; padding:8px 0 8px 28px;
+                       border-left:2px solid var(--ed-accent);">
+      <p style="font-family:var(--ed-font-display); font-size:22px; line-height:1.6;
+                margin:0; color:var(--ed-ink);">
+        排版不是装饰，是把作者的呼吸标出来。
+      </p>
+    </blockquote>
+
+    <p style="font-size:17px; line-height:1.85;">
+      所以这套风格里的数字都是定死的：正文 17px、行高 1.85、宽度 34 个汉字、圆角 0、阴影 0。改任何一个，它就不再是这个风格。
+    </p>
+
+    <div style="display:flex; gap:14px; align-items:center; margin-top:44px;">
+      <button>继续阅读</button>
+      <span class="ds-tag">2026 年 · 秋季刊</span>
+    </div>
+  </article>
+
+  <!-- 相关文章 -->
+  <div style="padding: 64px 64px 0; margin-top:56px; border-top:1px solid var(--ed-line);">
+    <div class="ds-group-label" style="margin-bottom:24px;">Related · 相关</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:40px;">
+      <div class="ds-card">
+        <h3 style="font-size:22px;">纸张的重量</h3>
+        <p style="font-size:14px; line-height:1.75; color:var(--ed-ink-muted); margin:0;">
+          背景不用纯白，因为真实的白纸从来不白。一点暖，就是一点「可以信任」。
+        </p>
+      </div>
+      <div class="ds-card">
+        <h3 style="font-size:22px;">衬线的分寸</h3>
+        <p style="font-size:14px; line-height:1.75; color:var(--ed-ink-muted); margin:0;">
+          标题用衬线，正文用黑体。中文排版里最不容易出错的一组搭配。
+        </p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-stat-label">阅读时长</div>
+        <div class="ds-stat-value">12 分钟</div>
+        <div class="ds-stat-label">全文 3,400 字</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ 2. Swiss · 产品落地页 ══════════════════ -->
+<div class="page-label">
+  <b>Web · 产品落地页</b><span>swiss-grid</span>
+  <em>产品页 / 案例 / 看板</em>
+</div>
+<div class="frame ds-swiss-grid" style="padding: 0 0 64px;">
+
+  <!-- 导航 -->
+  <header style="display:flex; align-items:center; justify-content:space-between;
+                 padding:20px 48px; border-bottom:1px solid var(--sw-line);">
+    <div style="font-weight:700; font-size:16px; letter-spacing:-0.02em; display:flex; align-items:center; gap:10px;">
+      <span style="display:inline-block; width:18px; height:18px; background:var(--sw-accent); border-radius:2px;"></span>
+      Gridbase
+    </div>
+    <nav style="display:flex; gap:28px; font-size:13px; color:var(--sw-ink-muted);">
+      <a href="#" style="color:var(--sw-ink); text-decoration:none;">产品</a>
+      <a href="#" style="color:var(--sw-ink-muted); text-decoration:none;">文档</a>
+      <a href="#" style="color:var(--sw-ink-muted); text-decoration:none;">定价</a>
+      <a href="#" style="color:var(--sw-ink-muted); text-decoration:none;">案例</a>
+    </nav>
+    <div style="display:flex; gap:10px;">
+      <button class="ds-btn-ghost" style="padding:8px 16px; font-size:12px;">登录</button>
+      <button style="padding:8px 16px; font-size:12px;">免费试用</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section style="padding: 72px 48px 56px; display:grid; grid-template-columns: 1.4fr 1fr; gap:64px; align-items:end;">
+    <div>
+      <div class="ds-group-label">Data infrastructure</div>
+      <h1 style="font-size:49px; margin:12px 0 20px; max-width:11em;">
+        把混乱的数据<br>理成一条直线
+      </h1>
+      <p style="font-size:16px; line-height:1.6; color:var(--sw-ink-muted); max-width:32em; margin-bottom:32px;">
+        统一的采集、清洗、建模与分发。8 分钟接完第一个数据源，不用先读两百页文档。
+      </p>
+      <div style="display:flex; gap:12px;">
+        <button>开始使用</button>
+        <button class="ds-btn-ghost">看 3 分钟演示</button>
+      </div>
+    </div>
+
+    <!-- 指标区 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px 20px;">
+      <div class="ds-stat">
+        <div class="ds-stat-label">日均处理</div>
+        <div class="ds-stat-value">2.4B</div>
+      </div>
+      <div class="ds-stat">
+        <div class="ds-stat-label">P99 延迟</div>
+        <div class="ds-stat-value">84ms</div>
+      </div>
+      <div class="ds-stat">
+        <div class="ds-stat-label">接入数据源</div>
+        <div class="ds-stat-value">160+</div>
+      </div>
+      <div class="ds-stat">
+        <div class="ds-stat-label">可用性</div>
+        <div class="ds-stat-value">99.98%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 特性三列 -->
+  <section style="padding: 8px 48px 0;">
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+      <div class="ds-card">
+        <div class="ds-tag" style="margin-bottom:14px;">01 · 采集</div>
+        <h3 style="font-size:20px; margin-bottom:8px;">一条命令接完</h3>
+        <p style="font-size:13px; line-height:1.7; color:var(--sw-ink-muted); margin:0;">
+          160 个数据源的连接器，认证、限流、重试全部内置。你只需要选一个源。
+        </p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-tag" style="margin-bottom:14px;">02 · 建模</div>
+        <h3 style="font-size:20px; margin-bottom:8px;">版本化的模型</h3>
+        <p style="font-size:13px; line-height:1.7; color:var(--sw-ink-muted); margin:0;">
+          每次改动都有 diff，能回滚到任意一天。数据模型的 git，就是这么用的。
+        </p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-tag" style="margin-bottom:14px;">03 · 分发</div>
+        <h3 style="font-size:20px; margin-bottom:8px;">按需同步</h3>
+        <p style="font-size:13px; line-height:1.7; color:var(--sw-ink-muted); margin:0;">
+          下游要什么给什么，不用全量搬。同步延迟可配到秒级，也可以按天批。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 对比条 -->
+  <section style="margin: 56px 48px 0; padding: 28px 32px; background:var(--sw-surface); border-radius:2px;
+                  display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-size:20px; font-weight:600; letter-spacing:-0.01em;">团队规模 50 人以内，永久免费</div>
+      <div style="font-size:13px; color:var(--sw-ink-muted); margin-top:6px;">不用信用卡，不限数据源数量。</div>
+    </div>
+    <button>查看定价</button>
+  </section>
+</div>
+
+<!-- ══════════════════ 3. Terminal · 技术文档页 ══════════════════ -->
+<div class="page-label">
+  <b>Web · 技术文档页</b><span>terminal-mono</span>
+  <em>技术文档 / 开发者工具</em>
+</div>
+<div class="frame ds-terminal-mono" style="padding: 0 0 64px;">
+
+  <!-- 顶栏 -->
+  <header style="display:flex; align-items:center; gap:14px; padding:16px 32px;
+                 border-bottom:1px solid var(--tm-line);">
+    <span style="color:var(--tm-ink-strong); font-size:14px; font-weight:700;">gridbase</span>
+    <span class="ds-tag" style="font-size:10px;">v2.4.0</span>
+    <span style="font-size:12px; color:var(--tm-ink-muted);">docs / quickstart</span>
+    <div style="margin-left:auto; display:flex; gap:16px; font-size:12px; color:var(--tm-ink-muted);">
+      <a href="#" style="color:var(--tm-ink-muted); text-decoration:none;">guides</a>
+      <a href="#" style="color:var(--tm-info); text-decoration:none;">api</a>
+      <a href="#" style="color:var(--tm-ink-muted); text-decoration:none;">changelog</a>
+    </div>
+  </header>
+
+  <div style="display:grid; grid-template-columns: 220px 1fr; gap:0;">
+    <!-- 侧栏 -->
+    <aside style="padding:28px 20px; border-right:1px solid var(--tm-line); font-size:12.5px;">
+      <div style="color:var(--tm-ink-muted); font-size:11px; letter-spacing:.08em; margin-bottom:12px;">GETTING STARTED</div>
+      <div style="color:var(--tm-accent); padding:5px 0;">▸ quickstart</div>
+      <div style="color:var(--tm-ink-muted); padding:5px 0;">installation</div>
+      <div style="color:var(--tm-ink-muted); padding:5px 0;">authentication</div>
+      <div style="color:var(--tm-ink-muted); font-size:11px; letter-spacing:.08em; margin:20px 0 12px;">CONCEPTS</div>
+      <div style="color:var(--tm-ink-muted); padding:5px 0;">sources</div>
+      <div style="color:var(--tm-ink-muted); padding:5px 0;">models</div>
+      <div style="color:var(--tm-ink-muted); padding:5px 0;">sync</div>
+    </aside>
+
+    <!-- 正文 -->
+    <main style="padding:36px 48px; max-width:720px;">
+      <h1 style="font-size:28px; margin-bottom:10px;">quickstart</h1>
+      <p style="color:var(--tm-ink-muted); font-size:13px;">
+        从零到第一条同步，大约 8 分钟。
+      </p>
+
+      <hr>
+
+      <h2 style="font-size:22px; margin:28px 0 12px;">1. 安装</h2>
+      <p>用官方安装脚本，会自动检测平台并校验签名：</p>
+      <pre style="margin:16px 0;"><code>curl -fsSL https://get.gridbase.dev | sh
+gridbase --version   <span style="color:var(--tm-ink-muted)"># v2.4.0</span></code></pre>
+
+      <h2 style="font-size:22px; margin:32px 0 12px;">2. 连接数据源</h2>
+      <p>取一个 API key，写进配置文件：</p>
+      <pre style="margin:16px 0;"><code><span style="color:var(--tm-ink-muted)">// gridbase.config.ts</span>
+export default {
+  source: <span style="color:var(--tm-primary)">"postgres"</span>,
+  url: process.env.<span style="color:var(--tm-warn)">DATABASE_URL</span>,
+  sync: { mode: <span style="color:var(--tm-primary)">"incremental"</span>, interval: <span style="color:var(--tm-info)">60</span> },
+}</code></pre>
+
+      <div style="display:flex; gap:10px; align-items:center; padding:14px 16px; margin:20px 0;
+                  background:var(--tm-surface); border:1px solid var(--tm-warn); border-radius:4px;">
+        <span class="ds-tag ds-tag-warn" style="font-size:10px;">note</span>
+        <span style="font-size:12.5px;">incremental 模式需要表上有 <code>updated_at</code> 或递增主键。</span>
+      </div>
+
+      <h2 style="font-size:22px; margin:32px 0 12px;">3. 跑第一次同步</h2>
+      <pre style="margin:16px 0;"><code><span class="ds-prompt">gridbase sync --dry-run</span>
+<span style="color:var(--tm-ink-muted)">→ scanning 12 tables…</span>
+<span style="color:var(--tm-accent)">✓ 12 tables, 48,201 rows ready</span>
+<span style="color:var(--tm-ink-muted)">→ estimated 1.2s</span></code></pre>
+
+      <div style="display:flex; gap:10px; margin-top:28px;">
+        <button>下一步：models →</button>
+        <span class="ds-tag" style="align-self:center;">stable</span>
+        <span class="ds-tag ds-tag-danger" style="align-self:center; font-size:10px;">breaking in 3.0</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

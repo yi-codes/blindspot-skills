@@ -84,6 +84,7 @@ cat > "$dir/tokens.css" <<EOF
 
   /* ---- 形状 ---- */
   --${prefix}-radius: 0;
+  --${prefix}-radius-sm: 2px;
   --${prefix}-border: 1px solid var(--${prefix}-line);
   --${prefix}-border-strong: 1px solid var(--${prefix}-ink);
 

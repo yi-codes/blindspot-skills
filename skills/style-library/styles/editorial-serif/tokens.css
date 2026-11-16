@@ -133,7 +133,7 @@
 }
 
 /* 小标签：全大写 + 宽字距，用于栏目名 */
-:where(.ds-editorial-serif) :where(.ds-eyebrow) {
+:where(.ds-editorial-serif) :where(.ds-group-label) {
   font-family: var(--ed-font-body);
   font-size: var(--ed-text-xs);
   font-weight: 600;

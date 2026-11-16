@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet Dark · Codex 风格界面样张</title>
+<link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    padding: 52px 24px 88px;
+    background: #050505;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    color: #7a7a7a;
+  }
+  .page { max-width: 1250px; margin: 0 auto; }
+
+  /* ---------- 页面说明 ---------- */
+  .intro { margin-bottom: 44px; padding-left: 4px; }
+  .intro h1 {
+    font-size: 20px; font-weight: 600; color: #e8e8e8;
+    margin: 0 0 10px; letter-spacing: -0.015em;
+  }
+  .intro p {
+    font-size: 13px; line-height: 1.85; color: #7a7a7a;
+    margin: 0; max-width: 52em;
+  }
+  .intro code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11.5px; color: #a6a6a6;
+    background: #161616; padding: 1px 5px; border-radius: 4px;
+  }
+
+  /* ---------- 窗口外框 ---------- */
+  .cap { margin: 0 0 14px; padding-left: 4px; display: flex; align-items: baseline; gap: 10px; }
+  .cap b { font-size: 13px; font-weight: 600; color: #c9c9c9; }
+  .cap span { font-size: 11.5px; color: #5a5a5a; }
+  .cap em {
+    font-family: ui-monospace, "SF Mono", monospace; font-style: normal;
+    font-size: 10.5px; color: #6b6b6b;
+    border: 1px solid #232323; border-radius: 4px; padding: 1px 5px;
+  }
+
+  .win {
+    width: 1200px; height: 780px;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .09),
+      0 2px 0 0 rgba(255, 255, 255, .03) inset,
+      0 40px 110px rgba(0, 0, 0, .85);
+  }
+  .win + .cap { margin-top: 52px; }
+
+  /* 标题栏 */
+  .tbar {
+    height: 44px; flex: 0 0 44px;
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 14px;
+    background: var(--qd-surface-input);
+    box-shadow: inset 0 -1px 0 0 var(--qd-hairline);
+  }
+  .lights { display: flex; gap: 8px; }
+  .lights i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .lights i:nth-child(1) { background: #ff5f57; opacity: .9; }
+  .lights i:nth-child(2) { background: #febc2e; opacity: .9; }
+  .lights i:nth-child(3) { background: #28c840; opacity: .9; }
+  .tbar-title {
+    flex: 1; text-align: center;
+    font-size: 12px; color: var(--qd-ink-secondary);
+    letter-spacing: .01em;
+  }
+  .tbar-spacer { width: 52px; }
+
+  .app { flex: 1; display: flex; min-height: 0; }
+
+  /* ---------- 侧栏 ---------- */
+  .aside {
+    width: 250px; flex: 0 0 250px;
+    background: var(--qd-surface-input);
+    box-shadow: inset -1px 0 0 0 var(--qd-hairline);
+    display: flex; flex-direction: column;
+    padding: 10px 8px 8px;
+  }
+  .newtask {
+    display: flex; align-items: center; gap: 8px;
+    width: 100%; height: 34px;
+    padding: 0 10px;
+    border-radius: var(--qd-radius-md);
+    color: var(--qd-ink);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+  }
+  .newtask:hover { background: var(--qd-surface-hover); }
+  .newtask svg { flex: 0 0 16px; opacity: .75; }
+  .newtask kbd {
+    margin-left: auto;
+    font-family: var(--qd-font-mono); font-size: 10.5px;
+    color: var(--qd-ink-tertiary);
+    background: none; padding: 0;
+  }
+
+  .search {
+    margin: 8px 0 12px;
+    height: 30px; display: flex; align-items: center; gap: 7px;
+    padding: 0 11px;
+    border-radius: var(--qd-radius-full);
+    background: var(--qd-canvas);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    color: var(--qd-ink-tertiary);
+    font-size: 12.5px;
+  }
+  .search svg { flex: 0 0 13px; opacity: .8; }
+
+  .grp {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 10px 6px;
+    font-size: 11px; font-weight: 500;
+    color: var(--qd-ink-tertiary);
+  }
+  .grp i { font-style: normal; font-variant-numeric: tabular-nums; opacity: .7; }
+
+  .task {
+    flex-direction: column; align-items: stretch;
+    gap: 2px; padding: 6px 10px;
+    cursor: pointer;
+    border-radius: var(--qd-radius-md);
+  }
+  .task .t {
+    font-size: 12.5px; line-height: 1.45; color: var(--qd-ink-secondary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .task .m {
+    font-size: 11px; line-height: 1.4; color: var(--qd-ink-tertiary);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .task.on { background: var(--qd-surface); box-shadow: inset 0 0 0 1px var(--qd-hairline); }
+  .task.on .t { color: var(--qd-ink); }
+  .task:hover { background: var(--qd-surface-hover); }
+  .task.on:hover { background: var(--qd-surface); }
+
+  .aside .foot {
+    margin-top: auto;
+    padding: 8px 4px 2px;
+    box-shadow: inset 0 1px 0 0 var(--qd-hairline);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ava {
+    width: 22px; height: 22px; flex: 0 0 22px;
+    border-radius: var(--qd-radius-full);
+    background: var(--qd-surface-raised);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    display: grid; place-items: center;
+    font-size: 10.5px; font-weight: 600; color: var(--qd-ink-secondary);
+  }
+  .who { font-size: 11.5px; color: var(--qd-ink-secondary); line-height: 1.3; }
+  .who small { display: block; font-size: 10.5px; color: var(--qd-ink-tertiary); }
+  .foot .ico { margin-left: auto; color: var(--qd-ink-tertiary); display: flex; }
+
+  /* ---------- 主区 ---------- */
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+  .mhead {
+    flex: 0 0 48px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 18px;
+    box-shadow: inset 0 -1px 0 0 var(--qd-hairline);
+  }
+  .mhead h2 {
+    font-size: 13.5px; font-weight: 600; color: var(--qd-ink);
+    margin: 0; letter-spacing: -.005em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .mhead .right { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+
+  .iconbtn {
+    width: 28px; height: 28px; padding: 0;
+    display: grid; place-items: center;
+    border: 0; background: transparent;
+    border-radius: var(--qd-radius-sm);
+    color: var(--qd-ink-tertiary);
+    cursor: pointer;
+  }
+  .iconbtn:hover { background: var(--qd-surface-hover); color: var(--qd-ink); }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 26px; padding: 0 11px;
+    border: 0; border-radius: var(--qd-radius-full);
+    background: var(--qd-surface);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
+    color: var(--qd-ink); font-size: 11.5px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .pill:hover { background: var(--qd-surface-hover); }
+  .pill.solid { background: var(--qd-ink); color: var(--qd-canvas); box-shadow: none; }
+  .pill.solid:hover { opacity: .88; }
+
+  .thread {
+    flex: 1; overflow: hidden;
+    padding: 20px 22px 14px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .col { width: 100%; max-width: 660px; margin: 0 auto; }
+
+  /* 用户消息 */
+  .umsg {
+    background: var(--qd-surface);
+    border-radius: var(--qd-radius-lg);
+    padding: 11px 15px;
+    font-size: 13.5px; line-height: 1.65;
+    color: var(--qd-ink);
+  }
+
+  /* 署名行，不是 eyebrow：12px / 原样大小写 / 不拉字距。
+     想删掉它试试——删了之后分不清屏幕上哪段是 agent 干的，所以它带信息，留。 */
+  .byline {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; font-weight: 500;
+    color: var(--qd-ink-secondary);
+    margin-bottom: 9px;
+  }
+  .byline svg { color: var(--qd-ink-tertiary); flex: 0 0 13px; }
+
+  .say { font-size: 13.5px; line-height: 1.62; color: var(--qd-ink-secondary); margin: 0 0 10px; }
+  .say b { color: var(--qd-ink); font-weight: 600; }
+  .say code {
+    font-family: var(--qd-font-mono); font-size: 12px;
+    background: var(--qd-surface-input); padding: 1px 5px; border-radius: 4px;
+    color: var(--qd-ink);
+  }
+
+  /* 命令块 */
+  .cmd {
+    border-radius: var(--qd-radius-md);
+    background: var(--qd-surface-input);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .cmd .hd {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 12px;
+    font-family: var(--qd-font-mono); font-size: 12px;
+    color: var(--qd-ink-secondary);
+    box-shadow: inset 0 -1px 0 0 var(--qd-hairline);
+  }
+  .cmd .hd .pr { color: var(--qd-ink-tertiary); }
+  .cmd .hd .st {
+    margin-left: auto; font-family: var(--qd-font-sans);
+    font-size: 10.5px; color: var(--qd-ink-tertiary);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .cmd .hd .st svg { color: var(--qd-success); }
+  .cmd .out {
+    padding: 9px 12px 11px;
+    font-family: var(--qd-font-mono); font-size: 11.5px; line-height: 1.75;
+    color: var(--qd-ink-tertiary); white-space: pre;
+  }
+  .cmd .out .ok { color: var(--qd-ink-secondary); }
+  .cmd .out .bad { color: var(--qd-diff-del); }
+
+  /* 文件引用 */
+  .filechips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .fchip {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 24px; padding: 0 9px;
+    border-radius: var(--qd-radius-sm);
+    background: var(--qd-surface-raised);
+    color: var(--qd-ink-secondary);
+    font-family: var(--qd-font-mono); font-size: 11px;
+  }
+  .fchip svg { opacity: .6; }
+
+  /* 迷你 diff */
+  .mini {
+    border-radius: var(--qd-radius-md);
+    background: var(--qd-surface-input);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    overflow: hidden;
+  }
+  .mini .f {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 12px;
+    font-family: var(--qd-font-mono); font-size: 11.5px;
+    color: var(--qd-ink-secondary);
+    box-shadow: inset 0 -1px 0 0 var(--qd-hairline);
+  }
+  .mini .f .n { margin-left: auto; font-size: 10.5px; display: flex; gap: 8px; }
+  .add { color: var(--qd-diff-add); }
+  .del { color: var(--qd-diff-del); }
+  .dline {
+    display: flex; gap: 0;
+    font-family: var(--qd-font-mono); font-size: 11.5px; line-height: 1.85;
+    padding: 0 12px;
+    white-space: pre;
+  }
+  .dline .g { width: 14px; flex: 0 0 14px; color: var(--qd-ink-faint); }
+  .dline.a { background: rgba(78, 168, 112, .10); color: #b9dcc4; }
+  .dline.d { background: rgba(207, 107, 107, .10); color: #e0c0c0; }
+  .dline.c { color: var(--qd-ink-tertiary); }
+
+  /* 汇总行 */
+  .summary {
+    display: flex; align-items: center; gap: 9px;
+    padding: 10px 12px;
+    border-radius: var(--qd-radius-md);
+    background: var(--qd-surface);
+    font-size: 12.5px; color: var(--qd-ink-secondary);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--qd-success); flex: 0 0 6px; }
+  .summary .acts { margin-left: auto; display: flex; gap: 6px; }
+
+  /* ---------- 输入区 ---------- */
+  .composer-wrap { padding: 14px 22px 18px; }
+  .composer {
+    max-width: 660px; margin: 0 auto;
+    background: var(--qd-surface);
+    border-radius: var(--qd-radius-xl);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline-strong);
+    padding: 12px 14px 10px;
+  }
+  .composer:focus-within { box-shadow: inset 0 0 0 1px var(--qd-focus-ring); }
+  .composer .ph {
+    font-size: 13.5px; color: var(--qd-ink-tertiary); line-height: 1.5;
+    min-height: 21px;
+  }
+  .composer .bar {
+    display: flex; align-items: center; gap: 6px; margin-top: 10px;
+  }
+  .composer .tool {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 24px; padding: 0 8px;
+    border-radius: var(--qd-radius-sm);
+    color: var(--qd-ink-tertiary); font-size: 11.5px;
+    cursor: pointer;
+  }
+  .composer .tool:hover { background: var(--qd-surface-hover); color: var(--qd-ink-secondary); }
+  .composer .bar .end { margin-left: auto; display: flex; align-items: center; gap: 7px; }
+  .model {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 24px; padding: 0 8px;
+    border-radius: var(--qd-radius-sm);
+    font-size: 11.5px; color: var(--qd-ink-secondary);
+  }
+  .model:hover { background: var(--qd-surface-hover); }
+  .send {
+    width: 26px; height: 26px; padding: 0;
+    border: 0; border-radius: 50%;
+    background: var(--qd-ink); color: var(--qd-canvas);
+    display: grid; place-items: center; cursor: pointer;
+  }
+  .send.off { background: var(--qd-surface-raised); color: var(--qd-ink-faint); box-shadow: inset 0 0 0 1px var(--qd-hairline); }
+
+  /* ---------- 审查视图 ---------- */
+  .dfile { margin-bottom: 4px; }
+  .dfile .fhead {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px;
+    background: var(--qd-surface-raised);
+    border-radius: var(--qd-radius-md) var(--qd-radius-md) 0 0;
+    font-family: var(--qd-font-mono); font-size: 11.5px;
+    color: var(--qd-ink);
+  }
+  .dfile .fhead .n { margin-left: auto; display: flex; gap: 8px; font-size: 10.5px; }
+  .dfile .body {
+    background: var(--qd-surface-input);
+    border-radius: 0 0 var(--qd-radius-md) var(--qd-radius-md);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    overflow: hidden;
+    margin-top: -1px;
+  }
+  .hunk {
+    padding: 5px 12px;
+    font-family: var(--qd-font-mono); font-size: 11px;
+    color: var(--qd-ink-tertiary);
+    background: rgba(255, 255, 255, .022);
+    box-shadow: inset 0 -1px 0 0 var(--qd-hairline);
+  }
+  .d2 {
+    display: flex;
+    font-family: var(--qd-font-mono); font-size: 11.5px; line-height: 1.95;
+    white-space: pre;
+  }
+  .d2 .ln {
+    width: 34px; flex: 0 0 34px;
+    text-align: right; padding-right: 8px;
+    color: var(--qd-ink-faint); font-size: 10.5px;
+    user-select: none;
+  }
+  .d2 .sg { width: 16px; flex: 0 0 16px; }
+  .d2 .tx { flex: 1; padding-right: 12px; }
+  .d2.a { background: rgba(78, 168, 112, .10); }
+  .d2.a .tx { color: #b9dcc4; }
+  .d2.a .sg { color: var(--qd-diff-add); }
+  .d2.d { background: rgba(207, 107, 107, .10); }
+  .d2.d .tx { color: #e0c0c0; }
+  .d2.d .sg { color: var(--qd-diff-del); }
+  .d2.c .tx { color: var(--qd-ink-tertiary); }
+
+  .reviewbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    box-shadow: inset 0 1px 0 0 var(--qd-hairline);
+  }
+  .reviewbar .txt { font-size: 12px; color: var(--qd-ink-tertiary); }
+  .reviewbar .txt b { color: var(--qd-ink-secondary); font-weight: 500; }
+  .reviewbar .g { margin-left: auto; display: flex; gap: 7px; }
+
+  /* ---------- 空状态 ---------- */
+  .empty {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0 24px 40px;
+  }
+  .empty h3 {
+    font-size: 22px; font-weight: 600; letter-spacing: -.02em;
+    color: var(--qd-ink); margin: 0 0 6px;
+  }
+  .empty p { font-size: 13px; color: var(--qd-ink-tertiary); margin: 0 0 26px; }
+  .sugg { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 20px; max-width: 700px; }
+  .sugg div {
+    padding: 8px 13px;
+    border-radius: var(--qd-radius-full);
+    background: var(--qd-surface);
+    box-shadow: inset 0 0 0 1px var(--qd-hairline);
+    font-size: 12px; color: var(--qd-ink-secondary);
+    cursor: pointer;
+  }
+  .sugg div:hover { background: var(--qd-surface-hover); color: var(--qd-ink); }
+
+  .note {
+    max-width: 52em; margin: 26px 0 0; padding-left: 4px;
+    font-size: 12px; line-height: 1.9; color: #5e5e5e;
+  }
+  .note b { color: #8e8e8e; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="intro">
+    <h1>Quiet Dark · Codex 界面样张</h1>
+    <p>
+      下面三个窗口全部由 <code>styles/quiet-dark/tokens.css</code> 渲染，没有一张图、没有一张截图。
+      色值来自 OpenAI 桌面客户端的 <code>app.asar</code>，圆角和字阶是反推的。
+      页面里没有一个色值是新发明的——如果某个值在 <code>tokens.css</code> 里找不到，那它就不该出现在这里。
+    </p>
+  </div>
+
+  <!-- ================= 1. 任务线程 ================= -->
+  <div class="cap">
+    <b>任务线程</b><span>Agent 干活时的主视图</span><em>1200 × 780</em>
+  </div>
+
+  <div class="win ds-quiet-dark" id="w1">
+    <div class="tbar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="tbar-title">Codex</div>
+      <div class="tbar-spacer"></div>
+    </div>
+
+    <div class="app">
+      <!-- 侧栏 -->
+      <div class="aside">
+        <div class="newtask">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3.5v9M3.5 8h9"/></svg>
+          新建任务
+          <kbd>⌘N</kbd>
+        </div>
+        <div class="search">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+          搜索任务
+        </div>
+
+        <div class="grp">今天 <i>4</i></div>
+
+        <div class="task on">
+          <div class="t">修复 auth 测试的偶发失败</div>
+          <div class="m"><span class="dot" style="background:var(--qd-warning)"></span>进行中，3 步</div>
+        </div>
+        <div class="task">
+          <div class="t">把上传逻辑抽成独立模块</div>
+          <div class="m">12 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">给 API 层补类型定义</div>
+          <div class="m">48 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">调查构建时间变长的原因</div>
+          <div class="m">2 小时前，已归档</div>
+        </div>
+
+        <div class="grp">昨天 <i>3</i></div>
+        <div class="task">
+          <div class="t">迁移到 pnpm workspace</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">清理未使用的依赖</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">重写 CI 缓存策略</div>
+          <div class="m">昨天，已归档</div>
+        </div>
+
+        <div class="foot">
+          <div class="ava">W</div>
+          <div class="who">wangyi<small>Codex Pro</small></div>
+          <div class="ico">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="2.4"/><path d="M8 1.6v1.8M8 12.6v1.8M1.6 8h1.8M12.6 8h1.8M3.5 3.5l1.3 1.3M11.2 11.2l1.3 1.3M12.5 3.5l-1.3 1.3M4.8 11.2l-1.3 1.3"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主区 -->
+      <div class="main">
+        <div class="mhead">
+          <h2>修复 auth 测试的偶发失败</h2>
+          <div class="right">
+            <button class="pill">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="4.6" cy="3.6" r="1.5"/><circle cx="4.6" cy="12.4" r="1.5"/><circle cx="11.4" cy="6.2" r="1.5"/><path d="M4.6 5.1v5.8M11.4 7.7c0 2.3-2.1 3.5-4.4 4.1"/></svg>
+              main
+            </button>
+            <button class="iconbtn">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="8" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="13" cy="8" r="1"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="thread">
+          <div class="col">
+            <div class="umsg">
+              auth 的测试在 CI 上偶发失败，大概 30% 的概率。帮我看下原因，能修就修。
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="byline">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 5.6L8 3.4l3.8 2.2v4.8L8 12.6 4.2 10.4z"/><path d="M8 3.4v9.2M4.2 5.6L11.8 10.4M11.8 5.6L4.2 10.4"/></svg>
+              Codex
+            </div>
+
+            <p class="say">先跑 20 次复现，看失败是不是集中在同一个用例上。</p>
+
+            <div class="cmd">
+              <div class="hd">
+                <span class="pr">$</span>pnpm vitest run src/auth --repeat 20
+                <span class="st">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg>
+                  42.6s
+                </span>
+              </div>
+              <div class="out"><span class="ok">✓</span> 18 passed
+<span class="ok">✓</span> suite src/auth/refresh.spec.ts
+<span class="bad">✗</span> 2 failed  › refreshes an expired token
+    AssertionError: expected 401 to be 200
+    at src/auth/refresh.spec.ts:34:20</div>
+            </div>
+
+            <p class="say">
+              两次失败都在同一个用例上，而且都在 token 刚刚过期的边界。
+              去看了 <code>refresh.ts</code> 的判断：边界用的是 <code>&gt;</code> 而不是 <code>&gt;=</code>，
+              所以过期时刻那一毫秒被当成"还没过期"，签名校验就失败了。
+            </p>
+
+            <div class="mini">
+              <div class="f">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 1.8H4.2A1.2 1.2 0 003 3v10a1.2 1.2 0 001.2 1.2h7.6A1.2 1.2 0 0013 13V5.8z"/><path d="M9 1.8v4h4"/></svg>
+                src/auth/refresh.ts
+                <span class="n"><span class="add">+1</span><span class="del">−1</span></span>
+              </div>
+              <div class="dline c"><span class="g"></span>  const now = Date.now();</div>
+              <div class="dline d"><span class="g">−</span>  if (now &gt; expiresAt) return null;</div>
+              <div class="dline a"><span class="g">+</span>  if (now &gt;= expiresAt) return null;</div>
+            </div>
+
+            <p class="say" style="margin-top:10px">
+              改完重跑 20 次，全绿。顺手在 <code>refresh.spec.ts</code> 补了一个卡边界的用例，
+              免得以后有人把 <code>&gt;=</code> 又改回去。
+            </p>
+
+            <div class="summary">
+              <span class="dot"></span>
+              <b style="font-weight:500;color:var(--qd-ink)">2 个文件已修改</b>
+              <span style="color:var(--qd-ink-tertiary)">+7 −1</span>
+              <span class="acts">
+                <button class="pill">查看变更</button>
+                <button class="pill solid">接受</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="composer-wrap">
+          <div class="composer">
+            <div class="ph">继续让它做点什么，或者输入 @ 引用文件…</div>
+            <div class="bar">
+              <span class="tool">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 7.5l-5 5a3.5 3.5 0 01-5-5l5.5-5.5a2.3 2.3 0 013.3 3.3L6.3 10.8a1.1 1.1 0 01-1.6-1.6L9.9 4"/></svg>
+              </span>
+              <span class="tool">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 4L2 8l2.5 4M11.5 4L14 8l-2.5 4"/></svg>
+              </span>
+              <div class="end">
+                <span class="model">
+                  GPT-5.1-Codex
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6.5l4 4 4-4"/></svg>
+                </span>
+                <button class="send">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3.5M4 7l4-3.5L12 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 2. 变更审查 ================= -->
+  <div class="cap">
+    <b>变更审查</b><span>diff 视图——全库唯一允许第二种色彩的地方</span><em>1200 × 780</em>
+  </div>
+
+  <div class="win ds-quiet-dark" id="w2">
+    <div class="tbar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="tbar-title">Codex — 审查变更</div>
+      <div class="tbar-spacer"></div>
+    </div>
+
+    <div class="app">
+      <div class="aside">
+        <div class="newtask">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3.5v9M3.5 8h9"/></svg>
+          新建任务
+          <kbd>⌘N</kbd>
+        </div>
+        <div class="search">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+          搜索任务
+        </div>
+
+        <div class="grp">今天 <i>4</i></div>
+        <div class="task on">
+          <div class="t">修复 auth 测试的偶发失败</div>
+          <div class="m"><span class="dot" style="background:var(--qd-primary)"></span>待审查，2 个文件</div>
+        </div>
+        <div class="task">
+          <div class="t">把上传逻辑抽成独立模块</div>
+          <div class="m">12 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">给 API 层补类型定义</div>
+          <div class="m">48 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">调查构建时间变长的原因</div>
+          <div class="m">2 小时前，已归档</div>
+        </div>
+
+        <div class="grp">昨天 <i>3</i></div>
+        <div class="task">
+          <div class="t">迁移到 pnpm workspace</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">清理未使用的依赖</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+
+        <div class="foot">
+          <div class="ava">W</div>
+          <div class="who">wangyi<small>Codex Pro</small></div>
+          <div class="ico">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="2.4"/><path d="M8 1.6v1.8M8 12.6v1.8M1.6 8h1.8M12.6 8h1.8M3.5 3.5l1.3 1.3M11.2 11.2l1.3 1.3M12.5 3.5l-1.3 1.3M4.8 11.2l-1.3 1.3"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="mhead">
+          <h2>审查变更</h2>
+          <div class="right">
+            <button class="pill">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 1.8H4.2A1.2 1.2 0 003 3v10a1.2 1.2 0 001.2 1.2h7.6A1.2 1.2 0 0013 13V5.8z"/><path d="M9 1.8v4h4"/></svg>
+              2 / 2
+            </button>
+            <button class="iconbtn">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="thread" style="padding-top:14px">
+          <div class="col" style="max-width:760px">
+
+            <div class="dfile">
+              <div class="fhead">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 1.8H4.2A1.2 1.2 0 003 3v10a1.2 1.2 0 001.2 1.2h7.6A1.2 1.2 0 0013 13V5.8z"/><path d="M9 1.8v4h4"/></svg>
+                src/auth/refresh.ts
+                <span class="n"><span class="add">+1</span><span class="del">−1</span></span>
+              </div>
+              <div class="body">
+                <div class="hunk">@@ -18,9 +18,9 @@ export function isValidSession(token: Token) {</div>
+                <div class="d2 c"><span class="ln">18</span><span class="sg"></span><span class="tx">  if (!token) return null;</span></div>
+                <div class="d2 c"><span class="ln">19</span><span class="sg"></span><span class="tx">  const now = Date.now();</span></div>
+                <div class="d2 c"><span class="ln">20</span><span class="sg"></span><span class="tx">  const { expiresAt, signature } = token;</span></div>
+                <div class="d2 c"><span class="ln">21</span><span class="sg"></span><span class="tx"> </span></div>
+                <div class="d2 d"><span class="ln">22</span><span class="sg">−</span><span class="tx">  if (now &gt; expiresAt) return null;</span></div>
+                <div class="d2 a"><span class="ln">22</span><span class="sg">+</span><span class="tx">  if (now &gt;= expiresAt) return null;</span></div>
+                <div class="d2 c"><span class="ln">23</span><span class="sg"></span><span class="tx">  if (!verify(signature)) return null;</span></div>
+                <div class="d2 c"><span class="ln">24</span><span class="sg"></span><span class="tx"> </span></div>
+                <div class="d2 c"><span class="ln">25</span><span class="sg"></span><span class="tx">  return token;</span></div>
+                <div class="d2 c"><span class="ln">26</span><span class="sg"></span><span class="tx">}</span></div>
+              </div>
+            </div>
+
+            <div class="dfile" style="margin-top:22px">
+              <div class="fhead">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 1.8H4.2A1.2 1.2 0 003 3v10a1.2 1.2 0 001.2 1.2h7.6A1.2 1.2 0 0013 13V5.8z"/><path d="M9 1.8v4h4"/></svg>
+                src/auth/refresh.spec.ts
+                <span class="n"><span class="add">+6</span></span>
+              </div>
+              <div class="body">
+                <div class="hunk">@@ -30,6 +30,12 @@ describe('refresh', () =&gt; {</div>
+                <div class="d2 c"><span class="ln">30</span><span class="sg"></span><span class="tx">  });</span></div>
+                <div class="d2 c"><span class="ln">31</span><span class="sg"></span><span class="tx"> </span></div>
+                <div class="d2 a"><span class="ln">32</span><span class="sg">+</span><span class="tx">  it('expires exactly at expiresAt', () =&gt; {</span></div>
+                <div class="d2 a"><span class="ln">33</span><span class="sg">+</span><span class="tx">    const t = sign({ expiresAt: 1000 });</span></div>
+                <div class="d2 a"><span class="ln">34</span><span class="sg">+</span><span class="tx">    vi.setSystemTime(1000);</span></div>
+                <div class="d2 a"><span class="ln">35</span><span class="sg">+</span><span class="tx">    expect(refresh(t)).toBeNull();</span></div>
+                <div class="d2 a"><span class="ln">36</span><span class="sg">+</span><span class="tx">  });</span></div>
+                <div class="d2 a"><span class="ln">37</span><span class="sg">+</span><span class="tx"> </span></div>
+                <div class="d2 c"><span class="ln">38</span><span class="sg"></span><span class="tx">  it('rejects a bad signature', () =&gt; {</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="reviewbar">
+          <div class="txt"><b>20 / 20</b> 通过，耗时 42.6s，分支 <span style="font-family:var(--qd-font-mono)">codex/fix-auth-flake</span></div>
+          <div class="g">
+            <button class="pill">请求修改</button>
+            <button class="pill solid">合并</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 3. 空状态 ================= -->
+  <div class="cap">
+    <b>新任务空状态</b><span>打开就只有一个输入框——这是克制的极限</span><em>1200 × 780</em>
+  </div>
+
+  <div class="win ds-quiet-dark" id="w3">
+    <div class="tbar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="tbar-title">Codex</div>
+      <div class="tbar-spacer"></div>
+    </div>
+
+    <div class="app">
+      <div class="aside">
+        <div class="newtask">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3.5v9M3.5 8h9"/></svg>
+          新建任务
+          <kbd>⌘N</kbd>
+        </div>
+        <div class="search">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+          搜索任务
+        </div>
+
+        <div class="grp">今天 <i>4</i></div>
+        <div class="task">
+          <div class="t">修复 auth 测试的偶发失败</div>
+          <div class="m"><span class="dot"></span>已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">把上传逻辑抽成独立模块</div>
+          <div class="m">12 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">给 API 层补类型定义</div>
+          <div class="m">48 分钟前，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">调查构建时间变长的原因</div>
+          <div class="m">2 小时前，已归档</div>
+        </div>
+
+        <div class="grp">昨天 <i>3</i></div>
+        <div class="task">
+          <div class="t">迁移到 pnpm workspace</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+        <div class="task">
+          <div class="t">清理未使用的依赖</div>
+          <div class="m">昨天，已合并</div>
+        </div>
+
+        <div class="foot">
+          <div class="ava">W</div>
+          <div class="who">wangyi<small>Codex Pro</small></div>
+          <div class="ico">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="2.4"/><path d="M8 1.6v1.8M8 12.6v1.8M1.6 8h1.8M12.6 8h1.8M3.5 3.5l1.3 1.3M11.2 11.2l1.3 1.3M12.5 3.5l-1.3 1.3M4.8 11.2l-1.3 1.3"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="empty">
+          <h3>今天想让它做什么？</h3>
+          <p>描述一个任务，或者直接贴一个报错。</p>
+
+          <div class="composer" style="width:100%;max-width:600px">
+            <div class="ph">例如：把 src/upload 里的重试逻辑抽成一个通用 hook</div>
+            <div class="bar">
+              <span class="tool">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 7.5l-5 5a3.5 3.5 0 01-5-5l5.5-5.5a2.3 2.3 0 013.3 3.3L6.3 10.8a1.1 1.1 0 01-1.6-1.6L9.9 4"/></svg>
+              </span>
+              <span class="tool">@ 文件</span>
+              <div class="end">
+                <span class="model">
+                  GPT-5.1-Codex
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6.5l4 4 4-4"/></svg>
+                </span>
+                <button class="send off">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3.5M4 7l4-3.5L12 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sugg">
+            <div>昨天 CI 为什么变慢</div>
+            <div>把重复的 fetch 收成一个</div>
+            <div>给这个模块补测试</div>
+            <div>解释一下这段正则</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b>关于那三个红绿灯。</b> 它是整套风格里唯一不在 tokens 里的颜色，因为它属于操作系统窗口控件，不属于设计系统。
+    真实截图里它就在那儿，去掉反而不真。除此之外，全屏只有一个蓝（焦点环 / 链接 / 待审查状态点）和两个被压过饱和度的 diff 色。<br>
+    <b>关于间距。</b> 侧栏 250px、主栏内容 660px、窗口 1200×780——这三个数不是随手写的，
+    是按"侧栏 : 内容 ≈ 1 : 2.6"和"一行 45-55 个汉字"算的。换宽度时这两个比例要守住。
+  </p>
+
+</div>
+</body>
+</html>

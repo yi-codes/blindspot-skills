@@ -20,6 +20,40 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 STYLES = ROOT / "styles"
 
+sys.path.insert(0, str(Path(__file__).parent))
+from _designmd import (  # noqa: E402
+    split_front_matter, parse_tokens, flat_fields,
+    HEX_RE, hex_to_rgb, rel_luminance, contrast,
+)
+
+# 选择条件：build-index.py 靠这几个字段把风格摆进索引。缺一个 = 这个风格选不出来。
+SELECTION_FIELDS = ("cues", "avoid", "surface", "register")
+REGISTERS = {"story", "professional", "technical", "tool"}
+SURFACES = {"light", "dark", "mixed"}
+
+LEN_RE = re.compile(r"^\s*(-?[\d.]+)\s*(px|rem)?\s*$")
+
+
+def to_px(v):
+    """把长度折成整数 px，用于比对字号/圆角/间距。
+
+    - '28px' → 28
+    - '1.75rem' → 28
+    - '1.953rem' → 31（取整吸收模块化字阶的取整误差，31.248 就是 31）
+    - '0' → 0
+    - em / % / clamp() / 关键字 → None（相对单位折 px 没有意义，比了就是假警报）
+    """
+    m = LEN_RE.match(str(v or ""))
+    if not m:
+        return None
+    n = float(m.group(1))
+    unit = m.group(2) or ("px" if n == 0 else None)
+    if unit == "rem":
+        n *= 16
+    elif unit != "px":
+        return None
+    return int(round(n))
+
 REQUIRED_SECTIONS = [
     "Overview",
     "Colors",
@@ -41,109 +75,8 @@ SECTION_ALIASES = {
 }
 
 
-# ---------------------------------------------------------------- front matter
-
-def split_front_matter(text):
-    """返回 (yaml_text, body_text)。要求文件以 --- 开头。"""
-    if not text.startswith("---"):
-        return None, text
-    lines = text.split("\n")
-    end = None
-    for i in range(1, len(lines)):
-        if lines[i].strip() == "---":
-            end = i
-            break
-    if end is None:
-        return None, text
-    return "\n".join(lines[1:end]), "\n".join(lines[end + 1:])
-
-
-def parse_tokens(yaml_text):
-    """极简 YAML 解析：只处理两级映射 + 标量，足够覆盖 DESIGN.md 的 token 段。
-
-    返回 { 'colors': {'primary': '#123456'}, 'typography': {'h1': {'fontSize': '48px'}}, ... }
-    """
-    tokens = {}
-    top = None
-    group = None
-    for raw in yaml_text.split("\n"):
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        indent = len(raw) - len(raw.lstrip(" "))
-        line = raw.strip()
-
-        # 跳过折叠块内容（description: >- 之后的缩进文本）
-        if indent >= 4 and top == "_foldblock":
-            continue
-
-        if indent == 0:
-            m = re.match(r"^([\w-]+):\s*(.*)$", line)
-            if not m:
-                continue
-            key, val = m.group(1), m.group(2).strip()
-            if val in (">-", ">", "|", "|-"):
-                top = "_foldblock"
-                tokens.setdefault(key, "")
-                continue
-            if val == "":
-                top = key
-                group = None
-                tokens.setdefault(key, {})
-            else:
-                top = None
-                tokens[key] = _scalar(val)
-        elif indent == 2 and isinstance(tokens.get(top), dict):
-            m = re.match(r"^([\w.-]+):\s*(.*)$", line)
-            if not m:
-                continue
-            key, val = m.group(1), m.group(2).strip()
-            if val == "":
-                group = key
-                tokens[top][key] = {}
-            else:
-                group = None
-                tokens[top][key] = _scalar(val)
-        elif indent == 4 and group and isinstance(tokens.get(top, {}).get(group), dict):
-            m = re.match(r"^([\w.-]+):\s*(.*)$", line)
-            if m:
-                tokens[top][group][m.group(1)] = _scalar(m.group(2).strip())
-    tokens.pop("_foldblock", None)
-    return tokens
-
-
-def _scalar(v):
-    v = v.strip()
-    # 去掉行尾注释（但保护 #开头的颜色值）
-    if v.startswith('"') and v.endswith('"') and len(v) > 1:
-        return v[1:-1]
-    if v.startswith("'") and v.endswith("'") and len(v) > 1:
-        return v[1:-1]
-    v = re.sub(r"\s+#\s.*$", "", v)  # 只去掉"空格+#+空格"形式的注释
-    return v
-
-
 # ------------------------------------------------------------------- 颜色
 
-HEX_RE = re.compile(r"#[0-9A-Fa-f]{6}\b")
-
-
-def hex_to_rgb(h):
-    h = h.lstrip("#")
-    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
-
-
-def rel_luminance(rgb):
-    def f(c):
-        c = c / 255
-        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
-    r, g, b = (f(x) for x in rgb)
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b
-
-
-def contrast(c1, c2):
-    l1, l2 = rel_luminance(hex_to_rgb(c1)), rel_luminance(hex_to_rgb(c2))
-    hi, lo = max(l1, l2), min(l1, l2)
-    return (hi + 0.05) / (lo + 0.05)
 
 
 # ------------------------------------------------------------------- 检查
@@ -168,6 +101,19 @@ def lint_style(design_md: Path):
         add("E", "front matter 缺 name")
     if not isinstance(tokens.get("colors"), dict) or not tokens.get("colors"):
         add("E", "缺 colors 或 colors 为空")
+
+    # --- 选择条件（build-index.py / SKILL.md 靠它把风格摆进索引）---
+    flat = flat_fields(yaml_text)
+    for k in SELECTION_FIELDS:
+        if not flat.get(k, "").strip():
+            add("E", f"缺少选择字段 `{k}` —— 这个风格在 styles/INDEX.md 里选不出来，SKILL.md 也不会推荐它")
+    for k in ("register", "surface"):
+        if "|" in flat.get(k, ""):
+            add("E", f"`{k}` 还是脚手架占位符（`{flat[k]}`）—— 没改成实际值，索引会把它归到「未分类」")
+    if flat.get("register") and "|" not in flat["register"] and flat["register"] not in REGISTERS:
+        add("W", f"register 的值 `{flat['register']}` 不在 {sorted(REGISTERS)} 里，索引会把它归到「未分类」")
+    if flat.get("surface") and "|" not in flat["surface"] and flat["surface"] not in SURFACES:
+        add("W", f"surface 的值 `{flat['surface']}` 不在 {sorted(SURFACES)} 里")
 
     colors = tokens.get("colors", {}) if isinstance(tokens.get("colors"), dict) else {}
     typo = tokens.get("typography", {}) if isinstance(tokens.get("typography"), dict) else {}
@@ -261,7 +207,37 @@ def lint_style(design_md: Path):
         if only_css:
             add("E", f"{css_name} 有 DESIGN.md 未声明的颜色（会产生漂移）: "
                      + "、".join(sorted(only_css)))
+
+        # --- 数值阶的对齐：字号 / 圆角 / 间距 ---
+        css_vars = re.findall(r"(--[\w-]+)\s*:\s*([^;{}]+);", css_text)
+        css_nums = {to_px(v) for _, v in css_vars}
+        css_nums.discard(None)
+        css_names = {n for n, _ in css_vars}
+
+        doc_sets = {
+            "typography.fontSize": {to_px(spec.get("fontSize"))
+                                    for spec in typo.values() if isinstance(spec, dict)},
+            "rounded": {to_px(v) for v in rounded.values()},
+            "spacing": {to_px(v) for v in spacing.values()},
+        }
+        for label, vals in doc_sets.items():
+            vals = {v for v in vals if v is not None}
+            missing = sorted(vals - css_nums)
+            if missing:
+                shown = "、".join(f"{v}px" for v in missing)
+                add("E", f"{css_name} 没有实现 {label} 里的这些值: {shown}"
+                         "（DESIGN.md 说有、CSS 里找不到对应变量，等于这个档位不存在）")
+
+        # 反向：CSS 里 radius 命名的变量，值必须出现在 rounded 阶里
+        doc_radius = {v for v in doc_sets["rounded"] if v is not None}
+        for n, v in css_vars:
+            if "radius" not in n and "rounded" not in n:
+                continue
+            px = to_px(v)
+            if px is not None and doc_radius and px not in doc_radius:
+                add("W", f"{css_name} 里 `{n}: {v.strip()}` = {px}px，不在 rounded 阶上（会悄悄长出一档圆角）")
         break
+
 
     # --- 生图侧出口 ---
     if not (design_md.parent / "prompt.md").exists():
