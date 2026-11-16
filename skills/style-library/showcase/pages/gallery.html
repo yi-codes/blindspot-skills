@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>陈列室 · wangyi 和他的 Jarvis</title>
+<link rel="stylesheet" href="../../styles/tactile-3d/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body {
+    background: #070708;
+    color: var(--t3-ink);
+    font-family: var(--t3-font-sans);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  body.dragging { cursor: grabbing; }
+
+  /* ---------- 视口与相机 ---------- */
+  .viewport {
+    position: fixed;
+    inset: 0;
+    perspective: var(--t3-perspective-deep);
+    perspective-origin: 50% 46%;
+    overflow: hidden;
+  }
+  .world {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .stage { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+
+  /* ---------- 场景尺寸：和 JS 里那组常量是同一组 ----------
+     地面就是台座的顶面，没有单独的"地板"元素。
+     实测：一块独立的 4000×2200 大平面和台座在同一个 preserve-3d 上下文里
+     会互相争排序，那块平面会翻过来盖住台座正面——试了三种蒙版和几何组合都一样。
+     做成同一个实体的顶面以后，遮挡关系就是盒子之间的遮挡关系，不用猜。 */
+
+  /* ---------- 背墙 ---------- */
+  .wall {
+    position: absolute;
+    width: 7600px;
+    height: 2600px;
+    left: -3800px;
+    top: -2450px;          /* 底边落在 y=150，正好是台面高度 */
+    transform: translateZ(-760px);
+    /* 单光源：光从上方落下，墙面越往下越亮 */
+    background: linear-gradient(180deg,
+      #0A0A0D 0%, #121217 42%, #1C1C24 76%, #26262F 100%);
+    backface-visibility: hidden;
+  }
+  .wall h1 {
+    position: absolute;
+    left: 0; right: 0;
+    top: 2170px;           /* 世界坐标 y = -280 */
+    margin: 0;
+    text-align: center;
+    font-size: 96px;
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+    color: #F2F2F5;
+  }
+  .wall .sub {
+    position: absolute;
+    left: 0; right: 0;
+    top: 2258px;           /* 世界坐标 y = -192 */
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: #6E6E76;
+  }
+
+  /* ---------- 实体：任何有体积的东西都走这一套 ---------- */
+  .solid {
+    position: absolute;
+    left: 0; top: 0;
+    width: 0; height: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .face {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    overflow: hidden;
+    backface-visibility: hidden;
+    background-color: var(--base, #17171A);
+  }
+  /* 光照层：JS 每帧写 --tone（0 或 255）和 --a（不透明度） */
+  .face::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--tone, 0) var(--tone, 0) var(--tone, 0) / var(--a, 0.4));
+    pointer-events: none;
+  }
+
+  .f-front, .f-back {
+    width: var(--w); height: var(--h);
+    margin-left: calc(var(--w) / -2); margin-top: calc(var(--h) / -2);
+  }
+  .f-front { transform: translateZ(calc(var(--d) / 2)); }
+  .f-back  { transform: translateZ(calc(var(--d) / -2)) rotateY(180deg); }
+
+  .f-left, .f-right {
+    width: var(--d); height: var(--h);
+    margin-left: calc(var(--d) / -2); margin-top: calc(var(--h) / -2);
+  }
+  .f-right { transform: translateX(calc(var(--w) / 2)) rotateY(90deg); }
+  .f-left  { transform: translateX(calc(var(--w) / -2)) rotateY(-90deg); }
+
+  .f-top, .f-bottom {
+    width: var(--w); height: var(--d);
+    margin-left: calc(var(--w) / -2); margin-top: calc(var(--d) / -2);
+  }
+  .f-top    { transform: translateY(calc(var(--h) / -2)) rotateX(90deg); }
+  .f-bottom { transform: translateY(calc(var(--h) / 2)) rotateX(-90deg); }
+
+  /* 台面网格：画在台座顶面上，透视跟着台座走，不是贴一张图 */
+  .deck-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg,
+        rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 108px),
+      repeating-linear-gradient(90deg,
+        rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 108px);
+  }
+
+  /* ---------- 台座正面：铜牌 ---------- */
+  .plinth-front {
+    position: absolute;
+    inset: 0;
+    /* 正面往下越来越暗：光源在头顶，越往下离光越远。这段衰减只跟距离有关，
+       和相机怎么转没关系，所以可以预先生成；跟姿态有关的那部分仍然每帧在算。 */
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0) 6%, rgba(0, 0, 0, 0.30) 48%, rgba(0, 0, 0, 0.58) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 34px;
+  }
+  /* 台面前沿的收光边。光从上方来，这条棱是整块台座上唯一被直接照到的边，
+     没有它，台面到正面之间没有分界，铜牌就像挂在纯黑里。 */
+  .plinth-front::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  /* 台沿压在正面上的接触阴影。台面比正面探出一道檐，
+     檐下这一段本来就照不到光——这是遮蔽，不是光照，所以可以预先生成。
+     没有它，正面从檐口往下是一整片均匀的灰，看不出是个垂直面。 */
+  .plinth-front::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.16) 42%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .plaque {
+    width: 660px;
+    padding: 17px 30px 19px;
+    border-radius: 3px;
+    text-align: center;
+    background: linear-gradient(168deg, #33302B 0%, #1C1B19 48%, #100F0E 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 236, 200, 0.26),
+      inset 0 0 0 1px rgba(255, 236, 200, 0.12),
+      0 12px 30px -14px rgba(0, 0, 0, 0.95);
+  }
+  .plaque .lab {
+    font-family: var(--t3-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: #8B8478;
+    margin: 0 0 8px;
+  }
+  .plaque .who {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: #EFE8DA;
+  }
+  .plaque .who em { font-style: normal; color: #FF6B3D; }
+  .plaque .note {
+    margin: 9px 0 0;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: #7F7869;
+  }
+
+  /* ---------- 盒子内容 ---------- */
+  .cover {
+    position: absolute;
+    inset: 0;
+    padding: 19px 18px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cover .no {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    color: var(--ink-dim, #55555A);
+  }
+  .cover .ttl {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #EAEAED;
+  }
+  .cover .en {
+    margin-top: 7px;
+    font-family: var(--t3-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: var(--ink-dim, #55555A);
+  }
+  /* 封面上的几何母题：只有描边和线，没有渐变 */
+  .motif { position: absolute; pointer-events: none; }
+  .m-ring {
+    width: 146px; height: 146px;
+    right: -42px; top: 60px;
+    border: 1px solid var(--line-c, rgba(255, 255, 255, 0.16));
+    border-radius: 50%;
+  }
+  .m-rule {
+    left: 18px; right: 18px; top: 140px;
+    height: 1px;
+    background: var(--line-c, rgba(255, 255, 255, 0.16));
+  }
+  .m-square {
+    width: 92px; height: 92px;
+    right: 10px; top: 82px;
+    border: 1px solid var(--line-c, rgba(255, 255, 255, 0.16));
+    transform: rotate(24deg);
+  }
+  .m-bars {
+    left: 18px; right: 18px; bottom: 82px;
+    height: 30px;
+    background: repeating-linear-gradient(90deg,
+      var(--line-c, rgba(255, 255, 255, 0.16)) 0 1px, transparent 1px 10px);
+  }
+  .m-arc {
+    width: 188px; height: 188px;
+    left: -54px; bottom: -72px;
+    border: 1px solid var(--line-c, rgba(255, 255, 255, 0.16));
+    border-radius: 50%;
+  }
+
+  /* 书脊：左右两面都有，转到哪边都有字 */
+  .spine {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #D4D4D8;
+  }
+  .spine .se {
+    font-family: var(--t3-font-mono);
+    font-size: 8px;
+    color: var(--ink-dim, #55555A);
+    margin-top: 6px;
+  }
+  .blurb {
+    position: absolute;
+    inset: 0;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .blurb .bt {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #EAEAED;
+    margin: 0;
+  }
+  .blurb .bd {
+    margin: 10px 0 0;
+    font-size: 11.5px;
+    line-height: 1.62;
+    color: #A8A8AF;
+  }
+  .blurb .bf {
+    font-family: var(--t3-font-mono);
+    font-size: 9.5px;
+    color: #5D5D63;
+  }
+  .top-label {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--t3-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: var(--ink-dim, #4E4E54);
+  }
+
+  /* 接触阴影 + 台面反光，平铺在台面这个平面上 */
+  .drop {
+    position: absolute;
+    width: 260px;
+    height: 100px;
+    margin-left: -130px;
+    pointer-events: none;
+  }
+
+  /* ---------- HUD ---------- */
+  .hud {
+    transition: opacity 700ms var(--t3-ease-out);
+    position: fixed;
+    left: 24px;
+    bottom: 20px;
+    z-index: 10;
+    font-size: 12px;
+    line-height: 1.75;
+    color: #5C5C63;
+    pointer-events: none;
+  }
+  .hud b { color: #A6A6AC; font-weight: 500; }
+  /* 会了就不用一直教：第一次拖动之后自己退到背景里 */
+  body.touched .hud,
+  body.touched .sign { opacity: 0.42; }
+  .sign {
+    transition: opacity 700ms var(--t3-ease-out);
+    position: fixed;
+    right: 24px;
+    bottom: 20px;
+    z-index: 10;
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #5C5C63;
+    pointer-events: none;
+  }
+  .sign b { color: #C0C0C6; font-weight: 600; }
+  .sign em { font-style: normal; color: #FF6B3D; }
+
+  @media (max-width: 900px) {
+    .hud, .sign { display: none; }
+  }
+</style>
+</head>
+<body class="ds-tactile-3d">
+
+<div class="viewport">
+  <div class="world" id="world">
+    <div class="wall">
+      <h1>陈列室</h1>
+      <p class="sub">六个盒子，一盏灯，没有一面是平的</p>
+    </div>
+    <div class="stage" id="stage"></div>
+  </div>
+</div>
+
+<div class="hud">
+  <div><b>拖动</b> 环绕视角</div>
+  <div><b>滚轮</b> 走近 / 退开</div>
+  <div><b>点盒子</b> 拿起来看背面</div>
+</div>
+
+<div class="sign">
+  <div><b>wangyi</b> 和他的 <em>Jarvis</em></div>
+  <div>纯 CSS 3D，零依赖</div>
+</div>
+
+<script>
+(function () {
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SUB = 1 / 240;               /* 弹簧积分步长：掉帧也不会炸 */
+  var DEG = Math.PI / 180;
+
+  /* ---------------- 场景常量 ---------------- */
+  var PLINTH_TOP = 150;            /* 台面高度，所有东西都站在这个面上 */
+  var PLINTH_W = 3800;   /* 宽过画面，两端始终在画外，台面才连成一条 */
+  var PLINTH_H = 620;              /* 够高：正面下缘走出画面，底部不留空洞 */
+  var PLINTH_D = 280;
+  var BOX_W = 188, BOX_H = 262, BOX_D = 84;
+  /* 必须站在台座质心（z=0）的前面。Chrome 的 preserve-3d 是按元素质心排绘制顺序的，
+     不是逐像素：盒子放在 z=-40 时，整块台座（质心 z=0）会盖在盒子上，
+     盒子底边齐刷刷被切掉一条。放到 +60 之后就归盒子画在前面了。 */
+  var BOX_Z = 30;
+  var GAP = 210;
+
+  /* ---------------- 数据 ---------------- */
+  var GAMES = [
+    { no: '01', ttl: '暗房', en: 'DARKROOM', motif: 'm-ring', base: '#FF6B3D', inkDim: '#7A2A12', line: 'rgba(24,10,5,0.32)',
+      blurb: '你在一间没有窗的暗房里醒来，只有一盏能移动的红灯，和七卷没冲洗的胶卷。', year: '2027 · 新品' },
+    { no: '02', ttl: '低轨', en: 'LOW ORBIT', motif: 'm-rule', base: '#252531', inkDim: '#55556A',
+      blurb: '空间站的氧气还剩 11 小时。你不能修好它，只能决定谁先呼吸。', year: '2026' },
+    { no: '03', ttl: '回声', en: 'ECHO', motif: 'm-arc', base: '#202830', inkDim: '#546069',
+      blurb: '你听不见，只能用声呐画地图。每敲一次墙，都会有什么东西朝你游过来。', year: '2026' },
+    { no: '04', ttl: '铁皮', en: 'TIN', motif: 'm-square', base: '#2B2620', inkDim: '#665C4E',
+      blurb: '一台没有说明书的机器，和 340 个零件。装错了不会爆炸，只会安静地不动。', year: '2025' },
+    { no: '05', ttl: '夜航', en: 'NIGHTFALL', motif: 'm-bars', base: '#1B2431', inkDim: '#48586C',
+      blurb: '一艘没有 GPS 的渔船，一张 1974 年的海图，和一场不该出现的风暴。', year: '2025' },
+    { no: '06', ttl: '静默', en: 'HUSH', motif: 'm-ring', base: '#242427', inkDim: '#57575C',
+      blurb: '移动会发出声音。整栋楼里只有一个脚步声不是你的。', year: '2024' }
+  ];
+
+  /* ---------------- 建模 ---------------- */
+  var FACE_N = {
+    front: [0, 0, 1], back: [0, 0, -1],
+    right: [1, 0, 0], left: [-1, 0, 0],
+    top: [0, -1, 0], bottom: [0, 1, 0]
+  };
+  var FACES = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+
+  function solid(w, h, d, content) {
+    var el = document.createElement('div');
+    el.className = 'solid';
+    el.style.setProperty('--w', w + 'px');
+    el.style.setProperty('--h', h + 'px');
+    el.style.setProperty('--d', d + 'px');
+    var map = {};
+    FACES.forEach(function (k) {
+      var f = document.createElement('div');
+      f.className = 'face f-' + k;
+      if (content && content[k]) f.innerHTML = content[k];
+      el.appendChild(f);
+      map[k] = f;
+    });
+    return { el: el, faces: map };
+  }
+
+  var stage = document.getElementById('stage');
+  var objs = [];
+
+  /* ---------------- 台座：顶面就是地面，正面挂铜牌 ---------------- */
+  var plaqueHTML =
+    '<div class="plinth-front"><div class="plaque">' +
+      '<p class="lab">EXHIBITION / 2026</p>' +
+      '<p class="who">wangyi 和他的 <em>Jarvis</em></p>' +
+      '<p class="note">六个盒子，一盏灯。没有贴图，没有图片——侧面、顶面、明暗，都是每帧算出来的。</p>' +
+    '</div></div>';
+
+  var plinth = solid(PLINTH_W, PLINTH_H, PLINTH_D, {
+    front: plaqueHTML,
+    top: '<div class="deck-grid"></div>'
+  });
+  plinth.el.style.setProperty('--base', '#1F1F25');
+  /* 台面必须明显亮过正面：光在头顶，朝上的面和朝前的面对同一盏灯的夹角不一样。
+     之前只差三个色阶，台面在画面上等于不存在，盒子看起来立在台沿那条棱上。 */
+  plinth.faces.top.style.setProperty('--base', '#31313B');
+  plinth.faces.left.style.setProperty('--base', '#17171C');
+  plinth.faces.right.style.setProperty('--base', '#17171C');
+  plinth.el.style.transform = 'translate3d(0,' + (PLINTH_TOP + PLINTH_H / 2) + 'px,0)';
+  stage.appendChild(plinth.el);
+  objs.push({ el: plinth.el, faces: plinth.faces, ry: 0, fixed: true, idx: -1 });
+
+  /* ---------------- 六个盒子 ---------------- */
+  var boxes = [];
+
+  GAMES.forEach(function (g, i) {
+    var cover =
+      '<div class="cover">' +
+        '<span class="no">' + g.no + '</span>' +
+        '<div><div class="ttl">' + g.ttl + '</div><div class="en">' + g.en + '</div></div>' +
+      '</div>' +
+      '<span class="motif ' + g.motif + '"></span>';
+    var spine = '<div class="spine">' + g.ttl + '<span class="se">' + g.en + '</span></div>';
+    var blurb =
+      '<div class="blurb">' +
+        '<div><p class="bt">' + g.ttl + '</p><p class="bd">' + g.blurb + '</p></div>' +
+        '<span class="bf">' + g.year + '</span>' +
+      '</div>';
+
+    var s = solid(BOX_W, BOX_H, BOX_D, {
+      front: cover, back: blurb, right: spine, left: spine,
+      top: '<div class="top-label">' + g.en + '</div>'
+    });
+    s.el.style.setProperty('--base', g.base);
+    s.el.style.setProperty('--ink-dim', g.inkDim);
+    if (g.line) s.el.style.setProperty('--line-c', g.line);
+
+    var b = {
+      el: s.el, faces: s.faces,
+      x: (i - 2.5) * GAP,
+      y: PLINTH_TOP - BOX_H / 2,
+      z: BOX_Z,
+      baseRy: [-12, 9, -7, 11, -10, 7][i],   /* 各带一点偏角，像手摆的 */
+      tilt: [0, -1.4, 1.1, -0.7, 1, -1.1][i],
+      alpha: 1, alphaV: 0,
+      pick: 0, pickV: 0, target: 0,
+      idx: i
+    };
+    b.ry = b.baseRy;
+    boxes.push(b);
+    objs.push(b);
+
+    /* 接触阴影 + 台面反光：贴在台面这个平面上 */
+    var drop = document.createElement('div');
+    drop.className = 'drop';
+    drop.style.left = b.x + 'px';
+    drop.style.top = (PLINTH_TOP - 50) + 'px';
+    drop.style.background =
+      'radial-gradient(58% 42% at 50% 30%, ' + rgba(g.base, 0.20) + ', transparent 74%),' +
+      'radial-gradient(56% 54% at 50% 56%, rgba(0,0,0,0.80), transparent 76%)';
+    b.drop = drop;
+
+    stage.appendChild(drop);
+    stage.appendChild(s.el);
+  });
+
+  function rgba(hex, a) {
+    var n = parseInt(hex.slice(1), 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
+  /* ---------------- 相机 ---------------- */
+  var world = document.getElementById('world');
+  /* 默认站左边：灯在左上，这一侧才看得到被照亮的那一面。
+     pitch 是负的才是"从上往下看"——正的 rotateX 把场景顶部往远处翻，
+     等于把相机往下沉，水平面（台面、盒顶、接触阴影）会全部翻成背面被剔掉。
+     判据：台面法线 (0,-cos p,-sin p) 要和视线 (0,-150,1400) 同向，
+     也就是 tan p < 150/1400 ≈ 0.107，过了这个角台面就整个消失。 */
+  var cam = { yaw: 7, yawV: 0, pitch: -15, pitchV: 0, dolly: 70, dollyV: 0 };
+  var camT = { yaw: 7, pitch: -15, dolly: 70 };
+
+  var YAW_LIM = 46, PITCH_MIN = -38, PITCH_MAX = 5, DOLLY_MIN = -320, DOLLY_MAX = 260;
+
+  var dragging = false, moved = 0;
+  var lastX = 0, lastY = 0, lastT = 0, flingX = 0, flingY = 0;
+  var touched = false;
+
+  function markTouched() {
+    if (touched) return;
+    touched = true;
+    document.body.classList.add('touched');
+  }
+
+  function down(e) {
+    dragging = true;
+    moved = 0;
+    document.body.classList.add('dragging');
+    lastX = e.clientX; lastY = e.clientY; lastT = performance.now();
+    flingX = 0; flingY = 0;
+    cam.yawV = 0; cam.pitchV = 0;
+    markTouched();
+  }
+
+  function move(e) {
+    if (!dragging) return;
+    var now = performance.now();
+    var dx = e.clientX - lastX, dy = e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    moved += Math.abs(dx) + Math.abs(dy);
+    camT.yaw += dx * 0.15;
+    camT.pitch = clamp(camT.pitch - dy * 0.06, PITCH_MIN, PITCH_MAX);
+    var dt = Math.max(8, now - lastT);
+    flingX = dx * 0.15 / dt;
+    flingY = -dy * 0.06 / dt;
+    lastT = now;
+  }
+
+  function up(e) {
+    if (!dragging) return;
+    dragging = false;
+    document.body.classList.remove('dragging');
+    /* 甩出去的惯性，再限死在可视范围里 */
+    camT.yaw = clamp(camT.yaw + flingX * 190, -YAW_LIM, YAW_LIM);
+    camT.pitch = clamp(camT.pitch + flingY * 130, PITCH_MIN, PITCH_MAX);
+    if (moved < 6) pickAt(e.clientX, e.clientY);
+  }
+
+  document.addEventListener('pointerdown', down);
+  document.addEventListener('pointermove', move);
+  document.addEventListener('pointerup', up);
+  document.addEventListener('pointercancel', up);
+
+  document.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    camT.dolly = clamp(camT.dolly - e.deltaY * 0.55, DOLLY_MIN, DOLLY_MAX);
+    markTouched();
+  }, { passive: false });
+
+  /* ---------------- 点选 ----------------
+     不自己算投影。每个盒子的正面本来就已经被浏览器投影到屏幕上了，
+     直接问它"你的屏幕矩形在哪"，比手写矩阵可靠得多。 */
+  var picked = -1;
+
+  function pickAt(cx, cy) {
+    var best = -1, bestD = 1e9;
+    for (var i = 0; i < boxes.length; i++) {
+      var r = boxes[i].faces.front.getBoundingClientRect();
+      if (cx < r.left || cx > r.right || cy < r.top || cy > r.bottom) continue;
+      var d = Math.hypot(cx - (r.left + r.right) / 2, cy - (r.top + r.bottom) / 2);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    picked = (best === -1) ? -1 : (picked === best ? -1 : best);
+    for (var j = 0; j < boxes.length; j++) boxes[j].target = (j === picked ? 1 : 0);
+  }
+
+  /* ---------------- 光照 ----------------
+     世界空间里的一盏灯，从左上前方来。相机绕行时灯不动，
+     所以转到侧面，正对灯的那一面才会亮起来——这是"真 3D"唯一的证据。
+     方向：左 0.66 / 上 0.60 / 前 0.45。偏得越狠，三个面拉开的档位越多；
+     正对着打（只有前 0.9）会让顶面和正面亮成一个色，盒子立刻变平面。 */
+  var L = norm([-0.66, -0.60, 0.45]);
+
+  function norm(v) {
+    var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]) || 1;
+    return [v[0] / l, v[1] / l, v[2] / l];
+  }
+  function rotY(a) {
+    var c = Math.cos(a), s = Math.sin(a);
+    return [c, 0, s, 0, 1, 0, -s, 0, c];
+  }
+  function rotX(a) {
+    var c = Math.cos(a), s = Math.sin(a);
+    return [1, 0, 0, 0, c, -s, 0, s, c];
+  }
+  function mul(A, B) {
+    var o = new Array(9);
+    for (var r = 0; r < 3; r++) {
+      for (var c = 0; c < 3; c++) {
+        o[r * 3 + c] = A[r * 3] * B[c] + A[r * 3 + 1] * B[3 + c] + A[r * 3 + 2] * B[6 + c];
+      }
+    }
+    return o;
+  }
+  function apply(M, v) {
+    return [
+      M[0] * v[0] + M[1] * v[1] + M[2] * v[2],
+      M[3] * v[0] + M[4] * v[1] + M[5] * v[2],
+      M[6] * v[0] + M[7] * v[1] + M[8] * v[2]
+    ];
+  }
+
+  /* ---------------- 弹簧 ---------------- */
+  function spring(s, key, target, omega, zeta, dt) {
+    var vk = key + 'V';
+    var n = Math.max(1, Math.ceil(dt / SUB));
+    var h = dt / n;
+    for (var i = 0; i < n; i++) {
+      s[vk] += (omega * omega * (target - s[key]) - 2 * zeta * omega * s[vk]) * h;
+      s[key] += s[vk] * h;
+    }
+  }
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+
+  /* ---------------- 主循环 ---------------- */
+  var last = performance.now();
+
+  function frame(now) {
+    var dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000));
+    last = now;
+
+    var om = RM ? 30 : 12, ze = RM ? 1 : 0.9;
+    spring(cam, 'yaw', camT.yaw, om, ze, dt);
+    spring(cam, 'pitch', camT.pitch, om, ze, dt);
+    spring(cam, 'dolly', camT.dolly, om * 0.8, 0.95, dt);
+
+    world.style.transform =
+      'translate3d(30px,20px,' + cam.dolly.toFixed(1) + 'px) ' +
+      'rotateX(' + cam.pitch.toFixed(2) + 'deg) ' +
+      'rotateY(' + cam.yaw.toFixed(2) + 'deg)';
+
+    /* 相机矩阵：把面法线从模型空间转到视空间 */
+    var C = mul(rotX(cam.pitch * DEG), rotY(cam.yaw * DEG));
+
+    for (var i = 0; i < objs.length; i++) {
+      var o = objs[i];
+
+      if (!o.fixed) {
+        spring(o, 'pick', o.target, RM ? 26 : 9, 0.82, dt);
+
+        /* 被拿起来：从台面托起来、略往前、转 150° 露出背面。
+           不要用"冲向镜头"——盒子放大到两倍会把台座上的铜牌整个盖住。 */
+        var p = o.pick;
+        o.ry = o.baseRy + p * 150;
+        o.el.style.transform =
+          'translate3d(' + o.x + 'px,' + (o.y - p * 96) + 'px,' + (o.z + p * 110) + 'px) ' +
+          'rotateZ(' + (o.tilt * (1 - p)).toFixed(2) + 'deg) rotateY(' + o.ry + 'deg)';
+
+        /* translateZ 而不是 translateY：translateY 会在翻转前把整块平面搬走，
+           翻完之后平面停在 y=110 而不是台面的 150，阴影就钻进盒子底下看不见了。 */
+        o.drop.style.transform =
+          'translateZ(' + o.z + 'px) rotateX(90deg) scale(' + (1 + p * 0.4).toFixed(3) + ')';
+        o.drop.style.opacity = (1 - p * 0.62).toFixed(3);
+      }
+
+      /* 有人被拿起来时，其余的压暗——但绝不能用 opacity：
+         opacity < 1 会强制这个元素的 preserve-3d 降级成平的，
+         六个面会当场塌成一张卡。所以在光照里乘系数，几何一个像素不动。 */
+      if (!o.fixed) {
+        spring(o, 'alpha', (picked >= 0 && picked !== o.idx) ? 0.42 : 1, 14, 1, dt);
+      }
+      var k = o.fixed ? 1 : o.alpha;
+
+      var R = mul(C, rotY(o.ry * DEG));
+      for (var cls in o.faces) {
+        var n = apply(R, FACE_N[cls]);
+        var d = n[0] * L[0] + n[1] * L[1] + n[2] * L[2];
+        var bright = (0.30 + 0.80 * Math.max(0, d)) * k;
+        /* bright ≥ 1 → 补白（高光）；< 1 → 压黑（背光面） */
+        var shade = 1 - bright;
+        var f = o.faces[cls];
+        if (shade >= 0) {
+          f.style.setProperty('--tone', '0');
+          f.style.setProperty('--a', Math.min(0.94, shade).toFixed(3));
+        } else {
+          f.style.setProperty('--tone', '255');
+          f.style.setProperty('--a', Math.min(0.4, -shade).toFixed(3));
+        }
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
