@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>风格库 · 对照预览</title>
+<link rel="stylesheet" href="../styles/academic/tokens.css">
+<link rel="stylesheet" href="../styles/civic/tokens.css">
 <link rel="stylesheet" href="../styles/editorial-serif/tokens.css">
+<link rel="stylesheet" href="../styles/neobrutalist/tokens.css">
 <link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
+<link rel="stylesheet" href="../styles/soft-pastel/tokens.css">
 <link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
 <link rel="stylesheet" href="../styles/terminal-mono/tokens.css">
 <style>
@@ -64,11 +68,77 @@
   <div class="hd">
     <h1>风格库 · 对照预览</h1>
     <p>
-      同一份内容，4 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
+      同一份内容，8 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
       新增风格后重跑 <code>scripts/build-preview.py</code> 就会多一块。
       本页由脚本生成，不要手改。
     </p>
   </div>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Academic</span>
+      <span class="demo-slug">academic</span>
+      <span class="demo-note">论文体。两端对齐、首行缩进、段间不留空行、标题自动编号、定理带计数器、 边注挂在版心…</span>
+    </div>
+    <div class="stage ds-academic">
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 年 Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Civic</span>
+      <span class="demo-slug">civic</span>
+      <span class="demo-note">公共服务的界面。纯白纸、近黑墨、一个黄色焦点环，零圆角零阴影。</span>
+    </div>
+    <div class="stage ds-civic">
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 年 Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="demo-block">
     <div class="demo-meta">
@@ -77,14 +147,46 @@
       <span class="demo-note">冷灰白纸上的编辑体。标题走衬线、正文走黑体，全系统只有一个赭红强调色， 所有装饰让位…</span>
     </div>
     <div class="stage ds-editorial-serif">
-      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>
       <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
       <div class="row">
         <button>开始阅读</button>
-        <span class="ds-tag">2026 · Q4</span>
+        <span class="ds-tag">2026 年 Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Neobrutalist</span>
+      <span class="demo-slug">neobrutalist</span>
+      <span class="demo-note">新粗野。2px 实黑边、4px 零模糊硬阴影、5px 圆角、浅蓝底。</span>
+    </div>
+    <div class="stage ds-neobrutalist">
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 年 Q4</span>
       </div>
       <div class="grid3">
         <div class="ds-card">
@@ -111,14 +213,46 @@
       <span class="demo-note">原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的 …</span>
     </div>
     <div class="stage ds-quiet-dark">
-      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>
       <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
       <div class="row">
         <button>开始阅读</button>
-        <span class="ds-tag">2026 · Q4</span>
+        <span class="ds-tag">2026 年 Q4</span>
+      </div>
+      <div class="grid3">
+        <div class="ds-card">
+          <h3>层级靠落差</h3>
+          <p class="muted">字号要么同级，要么跳一大截。17 → 18 → 19 是最难看的中间状态。</p>
+        </div>
+        <div class="ds-card">
+          <h3>一个强调色</h3>
+          <p class="muted">颜色收敛到三个家族以内。强调色只出现在可点击的东西上，它指路，不装饰。</p>
+        </div>
+        <div class="ds-card">
+          <div class="ds-stat-label">阅读时长</div>
+          <div class="ds-stat-value">12 分钟</div>
+          <div class="ds-stat-label">全文 3,400 字</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">Soft Pastel</span>
+      <span class="demo-slug">soft-pastel</span>
+      <span class="demo-note">低对比柔色界面。浅色是 Latte（灰紫纸 + 墨水紫），深色是 Mocha（暖夜色…</span>
+    </div>
+    <div class="stage ds-soft-pastel">
+      <h1>把复杂的事说清楚</h1>
+      <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
+      <h2>留白是一种语气</h2>
+      <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
+      <div class="row">
+        <button>开始阅读</button>
+        <span class="ds-tag">2026 年 Q4</span>
       </div>
       <div class="grid3">
         <div class="ds-card">
@@ -145,14 +279,13 @@
       <span class="demo-note">理性的秩序感。纯白画布、无衬线一族到底、只留一个电蓝强调色， 所有对齐都能追溯到一个…</span>
     </div>
     <div class="stage ds-swiss-grid">
-      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>
       <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
       <div class="row">
         <button>开始阅读</button>
-        <span class="ds-tag">2026 · Q4</span>
+        <span class="ds-tag">2026 年 Q4</span>
       </div>
       <div class="grid3">
         <div class="ds-card">
@@ -179,14 +312,13 @@
       <span class="demo-note">把命令行搬进正文。深灰蓝画布、等宽为骨架、语义四色只用来标记状态。</span>
     </div>
     <div class="stage ds-terminal-mono">
-      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>
       <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
       <div class="row">
         <button>开始阅读</button>
-        <span class="ds-tag">2026 · Q4</span>
+        <span class="ds-tag">2026 年 Q4</span>
       </div>
       <div class="grid3">
         <div class="ds-card">

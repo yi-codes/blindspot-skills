@@ -1,0 +1,349 @@
+/* ============================================================
+   Soft Pastel · 低对比柔色
+   用法：浅色 → class="ds-soft-pastel"
+        深色 → class="ds-soft-pastel-dark"
+   ------------------------------------------------------------
+   变量前缀 --sp-
+   色值来源：catppuccin/palette 的 palette.json（官方版本化色板，
+   26 个色 × 4 个 flavor，带 order 字段）。
+   ⚠ 重要：Catppuccin 是**调色板**，不是设计语言。它没有定义
+   字号、圆角、间距、组件。本文件里的形状与排版规则是本库补的，
+   不是它的。见 DESIGN.md 第一节。
+   ============================================================ */
+
+/* ---- 结构令牌：深浅共用 ---- */
+:where(.ds-soft-pastel), :where(.ds-soft-pastel-dark) {
+  --sp-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+                  "Noto Sans SC", system-ui, sans-serif;
+  --sp-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* 字号：比工具界面大一点，柔和的东西不该挤 */
+  --sp-text-xs:  0.75rem;   /* 12 */
+  --sp-text-sm:  0.875rem;  /* 14 */
+  --sp-text-md:  1rem;      /* 16 */
+  --sp-text-lg:  1.125rem;  /* 18 */
+  --sp-text-xl:  1.375rem;  /* 22 */
+  --sp-text-2xl: 1.75rem;   /* 28 */
+
+  --sp-leading-tight: 1.25;
+  --sp-leading-snug:  1.4;
+  --sp-leading-body:  1.6;   /* 比 quiet-dark 松，这是"柔"的一部分 */
+
+  /* 字重：不用 700。低对比 + 粗字重会互相打架 */
+  --sp-weight-body: 400;
+  --sp-weight-strong: 600;
+
+  /* 间距 */
+  --sp-space-xs: 4px;
+  --sp-space-sm: 8px;
+  --sp-space-md: 12px;
+  --sp-space-lg: 16px;
+  --sp-space-xl: 24px;
+  --sp-space-2xl: 32px;
+  --sp-space-section: 48px;
+
+  /* 圆角：三档。柔 ≠ 全圆，全圆是"胶囊"，柔是"被摸圆的" */
+  --sp-radius-sm: 8px;
+  --sp-radius-md: 12px;
+  --sp-radius-full: 9999px;
+
+  /* 动效：比 quiet-dark 慢一点，软的东西落得慢 */
+  --sp-duration: 180ms;
+  --sp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --sp-measure: 40em;
+}
+
+/* ============================================================
+   Latte（浅色）
+   ------------------------------------------------------------
+   26 个色全部照搬。注意下面这行注释很重要：
+   **这 14 个 accent 不是 14 个能当文字用的颜色。**
+   Latte 里只有 mauve(4.79) 和 red(4.80) 过了 4.5:1，
+   blue 勉强 4.34。其余 11 个全部低于 4.5，只能做填充和图标。
+   ============================================================ */
+:where(.ds-soft-pastel) {
+  --sp-canvas:   #eff1f5;  /* base */
+  --sp-surface:  #e6e9ef;  /* mantle */
+  --sp-sunken:   #dce0e8;  /* crust */
+  /* Latte 里没有比 base 更亮的色，所以 raised 借纯白。
+     这是本文件唯一一个不在官方调色板里的值。 */
+  --sp-surface-raised: #ffffff;
+  --sp-line:     #ccd0da;  /* surface0 */
+  --sp-line-strong: #acb0be; /* surface2 */
+
+  --sp-ink:        #4c4f69; /* text */
+  --sp-ink-strong: #4c4f69;
+  --sp-ink-soft:   #6c6f85; /* subtext0, 4.37:1 */
+  --sp-ink-faint:  #7c7f93; /* overlay2, 3.49:1 —— 只给占位符 */
+
+  /* 唯一两个能当文字色的 accent */
+  --sp-accent:        #8839ef; /* mauve */
+  --sp-accent-strong: #8839ef;
+  --sp-danger:        #d20f39; /* red */
+
+  /* 其余 12 个只做填充/图标 */
+  --sp-rosewater: #dc8a78;
+  --sp-flamingo:  #dd7878;
+  --sp-pink:      #ea76cb;
+  --sp-maroon:    #e64553;
+  --sp-peach:     #fe640b;
+  --sp-yellow:    #df8e1d;
+  --sp-green:     #40a02b;
+  --sp-teal:      #179299;
+  --sp-sky:       #04a5e5;
+  --sp-sapphire:  #209fb5;
+  --sp-blue:      #1e66f5;
+  --sp-lavender:  #7287fd;
+
+}
+
+/* ============================================================
+   Mocha（深色）
+   ------------------------------------------------------------
+   Mocha 的对比度健康得多：14 个 accent 对 base 全部在 7:1 以上，
+   全部可以当文字色。所以深色版的规则比浅色版松——这是配色的
+   客观差异，不是我偏心。
+   ============================================================ */
+:where(.ds-soft-pastel-dark) {
+  --sp-canvas:   #1e1e2e;
+  --sp-surface:  #181825;  /* mantle */
+  --sp-sunken:   #11111b;  /* crust */
+  --sp-surface-raised: #313244; /* surface0 */
+  --sp-line:     #313244;
+  --sp-line-strong: #45475a;
+
+  --sp-ink:        #cdd6f4; /* text, 11.34:1 */
+  --sp-ink-strong: #cdd6f4;
+  --sp-ink-soft:   #a6adc8; /* subtext0, 7.37:1 */
+  --sp-ink-faint:  #7f849c; /* overlay1, 4.44:1 */
+
+  --sp-accent:        #cba6f7; /* mauve */
+  --sp-accent-strong: #cba6f7;
+  --sp-danger:        #f38ba8; /* red */
+
+  --sp-rosewater: #f5e0dc;
+  --sp-flamingo:  #f2cdcd;
+  --sp-pink:      #f5c2e7;
+  --sp-maroon:    #eba0ac;
+  --sp-peach:     #fab387;
+  --sp-yellow:    #f9e2af;
+  --sp-green:     #a6e3a1;
+  --sp-teal:      #94e2d5;
+  --sp-sky:       #89dceb;
+  --sp-sapphire:  #74c7ec;
+  --sp-blue:      #89b4fa;
+  --sp-lavender:  #b4befe;
+
+}
+
+/* ---- 基础 ---- */
+:where(.ds-soft-pastel), :where(.ds-soft-pastel-dark) {
+  background: var(--sp-canvas);
+  color: var(--sp-ink);
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-md);
+  font-weight: var(--sp-weight-body);
+  line-height: var(--sp-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(h1, h2, h3, h4) {
+  font-family: var(--sp-font-sans);
+  font-weight: var(--sp-weight-strong);
+  line-height: var(--sp-leading-tight);
+  letter-spacing: -0.01em;
+  color: var(--sp-ink-strong);
+  margin: 0 0 var(--sp-space-md);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(h1) { font-size: var(--sp-text-2xl); }
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(h2) { font-size: var(--sp-text-xl); }
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(h3) { font-size: var(--sp-text-lg); }
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(h4) { font-size: var(--sp-text-md); font-weight: var(--sp-weight-strong); }
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(p) {
+  margin: 0 0 var(--sp-space-lg);
+  max-width: var(--sp-measure);
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(a) {
+  color: var(--sp-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sp-accent) 40%, transparent);
+  text-underline-offset: 0.2em;
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(a):hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- 按钮：胶囊形。柔色的按钮不该有尖角 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(button, .ds-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-space-sm);
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-sm);
+  font-weight: var(--sp-weight-strong);
+  line-height: 1;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: var(--sp-radius-full);
+  background: var(--sp-accent);
+  color: var(--sp-canvas);
+  cursor: pointer;
+  transition: filter var(--sp-duration) var(--sp-ease),
+              transform var(--sp-duration) var(--sp-ease);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(button, .ds-btn):hover {
+  filter: brightness(1.08);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(button, .ds-btn):active {
+  transform: scale(0.98);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(button, .ds-btn):disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-btn-soft) {
+  background: var(--sp-surface);
+  color: var(--sp-ink);
+}
+
+/* ---- 卡片：靠底色浮，无边框无阴影。柔色的层级只能靠明度 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-card) {
+  background: var(--sp-surface);
+  border-radius: var(--sp-radius-md);
+  padding: var(--sp-space-xl);
+  /* Latte 里 mantle 与 base 只差 1.04:1，纯靠明度分不出卡片边界，
+     所以补一条 1px surface0 描边。这不是装饰，是必需的。 */
+  box-shadow: inset 0 0 0 1px var(--sp-line);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-panel) {
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-md);
+  padding: var(--sp-space-xl);
+}
+
+/* ---- 输入框：柔和的下凹，靠底色而非描边 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(input, textarea, select) {
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-sm);
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--sp-radius-sm);
+  background: var(--sp-sunken);
+  color: var(--sp-ink);
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--sp-line);
+  transition: box-shadow var(--sp-duration) var(--sp-ease);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(input, textarea)::placeholder {
+  color: var(--sp-ink-faint);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(input, textarea):focus {
+  box-shadow: inset 0 0 0 2px var(--sp-accent);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(input, textarea)[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 2px var(--sp-danger);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(input, textarea):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- 标签：柔色底 + 深色字。底色用 accent 的 20% 混色，不用实色 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-tag) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--sp-text-xs);
+  font-weight: var(--sp-weight-strong);
+  line-height: 1;
+  padding: 4px 9px;
+  border-radius: var(--sp-radius-full);
+  background: color-mix(in srgb, var(--sp-accent) 18%, transparent);
+  color: var(--sp-accent);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-tag-success) {
+  background: color-mix(in srgb, var(--sp-green) 16%, var(--sp-canvas));
+  color: var(--sp-ink);   /* 不用绿色本身：Latte 里它只有 2.96:1 */
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-tag-warning) {
+  background: color-mix(in srgb, var(--sp-yellow) 18%, var(--sp-canvas));
+  color: var(--sp-ink);   /* 不用黄色本身：只有 2.31:1 */
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-tag-danger) {
+  background: color-mix(in srgb, var(--sp-danger) 15%, var(--sp-canvas));
+  color: var(--sp-danger);
+}
+
+/* ---- 列表行 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-row) {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-space-md);
+  padding: 12px 14px;
+  border-radius: var(--sp-radius-sm);
+  transition: background var(--sp-duration) var(--sp-ease);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-row):hover {
+  background: var(--sp-surface);
+}
+
+/* ---- 分段控件 ---- */
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-seg) {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--sp-radius-full);
+  background: var(--sp-sunken);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-seg-item) {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: var(--sp-radius-full);
+  background: transparent;
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-xs);
+  font-weight: var(--sp-weight-strong);
+  color: var(--sp-ink-soft);
+  cursor: pointer;
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-seg-item[aria-selected="true"]) {
+  background: var(--sp-surface-raised);
+  color: var(--sp-ink);
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(.ds-avatar) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--sp-radius-full);
+  background: color-mix(in srgb, var(--sp-accent) 22%, transparent);
+  font-size: var(--sp-text-xs);
+  font-weight: var(--sp-weight-strong);
+  color: var(--sp-accent);
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(code, pre) {
+  font-family: var(--sp-font-mono);
+  font-size: var(--sp-text-sm);
+}
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(pre) {
+  background: var(--sp-sunken);
+  border-radius: var(--sp-radius-sm);
+  padding: var(--sp-space-lg);
+  overflow-x: auto;
+  line-height: 1.55;
+}
+
+:where(.ds-soft-pastel, .ds-soft-pastel-dark) :where(hr) {
+  border: 0;
+  border-top: 1px solid var(--sp-line);
+  margin: var(--sp-space-xl) 0;
+}

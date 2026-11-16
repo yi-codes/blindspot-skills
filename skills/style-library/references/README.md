@@ -5,13 +5,28 @@
 ```
 references/
 ├── README.md            ← 你正在读的（方法论）
-├── claude/
-│   ├── DESIGN.md        ← 原始存档，只读，不许改
+├── <name>/
+│   ├── DESIGN.md        ← 原始存档，只读，不许改（有的话）
 │   └── NOTES.md         ← 我的提炼卡：吸收了什么、丢了什么
-└── ollama/
-    ├── DESIGN.md
-    └── NOTES.md
 ```
+
+## 现有样本
+
+样本多了以后，只靠目录名看不出它是什么、被谁用了。查这张表。
+
+| 目录 | 类型 | 去了哪 |
+|---|---|---|
+| `claude` | ① 二手 | `editorial-serif`（墨色不纯黑） |
+| `ollama` | ① 二手 | `terminal-mono` |
+| `bergside-codex` | ① 二手 | `quiet-dark` |
+| `chatgpt-ios` | ② 一手（拆包） | `quiet-dark` 动效与浅色板 |
+| `hallmark` | ① 二手 | 促成 `principles.md` 的版式规则 |
+| `govuk` | ② 一手（SCSS） | → `civic` |
+| `latex-css` | ② 一手（CSS + 推导注释） | → `academic` |
+| `neobrutalism` | ③ 组件库（CSS + TSX） | → `neobrutalist` |
+| `catppuccin` | ④ 纯调色板 | → `soft-pastel`（**形状是补的**） |
+
+注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
 
 ## 为什么要单独一层
 
@@ -21,11 +36,28 @@ references/
 
 分开之后，`references/` 可以无限膨胀而不影响 `styles/` 的一致性。**只有经过提炼、能写成数值的东西，才允许进入 `styles/`。**
 
+## 四种输入，硬度不同
+
+不是所有样本都同样"硬"。拿到一份材料，先判断它属于哪一类——**你只能声称它给你的那部分**。
+
+| 类型 | 例子 | 它给你什么 | 你还能声称什么 |
+|---|---|---|---|
+| ① 二手 DESIGN.md | `claude`、`ollama`、`bergside-codex` | 别人对某个产品的分析 | 只能声称"有人这么看"，数值要自己验 |
+| ② 一手源码 | `govuk`（SCSS 变量 + 注释）、`latex-css` | 每个值 + 为什么 | 颜色、字号、线宽、间距全部可复现 |
+| ③ 能跑的组件库 | `neobrutalism`（CSS + TSX） | 实际在用的值 + 交互 | 值可复现，**交互也能复现**（比 ② 多一层） |
+| ④ 纯调色板 | `catppuccin`（只给颜色） | 只有色值 | **只有颜色是它的，形状是你补的** |
+
+第 ④ 类最危险：它看起来最"完整"（26 个色、4 个 flavor、版本化管理），实际缺的正是最难的部分——层级怎么分、组件长什么样。而且缺了不会报错，只会做出来"颜色对了，气质不对"。
+
+**规则**：第 ④ 类必须把"形状是我补的"写在 DESIGN.md 第一段。读者有权知道哪些数是查得到的，哪些是定的。
+
 ## 怎么用这一层
 
 ### 第一步：拿到原始文件
 
-上游主力是 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)（127k★，84 个真实网站的 DESIGN.md）。
+上游主力有两种：
+
+**A. 别人写好的 DESIGN.md** —— [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)（127k★，84 个真实网站）
 文件在 `design-md/<品牌>/DESIGN.md`。
 
 ```bash
@@ -33,6 +65,15 @@ references/
 # 例：
 ./scripts/fetch-ref.sh VoltAgent/awesome-design-md design-md/linear/DESIGN.md linear
 ```
+
+**B. 设计系统自己的源码** —— 这是更硬的一类，2026-11 之后成为主力：
+
+```bash
+gh api "repos/alphagov/govuk-frontend/contents/packages/govuk-frontend/src/govuk/settings/_colours-palette--internal.scss" \
+  --jq '.content' | base64 -d
+```
+
+比 ① 好用的地方：注释里就写着"为什么是这个值"（比如 latex.css 把 `1.463rem` 的推导过程写在注释里）。
 
 也可以从别处来：某个产品官网、自己截图分析、Figma 社区的规范文件。只要能落成 DESIGN.md 格式，就走同一套流程。
 
@@ -93,3 +134,10 @@ references/
 - 格式规范：[google-labs-code/design.md](https://github.com/google-labs-code/design.md)（28.9k★），`docs/spec.md`
 - 样本库：[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)（127.6k★）
 - 官方校验：`npx @google/design.md lint DESIGN.md`（能查 WCAG 对比度、失效引用；不认识 `borderColor` 这类自定义属性，会告警——规范里组件属性只有 8 个）
+
+**找下一份样本时优先去这些地方**（比聚合库硬一个档，值是查得到的不是猜的）：
+
+- [alphagov/govuk-frontend](https://github.com/alphagov/govuk-frontend) —— 政府级无障碍标准，SCSS 变量带注释
+- [vincentdoerig/latex-css](https://github.com/vincentdoerig/latex-css) —— 单文件 CSS，把 LaTeX 的排版参数逐条推导
+- [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components) —— 带 TSX，交互行为也能抄
+- [catppuccin/palette](https://github.com/catppuccin/palette) —— 纯色板，用来压力测试方法（见上表 ④）

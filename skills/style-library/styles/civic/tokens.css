@@ -1,0 +1,296 @@
+/* ============================================================
+   Civic · 公共服务
+   用法：给任意容器加 class="ds-civic"
+   ------------------------------------------------------------
+   变量前缀 --cv-
+   色值来源：alphagov/govuk-frontend 的 _colours-palette--internal.scss
+   （每个色相 7 档 tint/shade）与 _measurements.scss。非臆测。
+   设计意图：让所有人都能读完、填完、办成。不为好看做任何妥协。
+   ============================================================ */
+
+:where(.ds-civic) {
+  /* ---- 颜色：一个黑、一个蓝、一个黄，够用了 ---- */
+  /* 画布是纯白。这是全库唯一的纯白画布，理由写在 DESIGN.md 的
+     「对 Floor 规则 2 的豁免」一节——这个风格的价值主张是最大可读性。 */
+  --cv-canvas:       #ffffff;
+  --cv-surface:      #f3f3f3;  /* black tint-95，区块底 */
+  --cv-surface-hover:#cecece;  /* black tint-80 */
+  --cv-ink:          #0b0c0c;  /* black primary，不是纯黑 */
+  --cv-ink-secondary:#484949;  /* black tint-25 */
+  --cv-ink-faint:    #858686;  /* black tint-50 */
+  --cv-line:         #b1b4b6;  /* 装饰性分隔线，不用于必须被看见的边界 */
+  --cv-line-strong:  #0b0c0c;  /* 必须被看见的边界一律用它 */
+  --cv-link:         #1d70b8;  /* blue primary */
+  --cv-link-visited: #4c2c92;
+  --cv-link-hover:   #003078;
+  --cv-focus:        #ffdd00;  /* yellow primary。只做底，不做字 */
+  --cv-error:        #ca3535;  /* red primary */
+  --cv-success:      #0f7a52;  /* green primary */
+  --cv-success-dark: #083d29;  /* green shade-50，按钮的"厚度" */
+  --cv-on-accent:    #ffffff;
+
+  /* ---- 字体：GDS Transport 是商用字体，退到它自己声明的 fallback ---- */
+  --cv-font-sans: "GDS Transport", "Noto Sans SC", "PingFang SC",
+                  "Hiragino Sans GB", arial, sans-serif;
+  --cv-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- 字号阶：直接抄 GOV.UK 的 8 档，一档都不加 ----
+     值来自 _typography-responsive.scss 的 tablet 断点。
+     注意 80 档行高等于字号（1.0），这是真事，不是笔误。 */
+  --cv-text-2xl: 5rem;      /* 80 / 80 */
+  --cv-text-xl:  3rem;      /* 48 / 50 */
+  --cv-text-lg:  2.25rem;   /* 36 / 40 */
+  --cv-text-md2: 1.6875rem; /* 27 / 30 */
+  --cv-text-md1: 1.5rem;    /* 24 / 30 */
+  --cv-text-md:  1.1875rem; /* 19 / 25  ← 正文。不是 16 */
+  --cv-text-sm:  1rem;      /* 16 / 20 */
+  --cv-text-xs:  0.875rem;  /* 14 / 16 */
+
+  --cv-leading-2xl: 1;
+  --cv-leading-xl:  1.042;
+  --cv-leading-lg:  1.111;
+  --cv-leading-md:  1.316;  /* 25/19 */
+  --cv-leading-sm:  1.25;
+  --cv-leading-xs:  1.143;
+
+  --cv-weight-regular: 400;
+  --cv-weight-bold: 700;
+
+  /* ---- 间距：5 的倍数，不是 4 也不是 8 ---- */
+  --cv-space-1: 5px;
+  --cv-space-2: 10px;
+  --cv-space-3: 15px;
+  --cv-space-4: 20px;
+  --cv-space-5: 25px;
+  --cv-space-6: 30px;
+  --cv-space-7: 40px;
+  --cv-space-8: 50px;
+  --cv-space-9: 60px;
+
+  /* ---- 线：这是这套风格的骨架 ---- */
+  --cv-border: 1px solid var(--cv-line);
+  --cv-border-form: 2px solid var(--cv-line-strong);
+  --cv-rule: 5px solid var(--cv-line-strong);   /* 区块分隔 */
+  --cv-rule-wide: 10px solid var(--cv-line-strong);
+  --cv-rule-narrow: 4px solid var(--cv-line-strong);
+  --cv-focus-width: 3px;
+
+  /* ---- 形状：零圆角、零阴影。整个系统没有例外 ---- */
+  --cv-radius: 0;
+
+  /* ---- 版心 ---- */
+  --cv-page-width: 960px;
+  --cv-gutter: 30px;
+  --cv-measure: 40em;
+}
+
+/* ---- 基础 ---- */
+:where(.ds-civic) {
+  background: var(--cv-canvas);
+  color: var(--cv-ink);
+  font-family: var(--cv-font-sans);
+  font-size: var(--cv-text-md);
+  font-weight: var(--cv-weight-regular);
+  line-height: var(--cv-leading-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-civic) :where(h1, h2, h3, h4) {
+  font-family: var(--cv-font-sans);
+  font-weight: var(--cv-weight-bold);
+  color: var(--cv-ink);
+  margin: 0 0 var(--cv-space-4);
+  max-width: var(--cv-measure);
+}
+:where(.ds-civic) :where(h1) { font-size: var(--cv-text-xl); line-height: var(--cv-leading-xl); }
+:where(.ds-civic) :where(h2) { font-size: var(--cv-text-lg); line-height: var(--cv-leading-lg); }
+:where(.ds-civic) :where(h3) { font-size: var(--cv-text-md1); line-height: var(--cv-leading-sm); }
+:where(.ds-civic) :where(h4) { font-size: var(--cv-text-md); line-height: var(--cv-leading-md); }
+
+:where(.ds-civic) :where(p) {
+  margin: 0 0 var(--cv-space-4);
+  max-width: var(--cv-measure);
+}
+
+/* 链接：颜色变化很克制，主要靠下划线变粗来回应悬停 */
+:where(.ds-civic) :where(a) {
+  color: var(--cv-link);
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.1578em;
+}
+:where(.ds-civic) :where(a):visited { color: var(--cv-link-visited); }
+:where(.ds-civic) :where(a):hover {
+  color: var(--cv-link-hover);
+  text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+  text-decoration-skip-ink: none;
+}
+:where(.ds-civic) :where(a):focus-visible {
+  outline: var(--cv-focus-width) solid transparent;
+  color: var(--cv-ink);
+  background-color: var(--cv-focus);
+  box-shadow: 0 -2px var(--cv-focus), 0 4px var(--cv-ink);
+  text-decoration: none;
+}
+
+/* 段落分隔：5px 粗黑线。这是全系统唯一的分隔手段 */
+:where(.ds-civic) :where(.ds-section) {
+  border-top: var(--cv-rule-narrow);
+  padding-top: var(--cv-space-4);
+  margin-top: var(--cv-space-6);
+}
+
+:where(.ds-civic) :where(hr) {
+  border: 0;
+  border-top: var(--cv-border);
+  margin: var(--cv-space-6) 0;
+}
+
+/* ---- 标题上方的引导语：19px、次要色，和标题贴得很近 ---- */
+:where(.ds-civic) :where(.ds-caption) {
+  display: block;
+  font-size: var(--cv-text-md1);
+  line-height: var(--cv-leading-sm);
+  color: var(--cv-ink-secondary);
+  margin: 0 0 var(--cv-space-1);
+}
+
+/* ---- 按钮：零圆角、2px 透明边、底部 2px 厚度的"实体感" ---- */
+:where(.ds-civic) :where(button, .ds-btn) {
+  display: inline-block;
+  font-family: var(--cv-font-sans);
+  font-size: var(--cv-text-md);
+  line-height: 1.1875;
+  padding: 8px 10px 7px;
+  border: 2px solid transparent;
+  border-radius: 0;
+  background: var(--cv-success);
+  color: var(--cv-on-accent);
+  box-shadow: 0 2px 0 var(--cv-success-dark);
+  cursor: pointer;
+}
+:where(.ds-civic) :where(button, .ds-btn):hover { background: var(--cv-success-dark); }
+:where(.ds-civic) :where(button, .ds-btn):active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+:where(.ds-civic) :where(button, .ds-btn):focus-visible {
+  outline: var(--cv-focus-width) solid transparent;
+  background-color: var(--cv-focus);
+  color: var(--cv-ink);
+  box-shadow: 0 -2px var(--cv-focus), 0 4px var(--cv-ink);
+}
+:where(.ds-civic) :where(button, .ds-btn):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:where(.ds-civic) :where(.ds-btn-secondary) {
+  background: var(--cv-surface);
+  color: var(--cv-ink);
+  box-shadow: 0 2px 0 var(--cv-line);
+}
+:where(.ds-civic) :where(.ds-btn-secondary):hover {
+  background: var(--cv-surface-hover);
+}
+
+/* ---- 表单：标签在输入框上方、加粗；边框 2px 黑 ---- */
+:where(.ds-civic) :where(.ds-field) { margin-bottom: var(--cv-space-6); max-width: 40em; }
+
+:where(.ds-civic) :where(.ds-label) {
+  display: block;
+  font-size: var(--cv-text-md);
+  font-weight: var(--cv-weight-bold);
+  line-height: var(--cv-leading-md);
+  margin-bottom: var(--cv-space-1);
+  color: var(--cv-ink);
+}
+:where(.ds-civic) :where(.ds-hint) {
+  display: block;
+  font-size: var(--cv-text-md);
+  color: var(--cv-ink-secondary);
+  margin-bottom: var(--cv-space-2);
+}
+
+:where(.ds-civic) :where(input, textarea, select) {
+  font-family: var(--cv-font-sans);
+  font-size: var(--cv-text-md);
+  line-height: var(--cv-leading-md);
+  width: 100%;
+  padding: 5px 4px;
+  border: var(--cv-border-form);
+  border-radius: 0;
+  background: var(--cv-canvas);
+  color: var(--cv-ink);
+  outline: none;
+}
+:where(.ds-civic) :where(input, textarea):focus {
+  outline: var(--cv-focus-width) solid transparent;
+  box-shadow: inset 0 0 0 2px var(--cv-ink), 0 0 0 var(--cv-focus-width) var(--cv-focus);
+}
+:where(.ds-civic) :where(input, textarea)[aria-invalid="true"] { border-color: var(--cv-error); }
+:where(.ds-civic) :where(input, textarea):disabled { opacity: 0.5; }
+
+/* 错误信息：左侧 5px 红条 + 加粗红字。这个条是 GOV.UK 最认得出的细节之一 */
+:where(.ds-civic) :where(.ds-error-message) {
+  display: block;
+  font-weight: var(--cv-weight-bold);
+  color: var(--cv-error);
+  padding-left: var(--cv-space-2);
+  border-left: var(--cv-rule) solid var(--cv-error);
+  margin-bottom: var(--cv-space-2);
+}
+
+/* 错误摘要框：整块 5px 红边 */
+:where(.ds-civic) :where(.ds-error-summary) {
+  border: var(--cv-rule) solid var(--cv-error);
+  padding: var(--cv-space-4);
+  margin-bottom: var(--cv-space-6);
+}
+
+/* ---- 标签（tag）：方角、蓝底、全大写 ---- */
+:where(.ds-civic) :where(.ds-tag) {
+  display: inline-block;
+  max-width: 100%;
+  font-size: var(--cv-text-sm);
+  font-weight: var(--cv-weight-bold);
+  line-height: 1.25;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 0;
+  background: var(--cv-link);
+  color: var(--cv-on-accent);
+}
+
+/* ---- 提示框（inset text）：左侧 10px 蓝边，无底色 ---- */
+:where(.ds-civic) :where(.ds-inset) {
+  border-left: var(--cv-rule-wide) solid var(--cv-link);
+  padding: var(--cv-space-3);
+  margin: var(--cv-space-4) 0;
+}
+
+/* ---- 警告框（warning text）：图标位 + 加粗，无边框 ---- */
+:where(.ds-civic) :where(.ds-warning) {
+  display: flex;
+  gap: var(--cv-space-2);
+  font-weight: var(--cv-weight-bold);
+  margin: var(--cv-space-4) 0;
+}
+
+/* ---- 表格：只有横线，表头加粗，表头下方一条 1px ---- */
+:where(.ds-civic) :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--cv-text-md);
+}
+:where(.ds-civic) :where(th, td) {
+  text-align: left;
+  padding: var(--cv-space-2) var(--cv-space-4) var(--cv-space-2) 0;
+  border-bottom: 1px solid var(--cv-line);
+  vertical-align: top;
+}
+:where(.ds-civic) :where(th) {
+  font-weight: var(--cv-weight-bold);
+  border-bottom: 2px solid var(--cv-line-strong);
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新增四个风格 · 同内容对照</title>
+<link rel="stylesheet" href="../styles/civic/tokens.css">
+<link rel="stylesheet" href="../styles/academic/tokens.css">
+<link rel="stylesheet" href="../styles/neobrutalist/tokens.css">
+<link rel="stylesheet" href="../styles/soft-pastel/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 26px 64px;
+    background: #e9e8e4;
+    font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
+    color: #2b2b28;
+  }
+  .page { max-width: 1340px; margin: 0 auto; }
+  .intro { margin-bottom: 28px; max-width: 64em; }
+  .intro h1 { font-size: 21px; font-weight: 650; margin: 0 0 10px; letter-spacing: -.01em; }
+  .intro p { font-size: 13.5px; line-height: 1.85; color: #5a5a55; margin: 0 0 6px; }
+  .intro code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px; background: #dcdbd6; padding: 1px 5px; border-radius: 3px;
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .frame { border-radius: 5px; overflow: hidden; box-shadow: 0 1px 2px rgba(20,20,18,.10), 0 10px 26px rgba(20,20,18,.09); }
+  .cap {
+    display: flex; align-items: baseline; gap: 10px; padding: 9px 16px;
+    background: #2a2a27; color: #cdcdc6; font-size: 11.5px;
+  }
+  .cap b { font-weight: 600; color: #f1f1ec; }
+  .cap span { margin-left: auto; font-family: ui-monospace, monospace; font-size: 10.5px; color: #8b8b84; }
+
+  .box { padding: 26px 26px 30px; }
+  .box .wrap { max-width: 34em; }
+  .box h2 { margin: 0 0 12px; }
+  .box p { margin: 0 0 14px; }
+  .box .ds-card { margin: 18px 0; }
+  .box .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .box label.fieldlabel { display: block; font-size: 12px; margin-bottom: 5px; color: currentColor; opacity: .75; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="intro">
+    <h1>新增四个风格 · 同内容对照</h1>
+    <p>
+      同一段内容、四个风格，只换最外层 class。看的是<strong>结构差异</strong>：行距、缩进、边线、
+      阴影、字重、以及"哪里加粗"这件事每个风格答案都不一样。
+    </p>
+    <p>
+      四个都来自可复现的来源：GOV.UK Frontend、latex-css、neobrutalism-components、Catppuccin palette。
+      具体到每个十六进制的出处，在各自 <code>DESIGN.md</code> 的第一节。
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ Civic ============ -->
+    <div class="frame">
+      <div class="cap"><b>Civic</b><span>公共服务 · GOV.UK</span></div>
+      <div class="box ds-civic">
+        <div class="wrap">
+          <span class="ds-caption">办事指南</span>
+          <h2>申请一份住址证明</h2>
+          <p>你需要提供最近三个月内的水电账单，或者一份银行对账单。如果这两样都没有，可以到社区服务中心开具居住确认书。</p>
+
+          <div class="ds-inset">办理时间通常为 <strong>5 个工作日</strong>。加急服务需要额外付费。</div>
+
+          <div class="ds-field">
+            <label class="ds-label" for="cv-email">电子邮箱</label>
+            <span class="ds-hint">我们会把受理编号发到这里</span>
+            <input id="cv-email" value="wangyi@example.com">
+          </div>
+
+          <div class="ds-field" style="margin-bottom:16px">
+            <label class="ds-label" for="cv-id">证件号码</label>
+            <span class="ds-error-message">证件号码必须是 18 位</span>
+            <input id="cv-id" aria-invalid="true" value="31010199001">
+          </div>
+
+          <div class="row">
+            <button>提交申请</button>
+            <button class="ds-btn-secondary">保存草稿</button>
+            <span class="ds-tag">草稿</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Academic ============ -->
+    <div class="frame">
+      <div class="cap"><b>Academic</b><span>论文体 · latex-css</span></div>
+      <div class="box ds-academic">
+        <div class="wrap">
+          <h2>行距与可读性的关系</h2>
+          <p>中文排版的默认行距照搬自西文，而西文的行距假设建立在小写字母加升降部的字形上。汉字是满格方块，同样的行距下，方块之间留出的空白更少，因此中文需要更大的行距才能达到等效的呼吸感。</p>
+          <p>我们把行距从 1.4 提高到 1.8，字宽从每行 60 字收到 34 字，在 24 名被试上测得的平均阅读速度提升了 11%。</p>
+
+          <div class="ds-theorem">对任意给定的字号与字宽，存在一个最优行距区间，使阅读速度达到局部最大。</div>
+          <div class="ds-proof">由上一节的测量结果直接可得。</div>
+
+          <div class="row" style="margin-top:18px">
+            <button>下载 PDF</button>
+            <button>查看数据</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Neobrutalist ============ -->
+    <div class="frame">
+      <div class="cap"><b>Neobrutalist</b><span>新粗野 · neobrutalism-components</span></div>
+      <div class="box ds-neobrutalist">
+        <div class="wrap">
+          <h2>把界面做成一块块纸板</h2>
+          <p>2px 实黑边、4px 零模糊硬阴影、5px 圆角。悬停的时候整个按钮平移进自己的阴影里，看起来像被按下去。</p>
+
+          <div class="ds-card ds-card-interactive">
+            <h4 style="margin:0 0 8px">专业版 · 每月 39 元</h4>
+            <p style="margin:0 0 14px; font-size:14px">无限项目、团队协作、导出全部格式。</p>
+            <div class="row">
+              <button>立即订阅</button>
+              <span class="ds-tag">省 20%</span>
+            </div>
+          </div>
+
+          <label class="fieldlabel" for="nb-email">邮箱</label>
+          <input id="nb-email" placeholder="you@example.com">
+
+          <div class="row" style="margin-top:16px">
+            <button class="ds-btn-neutral">了解更多</button>
+            <span class="ds-meta">不需要信用卡</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Soft Pastel ============ -->
+    <div class="frame">
+      <div class="cap"><b>Soft Pastel</b><span>低对比柔色 · Catppuccin Latte</span></div>
+      <div class="box ds-soft-pastel">
+        <div class="wrap">
+          <h2>今天写了三行</h2>
+          <p>不多，但比昨天多。日记这件事不需要每天都写得很好，只需要每天都打开它。</p>
+
+          <div class="ds-card">
+            <h4 style="margin:0 0 6px">昨天 · 周四</h4>
+            <p style="margin:0; font-size:14px; color:var(--sp-ink-soft)">把书桌收拾了一遍，找到那支丢了两周的笔。</p>
+            <div class="row" style="margin-top:14px">
+              <span class="ds-tag">心情 平静</span>
+              <span class="ds-tag ds-tag-success">连续 12 天</span>
+            </div>
+          </div>
+
+          <div class="ds-seg" style="margin-bottom:14px">
+            <button class="ds-seg-item" aria-selected="true">今天</button>
+            <button class="ds-seg-item">本周</button>
+            <button class="ds-seg-item">全部</button>
+          </div>
+
+          <label class="fieldlabel" for="sp-note">写一句</label>
+          <input id="sp-note" placeholder="今天发生了什么">
+
+          <div class="row" style="margin-top:16px">
+            <button>保存</button>
+            <button class="ds-btn-soft">跳过今天</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

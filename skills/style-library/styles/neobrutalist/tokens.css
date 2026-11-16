@@ -1,0 +1,287 @@
+/* ============================================================
+   Neobrutalist · 新粗野
+   用法：给任意容器加 class="ds-neobrutalist"
+   ------------------------------------------------------------
+   变量前缀 --nb-
+   数据来源：ekmas/neobrutalism-components（5.6k★）的 globals.css 与
+   button.tsx。圆角 5px、2px 黑边、4px 硬阴影、字重 500/700 全部原样。
+   设计意图：把"界面是一块块贴上去的纸板"这件事明说出来。
+   没有渐变、没有模糊、没有半透明——所有东西都是实心的。
+   ============================================================ */
+
+:where(.ds-neobrutalist) {
+  /* ---- 颜色：底色是一个浅蓝，主体只有黑与白 ---- */
+  --nb-canvas:   #dcebfe;  /* hsl(214 95% 93%) 背景 */
+  --nb-surface:  #ffffff;  /* 卡片/次级底 */
+  --nb-ink:      #000000;  /* 前景色。这个风格里纯黑是对的，见 DESIGN.md */
+  --nb-ink-weak: rgba(0, 0, 0, 0.65);  /* 弱化文字靠透明度，不引入第二级灰 */
+  --nb-main:     #5294ff;  /* hsl(217 100% 66%) 主色 */
+  --nb-border:   #000000;
+  --nb-ring:     #000000;
+  --nb-overlay:  rgba(0, 0, 0, 0.8);
+
+  /* ---- 图表五色。这一整套都是原样搬的，顺序也没动 ---- */
+  --nb-chart-1: #5294ff;
+  --nb-chart-2: #ff4d50;
+  --nb-chart-3: #facc00;
+  --nb-chart-4: #05e17a;
+  --nb-chart-5: #7a83ff;
+
+  /* ---- 字体：DM Sans 是原项目的正文字体 ---- */
+  --nb-font-sans: "DM Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
+                  system-ui, sans-serif;
+  --nb-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- 字号 ---- */
+  --nb-text-xs:  0.75rem;   /* 12 */
+  --nb-text-sm:  0.875rem;  /* 14 */
+  --nb-text-md:  1rem;      /* 16 */
+  --nb-text-lg:  1.25rem;   /* 20 */
+  --nb-text-xl:  1.5rem;    /* 24 */
+  --nb-text-2xl: 1.875rem;  /* 30 */
+  --nb-text-3xl: 3rem;      /* 48 */
+
+  --nb-leading-tight: 1.1;
+  --nb-leading-snug:  1.3;
+  --nb-leading-body:  1.55;
+
+  /* ---- 字重：正文 500 是这套风格的真实值，不是 400 ----
+     粗野风格的正文更沉，因为它的纸板感需要笔画撑住。 */
+  --nb-weight-body: 500;
+  --nb-weight-bold: 700;
+
+  /* ---- 间距 ---- */
+  --nb-space-xs: 4px;
+  --nb-space-sm: 8px;
+  --nb-space-md: 12px;
+  --nb-space-lg: 16px;
+  --nb-space-xl: 24px;
+  --nb-space-2xl: 32px;
+  --nb-space-section: 48px;
+
+  /* ---- 形状：只有一个圆角值 + 全圆 ---- */
+  --nb-radius: 5px;
+  --nb-radius-full: 9999px;
+
+  /* ---- 线：2px 实黑。不要 1px，1px 在浅蓝底上像铅笔线 ---- */
+  --nb-border-w: 2px;
+  --nb-border-style: var(--nb-border-w) solid var(--nb-border);
+
+  /* ---- 硬阴影：位移 4px，模糊 0。模糊一出现就不粗野了 ---- */
+  --nb-shadow-offset: 4px;
+  --nb-shadow: var(--nb-shadow-offset) var(--nb-shadow-offset) 0 0 var(--nb-border);
+  --nb-shadow-reverse: calc(-1 * var(--nb-shadow-offset)) calc(-1 * var(--nb-shadow-offset)) 0 0 var(--nb-border);
+
+  /* ---- 版心 ---- */
+  --nb-container: 1300px;
+  --nb-measure: 38em;
+
+  /* ---- 动效：只有位移，没有缓入缓出 ---- */
+  --nb-duration: 100ms;
+  --nb-ease: linear;   /* 这个风格不需要曲线，硬切更对 */
+}
+
+/* ---- 基础 ---- */
+:where(.ds-neobrutalist) {
+  background: var(--nb-canvas);
+  color: var(--nb-ink);
+  font-family: var(--nb-font-sans);
+  font-size: var(--nb-text-md);
+  font-weight: var(--nb-weight-body);
+  line-height: var(--nb-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-neobrutalist) :where(h1, h2, h3, h4) {
+  font-family: var(--nb-font-sans);
+  font-weight: var(--nb-weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--nb-ink);
+  margin: 0 0 var(--nb-space-md);
+  text-wrap: balance;
+}
+:where(.ds-neobrutalist) :where(h1) { font-size: var(--nb-text-3xl); line-height: var(--nb-leading-tight); }
+:where(.ds-neobrutalist) :where(h2) { font-size: var(--nb-text-2xl); line-height: var(--nb-leading-tight); }
+:where(.ds-neobrutalist) :where(h3) { font-size: var(--nb-text-xl); line-height: var(--nb-leading-snug); }
+:where(.ds-neobrutalist) :where(h4) { font-size: var(--nb-text-lg); line-height: var(--nb-leading-snug); }
+
+:where(.ds-neobrutalist) :where(p) {
+  margin: 0 0 var(--nb-space-lg);
+  max-width: var(--nb-measure);
+}
+
+:where(.ds-neobrutalist) :where(a) {
+  color: var(--nb-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+:where(.ds-neobrutalist) :where(a):hover { background: var(--nb-chart-3); }
+
+/* ---- 按钮：悬停时整体平移进自己的阴影里，阴影消失 ----
+   这是这套风格最重要的一个交互，它不是"变个颜色"。 */
+:where(.ds-neobrutalist) :where(button, .ds-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nb-space-sm);
+  height: 40px;
+  padding: 0 var(--nb-space-lg);
+  font-family: var(--nb-font-sans);
+  font-size: var(--nb-text-sm);
+  font-weight: var(--nb-weight-body);
+  line-height: 1;
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  background: var(--nb-main);
+  color: var(--nb-ink);
+  box-shadow: var(--nb-shadow);
+  cursor: pointer;
+  transition: transform var(--nb-duration) var(--nb-ease),
+              box-shadow var(--nb-duration) var(--nb-ease);
+}
+:where(.ds-neobrutalist) :where(button, .ds-btn):hover {
+  transform: translate(var(--nb-shadow-offset), var(--nb-shadow-offset));
+  box-shadow: none;
+}
+:where(.ds-neobrutalist) :where(button, .ds-btn):active {
+  transform: translate(calc(var(--nb-shadow-offset) / 2), calc(var(--nb-shadow-offset) / 2));
+  box-shadow: calc(var(--nb-shadow-offset) / 2) calc(var(--nb-shadow-offset) / 2) 0 0 var(--nb-border);
+}
+:where(.ds-neobrutalist) :where(button, .ds-btn):focus-visible {
+  outline: 2px solid var(--nb-ring);
+  outline-offset: 2px;
+}
+:where(.ds-neobrutalist) :where(button, .ds-btn):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--nb-shadow);
+}
+
+:where(.ds-neobrutalist) :where(.ds-btn-neutral) {
+  background: var(--nb-surface);
+  color: var(--nb-ink);
+}
+:where(.ds-neobrutalist) :where(.ds-btn-ghost) {
+  background: transparent;
+  box-shadow: none;
+}
+:where(.ds-neobrutalist) :where(.ds-btn-ghost):hover {
+  transform: none;
+  background: var(--nb-surface);
+  box-shadow: var(--nb-shadow);
+}
+
+/* ---- 卡片：白底 + 2px 黑边 + 4px 硬阴影。它看起来就是一块贴上去的纸板 ---- */
+:where(.ds-neobrutalist) :where(.ds-card) {
+  background: var(--nb-surface);
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  box-shadow: var(--nb-shadow);
+  padding: var(--nb-space-xl);
+}
+/* 可点的卡片：和按钮同一个交互 */
+:where(.ds-neobrutalist) :where(.ds-card-interactive) {
+  cursor: pointer;
+  transition: transform var(--nb-duration) var(--nb-ease),
+              box-shadow var(--nb-duration) var(--nb-ease);
+}
+:where(.ds-neobrutalist) :where(.ds-card-interactive):hover {
+  transform: translate(var(--nb-shadow-offset), var(--nb-shadow-offset));
+  box-shadow: none;
+}
+
+/* ---- 输入框：2px 黑边、5px 圆角、白底、无内阴影 ---- */
+:where(.ds-neobrutalist) :where(input, textarea, select) {
+  font-family: var(--nb-font-sans);
+  font-size: var(--nb-text-sm);
+  font-weight: var(--nb-weight-body);
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--nb-space-md);
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  background: var(--nb-surface);
+  color: var(--nb-ink);
+  outline: none;
+  box-shadow: var(--nb-shadow);
+}
+:where(.ds-neobrutalist) :where(textarea) { height: auto; padding: var(--nb-space-md); }
+:where(.ds-neobrutalist) :where(input, textarea):focus {
+  box-shadow: var(--nb-shadow), 0 0 0 2px var(--nb-surface), 0 0 0 4px var(--nb-ring);
+}
+:where(.ds-neobrutalist) :where(input, textarea)[aria-invalid="true"] {
+  border-color: var(--nb-chart-2);
+  box-shadow: var(--nb-shadow-offset) var(--nb-shadow-offset) 0 0 var(--nb-chart-2);
+}
+:where(.ds-neobrutalist) :where(input, textarea):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:where(.ds-neobrutalist) :where(input, textarea)::placeholder { color: var(--nb-ink-weak); }
+
+/* ---- 标签：实色块 + 2px 黑边。不透明、不淡 ---- */
+:where(.ds-neobrutalist) :where(.ds-tag) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--nb-text-xs);
+  font-weight: var(--nb-weight-bold);
+  line-height: 1;
+  padding: 4px 8px;
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  background: var(--nb-chart-3);
+  color: var(--nb-ink);
+}
+
+/* ---- 表格：2px 外框，行间 2px 黑线 ---- */
+:where(.ds-neobrutalist) :where(table) {
+  width: 100%;
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--nb-surface);
+  overflow: hidden;
+  font-size: var(--nb-text-sm);
+}
+:where(.ds-neobrutalist) :where(th, td) {
+  text-align: left;
+  padding: var(--nb-space-md) var(--nb-space-lg);
+  border-bottom: var(--nb-border-w) solid var(--nb-border);
+}
+:where(.ds-neobrutalist) :where(tr:last-child > td) { border-bottom: 0; }
+:where(.ds-neobrutalist) :where(th) {
+  font-weight: var(--nb-weight-bold);
+  background: var(--nb-canvas);
+}
+
+/* ---- 对话框：最厚的一层，8px 阴影 ---- */
+:where(.ds-neobrutalist) :where(.ds-backdrop) {
+  position: fixed;
+  inset: 0;
+  background: var(--nb-overlay);
+}
+:where(.ds-neobrutalist) :where(.ds-dialog) {
+  width: 440px;
+  max-width: calc(100vw - 40px);
+  padding: var(--nb-space-xl);
+  border: var(--nb-border-style);
+  border-radius: var(--nb-radius);
+  background: var(--nb-surface);
+  box-shadow: calc(2 * var(--nb-shadow-offset)) calc(2 * var(--nb-shadow-offset)) 0 0 var(--nb-border);
+}
+
+/* ---- 脚注风格的小字：不加灰度，靠字号 ---- */
+:where(.ds-neobrutalist) :where(.ds-meta) {
+  font-size: var(--nb-text-xs);
+  color: var(--nb-ink-weak);
+}
+
+:where(.ds-neobrutalist) :where(hr) {
+  border: 0;
+  border-top: var(--nb-border-w) solid var(--nb-border);
+  margin: var(--nb-space-xl) 0;
+}

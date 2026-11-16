@@ -10,6 +10,7 @@ description: >-
 cues: 落地页、产品页、案例研究、数据看板、B 端界面、需要显得专业的页面
 avoid: 长文阅读、需要情绪的场景、桌面应用外壳
 surface: light
+density: medium
 register: professional
 
 colors:

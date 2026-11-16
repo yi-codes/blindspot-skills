@@ -10,6 +10,7 @@ description: >-
 cues: 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目
 avoid: 工具界面、高密度数据、桌面应用、需要速度感的场景
 surface: light
+density: roomy
 register: story
 
 colors:

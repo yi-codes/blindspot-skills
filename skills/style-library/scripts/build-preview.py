@@ -22,14 +22,13 @@ OUT = ROOT / "preview" / "index.html"
 
 # ---- 默认演示内容：三种风格用同一份，差异才可比 ----
 DEFAULT_DEMO = """
-      <span class="ds-group-label">Case Study · 案例</span>
       <h1>把复杂的事说清楚</h1>
       <p>好的排版不负责让人惊艳，它负责让人读下去。当一段话值得被认真读完的时候，界面应该退到后面去，只留下纸、墨，和恰到好处的空白。</p>
       <h2>留白是一种语气</h2>
       <p>行高从 1.5 加到 1.85，字数从每行 60 收到 34，同样的文字会产生完全不同的阅读速度。慢下来，是设计出来的。</p>
       <div class="row">
         <button>开始阅读</button>
-        <span class="ds-tag">2026 · Q4</span>
+        <span class="ds-tag">2026 年 Q4</span>
       </div>
       <div class="grid3">
         <div class="ds-card">

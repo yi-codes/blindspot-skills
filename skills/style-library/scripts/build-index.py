@@ -29,11 +29,12 @@ STYLES = ROOT / "styles"
 FIELDS = [
     ("register", "职守"),
     ("surface", "明暗"),
+    ("density", "密度"),
     ("cues", "什么时候用"),
     ("avoid", "什么时候别用"),
 ]
 
-REQUIRED = ("name", "register", "surface", "cues", "avoid")
+REQUIRED = ("name", "register", "surface", "density", "cues", "avoid")
 
 REGISTER_ZH = {
     "story": "讲故事",
@@ -42,6 +43,7 @@ REGISTER_ZH = {
     "tool": "讲工具",
 }
 SURFACE_ZH = {"light": "浅色", "dark": "深色", "mixed": "双模"}
+DENSITY_ZH = {"tight": "紧", "medium": "中", "roomy": "松"}
 
 
 def main():
@@ -71,6 +73,7 @@ def main():
             "description": flat.get("description", "").strip(),
             "register": flat.get("register", ""),
             "surface": flat.get("surface", ""),
+            "density": flat.get("density", ""),
             "cues": split_list(flat.get("cues", "")),
             "avoid": split_list(flat.get("avoid", "")),
             "prefix": guess_prefix(d),
@@ -124,6 +127,45 @@ def main():
         out.append(f"| {label} | {REGISTER_ZH.get(reg, reg)} | {cells} |")
     out.append("")
 
+    # 交叉表：职守 × 密度。8 个风格之后，单看职守已经挑不出来
+    out.append("## 交叉表（职守 × 密度）")
+    out.append("")
+    out.append("定了职守还挑不出来时看这张。**密度是「这一屏要塞多少东西」，不是「留白多少」** ——")
+    out.append("紧 = 信息密度优先，松 = 阅读节奏优先。")
+    out.append("")
+    out.append("| 职守 | 紧 | 中 | 松 |")
+    out.append("|---|---|---|---|")
+    filled = crowded = 0
+    for reg in ("story", "professional", "technical", "tool", "未分类"):
+        if reg not in by_register:
+            continue
+        cells = {k: [] for k in ("tight", "medium", "roomy")}
+        other = []
+        for i in by_register[reg]:
+            d = i["density"]
+            if d in cells:
+                cells[d].append(f"`{i['slug']}`")
+            else:
+                other.append(f"`{i['slug']}`")
+        row = [REGISTER_ZH.get(reg, reg)]
+        for k in ("tight", "medium", "roomy"):
+            row.append("、".join(cells[k]) or "—")
+            if cells[k]:
+                filled += 1
+                if len(cells[k]) > 1:
+                    crowded += 1
+        out.append("| " + " | ".join(row) + " |")
+        if other:
+            out.append(f"| | 未标密度：{'、'.join(other)} | | |")
+    out.append("")
+    if crowded:
+        # 有格子挤了 2 个以上，密度这个维度才算真的在起筛选作用
+        out.append(f"有 {crowded} 个格子塞了不止一个风格 —— 那些格子还得往下看「明暗」，或者干脆各写各的场景。")
+        out.append("")
+    else:
+        out.append("现在每个格子里最多一个风格，说明密度还没开始筛人；看不出来就用全表的「什么时候用」判。")
+        out.append("")
+
     out.append("## 全表")
     out.append("")
     head = "| 风格 | " + " | ".join(t for _, t in FIELDS) + " | 画布 |"
@@ -137,6 +179,8 @@ def main():
                 cells.append(REGISTER_ZH.get(r[key], r[key] or "—"))
             elif key == "surface":
                 cells.append(SURFACE_ZH.get(r[key], r[key] or "—"))
+            elif key == "density":
+                cells.append(DENSITY_ZH.get(r[key], r[key] or "—"))
             elif key in ("cues", "avoid"):
                 cells.append("、".join(r[key]) or "—")
             else:
@@ -160,7 +204,7 @@ def main():
     out.append("`avoid` 里列的不是「不推荐」，是「**别用**」。")
     out.append("一个风格用在它 avoid 的场景里，出来的东西一定像模板 —— 因为它没为那个场景做过约束。")
     out.append("")
-    out.append("四个都排除了，说明这里该开一个新风格（见 `principles.md` §8），而不是硬套。")
+    out.append("全都排除了，说明这里该开一个新风格（见 `principles.md` §8），而不是硬套。")
     out.append("")
 
     if problems:
@@ -174,7 +218,7 @@ def main():
 
     print(f"已生成 styles/INDEX.md 和 styles/index.json，共 {len(rows)} 个风格。")
     for r in rows:
-        flag = "" if all(r.get(k) for k in ("register", "surface", "cues", "avoid")) else "  ⚠ 选择字段不全"
+        flag = "" if all(r.get(k) for k in ("register", "surface", "density", "cues", "avoid")) else "  ⚠ 选择字段不全"
         print(f"  - {r['slug']:<18} {r['name']:<16} {REGISTER_ZH.get(r['register'], r['register'] or '?'):<6}{flag}")
     if problems:
         print("\n问题：")

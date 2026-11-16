@@ -12,6 +12,7 @@ description: >-
 cues: 桌面应用、编辑器面板、内部后台、Agent 对话界面、需要长时间注视的工具
 avoid: 营销落地页、长文阅读、品牌表达、打印
 surface: dark
+density: tight
 register: tool
 
 colors:

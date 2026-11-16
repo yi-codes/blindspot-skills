@@ -10,6 +10,7 @@ description: >-
 cues: 技术文档、开发者工具、CLI 配套界面、以日志和代码为主体的页面
 avoid: 消费级产品、品牌表达、需要温度的场景
 surface: dark
+density: tight
 register: technical
 
 colors:
