@@ -108,6 +108,7 @@
 }
 
 /* 按钮：方角、细线、悬停才出现底色 */
+/* slop-ok S3: 编辑体的按钮字距是成熟杂志排版的节奏语法 */
 :where(.ds-editorial-serif) :where(button, .ds-btn) {
   font-family: var(--ed-font-body);
   font-size: var(--ed-text-sm);
@@ -134,6 +135,7 @@
 }
 
 /* 小标签：全大写 + 宽字距，用于栏目名 */
+/* slop-ok S3: 栏目名使用小型大写与宽字距是编辑体的原生语法 */
 :where(.ds-editorial-serif) :where(.ds-group-label) {
   font-family: var(--ed-font-body);
   font-size: var(--ed-text-xs);
@@ -159,6 +161,7 @@
   font-variant-numeric: oldstyle-nums;
   color: var(--ed-ink);
 }
+/* slop-ok S3: 指标标签沿用杂志页眉的小型大写节奏 */
 :where(.ds-editorial-serif) :where(.ds-stat-label) {
   font-size: var(--ed-text-xs);
   letter-spacing: 0.14em;
@@ -167,6 +170,7 @@
 }
 
 /* 标签：赭红弱底、方角，不抢正文 */
+/* slop-ok S3: 编辑体标签使用宽字距区分栏目与正文 */
 :where(.ds-editorial-serif) :where(.ds-tag) {
   display: inline-block;
   font-size: var(--ed-text-xs);

@@ -152,6 +152,7 @@
   font-variant-numeric: tabular-nums;
   line-height: var(--sw-leading-tight);
 }
+/* slop-ok S3: 瑞士网格的指标眉题使用小号大写是原生排版语法 */
 :where(.ds-swiss-grid) :where(.ds-stat-label) {
   font-size: var(--sw-text-xs);
   letter-spacing: var(--sw-tracking-caps);
@@ -159,6 +160,7 @@
   color: var(--sw-ink-muted);
 }
 
+/* slop-ok S3: 栏目标签使用小号大写与细字距符合瑞士平面传统 */
 :where(.ds-swiss-grid) :where(.ds-group-label) {
   display: inline-block;
   font-size: var(--sw-text-xs);
@@ -169,6 +171,7 @@
   margin-bottom: var(--sw-space-3);
 }
 
+/* slop-ok S3: 标签采用小号大写以匹配系统中的标题编排 */
 :where(.ds-swiss-grid) :where(.ds-tag) {
   display: inline-block;
   font-size: var(--sw-text-xs);

@@ -459,6 +459,7 @@
 }
 
 /* ---- 对话框 ---- */
+/* slop-ok S7: 毛玻璃背景层承担弹层与桌面背景之间的真实深度关系 */
 :where(.ds-quiet-dark, .ds-quiet-light) :where(.ds-backdrop) {
   position: fixed;
   inset: 0;

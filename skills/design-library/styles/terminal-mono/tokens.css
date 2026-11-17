@@ -154,6 +154,7 @@
 }
 
 /* 状态标记 */
+/* slop-ok S3: 终端风格中的状态标签保留大写作为系统原生命令语法 */
 :where(.ds-terminal-mono) :where(.ds-tag) {
   display: inline-block;
   font-family: var(--tm-font-mono);
@@ -185,6 +186,7 @@
   text-transform: lowercase;
 }
 
+/* slop-ok S3: 分组标签使用小型大写对应真实命令行的分区标题 */
 :where(.ds-terminal-mono) :where(.ds-group-label) {
   font-family: var(--tm-font-mono);
   font-size: var(--tm-text-xs);
