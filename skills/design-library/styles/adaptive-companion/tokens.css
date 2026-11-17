@@ -1,0 +1,151 @@
+/* ============================================================
+   Adaptive Companion · 跨设备触控工作界面
+   class: ds-adaptive-companion
+   prefix: --ac2-
+   ============================================================ */
+
+:where(.ds-adaptive-companion) {
+  --ac2-canvas: #F1F3F4;
+  --ac2-surface: #FAFBFA;
+  --ac2-surface-soft: #E9EDEB;
+  --ac2-raised: #FDFDFB;
+  --ac2-ink: #25302F;
+  --ac2-ink-muted: #5E6865;
+  --ac2-ink-faint: #737D79;
+  --ac2-line: #D8DDD7;
+  --ac2-line-strong: #B6C0BA;
+  --ac2-accent: #356D87;
+  --ac2-accent-strong: #28566C;
+  --ac2-accent-soft: #DCEAF0;
+  --ac2-ok: #3F8068;
+  --ac2-warning: #9A6B2A;
+  --ac2-danger: #A64C47;
+  --ac2-dark-canvas: #171D21;
+  --ac2-dark-surface: #20282C;
+  --ac2-dark-soft: #293338;
+  --ac2-dark-ink: #E8ECEC;
+  --ac2-dark-muted: #A7B1AF;
+  --ac2-dark-line: #3D484D;
+  --ac2-dark-accent: #8EC1D5;
+
+  --ac2-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+  --ac2-font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  --ac2-font-mono: "SF Mono", ui-monospace, monospace;
+  --ac2-text-xs: 0.75rem;
+  --ac2-text-sm: 0.8125rem;
+  --ac2-text-md: 1rem;
+  --ac2-text-lg: 1.5rem;
+  --ac2-text-xl: 2rem;
+  --ac2-leading-tight: 1.18;
+  --ac2-leading-ui: 1.62;
+  --ac2-leading-body: 1.75;
+  --ac2-tracking-display: -0.03em;
+  --ac2-space-xs: 0.25rem;
+  --ac2-space-sm: 0.5rem;
+  --ac2-space-md: 0.75rem;
+  --ac2-space-lg: 1rem;
+  --ac2-space-xl: 1.5rem;
+  --ac2-space-section: 2rem;
+  --ac2-space-page: 3rem;
+  --ac2-radius-sm: 4px;
+  --ac2-radius-control: 10px;
+  --ac2-radius-panel: 20px;
+  --ac2-radius-pill: 9999px;
+  --ac2-border: 1px solid var(--ac2-line);
+  --ac2-shadow: 0 18px 48px rgba(24, 34, 38, 0.16);
+  --ac2-duration: 180ms;
+  --ac2-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:where(.ds-adaptive-companion[data-theme="dark"]) {
+  --ac2-canvas: var(--ac2-dark-canvas);
+  --ac2-surface: var(--ac2-dark-surface);
+  --ac2-surface-soft: var(--ac2-dark-soft);
+  --ac2-raised: var(--ac2-dark-soft);
+  --ac2-ink: var(--ac2-dark-ink);
+  --ac2-ink-muted: var(--ac2-dark-muted);
+  --ac2-ink-faint: var(--ac2-dark-muted);
+  --ac2-line: var(--ac2-dark-line);
+  --ac2-line-strong: var(--ac2-dark-line);
+  --ac2-accent: var(--ac2-dark-accent);
+  --ac2-accent-strong: var(--ac2-dark-accent);
+  --ac2-accent-soft: var(--ac2-dark-soft);
+}
+
+:where(.ds-adaptive-companion) {
+  background: var(--ac2-canvas);
+  color: var(--ac2-ink);
+  font-family: var(--ac2-font-body);
+  font-size: var(--ac2-text-md);
+  line-height: var(--ac2-leading-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-adaptive-companion) :where(h1, h2, h3) {
+  margin: 0 0 var(--ac2-space-md);
+  color: var(--ac2-ink);
+  font-family: var(--ac2-font-display);
+  font-weight: 650;
+  line-height: var(--ac2-leading-tight);
+  letter-spacing: var(--ac2-tracking-display);
+  text-wrap: balance;
+}
+
+:where(.ds-adaptive-companion) h1 { max-width: 16ch; font-size: var(--ac2-text-xl); }
+:where(.ds-adaptive-companion) h2 { font-size: var(--ac2-text-lg); }
+:where(.ds-adaptive-companion) h3 { font-size: var(--ac2-text-md); }
+:where(.ds-adaptive-companion) p { max-width: 68ch; margin: 0 0 var(--ac2-space-lg); }
+:where(.ds-adaptive-companion) a { color: var(--ac2-accent-strong); }
+
+:where(.ds-adaptive-companion) :where(button, .ds-btn) {
+  min-height: 44px;
+  padding: var(--ac2-space-md) var(--ac2-space-lg);
+  border: 0;
+  border-radius: var(--ac2-radius-control);
+  background: var(--ac2-accent);
+  color: var(--ac2-surface);
+  font: inherit;
+  font-size: var(--ac2-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--ac2-duration) var(--ac2-ease), transform var(--ac2-duration) var(--ac2-ease);
+}
+:where(.ds-adaptive-companion) :where(button, .ds-btn):hover { background: var(--ac2-accent-strong); }
+:where(.ds-adaptive-companion) :where(button, .ds-btn):active { transform: translateY(1px); }
+:where(.ds-adaptive-companion) :where(button, .ds-btn):focus-visible {
+  outline: 2px solid var(--ac2-accent);
+  outline-offset: 3px;
+}
+
+:where(.ds-adaptive-companion) :where(.ds-card, .ds-panel) {
+  padding: var(--ac2-space-xl);
+  border: var(--ac2-border);
+  border-radius: var(--ac2-radius-panel);
+  background: var(--ac2-surface);
+}
+
+:where(.ds-adaptive-companion) :where(.ds-tag) {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: var(--ac2-radius-pill);
+  background: var(--ac2-accent-soft);
+  color: var(--ac2-accent-strong);
+  font-size: var(--ac2-text-xs);
+}
+
+:where(.ds-adaptive-companion) :where(.ds-stat-value) {
+  font-family: var(--ac2-font-display);
+  font-size: var(--ac2-text-lg);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-adaptive-companion) :where(.ds-stat-label) {
+  color: var(--ac2-ink-muted);
+  font-size: var(--ac2-text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-adaptive-companion) * { transition-duration: 0.01ms !important; }
+}
+

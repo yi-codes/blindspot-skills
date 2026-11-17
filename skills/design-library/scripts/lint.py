@@ -27,10 +27,11 @@ from _designmd import (  # noqa: E402
 )
 
 # 选择条件：build-index.py 靠这几个字段把风格摆进索引。缺一个 = 这个风格选不出来。
-SELECTION_FIELDS = ("cues", "avoid", "surface", "density", "register")
+SELECTION_FIELDS = ("cues", "avoid", "surface", "density", "register", "family", "tier")
 REGISTERS = {"story", "professional", "technical", "tool"}
 SURFACES = {"light", "dark", "mixed"}
 DENSITIES = {"tight", "medium", "roomy"}
+TIERS = {"core", "variant", "technique"}
 
 LEN_RE = re.compile(r"^\s*(-?[\d.]+)\s*(px|rem)?\s*$")
 
@@ -108,7 +109,7 @@ def lint_style(design_md: Path):
     for k in SELECTION_FIELDS:
         if not flat.get(k, "").strip():
             add("E", f"缺少选择字段 `{k}` —— 这个风格在 styles/INDEX.md 里选不出来，SKILL.md 也不会推荐它")
-    for k in ("register", "surface", "density"):
+    for k in ("register", "surface", "density", "family", "tier"):
         if "|" in flat.get(k, ""):
             add("E", f"`{k}` 还是脚手架占位符（`{flat[k]}`）—— 没改成实际值，索引会把它归到「未分类」")
     if flat.get("register") and "|" not in flat["register"] and flat["register"] not in REGISTERS:
@@ -117,6 +118,8 @@ def lint_style(design_md: Path):
         add("W", f"surface 的值 `{flat['surface']}` 不在 {sorted(SURFACES)} 里")
     if flat.get("density") and "|" not in flat["density"] and flat["density"] not in DENSITIES:
         add("W", f"density 的值 `{flat['density']}` 不在 {sorted(DENSITIES)} 里，交叉表里会留空")
+    if flat.get("tier") and "|" not in flat["tier"] and flat["tier"] not in TIERS:
+        add("E", f"tier 的值 `{flat['tier']}` 不在 {sorted(TIERS)} 里")
 
     colors = tokens.get("colors", {}) if isinstance(tokens.get("colors"), dict) else {}
     typo = tokens.get("typography", {}) if isinstance(tokens.get("typography"), dict) else {}

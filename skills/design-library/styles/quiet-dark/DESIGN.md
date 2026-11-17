@@ -9,6 +9,9 @@ description: >-
 # ---------------------------------------------------------------- 选择条件
 # 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
 # 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+family: workbench
+tier: variant
+sourceRefs: openai-desktop-client-observed,chatgpt-ios
 cues: 桌面应用、编辑器面板、内部后台、Agent 对话界面、需要长时间注视的工具
 avoid: 营销落地页、长文阅读、品牌表达、打印
 surface: dark

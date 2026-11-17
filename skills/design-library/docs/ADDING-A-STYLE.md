@@ -29,6 +29,9 @@ avoid: 排他场景1、排他场景2
 surface: light | dark | mixed
 density: tight | medium | roomy
 register: story | professional | technical | tool
+family: reading | professional | developer | workbench | operations | enterprise-data | companion | expressive | trusted-service
+tier: core | variant | technique
+sourceRefs: 来源 slug，用英文逗号分隔
 status: beta | stable
 ```
 

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Enterprise Data 的真实 token 渲染预览。">
+  <title>Enterprise Data · Design Library Preview</title>
+  <link rel="stylesheet" href="_frame.css">
+  <link rel="stylesheet" href="../styles/enterprise-data/tokens.css">
+</head>
+<body>
+  <div class="ds-enterprise-data preview-root">
+
+      <div class="frame-data-shell">
+        <aside class="frame-data-side">
+          <strong>Operations</strong>
+          <nav>
+            <a href="#sample-main" aria-current="page">订单</a>
+            <a href="#sample-main">客户</a>
+            <a href="#sample-main">权限</a>
+            <a href="#sample-main">审计</a>
+          </nav>
+        </aside>
+        <main id="sample-main" class="frame-data-main">
+          <header class="frame-toolbar">
+            <div>
+              <h1>订单</h1>
+              <p class="frame-muted">12,480 条记录，当前筛选 24 条。</p>
+            </div>
+            <button type="button">新建订单</button>
+          </header>
+          <div class="frame-filterbar">
+            <span>状态：待处理</span>
+            <span>区域：华东</span>
+            <span>时间：最近 7 天</span>
+          </div>
+          <table>
+            <thead><tr><th>订单</th><th>客户</th><th>金额</th><th>状态</th><th>负责人</th></tr></thead>
+            <tbody>
+              <tr><td>ORD-1842</td><td>North Studio</td><td>¥ 8,400</td><td>待处理</td><td>Lin</td></tr>
+              <tr><td>ORD-1841</td><td>Ming Labs</td><td>¥ 12,900</td><td>已审核</td><td>Wei</td></tr>
+              <tr><td>ORD-1840</td><td>Field Notes</td><td>¥ 3,240</td><td>待发货</td><td>Chen</td></tr>
+              <tr><td>ORD-1839</td><td>Atlas Works</td><td>¥ 21,760</td><td>已完成</td><td>Lin</td></tr>
+            </tbody>
+          </table>
+          <div class="frame-task">
+            <div><h2>已选择 2 条记录</h2><p>批量操作会写入审计日志，并在执行前再次确认。</p></div>
+            <button type="button">批量更新</button>
+          </div>
+        </main>
+      </div>
+
+  </div>
+</body>
+</html>

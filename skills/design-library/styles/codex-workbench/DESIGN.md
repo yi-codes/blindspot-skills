@@ -4,6 +4,9 @@ name: Codex Workbench
 description: >-
   暖中性纸面上的安静工作台。大标题负责建立叙事，正文保持连续可读，
   状态与操作只用少量低饱和绿色。不是缩小字号的仪表盘，也不是卡片拼贴。
+family: workbench
+tier: core
+sourceRefs: openai-codex-observed
 cues: Agent 任务工作台、产品方案页、设置页、插件面板、需要连续阅读和反复操作的工具页
 avoid: 营销落地页、强视觉叙事作品、数据密集型分析大屏、需要高密度多维图表的事故台
 surface: mixed

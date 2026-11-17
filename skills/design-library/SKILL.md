@@ -2,7 +2,7 @@
 name: design-library
 description: 个人设计风格库与界面落地工作流。需要为网页、控制台、桌面应用、文档或生图选择视觉风格，比较现有风格，设计或重设计页面，审计风格一致性，或把新设计收进风格库时使用。把风格选择、token、实现骨架、预览、产物检查和扩展流程收在一个入口里。
 metadata:
-  version: 2.0.0
+  version: 2.1.0
 ---
 
 # Design Library
@@ -15,6 +15,14 @@ metadata:
 - `tokens.css`：可直接引入的 CSS token 与基础组件
 - `prompt.md`：同一视觉语言的生图模板
 - 自动生成的预览、索引和目录数据
+
+每个风格还声明 `family`、`tier` 和 `sourceRefs`：
+
+- `tier: core`：独立承担一种页面职责，默认优先推荐
+- `tier: variant`：核心风格的明暗、材料或密度变体，完整保留但不是第一入口
+- `tier: technique`：可复用技法，通常与某个核心风格或组件搭配
+
+**三类都保留。** 分层只影响推荐顺序，不删除风格。
 
 **当前有哪些风格，一律读 [`styles/INDEX.md`](styles/INDEX.md)。不要背名字，也不要从 README 猜。**
 
@@ -55,6 +63,12 @@ python3 scripts/designlib.py recommend "内部 Agent 控制台，任务运行状
 2. `styles/<slug>/tokens.css`
 
 不要同时读多套风格；读多了会互相污染。
+
+想先只看主入口：
+
+```bash
+python3 scripts/designlib.py list --tier core
+```
 
 ### apply
 
@@ -110,6 +124,8 @@ python3 scripts/designlib.py new <slug> "<中文名>"
 - `build`：重建索引、目录数据和预览页
 - `check`：生成检查、文档 lint、链接检查和目录自洽检查
 - `new`：创建风格骨架
+
+所有命令都保留全部风格；`--tier` 只用于缩小浏览范围。
 
 浏览器目录直接打开 [`catalog/index.html`](catalog/index.html)。支持搜索任务、按职守/明暗/密度筛选、并排比较和复制接入代码。
 

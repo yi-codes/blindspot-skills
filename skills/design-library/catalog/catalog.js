@@ -21,6 +21,44 @@
       tight: "紧",
       medium: "中",
       roomy: "松"
+    },
+    tier: {
+      core: "核心",
+      variant: "变体",
+      technique: "技法"
+    },
+    family: {
+      reading: "阅读",
+      "trusted-service": "可信服务",
+      workbench: "工作台",
+      operations: "运维",
+      expressive: "表现型",
+      developer: "开发者",
+      "enterprise-data": "企业数据",
+      companion: "陪伴型",
+      professional: "专业展示"
+    },
+    source: {
+      native: "原生设计",
+      latexcss: "LaTeX.css",
+      "latex-css": "LaTeX.css",
+      govuk: "GOV.UK Frontend",
+      uswds: "U.S. Web Design System",
+      "openai-codex-observed": "Codex 桌面客户端观察",
+      "openai-desktop-client-observed": "OpenAI 桌面客户端观察",
+      "ui-styles-ops-console": "本地运维台设计经验",
+      "ui-styles-liquid-glass": "本地毛玻璃设计经验",
+      neobrutalism: "Neobrutalism Components",
+      "chatgpt-ios": "ChatGPT iOS 拆解",
+      catppuccin: "Catppuccin Palette",
+      atropos: "Atropos",
+      "react-bits": "React Bits",
+      primer: "GitHub Primer",
+      geist: "Vercel Geist",
+      radix: "Radix Themes",
+      carbon: "IBM Carbon",
+      "material-3": "Material 3",
+      "fluent-2": "Microsoft Fluent 2"
     }
   };
 
@@ -34,6 +72,7 @@
   const state = {
     query: "",
     register: "all",
+    tier: "all",
     surface: "all",
     density: "all",
     selected: styles[0] ? styles[0].slug : "",
@@ -47,6 +86,7 @@
     resetButton: document.getElementById("resetButton"),
     filterReset: document.getElementById("filterReset"),
     registerFilters: document.getElementById("registerFilters"),
+    tierFilters: document.getElementById("tierFilters"),
     surfaceFilters: document.getElementById("surfaceFilters"),
     densityFilters: document.getElementById("densityFilters"),
     taskHint: document.getElementById("taskHint"),
@@ -125,6 +165,7 @@
 
   function renderFilters() {
     renderFilter(elements.registerFilters, "register", state.register);
+    renderFilter(elements.tierFilters, "tier", state.tier);
     renderFilter(elements.surfaceFilters, "surface", state.surface);
     renderFilter(elements.densityFilters, "density", state.density);
   }
@@ -137,7 +178,7 @@
     const text = normalize(query);
     const queryFragments = semanticFragments(text);
     const reasons = [];
-    let score = 0;
+    let score = ({ core: 1, variant: 0, technique: -1 })[style.tier] || 0;
 
     for (const cue of style.cues) {
       const normalizedCue = normalize(cue);
@@ -193,6 +234,7 @@
   }
 
   function filteredStyles() {
+    const tierOrder = { core: 0, variant: 1, technique: 2 };
     const scored = styles.map((style, index) => ({
       style,
       index,
@@ -201,11 +243,15 @@
 
     return scored
       .filter(({ style }) => state.register === "all" || style.register === state.register)
+      .filter(({ style }) => state.tier === "all" || style.tier === state.tier)
       .filter(({ style }) => state.surface === "all" || style.surface === state.surface)
       .filter(({ style }) => state.density === "all" || style.density === state.density)
       .sort((a, b) => {
         if (b.score !== a.score) {
           return b.score - a.score;
+        }
+        if (tierOrder[a.style.tier] !== tierOrder[b.style.tier]) {
+          return tierOrder[a.style.tier] - tierOrder[b.style.tier];
         }
         return a.index - b.index;
       });
@@ -235,6 +281,7 @@
         <span class="style-description">${escapeHtml(detail)}</span>
         <span class="style-facets">
           <span class="facet">${escapeHtml(labels.register[style.register] || style.register)}</span>
+          <span class="facet">${escapeHtml(labels.tier[style.tier] || style.tier)}</span>
           <span class="facet">${escapeHtml(labels.surface[style.surface] || style.surface)}</span>
           <span class="facet">${escapeHtml(labels.density[style.density] || style.density)}</span>
           <button class="compare-toggle" type="button" data-compare="${escapeHtml(style.slug)}" aria-pressed="${comparing}" aria-label="${comparing ? "移出比较" : "加入比较"}" ${atLimit ? "disabled" : ""}>${comparing ? "−" : "+"}</button>
@@ -274,12 +321,15 @@
     const importCode = `<link rel="stylesheet" href="styles/${style.slug}/tokens.css">\n<div class="${style.className || `ds-${style.slug}`}">…</div>`;
     const cues = style.cues.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     const avoid = style.avoid.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    const sources = (style.sourceRefs || []).map((item) => `<li>${escapeHtml(labels.source[item] || item)}</li>`).join("");
 
     return `
       <h2 class="style-title">${escapeHtml(style.name)}</h2>
       <p class="style-summary">${escapeHtml(style.description)}</p>
       <div class="meta-line">
+        <span>${escapeHtml(labels.family[style.family] || style.family)}</span>
         <span>${escapeHtml(labels.register[style.register] || style.register)}</span>
+        <span>${escapeHtml(labels.tier[style.tier] || style.tier)}</span>
         <span>${escapeHtml(labels.surface[style.surface] || style.surface)}</span>
         <span>${escapeHtml(labels.density[style.density] || style.density)}</span>
         <span>${escapeHtml(style.status || "stable")}</span>
@@ -292,6 +342,7 @@
         <h3>绝对别用</h3>
         <ul class="detail-list">${avoid}</ul>
       </section>
+      ${sources ? `<section class="detail-section"><h3>来源与依据</h3><ul class="detail-list">${sources}</ul></section>` : ""}
       <section class="detail-section">
         <h3>接入</h3>
         <pre class="code-block">${escapeHtml(importCode)}</pre>
@@ -332,6 +383,7 @@
     const params = new URLSearchParams();
     if (state.query) params.set("q", state.query);
     if (state.register !== "all") params.set("register", state.register);
+    if (state.tier !== "all") params.set("tier", state.tier);
     if (state.surface !== "all") params.set("surface", state.surface);
     if (state.density !== "all") params.set("density", state.density);
     if (state.selected) params.set("style", state.selected);
@@ -393,7 +445,7 @@
       <section class="compare-column">
         <header>
           <h3>${escapeHtml(style.name)}</h3>
-          <p>${escapeHtml(labels.register[style.register] || style.register)}，${escapeHtml(labels.surface[style.surface] || style.surface)}，${escapeHtml(labels.density[style.density] || style.density)}</p>
+          <p>${escapeHtml(labels.family[style.family] || style.family)}，${escapeHtml(labels.tier[style.tier] || style.tier)}，${escapeHtml(labels.density[style.density] || style.density)}</p>
         </header>
         <iframe title="${escapeHtml(style.name)} 比较预览" src="../${escapeHtml(style.previewUrl)}"></iframe>
       </section>
@@ -418,6 +470,7 @@
     function reset() {
       state.query = "";
       state.register = "all";
+      state.tier = "all";
       state.surface = "all";
       state.density = "all";
       state.selected = "";
@@ -434,7 +487,7 @@
       elements.filterToggle.setAttribute("aria-expanded", String(open));
     });
 
-    for (const container of [elements.registerFilters, elements.surfaceFilters, elements.densityFilters]) {
+    for (const container of [elements.registerFilters, elements.tierFilters, elements.surfaceFilters, elements.densityFilters]) {
       container.addEventListener("change", (event) => {
         const input = event.target.closest("input[name]");
         if (input) {
@@ -484,6 +537,7 @@
     const params = new URLSearchParams(location.search);
     state.query = params.get("q") || "";
     state.register = params.get("register") || "all";
+    state.tier = params.get("tier") || "all";
     state.surface = params.get("surface") || "all";
     state.density = params.get("density") || "all";
     state.selected = params.get("style") || state.selected;

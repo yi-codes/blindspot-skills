@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Developer Docs 的真实 token 渲染预览。">
+  <title>Developer Docs · Design Library Preview</title>
+  <link rel="stylesheet" href="_frame.css">
+  <link rel="stylesheet" href="../styles/developer-docs/tokens.css">
+</head>
+<body>
+  <div class="ds-developer-docs preview-root">
+
+      <div class="frame-docs">
+        <aside class="frame-docs-nav">
+          <strong>runtime-kit</strong>
+          <nav>
+            <a href="#sample-main" aria-current="page">快速开始</a>
+            <a href="#sample-cards">核心概念</a>
+            <a href="#sample-cards">API 参考</a>
+          </nav>
+          <p class="frame-muted">v2.4 · 当前版本</p>
+        </aside>
+        <main id="sample-main" class="frame-docs-main">
+          <h1>从一个可验证的最小任务开始</h1>
+          <p class="frame-lede">安装依赖、运行检查、读取结果。每一步都能独立验证，失败时给出下一步。</p>
+          <h2>安装</h2>
+          <pre><code>npm install runtime-kit</code></pre>
+          <h2>运行</h2>
+          <pre><code>runtime-kit check --strict</code></pre>
+          <div class="frame-grid" id="sample-cards">
+            <article class="ds-card">
+              <h3>版本</h3>
+              <p>v2.4 与上一版保持配置兼容。</p>
+            </article>
+            <article class="ds-card">
+              <h3>结果</h3>
+              <p>检查通过后返回可复制的摘要。</p>
+            </article>
+            <article class="ds-card">
+              <h3>失败</h3>
+              <p>错误信息包含位置和恢复命令。</p>
+            </article>
+          </div>
+        </main>
+        <aside class="frame-docs-toc">
+          <strong>本页</strong>
+          <a href="#sample-cards">安装</a>
+          <a href="#sample-cards">运行</a>
+          <a href="#sample-cards">结果</a>
+        </aside>
+      </div>
+
+  </div>
+</body>
+</html>

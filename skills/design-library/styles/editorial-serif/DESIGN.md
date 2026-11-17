@@ -7,6 +7,9 @@ description: >-
 # ---------------------------------------------------------------- 选择条件
 # 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
 # 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+family: reading
+tier: core
+sourceRefs: native
 cues: 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目
 avoid: 工具界面、高密度数据、桌面应用、需要速度感的场景
 surface: light

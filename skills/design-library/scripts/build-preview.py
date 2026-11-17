@@ -179,11 +179,131 @@ def tool_sample() -> str:
     """
 
 
+def docs_sample() -> str:
+    return """
+      <div class="frame-docs">
+        <aside class="frame-docs-nav">
+          <strong>runtime-kit</strong>
+          <nav>
+            <a href="#sample-main" aria-current="page">快速开始</a>
+            <a href="#sample-cards">核心概念</a>
+            <a href="#sample-cards">API 参考</a>
+          </nav>
+          <p class="frame-muted">v2.4 · 当前版本</p>
+        </aside>
+        <main id="sample-main" class="frame-docs-main">
+          <h1>从一个可验证的最小任务开始</h1>
+          <p class="frame-lede">安装依赖、运行检查、读取结果。每一步都能独立验证，失败时给出下一步。</p>
+          <h2>安装</h2>
+          <pre><code>npm install runtime-kit</code></pre>
+          <h2>运行</h2>
+          <pre><code>runtime-kit check --strict</code></pre>
+          <div class="frame-grid" id="sample-cards">
+            <article class="ds-card">
+              <h3>版本</h3>
+              <p>v2.4 与上一版保持配置兼容。</p>
+            </article>
+            <article class="ds-card">
+              <h3>结果</h3>
+              <p>检查通过后返回可复制的摘要。</p>
+            </article>
+            <article class="ds-card">
+              <h3>失败</h3>
+              <p>错误信息包含位置和恢复命令。</p>
+            </article>
+          </div>
+        </main>
+        <aside class="frame-docs-toc">
+          <strong>本页</strong>
+          <a href="#sample-cards">安装</a>
+          <a href="#sample-cards">运行</a>
+          <a href="#sample-cards">结果</a>
+        </aside>
+      </div>
+    """
+
+
+def table_sample() -> str:
+    return """
+      <div class="frame-data-shell">
+        <aside class="frame-data-side">
+          <strong>Operations</strong>
+          <nav>
+            <a href="#sample-main" aria-current="page">订单</a>
+            <a href="#sample-main">客户</a>
+            <a href="#sample-main">权限</a>
+            <a href="#sample-main">审计</a>
+          </nav>
+        </aside>
+        <main id="sample-main" class="frame-data-main">
+          <header class="frame-toolbar">
+            <div>
+              <h1>订单</h1>
+              <p class="frame-muted">12,480 条记录，当前筛选 24 条。</p>
+            </div>
+            <button type="button">新建订单</button>
+          </header>
+          <div class="frame-filterbar">
+            <span>状态：待处理</span>
+            <span>区域：华东</span>
+            <span>时间：最近 7 天</span>
+          </div>
+          <table>
+            <thead><tr><th>订单</th><th>客户</th><th>金额</th><th>状态</th><th>负责人</th></tr></thead>
+            <tbody>
+              <tr><td>ORD-1842</td><td>North Studio</td><td>¥ 8,400</td><td>待处理</td><td>Lin</td></tr>
+              <tr><td>ORD-1841</td><td>Ming Labs</td><td>¥ 12,900</td><td>已审核</td><td>Wei</td></tr>
+              <tr><td>ORD-1840</td><td>Field Notes</td><td>¥ 3,240</td><td>待发货</td><td>Chen</td></tr>
+              <tr><td>ORD-1839</td><td>Atlas Works</td><td>¥ 21,760</td><td>已完成</td><td>Lin</td></tr>
+            </tbody>
+          </table>
+          <div class="frame-task">
+            <div><h2>已选择 2 条记录</h2><p>批量操作会写入审计日志，并在执行前再次确认。</p></div>
+            <button type="button">批量更新</button>
+          </div>
+        </main>
+      </div>
+    """
+
+
+def adaptive_sample() -> str:
+    return """
+      <main class="frame-adaptive" id="sample-main">
+        <header>
+          <p class="frame-muted">今天，星期二</p>
+          <h1>把今天收成一个清楚的下一步</h1>
+          <p class="frame-lede">三个任务已完成，一个决定需要你确认。重要信息保持在拇指可达的位置。</p>
+        </header>
+        <section class="frame-grid" id="sample-cards">
+          <article class="ds-card">
+            <span class="ds-tag">下一步</span>
+            <h2>确认明天的行程</h2>
+            <p>地点与出发时间已经整理好，只差你的确认。</p>
+            <button type="button">查看并确认</button>
+          </article>
+          <article class="ds-card">
+            <h2>今日回顾</h2>
+            <p>2 条笔记已归档，1 条等待补充。</p>
+          </article>
+        </section>
+        <nav class="frame-mobile-nav" aria-label="应用导航">
+          <a href="#sample-main" aria-current="page">今天</a>
+          <a href="#sample-cards">任务</a>
+          <a href="#sample-cards">笔记</a>
+          <a href="#sample-cards">设置</a>
+        </nav>
+      </main>
+    """
+
+
 SAMPLES = {
     "story": story_sample,
     "professional": professional_sample,
     "technical": technical_sample,
     "tool": tool_sample,
+    "docs": docs_sample,
+    "table": table_sample,
+    "adaptive": adaptive_sample,
 }
 
 
@@ -195,8 +315,8 @@ def single_page(style: dict) -> str:
     slug = html.escape(style["slug"])
     class_name = html.escape(style.get("className") or f"ds-{style['slug']}")
     title = html.escape(style["name"])
-    register = style.get("register", "professional")
-    sample = SAMPLES.get(register, professional_sample)()
+    preview_variant = style.get("previewVariant") or style.get("register", "professional")
+    sample = SAMPLES.get(preview_variant, professional_sample)()
     return clean_html(f"""<!doctype html>
 <html lang="zh-CN">
 <head>

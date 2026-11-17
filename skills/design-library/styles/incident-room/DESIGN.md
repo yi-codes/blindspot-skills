@@ -4,6 +4,9 @@ name: Incident Room
 description: >-
   重大事故响应台。用一条连续时间线把发现、判断、动作、验证和回执串起来，
   让接班者不读整段聊天也能恢复现场。高密度但不制造警报噪音。
+family: operations
+tier: core
+sourceRefs: ui-styles-ops-console
 cues: 正在发生的事故、事故响应、值班交接、故障复盘、重大变更回滚、需要统一事件叙事的跨团队协作
 avoid: 日常低风险监控、营销页、长期产品文档、需要同时比较多个无关信号的普通控制台
 surface: dark

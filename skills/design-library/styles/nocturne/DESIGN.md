@@ -25,6 +25,9 @@ colors:
   key-chapel: "#9DBCF5"
   surface-lit-chapel: "#212739"
 # ---------------------------------------------------------------- 选择条件
+family: expressive
+tier: variant
+sourceRefs: native
 cues: 桌游/剧本杀的产品页与发行页、活动与票务、沉浸式叙事产品、需要悬念的落地页、夜间模式的展示型界面
 avoid: 白天阅读的长文、后台与表单、数据密集型列表、需要平等比较多个选项的界面、打印
 surface: dark

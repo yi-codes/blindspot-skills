@@ -4,6 +4,9 @@ name: Liquid Glass
 description: >-
   克制的半透明工作台。近中性纸面上浮着偏实的玻璃面板，只用一个沉静蓝指路；
   模糊负责区分工作层与信息层，不负责制造炫光。
+family: operations
+tier: variant
+sourceRefs: ui-styles-liquid-glass
 cues: 高频盯屏的控制台、任务指挥台、状态面板、需要保留环境上下文的工作界面、桌面与平板工具
 avoid: 营销落地页、需要强烈视觉冲击的作品集、大量并排比较的长表格、打印
 surface: mixed

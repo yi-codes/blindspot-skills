@@ -22,6 +22,8 @@ ROOT = Path(__file__).resolve().parent.parent
 STYLES = ROOT / "styles"
 
 FIELDS = [
+    ("family", "家族"),
+    ("tier", "层级"),
     ("register", "职守"),
     ("surface", "明暗"),
     ("density", "密度"),
@@ -29,7 +31,7 @@ FIELDS = [
     ("avoid", "什么时候别用"),
 ]
 
-REQUIRED = ("name", "register", "surface", "density", "cues", "avoid")
+REQUIRED = ("name", "family", "tier", "register", "surface", "density", "cues", "avoid")
 
 REGISTER_ZH = {
     "story": "讲故事",
@@ -39,6 +41,7 @@ REGISTER_ZH = {
 }
 SURFACE_ZH = {"light": "浅色", "dark": "深色", "mixed": "双模"}
 DENSITY_ZH = {"tight": "紧", "medium": "中", "roomy": "松"}
+TIER_ZH = {"core": "核心", "variant": "变体", "technique": "技法"}
 
 
 def guess_prefix(style_dir: Path) -> str:
@@ -95,6 +98,10 @@ def collect() -> tuple[list[dict], list[str]]:
             "description": flat.get("description", "").strip(),
             "version": flat.get("version", "alpha"),
             "status": flat.get("status", "stable"),
+            "previewVariant": flat.get("previewVariant", ""),
+            "family": flat.get("family", ""),
+            "tier": flat.get("tier", ""),
+            "sourceRefs": split_list(flat.get("sourceRefs", "")),
             "register": flat.get("register", ""),
             "surface": flat.get("surface", ""),
             "density": flat.get("density", ""),
@@ -117,6 +124,7 @@ def collect() -> tuple[list[dict], list[str]]:
 
 
 def render_markdown(rows: list[dict], problems: list[str]) -> str:
+    core_rows = [row for row in rows if row["tier"] == "core"]
     out = [
         "# 风格索引",
         "",
@@ -128,7 +136,7 @@ def render_markdown(rows: list[dict], problems: list[str]) -> str:
         "",
         "## 决定表",
         "",
-        "先定**这篇东西要让读者确认什么**，再在那一组里挑。",
+        "先定**这篇东西要让读者确认什么**，再在核心风格里挑。变体和技法仍完整保留，见后文。",
         "",
         "| 读者要确认的 | 职守 | 风格 |",
         "|---|---|---|",
@@ -141,7 +149,7 @@ def render_markdown(rows: list[dict], problems: list[str]) -> str:
         "tool": "「这是给高频工作的人做的」",
     }
     for register in ("story", "professional", "technical", "tool", "未分类"):
-        items = [row for row in rows if (row["register"] or "未分类") == register]
+        items = [row for row in core_rows if (row["register"] or "未分类") == register]
         if not items:
             continue
         cells = "、".join(f"`{item['slug']}`" for item in items)
@@ -157,7 +165,7 @@ def render_markdown(rows: list[dict], problems: list[str]) -> str:
         "|---|---|---|---|",
     ])
     for register in ("story", "professional", "technical", "tool", "未分类"):
-        items = [row for row in rows if (row["register"] or "未分类") == register]
+        items = [row for row in core_rows if (row["register"] or "未分类") == register]
         if not items:
             continue
         line = [REGISTER_ZH.get(register, register)]
@@ -168,15 +176,35 @@ def render_markdown(rows: list[dict], problems: list[str]) -> str:
 
     out.extend([
         "",
+        "## 变体与技法",
+        "",
+        "这些不是低质量项，而是需要附着在核心风格或具体组件上的明暗、材料与动效变体。",
+        "",
+        "| 风格 | 层级 | 家族 | 来源 | 一句话 |",
+        "|---|---|---|---|---|",
+    ])
+    for row in rows:
+        if row["tier"] == "core":
+            continue
+        summary = row["description"].split("。")[0]
+        out.append(
+            f"| **{row['name']}** `{row['slug']}` | {TIER_ZH.get(row['tier'], row['tier'])} | "
+            f"{row['family']} | {'、'.join(row['sourceRefs']) or '—'} | {summary}。 |"
+        )
+
+    out.extend([
+        "",
         "## 全表",
         "",
-        "| 风格 | 状态 | 职守 | 明暗 | 密度 | 什么时候用 | 什么时候别用 | 画布 |",
-        "|---|---|---|---|---|---|---|---|",
+        "| 风格 | 状态 | 家族 | 层级 | 来源 | 职守 | 明暗 | 密度 | 什么时候用 | 什么时候别用 | 画布 |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ])
     for row in rows:
         swatch = f"`{row['canvas']}`" if row["canvas"] else "—"
         out.append(
-            f"| **{row['name']}** `{row['slug']}` | {row['status']} | "
+            f"| **{row['name']}** `{row['slug']}` | {row['status']} | {row['family']} | "
+            f"{TIER_ZH.get(row['tier'], row['tier'] or '—')} | "
+            f"{'、'.join(row['sourceRefs']) or '—'} | "
             f"{REGISTER_ZH.get(row['register'], row['register'] or '—')} | "
             f"{SURFACE_ZH.get(row['surface'], row['surface'] or '—')} | "
             f"{DENSITY_ZH.get(row['density'], row['density'] or '—')} | "

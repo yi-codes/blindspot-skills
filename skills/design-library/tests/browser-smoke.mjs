@@ -154,13 +154,29 @@ try {
     mobile: false
   });
   await call("Page.navigate", { url: `http://127.0.0.1:${port}/catalog/index.html` });
-  await waitFor("document.readyState === 'complete' && document.querySelectorAll('.style-row').length === 14", "catalog");
+  await waitFor("document.readyState === 'complete' && document.querySelectorAll('.style-row').length === 17", "catalog");
 
-  check("desktop rows", await evaluate("document.querySelectorAll('.style-row').length") === 14);
+  check("desktop rows", await evaluate("document.querySelectorAll('.style-row').length") === 17);
   check("desktop preview", await evaluate("document.querySelector('#previewFrame').src.includes('/preview/')"));
   check("desktop no overflow", await evaluate("document.documentElement.scrollWidth <= innerWidth"));
+  await evaluate("document.querySelector('input[name=\"tier\"][value=\"core\"]').click()");
+  check("core filter", await evaluate("document.querySelectorAll('.style-row').length") === 11);
+  await evaluate("document.querySelector('input[name=\"tier\"][value=\"all\"]').click()");
   await screenshot("/tmp/design-library-desktop.png");
 
+  for (const slug of ["developer-docs", "enterprise-data", "adaptive-companion"]) {
+    await call("Page.navigate", { url: `http://127.0.0.1:${port}/preview/${slug}.html` });
+    await waitFor("document.readyState === 'complete' && document.querySelector('h1')", slug);
+    check(`${slug} no overflow`, await evaluate("document.documentElement.scrollWidth <= innerWidth"));
+    await screenshot(`/tmp/${slug}.png`);
+  }
+
+  await call("Emulation.setDeviceMetricsOverride", {
+    width: 1440,
+    height: 900,
+    deviceScaleFactor: 1,
+    mobile: false
+  });
   await call("Page.navigate", {
     url: `http://127.0.0.1:${port}/catalog/index.html?q=${encodeURIComponent("正在发生重大事故，需要时间线和交接")}`
   });

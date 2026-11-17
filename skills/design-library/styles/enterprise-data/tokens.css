@@ -1,0 +1,166 @@
+/* ============================================================
+   Enterprise Data · 密集业务数据界面
+   class: ds-enterprise-data
+   prefix: --edata-
+   ============================================================ */
+
+:where(.ds-enterprise-data) {
+  --edata-canvas: #EEF1F2;
+  --edata-surface: #F8FAFA;
+  --edata-surface-alt: #E7ECEE;
+  --edata-sunk: #E1E7E9;
+  --edata-ink: #20282E;
+  --edata-ink-muted: #56656D;
+  --edata-ink-faint: #6E7D84;
+  --edata-line: #D1D9DE;
+  --edata-line-strong: #AEBAC2;
+  --edata-accent: #2E6D58;
+  --edata-accent-strong: #225542;
+  --edata-accent-soft: #DDECE5;
+  --edata-info: #356B9D;
+  --edata-warning: #92671F;
+  --edata-danger: #A7433D;
+  --edata-dark-canvas: #151B1F;
+  --edata-dark-surface: #1D252A;
+  --edata-dark-raised: #263037;
+  --edata-dark-ink: #E7EDF0;
+  --edata-dark-muted: #A3AFB6;
+  --edata-dark-line: #39464F;
+  --edata-dark-accent: #79BCA2;
+
+  --edata-font-ui: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  --edata-font-mono: "SF Mono", ui-monospace, monospace;
+  --edata-text-xs: 0.75rem;
+  --edata-text-sm: 0.8125rem;
+  --edata-text-md: 0.9375rem;
+  --edata-text-lg: 1.25rem;
+  --edata-text-xl: 1.75rem;
+  --edata-leading-tight: 1.18;
+  --edata-leading-ui: 1.5;
+  --edata-leading-body: 1.7;
+  --edata-tracking-title: -0.02em;
+  --edata-space-xs: 0.25rem;
+  --edata-space-sm: 0.5rem;
+  --edata-space-md: 0.75rem;
+  --edata-space-lg: 1rem;
+  --edata-space-xl: 1.5rem;
+  --edata-space-section: 2rem;
+  --edata-radius-sm: 2px;
+  --edata-radius-control: 4px;
+  --edata-radius-panel: 6px;
+  --edata-border: 1px solid var(--edata-line);
+  --edata-shadow: 0 16px 40px rgba(21, 31, 36, 0.18);
+  --edata-duration: 150ms;
+  --edata-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:where(.ds-enterprise-data[data-theme="dark"]) {
+  --edata-canvas: var(--edata-dark-canvas);
+  --edata-surface: var(--edata-dark-surface);
+  --edata-surface-alt: var(--edata-dark-raised);
+  --edata-sunk: var(--edata-dark-canvas);
+  --edata-ink: var(--edata-dark-ink);
+  --edata-ink-muted: var(--edata-dark-muted);
+  --edata-ink-faint: var(--edata-dark-muted);
+  --edata-line: var(--edata-dark-line);
+  --edata-line-strong: var(--edata-dark-line);
+  --edata-accent: var(--edata-dark-accent);
+  --edata-accent-strong: var(--edata-dark-accent);
+  --edata-accent-soft: var(--edata-dark-raised);
+}
+
+:where(.ds-enterprise-data) {
+  background: var(--edata-canvas);
+  color: var(--edata-ink);
+  font-family: var(--edata-font-ui);
+  font-size: var(--edata-text-md);
+  line-height: var(--edata-leading-ui);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-enterprise-data) :where(h1, h2, h3) {
+  margin: 0 0 var(--edata-space-md);
+  color: var(--edata-ink);
+  font-family: var(--edata-font-ui);
+  font-weight: 620;
+  line-height: var(--edata-leading-tight);
+  letter-spacing: var(--edata-tracking-title);
+}
+
+:where(.ds-enterprise-data) h1 { font-size: var(--edata-text-xl); }
+:where(.ds-enterprise-data) h2 { font-size: var(--edata-text-lg); }
+:where(.ds-enterprise-data) h3 { font-size: var(--edata-text-md); }
+:where(.ds-enterprise-data) p { max-width: 74ch; margin: 0 0 var(--edata-space-md); }
+:where(.ds-enterprise-data) a { color: var(--edata-accent-strong); }
+:where(.ds-enterprise-data) :where(code, time) { font-family: var(--edata-font-mono); }
+
+:where(.ds-enterprise-data) :where(button, .ds-btn) {
+  min-height: 34px;
+  padding: var(--edata-space-sm) var(--edata-space-md);
+  border: var(--edata-border);
+  border-radius: var(--edata-radius-control);
+  background: var(--edata-surface);
+  color: var(--edata-ink);
+  font: inherit;
+  font-size: var(--edata-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--edata-duration) var(--edata-ease), border-color var(--edata-duration) var(--edata-ease);
+}
+:where(.ds-enterprise-data) :where(button, .ds-btn):hover { background: var(--edata-surface-alt); }
+:where(.ds-enterprise-data) :where(.ds-btn-primary) {
+  border-color: var(--edata-accent);
+  background: var(--edata-accent);
+  color: var(--edata-surface);
+}
+:where(.ds-enterprise-data) :where(button, .ds-btn):focus-visible {
+  outline: 2px solid var(--edata-accent);
+  outline-offset: 2px;
+}
+
+:where(.ds-enterprise-data) :where(.ds-card, .ds-panel) {
+  padding: var(--edata-space-lg);
+  border: var(--edata-border);
+  border-radius: var(--edata-radius-panel);
+  background: var(--edata-surface);
+}
+
+:where(.ds-enterprise-data) :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--edata-text-sm);
+}
+:where(.ds-enterprise-data) :where(th, td) {
+  height: 2.25rem;
+  padding: var(--edata-space-sm) var(--edata-space-md);
+  border-bottom: var(--edata-border);
+  text-align: left;
+  white-space: nowrap;
+}
+:where(.ds-enterprise-data) :where(th) {
+  background: var(--edata-surface-alt);
+  color: var(--edata-ink-muted);
+  font-size: var(--edata-text-xs);
+  font-weight: 550;
+}
+
+:where(.ds-enterprise-data) :where(.ds-tag) {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: var(--edata-radius-sm);
+  background: var(--edata-surface-alt);
+  color: var(--edata-ink-muted);
+  font-size: var(--edata-text-xs);
+}
+
+:where(.ds-enterprise-data) :where(.ds-stat-value) {
+  font-size: var(--edata-text-lg);
+  font-weight: 620;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-enterprise-data) * { transition-duration: 0.01ms !important; }
+}
+

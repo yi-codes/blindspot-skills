@@ -7,6 +7,9 @@ description: >-
 # ---------------------------------------------------------------- 选择条件
 # 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
 # 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+family: developer
+tier: variant
+sourceRefs: native
 cues: 技术文档、开发者工具、CLI 配套界面、以日志和代码为主体的页面
 avoid: 消费级产品、品牌表达、需要温度的场景
 surface: dark

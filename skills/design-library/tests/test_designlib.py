@@ -16,12 +16,15 @@ spec.loader.exec_module(designlib)
 class DesignLibraryTests(unittest.TestCase):
     def test_library_has_expected_styles(self):
         rows = designlib.load_rows()
-        self.assertGreaterEqual(len(rows), 14)
+        self.assertGreaterEqual(len(rows), 17)
         slugs = {row["slug"] for row in rows}
         self.assertIn("liquid-glass", slugs)
         self.assertIn("codex-workbench", slugs)
         self.assertIn("signal-console", slugs)
         self.assertIn("incident-room", slugs)
+        self.assertIn("developer-docs", slugs)
+        self.assertIn("enterprise-data", slugs)
+        self.assertIn("adaptive-companion", slugs)
 
     def test_every_style_has_three_artifacts(self):
         for row in designlib.load_rows():
@@ -34,11 +37,14 @@ class DesignLibraryTests(unittest.TestCase):
         valid_registers = {"story", "professional", "technical", "tool"}
         valid_surfaces = {"light", "dark", "mixed"}
         valid_densities = {"tight", "medium", "roomy"}
+        valid_tiers = {"core", "variant", "technique"}
         for row in designlib.load_rows():
             with self.subTest(slug=row["slug"]):
                 self.assertIn(row["register"], valid_registers)
                 self.assertIn(row["surface"], valid_surfaces)
                 self.assertIn(row["density"], valid_densities)
+                self.assertIn(row["tier"], valid_tiers)
+                self.assertTrue(row["family"])
                 self.assertTrue(row["cues"])
                 self.assertTrue(row["avoid"])
 

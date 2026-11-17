@@ -7,6 +7,9 @@ description: >-
 # ---------------------------------------------------------------- 选择条件
 # 这四项是 build-index.py 读的。没有它们，这个风格在索引里选不出来。
 # 加字段时改 scripts/build-index.py 的 FIELDS 表即可，这里自由扩展。
+family: professional
+tier: core
+sourceRefs: native
 cues: 落地页、产品页、案例研究、数据看板、B 端界面、需要显得专业的页面
 avoid: 长文阅读、需要情绪的场景、桌面应用外壳
 surface: light

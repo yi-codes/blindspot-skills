@@ -27,8 +27,17 @@ references/
 | `catppuccin` | ④ 纯调色板 | → `soft-pastel`（**形状是补的**） |
 | `react-bits` | ③ 组件库（JSX + CSS） | → `tactile-3d`（弹簧参数、高光衰减） |
 | `atropos` | ③ 组件库（JS + SCSS） | → `tactile-3d`（倾角上限、归一化公式） |
+| `primer` | ② 一手设计规范 | → `developer-docs` |
+| `carbon` | ② 一手设计系统 | → `enterprise-data` |
+| `radix` | ③ 组件库 | → `developer-docs`、`enterprise-data` |
+| `material-3` | ③ 组件库 | → `adaptive-companion` |
+| `fluent-2` | ③ 组件库 | → `adaptive-companion`（仅行为参考，许可待逐文件核验） |
+| `uswds` | ② 一手设计系统 | → `civic`（许可待逐文件核验） |
+| `geist` | ⑤ 字体资产 | → `developer-docs`（只吸收字体分工） |
 
 注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
+
+许可与边界汇总见 [`SOURCES.md`](SOURCES.md)。`NOASSERTION` 来源在逐文件核验前只作行为参考，不复制实现。
 
 ## 为什么要单独一层
 

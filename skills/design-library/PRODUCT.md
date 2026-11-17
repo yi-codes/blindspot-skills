@@ -36,13 +36,14 @@ delegated: 零依赖静态 HTML、CSS、JavaScript 与 Python；可直接打开�
 
 ## Evidence on Hand
 
-- 10 套已有可执行风格及其 token、提示词和样张。
-- 4 套来自 `ui-styles` 的工具型设计经验，其中两套拆为日常观测和事故响应。
+- 17 套可执行风格及其 token、提示词和预览。
+- 核心、变体、技法三层，全部保留，默认优先推荐核心风格。
+- 从 GOV.UK、Carbon、Primer、Radix、Material、Fluent、Geist 等开源来源提炼的可追溯说明。
 - 文档 lint、AI 味儿检查、预览生成器和外部参考提炼流程。
 
 ## Product Principles
 
-- 少的准胜过多而乱。
+- 全部保留，但必须分层、可排除、可追溯。
 - 选择先看任务和排他条件，再看审美偏好。
 - 规范、实现和预览必须同源。
 - 新增能力通过生成器扩展，不通过复制规则扩展。

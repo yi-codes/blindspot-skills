@@ -20,6 +20,13 @@ ROOT = Path(__file__).resolve().parent.parent
 STYLES_DIR = ROOT / "styles"
 INDEX = STYLES_DIR / "index.json"
 CATALOG_DATA = ROOT / "catalog" / "data.js"
+PSEUDO_SOURCES = {
+    "native",
+    "openai-codex-observed",
+    "openai-desktop-client-observed",
+    "ui-styles-liquid-glass",
+    "ui-styles-ops-console",
+}
 
 REGISTER_ZH = {
     "story": "讲故事",
@@ -29,6 +36,7 @@ REGISTER_ZH = {
 }
 SURFACE_ZH = {"light": "浅色", "dark": "深色", "mixed": "双模"}
 DENSITY_ZH = {"tight": "紧", "medium": "中", "roomy": "松"}
+TIER_ZH = {"core": "核心", "variant": "变体", "technique": "技法"}
 
 REGISTER_SIGNALS = {
     "story": ("品牌", "故事", "作品集", "活动", "营销", "发布", "叙事", "杂志", "创意"),
@@ -54,6 +62,9 @@ def load_rows() -> list[dict]:
             "description": flat.get("description", ""),
             "version": flat.get("version", "alpha"),
             "status": flat.get("status", "stable"),
+            "family": flat.get("family", ""),
+            "tier": flat.get("tier", ""),
+            "sourceRefs": split_list(flat.get("sourceRefs", "")),
             "register": flat.get("register", ""),
             "surface": flat.get("surface", ""),
             "density": flat.get("density", ""),
@@ -93,7 +104,7 @@ def score_style(style: dict, query: str) -> tuple[int, list[str]]:
         return 0, []
 
     text = normalize(query)
-    score = 0
+    score = {"core": 1, "variant": 0, "technique": -1}.get(style.get("tier"), 0)
     reasons = []
 
     query_fragments = semantic_fragments(text)
@@ -146,10 +157,13 @@ def command_list(args: argparse.Namespace) -> int:
         rows = [row for row in rows if row["surface"] == args.surface]
     if args.density:
         rows = [row for row in rows if row["density"] == args.density]
+    if args.tier:
+        rows = [row for row in rows if row["tier"] == args.tier]
 
     for row in rows:
         print(
             f"{row['slug']:<18} {row['name']:<18} "
+            f"{TIER_ZH.get(row['tier'], row['tier']):<2} "
             f"{REGISTER_ZH.get(row['register'], row['register']):<5} "
             f"{SURFACE_ZH.get(row['surface'], row['surface']):<4} "
             f"{DENSITY_ZH.get(row['density'], row['density']):<2} "
@@ -180,7 +194,7 @@ def command_recommend(args: argparse.Namespace) -> int:
     print(f"任务：{query or '未填写'}\n")
     for rank, (score, _, row, reasons) in enumerate(top, start=1):
         reason = "；".join(reasons) or "没有直接命中，按现有索引排序"
-        print(f"{rank}. {row['name']} ({row['slug']})  score={score}")
+        print(f"{rank}. {row['name']} ({row['slug']})  score={score}  [{TIER_ZH.get(row['tier'], row['tier'])}]")
         print(f"   {reason}")
         print(f"   读：styles/{row['slug']}/DESIGN.md")
         print(f"       styles/{row['slug']}/tokens.css")
@@ -196,6 +210,7 @@ def command_show(args: argparse.Namespace) -> int:
 
     print(f"{row['name']} ({row['slug']})")
     print(f"状态：{row['status']} · v{row['version']}")
+    print(f"家族：{row['family']} · 层级：{TIER_ZH.get(row['tier'], row['tier'])}")
     print(f"用途：{REGISTER_ZH.get(row['register'], row['register'])} · {SURFACE_ZH.get(row['surface'], row['surface'])} · {DENSITY_ZH.get(row['density'], row['density'])}")
     print(f"\n{row['description']}\n")
     print("最小读数路径：")
@@ -253,9 +268,17 @@ def validate_catalog() -> list[str]:
 
     for slug in slugs:
         style_dir = STYLES_DIR / slug
+        row = next((item for item in rows if item["slug"] == slug), {})
         for filename in ("DESIGN.md", "tokens.css", "prompt.md"):
             if not (style_dir / filename).exists():
                 problems.append(f"{slug}: 缺少 {filename}")
+
+        if row_tier := row.get("tier", ""):
+            if row_tier not in TIER_ZH:
+                problems.append(f"{slug}: tier `{row_tier}` 无效")
+        for source in row.get("sourceRefs", []):
+            if source not in PSEUDO_SOURCES and not (ROOT / "references" / source / "NOTES.md").exists():
+                problems.append(f"{slug}: sourceRefs 指向不存在的提炼卡 references/{source}/NOTES.md")
 
         preview = ROOT / "preview" / f"{slug}.html"
         if not preview.exists():
@@ -297,8 +320,8 @@ def validate_catalog() -> list[str]:
             if clean and not (markdown_path.parent / clean).resolve().exists():
                 problems.append(f"{markdown_path.relative_to(ROOT)}: 本地链接不存在 {target}")
 
-    if len(slugs) < 14:
-        problems.append(f"当前只有 {len(slugs)} 个风格，预期至少 14 个")
+    if len(slugs) < 17:
+        problems.append(f"当前只有 {len(slugs)} 个风格，预期至少 17 个")
     return list(dict.fromkeys(problems))
 
 
@@ -357,6 +380,7 @@ def build_parser() -> argparse.ArgumentParser:
     list_parser.add_argument("--register", choices=tuple(REGISTER_ZH))
     list_parser.add_argument("--surface", choices=("light", "dark", "mixed"))
     list_parser.add_argument("--density", choices=("tight", "medium", "roomy"))
+    list_parser.add_argument("--tier", choices=tuple(TIER_ZH))
     list_parser.set_defaults(func=command_list)
 
     recommend_parser = subparsers.add_parser("recommend", help="按任务描述推荐风格")

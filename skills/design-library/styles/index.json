@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 14,
+  "count": 17,
   "styles": [
     {
       "slug": "academic",
@@ -8,6 +8,12 @@
       "description": "论文体。两端对齐、首行缩进、段间不留空行、标题自动编号、定理带计数器、 边注挂在版心外面。衬线字体、1.8 行高、80 字符版心。 目标不是\"看起来专业\"，是\"看起来像一篇排版正确的文章\"。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "reading",
+      "tier": "core",
+      "sourceRefs": [
+        "latex-css"
+      ],
       "register": "technical",
       "surface": "mixed",
       "density": "roomy",
@@ -38,11 +44,62 @@
       "has_css": true
     },
     {
+      "slug": "adaptive-companion",
+      "name": "Adaptive Companion",
+      "description": "跨手机、平板和桌面的陪伴型工作界面。触控目标优先，信息按使用节奏渐进展开， 同一任务在不同窗口尺寸保持相同层次；不是把桌面后台缩成手机卡片。",
+      "version": "beta",
+      "status": "stable",
+      "previewVariant": "adaptive",
+      "family": "companion",
+      "tier": "core",
+      "sourceRefs": [
+        "material-3",
+        "fluent-2"
+      ],
+      "register": "tool",
+      "surface": "mixed",
+      "density": "roomy",
+      "cues": [
+        "移动端 app",
+        "跨设备助理",
+        "陪伴型工具",
+        "个人日程",
+        "触控操作",
+        "渐进式引导",
+        "响应式产品"
+      ],
+      "avoid": [
+        "高密度管理后台",
+        "宽表格",
+        "事故指挥台",
+        "营销落地页",
+        "以打印为主的文档"
+      ],
+      "prefix": "",
+      "className": "ds-adaptive-companion",
+      "canvas": "#F1F3F4",
+      "ink": "#25302F",
+      "accent": "#356D87",
+      "previewUrl": "preview/adaptive-companion.html",
+      "designPath": "styles/adaptive-companion/DESIGN.md",
+      "tokensPath": "styles/adaptive-companion/tokens.css",
+      "promptPath": "styles/adaptive-companion/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
       "slug": "civic",
       "name": "Civic",
       "description": "公共服务的界面。纯白纸、近黑墨、一个黄色焦点环，零圆角零阴影。 所有尺寸都是为\"能被读完、能被填完、能被键盘操作完\"服务的， 没有一处是为了好看。正文 19px 而不是 16，标题行高可以低到 1.0。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "trusted-service",
+      "tier": "core",
+      "sourceRefs": [
+        "govuk",
+        "uswds"
+      ],
       "register": "professional",
       "surface": "light",
       "density": "medium",
@@ -77,6 +134,12 @@
       "description": "暖中性纸面上的安静工作台。大标题负责建立叙事，正文保持连续可读， 状态与操作只用少量低饱和绿色。不是缩小字号的仪表盘，也不是卡片拼贴。",
       "version": "beta",
       "status": "stable",
+      "previewVariant": "",
+      "family": "workbench",
+      "tier": "core",
+      "sourceRefs": [
+        "openai-codex-observed"
+      ],
       "register": "tool",
       "surface": "mixed",
       "density": "medium",
@@ -106,11 +169,61 @@
       "has_css": true
     },
     {
+      "slug": "developer-docs",
+      "name": "Developer Docs",
+      "description": "现代产品文档的清晰工作区。浅色正文、稳定的侧栏、可直接执行的代码块和明确的版本状态， 让读者从概念走到运行结果；不把等宽字体当成技术感的戏服。",
+      "version": "beta",
+      "status": "stable",
+      "previewVariant": "docs",
+      "family": "developer",
+      "tier": "core",
+      "sourceRefs": [
+        "primer",
+        "geist",
+        "radix"
+      ],
+      "register": "technical",
+      "surface": "mixed",
+      "density": "medium",
+      "cues": [
+        "产品文档",
+        "API 参考",
+        "SDK 指南",
+        "开发者入门",
+        "版本迁移",
+        "代码示例密集的页面"
+      ],
+      "avoid": [
+        "终端模拟器",
+        "营销落地页",
+        "事故指挥台",
+        "纯打印论文",
+        "需要强情绪表达的页面"
+      ],
+      "prefix": "--dd-*",
+      "className": "ds-developer-docs",
+      "canvas": "#F4F6F4",
+      "ink": "#222A2A",
+      "accent": "#1E6F67",
+      "previewUrl": "preview/developer-docs.html",
+      "designPath": "styles/developer-docs/DESIGN.md",
+      "tokensPath": "styles/developer-docs/tokens.css",
+      "promptPath": "styles/developer-docs/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
       "slug": "editorial-serif",
       "name": "Editorial Serif",
       "description": "冷灰白纸上的编辑体。标题走衬线、正文走黑体，全系统只有一个赭红强调色， 所有装饰让位给文字。目标是让人愿意把一篇长文读完，而不是被界面惊艳一下。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "reading",
+      "tier": "core",
+      "sourceRefs": [
+        "native"
+      ],
       "register": "story",
       "surface": "light",
       "density": "roomy",
@@ -141,11 +254,61 @@
       "has_css": true
     },
     {
+      "slug": "enterprise-data",
+      "name": "Enterprise Data",
+      "description": "面向真实业务操作的数据界面。表格、筛选、批量动作、权限与审计信息共用一套稳定尺度， 让熟练用户在一屏内完成判断和修改；不把后台做成 KPI 卡片墙。",
+      "version": "beta",
+      "status": "stable",
+      "previewVariant": "table",
+      "family": "enterprise-data",
+      "tier": "core",
+      "sourceRefs": [
+        "carbon",
+        "radix"
+      ],
+      "register": "professional",
+      "surface": "mixed",
+      "density": "tight",
+      "cues": [
+        "企业管理后台",
+        "数据表格",
+        "批量操作",
+        "权限与审计",
+        "订单账单",
+        "客户运营",
+        "B 端管理工作流"
+      ],
+      "avoid": [
+        "品牌营销页",
+        "长文阅读",
+        "移动优先消费产品",
+        "事故时间线",
+        "沉浸式展示"
+      ],
+      "prefix": "",
+      "className": "ds-enterprise-data",
+      "canvas": "#EEF1F2",
+      "ink": "#20282E",
+      "accent": "#2E6D58",
+      "previewUrl": "preview/enterprise-data.html",
+      "designPath": "styles/enterprise-data/DESIGN.md",
+      "tokensPath": "styles/enterprise-data/tokens.css",
+      "promptPath": "styles/enterprise-data/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
       "slug": "incident-room",
       "name": "Incident Room",
       "description": "重大事故响应台。用一条连续时间线把发现、判断、动作、验证和回执串起来， 让接班者不读整段聊天也能恢复现场。高密度但不制造警报噪音。",
       "version": "beta",
       "status": "stable",
+      "previewVariant": "",
+      "family": "operations",
+      "tier": "core",
+      "sourceRefs": [
+        "ui-styles-ops-console"
+      ],
       "register": "tool",
       "surface": "dark",
       "density": "tight",
@@ -181,6 +344,12 @@
       "description": "克制的半透明工作台。近中性纸面上浮着偏实的玻璃面板，只用一个沉静蓝指路； 模糊负责区分工作层与信息层，不负责制造炫光。",
       "version": "beta",
       "status": "stable",
+      "previewVariant": "",
+      "family": "operations",
+      "tier": "variant",
+      "sourceRefs": [
+        "ui-styles-liquid-glass"
+      ],
       "register": "tool",
       "surface": "mixed",
       "density": "tight",
@@ -215,6 +384,12 @@
       "description": "新粗野。2px 实黑边、4px 零模糊硬阴影、5px 圆角、浅蓝底。 悬停时元素整体平移进自己的阴影里，像一块被按下去的纸板。 没有渐变、没有模糊、没有半透明，所有东西都是实心的。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "core",
+      "sourceRefs": [
+        "neobrutalism"
+      ],
       "register": "story",
       "surface": "light",
       "density": "medium",
@@ -250,6 +425,12 @@
       "description": "一盏灯，一圈黑。深度不来自投影，来自**离灯有多远**——四档底色就是四个距离。 哑光：没有任何镜面高光，和 `tactile-3d` 正好站在对立面。 三套光（阁楼暖金 / 地窖苔绿 / 教堂冷蓝）共用一套布局，换场景只换灯，不换家具。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "native"
+      ],
       "register": "story",
       "surface": "dark",
       "density": "medium",
@@ -285,6 +466,13 @@
       "description": "原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的 叠加边框分层，大圆角（16px 起）、系统无衬线字体、紧凑的行高。整个界面只有一处彩色： 焦点环和信息蓝；代码差异（diff）是唯一被放行的第二处。 适合需要长时间盯着、且不该抢内容风头的工具界面。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "workbench",
+      "tier": "variant",
+      "sourceRefs": [
+        "openai-desktop-client-observed",
+        "chatgpt-ios"
+      ],
       "register": "tool",
       "surface": "dark",
       "density": "tight",
@@ -319,6 +507,12 @@
       "description": "日常运维信号台。先回答哪里不对劲、证据是什么、下一步是否安全， 再把 AI 诊断放在证据旁边。高密度来自信息关系，不来自堆 KPI。",
       "version": "beta",
       "status": "stable",
+      "previewVariant": "",
+      "family": "operations",
+      "tier": "core",
+      "sourceRefs": [
+        "ui-styles-ops-console"
+      ],
       "register": "tool",
       "surface": "dark",
       "density": "tight",
@@ -355,6 +549,12 @@
       "description": "低对比柔色界面。浅色是 Latte（灰紫纸 + 墨水紫），深色是 Mocha（暖夜色 + 薰衣草紫）。颜色的量很大——14 个色相——但全部压在同一明度带上， 所以看起来是\"柔和\"而不是\"花\"。只有一个字重差，没有阴影，全是圆角。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "companion",
+      "tier": "variant",
+      "sourceRefs": [
+        "catppuccin"
+      ],
       "register": "tool",
       "surface": "mixed",
       "density": "roomy",
@@ -389,6 +589,12 @@
       "description": "理性的秩序感。纯白画布、无衬线一族到底、只留一个电蓝强调色， 所有对齐都能追溯到一个 8px 的基线格。装饰即噪音，一律去掉。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "professional",
+      "tier": "core",
+      "sourceRefs": [
+        "native"
+      ],
       "register": "professional",
       "surface": "light",
       "density": "medium",
@@ -423,6 +629,13 @@
       "description": "会动的卡片。透视 800px，倾角 12°，弹簧 ω=7.6/ζ=0.82——数值全部来自两个 能跑的组件库，不是估的。核心不是\"有阴影\"，是**阴影和高光都跟着指针走**： 光从哪来、卡有多厚、手推到哪儿，三件事在同一个坐标系里。 这一份的形状是它的，动效也是它的（第 ③ 类输入），只有排版节奏是本库补的。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "technique",
+      "sourceRefs": [
+        "atropos",
+        "react-bits"
+      ],
       "register": "story",
       "surface": "dark",
       "density": "roomy",
@@ -460,6 +673,12 @@
       "description": "把命令行搬进正文。深灰蓝画布、等宽为骨架、语义四色只用来标记状态。 标题和代码走等宽，长段落退回无衬线——满屏等宽中文是读不下去的。",
       "version": "alpha",
       "status": "stable",
+      "previewVariant": "",
+      "family": "developer",
+      "tier": "variant",
+      "sourceRefs": [
+        "native"
+      ],
       "register": "technical",
       "surface": "dark",
       "density": "tight",

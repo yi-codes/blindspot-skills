@@ -4,6 +4,9 @@ name: Signal Console
 description: >-
   日常运维信号台。先回答哪里不对劲、证据是什么、下一步是否安全，
   再把 AI 诊断放在证据旁边。高密度来自信息关系，不来自堆 KPI。
+family: operations
+tier: core
+sourceRefs: ui-styles-ops-console
 cues: AI SRE 助手、告警分诊、日志指标追踪、服务拓扑、值班交接、日常可观测性控制台
 avoid: 营销页、长文报告、公开状态页、低频任务列表、正在发生重大事故时的统一事故时间线
 surface: dark
