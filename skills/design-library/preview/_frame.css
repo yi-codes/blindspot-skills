@@ -1,0 +1,251 @@
+/* 预览外壳只负责布局，视觉来自每个风格自己的 tokens.css。 */
+
+:root {
+  --frame-canvas: #ECE9E2;
+  --frame-panel: #F6F3EC;
+  --frame-ink: #28302F;
+  --frame-muted: #68716F;
+  --frame-line: #D8D3C8;
+  --frame-line-strong: #BEB8AB;
+  --frame-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  --frame-mono: "SF Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  overflow-x: clip;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--frame-canvas);
+  color: var(--frame-ink);
+  font-family: var(--frame-font);
+}
+
+code,
+pre,
+time {
+  font-family: var(--frame-mono);
+}
+
+.preview-root {
+  min-height: 100dvh;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.frame-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid currentColor;
+}
+
+.frame-nav strong {
+  margin-right: auto;
+}
+
+.frame-nav span {
+  opacity: 0.68;
+  font-size: 0.8125rem;
+}
+
+.frame-story,
+.frame-professional,
+.frame-technical,
+.frame-workspace {
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.frame-story {
+  padding-top: clamp(3rem, 8vw, 7rem);
+}
+
+.frame-story h1,
+.frame-professional h1,
+.frame-technical h1,
+.frame-toolbar h1 {
+  max-width: 17ch;
+}
+
+.frame-context {
+  margin-bottom: 1rem;
+  opacity: 0.64;
+  font-size: 0.8125rem;
+}
+
+.frame-lede {
+  max-width: 58ch;
+  opacity: 0.82;
+}
+
+.frame-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.frame-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) repeat(2, minmax(0, 0.8fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.frame-grid h2 {
+  font-size: 1rem;
+}
+
+.frame-grid p {
+  margin-bottom: 0;
+  opacity: 0.78;
+}
+
+.frame-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(15rem, 0.75fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  padding-top: clamp(3rem, 8vw, 7rem);
+}
+
+.frame-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.frame-stats div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid currentColor;
+}
+
+.frame-stats dt,
+.frame-stats dd {
+  margin: 0;
+}
+
+.frame-technical {
+  padding-top: clamp(3rem, 8vw, 7rem);
+}
+
+.frame-technical pre {
+  max-width: 100%;
+  padding: 0.75rem;
+  overflow: auto;
+}
+
+.frame-app {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
+  gap: 1.5rem;
+  min-height: calc(100dvh - 2rem);
+}
+
+.frame-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid currentColor;
+}
+
+.frame-side nav {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.frame-side a {
+  padding: 0.45rem 0;
+}
+
+.frame-muted {
+  opacity: 0.68;
+}
+
+.frame-side .frame-muted {
+  margin-top: auto;
+  font-size: 0.75rem;
+}
+
+.frame-toolbar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid currentColor;
+}
+
+.frame-toolbar p {
+  margin: 0;
+}
+
+.frame-task {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+}
+
+.frame-task h2 {
+  font-size: 1rem;
+}
+
+.frame-task p {
+  margin-bottom: 0;
+  opacity: 0.78;
+}
+
+@media (max-width: 48rem) {
+  .frame-nav {
+    flex-wrap: wrap;
+  }
+
+  .frame-nav a {
+    width: 100%;
+  }
+
+  .frame-grid,
+  .frame-split,
+  .frame-task {
+    grid-template-columns: 1fr;
+  }
+
+  .frame-app {
+    grid-template-columns: 1fr;
+  }
+
+  .frame-side {
+    padding-right: 0;
+    padding-bottom: 1rem;
+    border-right: 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .frame-side nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .frame-side .frame-muted {
+    margin-top: 0;
+  }
+}
+

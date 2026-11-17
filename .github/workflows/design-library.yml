@@ -1,0 +1,30 @@
+name: Design Library
+
+on:
+  push:
+    paths:
+      - "skills/design-library/**"
+      - ".github/workflows/design-library.yml"
+  pull_request:
+    paths:
+      - "skills/design-library/**"
+      - ".github/workflows/design-library.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/design-library
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check generated artifacts
+        run: python3 scripts/designlib.py build
+      - name: Fail on generated drift
+        run: git diff --exit-code
+      - name: Validate library
+        run: python3 scripts/designlib.py check
+

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="设计风格库全部风格的真实 token 渲染总览。">
+  <title>Design Library · 全部预览</title>
+  <link rel="stylesheet" href="_frame.css">
+  <style>
+    .overview {
+      width: min(94rem, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
+    }
+    .overview-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 28rem); gap: 2rem; padding: 1rem 0 2rem; }
+    .overview-head h1 { margin: 0 0 0.5rem; font-size: 1.75rem; line-height: 1.15; }
+    .overview-head p { margin: 0; color: var(--frame-muted); line-height: 1.65; }
+    .overview-row { margin: 0 0 2.5rem; border-top: 1px solid var(--frame-line-strong); }
+    .overview-row header { display: flex; align-items: end; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; }
+    .overview-row h2 { margin: 0; font-size: 1rem; }
+    .overview-row p { margin: 0.25rem 0 0; color: var(--frame-muted); font-size: 0.8125rem; }
+    .overview-row iframe { display: block; width: 100%; height: 42rem; border: 1px solid var(--frame-line); border-radius: 8px; background: var(--frame-panel); }
+    @media (max-width: 52rem) {
+      .overview-head { grid-template-columns: 1fr; }
+      .overview-row iframe { height: 34rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="overview">
+    <header class="overview-head">
+      <div>
+        <h1>全部风格，同一份内容</h1>
+        <p>每块样张都加载该风格自己的 <code>tokens.css</code>。先看层级、密度与对比度是否适合任务，再回到目录读排他条件。</p>
+      </div>
+      <p>这个页面由 <code>scripts/build-preview.py</code> 生成，不作为风格索引。选择请打开 <a href="../catalog/index.html">catalog</a>。</p>
+    </header>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Academic</h2>
+              <p><code>academic</code>，讲技术，stable</p>
+            </div>
+            <a href="academic.html">单独打开</a>
+          </header>
+          <iframe title="Academic 预览" src="academic.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Civic</h2>
+              <p><code>civic</code>，讲专业，stable</p>
+            </div>
+            <a href="civic.html">单独打开</a>
+          </header>
+          <iframe title="Civic 预览" src="civic.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Codex Workbench</h2>
+              <p><code>codex-workbench</code>，讲工具，stable</p>
+            </div>
+            <a href="codex-workbench.html">单独打开</a>
+          </header>
+          <iframe title="Codex Workbench 预览" src="codex-workbench.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Editorial Serif</h2>
+              <p><code>editorial-serif</code>，讲故事，stable</p>
+            </div>
+            <a href="editorial-serif.html">单独打开</a>
+          </header>
+          <iframe title="Editorial Serif 预览" src="editorial-serif.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Incident Room</h2>
+              <p><code>incident-room</code>，讲工具，stable</p>
+            </div>
+            <a href="incident-room.html">单独打开</a>
+          </header>
+          <iframe title="Incident Room 预览" src="incident-room.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Liquid Glass</h2>
+              <p><code>liquid-glass</code>，讲工具，stable</p>
+            </div>
+            <a href="liquid-glass.html">单独打开</a>
+          </header>
+          <iframe title="Liquid Glass 预览" src="liquid-glass.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Neobrutalist</h2>
+              <p><code>neobrutalist</code>，讲故事，stable</p>
+            </div>
+            <a href="neobrutalist.html">单独打开</a>
+          </header>
+          <iframe title="Neobrutalist 预览" src="neobrutalist.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>夜色舞台</h2>
+              <p><code>nocturne</code>，讲故事，stable</p>
+            </div>
+            <a href="nocturne.html">单独打开</a>
+          </header>
+          <iframe title="夜色舞台 预览" src="nocturne.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Quiet Dark</h2>
+              <p><code>quiet-dark</code>，讲工具，stable</p>
+            </div>
+            <a href="quiet-dark.html">单独打开</a>
+          </header>
+          <iframe title="Quiet Dark 预览" src="quiet-dark.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Signal Console</h2>
+              <p><code>signal-console</code>，讲工具，stable</p>
+            </div>
+            <a href="signal-console.html">单独打开</a>
+          </header>
+          <iframe title="Signal Console 预览" src="signal-console.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Soft Pastel</h2>
+              <p><code>soft-pastel</code>，讲工具，stable</p>
+            </div>
+            <a href="soft-pastel.html">单独打开</a>
+          </header>
+          <iframe title="Soft Pastel 预览" src="soft-pastel.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Swiss Grid</h2>
+              <p><code>swiss-grid</code>，讲专业，stable</p>
+            </div>
+            <a href="swiss-grid.html">单独打开</a>
+          </header>
+          <iframe title="Swiss Grid 预览" src="swiss-grid.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Tactile 3D</h2>
+              <p><code>tactile-3d</code>，讲故事，stable</p>
+            </div>
+            <a href="tactile-3d.html">单独打开</a>
+          </header>
+          <iframe title="Tactile 3D 预览" src="tactile-3d.html" loading="lazy"></iframe>
+        </article>
+
+        <article class="overview-row">
+          <header>
+            <div>
+              <h2>Terminal Mono</h2>
+              <p><code>terminal-mono</code>，讲技术，stable</p>
+            </div>
+            <a href="terminal-mono.html">单独打开</a>
+          </header>
+          <iframe title="Terminal Mono 预览" src="terminal-mono.html" loading="lazy"></iframe>
+        </article>
+
+  </main>
+</body>
+</html>

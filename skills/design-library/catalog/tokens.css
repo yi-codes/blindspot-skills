@@ -1,0 +1,40 @@
+/* Hallmark · app: design-library catalog · scope: app · genre: modern-minimal · theme: specimen-ledger · built: code-first · v2.0.0 */
+
+:root {
+  --lib-canvas: #EEF1EE;
+  --lib-panel: #F7F8F5;
+  --lib-panel-raised: #FBFCFA;
+  --lib-well: #E3E8E3;
+  --lib-ink: #202829;
+  --lib-ink-muted: #596463;
+  --lib-ink-faint: #677170;
+  --lib-rule: #D2D8D3;
+  --lib-rule-strong: #B7BFBA;
+  --lib-accent: #176763;
+  --lib-accent-strong: #0E504D;
+  --lib-accent-soft: #DDEBE7;
+  --lib-danger: #A34F45;
+  --lib-focus: #1F837E;
+  --lib-backdrop: rgba(25, 31, 31, 0.42);
+  --lib-shadow: 0 20px 60px rgba(25, 31, 31, 0.18);
+  --lib-font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  --lib-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+  --lib-font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  --lib-text-xs: 0.75rem;
+  --lib-text-sm: 0.8125rem;
+  --lib-text-md: 0.9375rem;
+  --lib-text-lg: 1.0625rem;
+  --lib-text-xl: 1.5rem;
+  --lib-space-xs: 0.25rem;
+  --lib-space-sm: 0.5rem;
+  --lib-space-md: 0.75rem;
+  --lib-space-lg: 1rem;
+  --lib-space-xl: 1.5rem;
+  --lib-space-2xl: 2rem;
+  --lib-radius-sm: 3px;
+  --lib-radius-control: 5px;
+  --lib-radius-app: 8px;
+  --lib-duration: 160ms;
+  --lib-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+

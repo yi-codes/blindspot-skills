@@ -1,0 +1,154 @@
+/* ============================================================
+   Codex Workbench · 安静的暖中性工作台
+   class: ds-codex-workbench
+   prefix: --cw-
+   ============================================================ */
+
+:where(.ds-codex-workbench) {
+  --cw-canvas: #F7F5F0;
+  --cw-surface: #FCFAF5;
+  --cw-surface-soft: #EFECE5;
+  --cw-ink: #2A322D;
+  --cw-ink-muted: #66706A;
+  --cw-ink-faint: #838A85;
+  --cw-hairline: #DEDAD1;
+  --cw-hairline-strong: #C4C0B6;
+  --cw-accent: #2D7557;
+  --cw-accent-soft: #DDEADF;
+  --cw-warning: #946A2D;
+  --cw-danger: #A4483E;
+  --cw-dark-canvas: #1D211F;
+  --cw-dark-surface: #262C28;
+  --cw-dark-surface-soft: #303732;
+  --cw-dark-ink: #E9EAE5;
+  --cw-dark-muted: #ABB2AC;
+  --cw-dark-line: #3B433E;
+  --cw-dark-accent: #8DC5A8;
+
+  --cw-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+  --cw-font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  --cw-font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --cw-text-xs: 0.75rem;
+  --cw-text-sm: 0.9375rem;
+  --cw-text-md: 1rem;
+  --cw-text-lg: 1.375rem;
+  --cw-text-xl: 1.75rem;
+  --cw-text-2xl: 2.625rem;
+
+  --cw-leading-tight: 1.14;
+  --cw-leading-body: 1.72;
+  --cw-tracking-display: -0.035em;
+
+  --cw-space-xs: 0.25rem;
+  --cw-space-sm: 0.5rem;
+  --cw-space-md: 0.75rem;
+  --cw-space-lg: 1rem;
+  --cw-space-xl: 1.5rem;
+  --cw-space-2xl: 2rem;
+  --cw-space-section: 3rem;
+
+  --cw-radius-control: 9px;
+  --cw-radius-panel: 14px;
+  --cw-border: 1px solid var(--cw-hairline);
+  --cw-shadow: 0 16px 48px rgba(37, 43, 39, 0.12);
+  --cw-duration: 180ms;
+  --cw-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:where(.ds-codex-workbench[data-theme="dark"]) {
+  --cw-canvas: var(--cw-dark-canvas);
+  --cw-surface: var(--cw-dark-surface);
+  --cw-surface-soft: var(--cw-dark-surface-soft);
+  --cw-ink: var(--cw-dark-ink);
+  --cw-ink-muted: var(--cw-dark-muted);
+  --cw-ink-faint: var(--cw-dark-muted);
+  --cw-hairline: var(--cw-dark-line);
+  --cw-hairline-strong: var(--cw-dark-line);
+  --cw-accent: var(--cw-dark-accent);
+  --cw-accent-soft: var(--cw-dark-surface-soft);
+}
+
+:where(.ds-codex-workbench) {
+  background: var(--cw-canvas);
+  color: var(--cw-ink);
+  font-family: var(--cw-font-body);
+  font-size: var(--cw-text-md);
+  line-height: var(--cw-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.ds-codex-workbench) :where(h1, h2, h3) {
+  margin: 0 0 var(--cw-space-lg);
+  color: var(--cw-ink);
+  font-family: var(--cw-font-display);
+  font-weight: 650;
+  line-height: var(--cw-leading-tight);
+  letter-spacing: var(--cw-tracking-display);
+  text-wrap: balance;
+}
+
+:where(.ds-codex-workbench) h1 { max-width: 18ch; font-size: var(--cw-text-2xl); }
+:where(.ds-codex-workbench) h2 { max-width: 28ch; font-size: var(--cw-text-xl); }
+:where(.ds-codex-workbench) h3 { font-size: var(--cw-text-lg); }
+:where(.ds-codex-workbench) p { max-width: 72ch; margin: 0 0 var(--cw-space-lg); }
+:where(.ds-codex-workbench) a { color: var(--cw-accent); }
+
+:where(.ds-codex-workbench) :where(button, .ds-btn) {
+  min-height: 40px;
+  padding: var(--cw-space-sm) var(--cw-space-lg);
+  border: 1px solid var(--cw-hairline-strong);
+  border-radius: var(--cw-radius-control);
+  background: var(--cw-surface);
+  color: var(--cw-ink);
+  font: inherit;
+  font-size: var(--cw-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--cw-duration) var(--cw-ease), color var(--cw-duration) var(--cw-ease);
+}
+:where(.ds-codex-workbench) :where(button, .ds-btn):hover { background: var(--cw-surface-soft); }
+:where(.ds-codex-workbench) :where(.ds-btn-primary) {
+  border-color: var(--cw-accent);
+  background: var(--cw-accent);
+  color: var(--cw-surface);
+}
+:where(.ds-codex-workbench) :where(button, .ds-btn):focus-visible {
+  outline: 2px solid var(--cw-accent);
+  outline-offset: 2px;
+}
+
+:where(.ds-codex-workbench) :where(.ds-card, .ds-panel) {
+  padding: var(--cw-space-xl);
+  border: var(--cw-border);
+  border-radius: var(--cw-radius-panel);
+  background: var(--cw-surface);
+}
+
+:where(.ds-codex-workbench) :where(.ds-tag) {
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: var(--cw-accent-soft);
+  color: var(--cw-accent);
+  font-size: var(--cw-text-xs);
+}
+
+:where(.ds-codex-workbench) :where(.ds-stat-value) {
+  font-family: var(--cw-font-display);
+  font-size: var(--cw-text-xl);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-codex-workbench) :where(.ds-stat-label) {
+  color: var(--cw-ink-muted);
+  font-size: var(--cw-text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-codex-workbench) * {
+    transition-duration: 0.01ms !important;
+  }
+}
+

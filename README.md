@@ -27,21 +27,27 @@ skill 要你开口或被模型判断匹配才会启用，但"未知的未知"往
 - **按风险投入。** 随口一问不需要这些流程，skill 的描述里写明了不适用的场景，避免每个问题都被拖长。
 - **不外发敏感内容。** `cross-check` 发出提问前要求检查并脱敏；调用的模型在空的临时目录中运行，读不到你的项目文件。
 
-## 附带的 skill：视觉风格库
+## 附带的 skill：Design Library
 
-`skills/style-library/` 与上面的盲区三部曲方向不同——它管的是**视觉**，不是**判断**。
+`skills/design-library/` 与上面的盲区三部曲方向不同。它管的是**视觉执行**，不是判断。
 
-把一套视觉风格写成 agent 能精确执行的 `DESIGN.md`（[Google Stitch 规范](https://github.com/google-labs-code/design.md)），每个风格同时给出两个出口：`tokens.css`（网页实现，容器加个 class 就切换）和 `prompt.md`（生图模板）。
+设计库已经合并原来分散的两个入口：
 
-三个风格各司其职：
+- `style-library` 的可执行 `DESIGN.md + tokens.css + prompt.md` 体系
+- `ui-styles` 对工作台、控制台、事故响应和重设计流程的约束
 
-| 风格 | 讲什么 | 用在哪 |
-| --- | --- | --- |
-| `editorial-serif` | 讲故事 | 长文、博客、白皮书、品牌页 |
-| `swiss-grid` | 讲专业 | 产品页、案例、数据看板、B 端界面 |
-| `terminal-mono` | 讲技术 | 技术文档、开发者工具、CLI 配套界面 |
+当前收录 14 个风格，覆盖长文、产品页、技术文档、个人工具、深色工作台、毛玻璃控制台、运维信号台和事故时间线。每个风格都有明确的使用条件、排他条件、token、组件骨架和生图模板。
 
-配套 `scripts/lint.py`（零依赖）检查 token 引用是否有效、颜色与 CSS 是否一致、WCAG 对比度是否达标；还有一条收集外部设计的三层流程 `inbox/` → `references/` → `styles/`，方法在 `references/README.md`。
+```bash
+cd skills/design-library
+python3 scripts/designlib.py list
+python3 scripts/designlib.py recommend "运维值班台，查看告警并批准 AI 建议"
+python3 scripts/designlib.py show signal-console
+```
+
+浏览器打开 `skills/design-library/catalog/index.html`，可以按任务搜索、筛选风格、查看真实 token 渲染，并最多并排比较三个风格。
+
+新增一个风格只动 `styles/<slug>/`；索引、目录数据和预览由 `python3 scripts/designlib.py build` 生成。完整检查运行 `python3 scripts/designlib.py check`。
 
 用不到可以完全忽略，不影响盲区三部曲。
 

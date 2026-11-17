@@ -46,10 +46,10 @@ cat > "$dir/tokens.css" <<EOF
 
 :where(.ds-${slug}) {
   /* ---- 颜色 ---- */
-  --${prefix}-bg:          #FFFFFF;
-  --${prefix}-surface:     #FFFFFF;
+  --${prefix}-bg:          #F7F7F4;
+  --${prefix}-surface:     #FCFCFA;
   --${prefix}-surface-alt: #F5F5F5;
-  --${prefix}-ink:         #111111;
+  --${prefix}-ink:         #1D2323;
   --${prefix}-ink-muted:   #666666;
   --${prefix}-ink-faint:   #8F8F8F;
   --${prefix}-line:        #E0E0E0;
@@ -215,7 +215,5 @@ echo "     —— 少写一项，这个风格在 INDEX.md 里就选不出来"
 echo "  2. 填 $dir/DESIGN.md 正文（Overview 和 Colors 是核心，其余照模板八节写）"
 echo "  3. 填 $dir/tokens.css"
 echo "  4. 填 $dir/prompt.md"
-echo "  5. python3 scripts/lint.py            # 0 错误才往下走"
-echo "  6. python3 scripts/build-index.py     # 重排 INDEX.md，它会告诉你少没少字段"
-echo "  7. python3 scripts/build-preview.py   # 八加一个风格，对照页里多一块"
-echo "  8. python3 scripts/slop.py showcase/<你的样例>.html   # 有 E 就改，或写 slop-ok 说明理由"
+echo "  5. python3 scripts/designlib.py build    # 索引、目录与预览一起重建"
+echo "  6. python3 scripts/designlib.py check    # 0 错误才算完成"

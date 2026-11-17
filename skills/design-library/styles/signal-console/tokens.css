@@ -1,0 +1,142 @@
+/* ============================================================
+   Signal Console · 日常运维信号台
+   class: ds-signal-console
+   prefix: --sc-
+   ============================================================ */
+
+:where(.ds-signal-console) {
+  --sc-canvas: #111820;
+  --sc-surface: #172129;
+  --sc-raised: #1D2832;
+  --sc-input: #131C24;
+  --sc-ink: #E7EDF0;
+  --sc-ink-muted: #A1ADB5;
+  --sc-ink-faint: #75828C;
+  --sc-line: #2B3742;
+  --sc-line-strong: #40505E;
+  --sc-accent: #6BA7E6;
+  --sc-accent-soft: #233B57;
+  --sc-ok: #65B58D;
+  --sc-warning: #D5A44F;
+  --sc-danger: #E06B63;
+  --sc-series-4: #9B8FD1;
+  --sc-series-5: #62B2BD;
+
+  --sc-font-ui: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  --sc-font-mono: "Geist Mono", "SF Mono", ui-monospace, monospace;
+
+  --sc-text-xs: 0.75rem;
+  --sc-text-sm: 0.8125rem;
+  --sc-text-md: 0.9375rem;
+  --sc-text-lg: 1.3125rem;
+  --sc-text-xl: 1.6875rem;
+
+  --sc-leading-tight: 1.18;
+  --sc-leading-ui: 1.55;
+  --sc-leading-body: 1.7;
+  --sc-tracking-title: -0.02em;
+
+  --sc-space-xs: 0.25rem;
+  --sc-space-sm: 0.5rem;
+  --sc-space-md: 0.75rem;
+  --sc-space-lg: 1rem;
+  --sc-space-xl: 1.5rem;
+  --sc-space-section: 2rem;
+
+  --sc-radius-sm: 4px;
+  --sc-radius-control: 6px;
+  --sc-radius-panel: 8px;
+  --sc-border: 1px solid var(--sc-line);
+  --sc-shadow: 0 18px 48px rgba(5, 9, 12, 0.5);
+  --sc-duration: 160ms;
+  --sc-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:where(.ds-signal-console) {
+  background: var(--sc-canvas);
+  color: var(--sc-ink);
+  font-family: var(--sc-font-ui);
+  font-size: var(--sc-text-md);
+  font-weight: 350;
+  line-height: var(--sc-leading-ui);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-signal-console) :where(h1, h2, h3) {
+  margin: 0 0 var(--sc-space-md);
+  color: var(--sc-ink);
+  font-family: var(--sc-font-ui);
+  font-weight: 600;
+  line-height: var(--sc-leading-tight);
+  letter-spacing: var(--sc-tracking-title);
+}
+
+:where(.ds-signal-console) h1 { font-size: var(--sc-text-xl); }
+:where(.ds-signal-console) h2 { font-size: var(--sc-text-lg); }
+:where(.ds-signal-console) h3 { font-size: var(--sc-text-md); }
+:where(.ds-signal-console) p { max-width: 74ch; margin: 0 0 var(--sc-space-md); }
+:where(.ds-signal-console) a { color: var(--sc-accent); }
+:where(.ds-signal-console) :where(code, time, pre) { font-family: var(--sc-font-mono); }
+
+:where(.ds-signal-console) :where(button, .ds-btn) {
+  min-height: 34px;
+  padding: var(--sc-space-sm) var(--sc-space-md);
+  border: var(--sc-border);
+  border-radius: var(--sc-radius-control);
+  background: var(--sc-raised);
+  color: var(--sc-ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--sc-duration) var(--sc-ease), border-color var(--sc-duration) var(--sc-ease);
+}
+:where(.ds-signal-console) :where(button, .ds-btn):hover { border-color: var(--sc-line-strong); }
+:where(.ds-signal-console) :where(.ds-btn-primary) {
+  border-color: var(--sc-accent);
+  background: var(--sc-accent);
+  color: var(--sc-canvas);
+}
+:where(.ds-signal-console) :where(button, .ds-btn):focus-visible {
+  outline: 2px solid var(--sc-accent);
+  outline-offset: 2px;
+}
+
+:where(.ds-signal-console) :where(.ds-card, .ds-panel) {
+  padding: var(--sc-space-lg);
+  border: var(--sc-border);
+  border-radius: var(--sc-radius-panel);
+  background: var(--sc-surface);
+}
+
+:where(.ds-signal-console) :where(.ds-tag) {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: var(--sc-radius-sm);
+  background: var(--sc-raised);
+  color: var(--sc-ink-muted);
+  font-size: var(--sc-text-xs);
+}
+
+:where(.ds-signal-console) :where(.ds-tag-ok) { color: var(--sc-ok); }
+:where(.ds-signal-console) :where(.ds-tag-warn) { color: var(--sc-warning); }
+:where(.ds-signal-console) :where(.ds-tag-danger) { color: var(--sc-danger); }
+
+:where(.ds-signal-console) :where(.ds-stat-value) {
+  font-family: var(--sc-font-ui);
+  font-size: var(--sc-text-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.ds-signal-console) :where(.ds-stat-label) {
+  color: var(--sc-ink-muted);
+  font-size: var(--sc-text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-signal-console) * {
+    transition-duration: 0.01ms !important;
+  }
+}
+

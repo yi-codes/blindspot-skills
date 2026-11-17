@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="个人设计风格库：按任务选择、比较真实渲染并复制可执行 token。">
+  <title>Design Library</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Design Library 首页">Design Library <span>设计风格正本</span></a>
+      <form class="search" id="searchForm" role="search">
+        <label class="sr-only" for="query">描述你要做的页面</label>
+        <div class="search-field">
+          <input id="query" name="query" type="search" autocomplete="off" placeholder="描述任务，例如：运维告警与批准动作">
+          <kbd class="kbd">/</kbd>
+        </div>
+        <button class="button button-primary" type="submit">推荐</button>
+      </form>
+      <button class="button button-quiet mobile-only" id="filterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">筛选</button>
+      <button class="button button-quiet" id="resetButton" type="button">重置</button>
+      <span class="build-state" id="buildState">正在读取索引</span>
+    </header>
+
+    <main class="workspace">
+      <aside class="filter-panel" id="filterPanel" aria-label="风格筛选">
+        <div class="filter-head">
+          <h2>筛选</h2>
+          <button class="filter-reset" id="filterReset" type="button">清除</button>
+        </div>
+        <section class="filter-group" data-filter-group="register">
+          <h3>用途</h3>
+          <div class="filter-options" id="registerFilters"></div>
+        </section>
+        <section class="filter-group" data-filter-group="surface">
+          <h3>明暗</h3>
+          <div class="filter-options" id="surfaceFilters"></div>
+        </section>
+        <section class="filter-group" data-filter-group="density">
+          <h3>密度</h3>
+          <div class="filter-options" id="densityFilters"></div>
+        </section>
+      </aside>
+
+      <section class="catalog" aria-labelledby="catalogTitle">
+        <header class="section-head">
+          <div>
+            <h1 id="catalogTitle">先说清要完成什么</h1>
+            <p>同一个页面只选一种风格。搜索会优先匹配“用户要做的事”，同时降低命中风格排他条件的候选。</p>
+          </div>
+          <p class="method">推荐不是审美投票，而是场景、职守、明暗和密度的可解释排序。</p>
+        </header>
+
+        <div class="task-panel">
+          <p id="taskHint">还没有任务描述。浏览全部风格，或在上方输入具体场景。</p>
+          <span class="meta-line" id="recommendationMeta" aria-live="polite"></span>
+        </div>
+
+        <div class="results-head">
+          <h2 id="resultsTitle">全部风格</h2>
+          <p class="results-note"><span id="visibleCount">0</span> 个结果</p>
+          <p class="compare-summary"><strong id="compareCount">0</strong> / 3 已加入比较</p>
+        </div>
+
+        <ol class="style-list" id="styleList" aria-label="设计风格列表"></ol>
+        <div class="empty-state" id="emptyState" hidden>
+          <h2>没有符合条件的风格</h2>
+          <p>放宽一个筛选条件，或把任务描述改得更具体。如果全部排除了，说明这里需要新增风格，而不是硬套现有风格。</p>
+        </div>
+
+        <section class="mobile-detail" id="mobileDetail" aria-label="当前风格详情"></section>
+      </section>
+
+      <aside class="inspector" aria-label="当前风格详情">
+        <div class="preview">
+          <div class="preview-bar">
+            <span class="preview-label" id="previewLabel">preview</span>
+            <a id="openPreview" href="#" target="_blank" rel="noopener">单独打开</a>
+          </div>
+          <iframe id="previewFrame" title="当前风格预览" loading="eager"></iframe>
+        </div>
+        <div class="inspector-head">
+          <h2>当前风格</h2>
+          <span class="build-state" id="styleVersion"></span>
+        </div>
+        <div class="inspector-body" id="styleDetail"></div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="compare-bar" id="compareBar" hidden>
+    <p><strong id="compareBarCount">0</strong> 个风格待比较</p>
+    <button class="button button-primary" id="openCompare" type="button">并排比较</button>
+  </div>
+
+  <dialog class="compare-dialog" id="compareDialog">
+    <div class="dialog-shell">
+      <div class="dialog-head">
+        <h2>同内容并排比较</h2>
+        <button class="button" id="closeCompare" type="button">关闭</button>
+      </div>
+      <div class="compare-grid" id="compareGrid"></div>
+    </div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="catalog.js"></script>
+</body>
+</html>
+

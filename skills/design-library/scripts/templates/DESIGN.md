@@ -11,12 +11,13 @@ avoid: 绝对别用的场景1、场景2
 surface: light | dark | mixed
 density: tight | medium | roomy   # 这一屏要塞多少东西，不是留白多少。tight=信息密度优先
 register: story | professional | technical | tool
+status: beta
 
 colors:
-  canvas: "#FFFFFF"
-  surface: "#FFFFFF"
+  canvas: "#F7F7F4"
+  surface: "#FCFCFA"
   surface-alt: "#F5F5F5"
-  ink: "#111111"
+  ink: "#1D2323"
   ink-muted: "#666666"
   ink-faint: "#8F8F8F"
   hairline: "#E0E0E0"
@@ -84,7 +85,7 @@ components:
 
 **Key Characteristics**
 
-- 画布 `{colors.canvas}`（#FFFFFF）——为什么用这个值
+- 画布 `{colors.canvas}`（#F7F7F4）——为什么用这个值
 - 唯一彩色 `{colors.primary}`（色名 + 值）——它只出现在哪里，为什么是这一个
 - 字体策略（一族到底 还是 双体分工）——为什么
 - 间距节奏（8 的倍数 / 4 的倍数）——为什么
