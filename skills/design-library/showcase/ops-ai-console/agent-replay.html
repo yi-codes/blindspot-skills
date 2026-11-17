@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meridian Ops Agent 执行审批与回放样张，使用 Liquid Glass 风格。">
+  <title>Meridian Ops · Agent 执行回放</title>
+  <link rel="stylesheet" href="../../styles/liquid-glass/tokens.css">
+  <link rel="stylesheet" href="ops.css">
+</head>
+<body class="ds-liquid-glass ops-app" data-page="agent">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="appbar">
+    <a class="brand" href="index.html" aria-label="Meridian Ops 样张首页">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span>Meridian Ops <small>Agent 运行</small></span>
+    </a>
+    <button class="menu-button" type="button" data-nav-toggle aria-expanded="false" aria-controls="globalNav">菜单</button>
+    <nav class="global-nav" id="globalNav" aria-label="全局导航">
+      <a href="daily.html">总览</a>
+      <a href="incident.html">事故</a>
+      <a href="agent-replay.html" aria-current="page">执行回放</a>
+      <a href="index.html">样张说明</a>
+    </nav>
+    <div class="top-status">
+      <span>run/7c91</span>
+      <strong>等待批准</strong>
+    </div>
+  </header>
+
+  <div class="agent-layout">
+    <aside class="run-list" aria-labelledby="runsTitle">
+      <h2 id="runsTitle">最近运行</h2>
+      <a class="run-item" href="agent-replay.html" aria-current="true">
+        <strong>检查支付发布</strong>
+        <p>等待批准 · 12 步</p>
+      </a>
+      <a class="run-item" href="agent-replay.html">
+        <strong>整理事故时间线</strong>
+        <p>已完成 · 08:48</p>
+      </a>
+      <a class="run-item" href="agent-replay.html">
+        <strong>对比 v182 与 v184</strong>
+        <p>已完成 · 08:45</p>
+      </a>
+      <p class="page-note">样张运行，不会连接真实 Agent 或生产环境。</p>
+    </aside>
+
+    <main class="trace-region" id="main">
+      <header class="trace-head">
+        <div>
+          <h1>检查支付发布并验证回滚条件</h1>
+          <p class="trace-meta"><span>run/7c91</span><span>checkout-api</span><span>v184 到 v182</span></p>
+        </div>
+        <div class="toolbar">
+          <a class="text-action" href="#main" data-empty-action>导出回执</a>
+          <button class="button button-primary" type="button" data-open-dialog="agentDialog">审查待批准动作</button>
+        </div>
+      </header>
+
+      <section class="centered-controls" aria-label="运行条件">
+        <div class="summary-strip">
+          <div><strong>12</strong><span>已完成步骤</span></div>
+          <div><strong>1</strong><span>待批准动作</span></div>
+          <div><strong>0</strong><span>验证失败</span></div>
+        </div>
+      </section>
+
+      <section class="trace-panel" aria-labelledby="traceTitle">
+        <header class="panel-head">
+          <h2 id="traceTitle">执行流</h2>
+          <span>显示计划摘要，不展示隐藏推理</span>
+        </header>
+        <ol class="trace-stream" id="traceStream">
+          <li class="trace-step" data-kind="user" data-step="1">
+            <time>08:44:02</time><strong>请求</strong><pre>检查 v184 发布，判断是否需要回滚。</pre>
+          </li>
+          <li class="trace-step" data-kind="plan" data-step="2">
+            <time>08:44:04</time><strong>计划</strong><pre>对比部署、错误率、日志和健康检查。</pre>
+          </li>
+          <li class="trace-step" data-kind="command" data-step="3">
+            <time>08:44:08</time><strong>命令</strong><pre>deploy diff checkout-api --from v182 --to v184
+exit 0 · 1 config change</pre>
+          </li>
+          <li class="trace-step" data-kind="file" data-step="4">
+            <time>08:44:10</time><strong>文件</strong><pre>config/payment_timeout.yaml · 800ms -&gt; 480ms</pre>
+          </li>
+          <li class="trace-step" data-kind="command" data-step="5">
+            <time>08:44:14</time><strong>查询</strong><pre>metrics query checkout-api.http_5xx --window 15m
+baseline 0.7% · current 4.8%</pre>
+          </li>
+          <li class="trace-step" data-kind="command" data-step="6">
+            <time>08:44:17</time><strong>查询</strong><pre>logs search payment-bridge status=504 --window 15m
+42 matching events · first at 08:36</pre>
+          </li>
+          <li class="trace-step" data-kind="verify" data-step="7">
+            <time>08:44:22</time><strong>验证</strong><pre>错误率峰值与灰度开始时间相差 6 分钟。</pre>
+          </li>
+          <li class="trace-step" data-kind="verify" data-step="8">
+            <time>08:44:25</time><strong>验证</strong><pre>其他服务未出现相同错误上升。</pre>
+          </li>
+          <li class="trace-step" data-kind="plan" data-step="9">
+            <time>08:44:28</time><strong>建议</strong><pre>暂停灰度，观察指标 10 分钟。</pre>
+          </li>
+          <li class="trace-step" data-kind="command" data-step="10">
+            <time>08:45:31</time><strong>执行</strong><pre>deploy pause checkout-api --rev v184
+receipt deploy/pause-8842</pre>
+          </li>
+          <li class="trace-step" data-kind="verify" data-step="11">
+            <time>08:48:02</time><strong>验证</strong><pre>5xx 从 4.8% 降至 1.9%，p95 仍为 610ms。</pre>
+          </li>
+          <li class="trace-step" data-kind="approval" data-step="12">
+            <time>08:53:17</time><strong>待批准</strong><pre>deploy rollback checkout-api --to v182</pre>
+          </li>
+        </ol>
+      </section>
+
+      <div class="replay-controls" aria-label="回放控制">
+        <button class="button" type="button" data-step-action="prev">上一步</button>
+        <label class="field-label" for="traceRange">第 <span id="tracePosition">12</span> / 12 步</label>
+        <input class="scrubber" id="traceRange" type="range" min="1" max="12" value="12" step="1">
+        <button class="button" type="button" data-step-action="next">下一步</button>
+      </div>
+    </main>
+
+    <aside class="agent-aside" aria-labelledby="approvalTitle">
+      <header class="inspector-head">
+        <h2 id="approvalTitle">当前结论</h2>
+        <p>来自运行记录与可验证证据。</p>
+      </header>
+
+      <section class="approval">
+        <h2>回滚到 v182</h2>
+        <p>灰度已暂停，但 p95 仍高于基线。回滚可以验证配置变更是唯一原因。</p>
+        <div class="badge-row">
+          <span class="badge badge-warn">需要人工批准</span>
+          <span class="badge">可逆</span>
+          <span class="badge">写入审计</span>
+        </div>
+      </section>
+
+      <section class="inspector-section">
+        <h3>执行证据</h3>
+        <ul class="fact-list">
+          <li>12 个步骤已完成，命令退出码全部可读取。</li>
+          <li>回滚不会删除现有部署，只切换流量。</li>
+          <li>验证条件：5xx 与 p95 连续 5 分钟达标。</li>
+        </ul>
+      </section>
+
+      <section class="inspector-section">
+        <h3>操作</h3>
+        <div class="action-row">
+          <button class="button button-primary" type="button" data-open-dialog="agentDialog">打开审批</button>
+          <button class="button button-quiet" type="button" data-empty-action>复制回执</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <dialog class="dialog" id="agentDialog" aria-labelledby="agentDialogTitle">
+    <div class="dialog-body">
+      <h2 id="agentDialogTitle">批准回滚到 v182</h2>
+      <p>审批只针对 checkout-api。此样张不会执行命令，也不会写入真实审计日志。</p>
+    </div>
+    <div class="dialog-actions">
+      <button class="button" type="button" data-close-dialog>取消</button>
+      <button class="button button-primary" type="button" data-close-dialog>关闭样张</button>
+    </div>
+  </dialog>
+
+  <div class="sr-only" role="status" aria-live="polite" id="liveStatus"></div>
+  <script src="ops.js"></script>
+</body>
+</html>
+

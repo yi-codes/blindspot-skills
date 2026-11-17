@@ -294,7 +294,12 @@ def validate_catalog() -> list[str]:
             if broken.startswith(("styles/", "skills/")) and not target.exists():
                 problems.append(f"{slug}: DESIGN.md 引用了不存在路径 {broken}")
 
-    for html_path in (ROOT / "catalog" / "index.html", ROOT / "preview" / "index.html"):
+    html_paths = [
+        ROOT / "catalog" / "index.html",
+        ROOT / "preview" / "index.html",
+        *sorted((ROOT / "showcase").glob("ops-ai-console/*.html")),
+    ]
+    for html_path in html_paths:
         if not html_path.exists():
             problems.append(f"缺少 {html_path.relative_to(ROOT)}")
             continue
@@ -351,6 +356,9 @@ def command_check(_: argparse.Namespace) -> int:
     if preview_files:
         run_script("slop.py", *preview_files)
     run_script("slop.py", str(ROOT / "catalog" / "index.html"))
+    showcase_files = sorted(str(path) for path in (ROOT / "showcase" / "ops-ai-console").glob("*.html"))
+    if showcase_files:
+        run_script("slop.py", *showcase_files)
 
     print("4/4 项目自洽与测试")
     problems = validate_catalog()

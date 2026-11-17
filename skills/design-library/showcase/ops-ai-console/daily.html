@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meridian Ops 日常告警分诊样张，使用 Signal Console 风格。">
+  <title>Meridian Ops · 日常告警分诊</title>
+  <link rel="stylesheet" href="../../styles/signal-console/tokens.css">
+  <link rel="stylesheet" href="ops.css">
+</head>
+<body class="ds-signal-console ops-app" data-page="daily">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="appbar">
+    <a class="brand" href="index.html" aria-label="Meridian Ops 样张首页">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span>Meridian Ops <small>示例工作区</small></span>
+    </a>
+    <button class="menu-button" type="button" data-nav-toggle aria-expanded="false" aria-controls="globalNav">菜单</button>
+    <nav class="global-nav" id="globalNav" aria-label="全局导航">
+      <a href="daily.html" aria-current="page">总览</a>
+      <a href="incident.html">事故</a>
+      <a href="agent-replay.html">执行回放</a>
+      <a href="index.html">样张说明</a>
+    </nav>
+    <div class="top-status">
+      <span>生产环境</span>
+      <strong>数据更新 08:42</strong>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="服务与保存视图">
+      <section class="nav-group">
+        <h2>保存视图</h2>
+        <a class="nav-link" href="#queue" aria-current="page">当前值班 <span class="nav-count">7</span></a>
+        <a class="nav-link" href="#queue">我负责的服务 <span class="nav-count">3</span></a>
+        <a class="nav-link" href="#queue">高优先级变更 <span class="nav-count">2</span></a>
+      </section>
+      <section class="nav-group">
+        <h2>服务</h2>
+        <a class="nav-link" href="#main">checkout-api <span class="nav-count">1</span></a>
+        <a class="nav-link" href="#main">identity-gateway <span class="nav-count">1</span></a>
+        <a class="nav-link" href="#main">event-stream <span class="nav-count">2</span></a>
+        <a class="nav-link" href="#main">storage-index</a>
+      </section>
+      <section class="nav-group">
+        <h2>检索范围</h2>
+        <a class="nav-link" href="#main">最近 15 分钟</a>
+        <a class="nav-link" href="#main">生产与预发</a>
+        <a class="nav-link" href="#main">全部严重度</a>
+      </section>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="page-head">
+        <div>
+          <h1>告警分诊</h1>
+          <p>先确认影响范围，再判断是否批准 AI 建议。当前时间窗：08:27 至 08:42。</p>
+        </div>
+        <div class="toolbar">
+          <fieldset class="segmented">
+            <legend class="sr-only">时间窗口</legend>
+            <label><input type="radio" name="time-window" value="15"><span>15 分钟</span></label>
+            <label><input type="radio" name="time-window" value="60" checked><span>1 小时</span></label>
+            <label><input type="radio" name="time-window" value="1440"><span>24 小时</span></label>
+          </fieldset>
+          <a class="text-action" href="#main" data-empty-action>创建静默</a>
+        </div>
+      </header>
+
+      <div class="signal-layout">
+        <section class="queue" id="queue" aria-labelledby="queueTitle">
+          <header class="panel-head">
+            <h2 id="queueTitle">待处理</h2>
+            <span>7 条</span>
+          </header>
+          <ol class="alert-list">
+            <li class="alert-item" aria-current="true">
+              <span class="severity severity-danger">P1</span>
+              <div class="alert-copy">
+                <h3>checkout-api 5xx 上升</h3>
+                <p>08:35 开始，当前错误率 4.8%</p>
+              </div>
+            </li>
+            <li class="alert-item">
+              <span class="severity severity-warn">P2</span>
+              <div class="alert-copy">
+                <h3>event-stream 消费延迟</h3>
+                <p>积压 18.4k，持续 6 分钟</p>
+              </div>
+            </li>
+            <li class="alert-item">
+              <span class="severity">P3</span>
+              <div class="alert-copy">
+                <h3>identity-gateway 冷战数量上升</h3>
+                <p>当前 236，未超过基线</p>
+              </div>
+            </li>
+            <li class="alert-item">
+              <span class="severity">P3</span>
+              <div class="alert-copy">
+                <h3>storage-index 查询变慢</h3>
+                <p>p95 增加 18%，持续 11 分钟</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <article class="signal-detail" aria-labelledby="signalTitle">
+          <header class="signal-heading">
+            <div>
+              <h2 id="signalTitle">checkout-api 5xx 正在上升</h2>
+              <p>过去 7 分钟错误率从 0.7% 升到 4.8%，主要集中在支付回调路径。</p>
+              <div class="badge-row">
+                <span class="badge badge-danger">P1</span>
+                <span class="badge">checkout-api</span>
+                <span class="badge">生产环境</span>
+                <span class="badge">最近 15 分钟</span>
+              </div>
+            </div>
+            <button class="button" type="button" data-copy-summary>复制摘要</button>
+          </header>
+
+          <section class="metric-grid" aria-label="关键指标">
+            <div class="metric">
+              <span class="metric-label">5xx 错误率</span>
+              <strong class="metric-value">4.8%</strong>
+              <span class="metric-window">过去 7 分钟</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">p95 延迟</span>
+              <strong class="metric-value">821ms</strong>
+              <span class="metric-window">过去 7 分钟</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">失败请求</span>
+              <strong class="metric-value">1,284</strong>
+              <span class="metric-window">过去 7 分钟</span>
+            </div>
+          </section>
+
+          <section aria-labelledby="evidenceTitle">
+            <div class="panel-head">
+              <h2 id="evidenceTitle">证据</h2>
+              <div class="segmented" data-tabs role="tablist" aria-label="证据类型">
+                <button type="button" role="tab" aria-selected="true" aria-controls="tab-metrics" id="tab-metrics-button">指标</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="tab-logs" id="tab-logs-button" tabindex="-1">日志</button>
+                <button type="button" role="tab" aria-selected="false" aria-controls="tab-map" id="tab-map-button" tabindex="-1">服务关系</button>
+              </div>
+            </div>
+
+            <section id="tab-metrics" role="tabpanel" aria-labelledby="tab-metrics-button">
+              <div class="chart" role="img" aria-label="5xx 错误率在最近十六个时间片内持续上升">
+                <span style="height: 8%"></span>
+                <span style="height: 10%"></span>
+                <span style="height: 9%"></span>
+                <span style="height: 12%"></span>
+                <span style="height: 11%"></span>
+                <span style="height: 15%"></span>
+                <span style="height: 14%"></span>
+                <span style="height: 19%"></span>
+                <span style="height: 21%"></span>
+                <span style="height: 24%"></span>
+                <span style="height: 38%"></span>
+                <span class="is-alert" style="height: 57%"></span>
+                <span class="is-alert" style="height: 72%"></span>
+                <span class="is-alert" style="height: 86%"></span>
+                <span class="is-alert" style="height: 93%"></span>
+                <span class="is-alert" style="height: 88%"></span>
+              </div>
+              <p class="chart-caption"><span>08:27</span><span>错误率，峰值 4.8%</span><span>现在</span></p>
+            </section>
+
+            <div class="evidence-grid">
+              <section class="evidence-panel" id="tab-logs" role="tabpanel" aria-labelledby="tab-logs-button" hidden>
+                <h3>相关日志</h3>
+                <ol class="log-list">
+                  <li><span class="log-time">08:36:14</span><span>payment callback timeout after 800ms</span></li>
+                  <li><span class="log-time">08:36:21</span><span>retry budget exhausted for order=example-4821</span></li>
+                  <li><span class="log-time">08:37:03</span><span>upstream response status=504 route=/confirm</span></li>
+                </ol>
+              </section>
+              <section class="evidence-panel" id="tab-map" role="tabpanel" aria-labelledby="tab-map-button" hidden>
+                <h3>服务关系</h3>
+                <div class="service-map">
+                  <div class="service-node">api-edge <span>健康</span></div>
+                  <div class="service-node is-current">checkout-api <span class="severity-danger">异常</span></div>
+                  <div class="service-node">payment-bridge <span>高延迟</span></div>
+                  <div class="service-node">ledger <span>健康</span></div>
+                </div>
+              </section>
+              <section class="evidence-panel">
+                <h3>最近变更</h3>
+                <p><strong>08:29</strong> checkout-api 开始灰度发布 v184。</p>
+                <p><strong>范围</strong> 30% 流量，涉及支付回调超时配置。</p>
+                <p><strong>关联</strong> 错误率上升晚于发布 6 分钟。</p>
+              </section>
+            </div>
+          </section>
+
+          <p class="page-note">样张数据，不对应任何真实服务或生产指标。</p>
+        </article>
+      </div>
+    </main>
+
+    <aside class="inspector" aria-labelledby="aiTitle">
+      <header class="inspector-head">
+        <h2 id="aiTitle">AI 诊断</h2>
+        <p>基于指标、部署记录与相关日志，生成于最近一次刷新。</p>
+      </header>
+
+      <section class="inspector-section">
+        <h3>事实</h3>
+        <ul class="fact-list">
+          <li>错误集中在支付回调路径，其他路径无明显变化。</li>
+          <li>08:29 的灰度发布修改了 800ms 上游超时。</li>
+          <li>日志出现 504 与重试预算耗尽，时间点一致。</li>
+        </ul>
+      </section>
+
+      <section class="inspector-section">
+        <h3>建议</h3>
+        <div class="confidence"><span>暂停 rollout 并回退超时配置</span><strong>76%</strong></div>
+        <p>这能验证“新超时阈值触发上游重试风暴”的假设。若不恢复，继续扩大灰度会增加失败请求。</p>
+      </section>
+
+      <section class="inspector-section">
+        <h3>风险与边界</h3>
+        <ul class="risk-list">
+          <li>回退只影响当前 30% 灰度流量。</li>
+          <li>需要有权限的人确认发布窗口。</li>
+          <li>此样张不会执行任何命令。</li>
+        </ul>
+      </section>
+
+      <section class="inspector-section">
+        <h3>待批准动作</h3>
+        <div class="action-card">
+          <p>暂停 checkout-api 的 v184 灰度，并恢复上一版超时配置。</p>
+          <code>rollout pause checkout-api --rev v184</code>
+          <div class="action-row">
+            <button class="button button-primary" type="button" data-open-dialog="approvalDialog">审查并批准</button>
+            <button class="button button-quiet" type="button" data-empty-action>先观察 10 分钟</button>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <dialog class="dialog" id="approvalDialog" aria-labelledby="approvalTitle">
+    <div class="dialog-body">
+      <h2 id="approvalTitle">确认暂停灰度</h2>
+      <p>目标：checkout-api / v184。影响范围：当前 30% 灰度流量。此样张不会提交真实操作。</p>
+    </div>
+    <div class="dialog-actions">
+      <button class="button" type="button" data-close-dialog>返回检查</button>
+      <button class="button button-primary" type="button" data-close-dialog>关闭样张</button>
+    </div>
+  </dialog>
+
+  <div class="sr-only" role="status" aria-live="polite" id="liveStatus"></div>
+  <script src="ops.js"></script>
+</body>
+</html>
+

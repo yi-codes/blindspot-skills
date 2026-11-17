@@ -50,6 +50,8 @@ python3 scripts/designlib.py check
 
 浏览器打开 `catalog/index.html`，可以搜索任务、筛选风格、查看真实 token 渲染，并最多并排比较三个风格。
 
+深度场景样张放在 `showcase/`；运维 AI 控制台的三屏示例从 [showcase/ops-ai-console/index.html](showcase/ops-ai-console/index.html) 进入。
+
 ## 目录
 
 ```text

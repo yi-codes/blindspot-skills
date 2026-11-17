@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meridian Ops 事故响应样张，使用 Incident Room 风格。">
+  <title>Meridian Ops · 事故响应</title>
+  <link rel="stylesheet" href="../../styles/incident-room/tokens.css">
+  <link rel="stylesheet" href="ops.css">
+</head>
+<body class="ds-incident-room ops-app" data-page="incident">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="appbar">
+    <a class="brand" href="index.html" aria-label="Meridian Ops 样张首页">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span>Meridian Ops <small>事故响应</small></span>
+    </a>
+    <button class="menu-button" type="button" data-nav-toggle aria-expanded="false" aria-controls="globalNav">菜单</button>
+    <nav class="global-nav" id="globalNav" aria-label="全局导航">
+      <a href="daily.html">总览</a>
+      <a href="incident.html" aria-current="page">事故</a>
+      <a href="agent-replay.html">执行回放</a>
+      <a href="index.html">样张说明</a>
+    </nav>
+    <div class="top-status">
+      <span>INC-2026-1117</span>
+      <strong>第 18 分钟</strong>
+    </div>
+  </header>
+
+  <header class="incident-top">
+    <div class="incident-title">
+      <h1>支付回调延迟导致订单确认失败</h1>
+      <p>错误集中在支付桥接层。当前已暂停 30% 灰度，等待验证恢复。</p>
+    </div>
+    <dl class="incident-meta">
+      <div><dt>级别</dt><dd>SEV-2</dd></div>
+      <div><dt>开始</dt><dd>08:35</dd></div>
+      <div><dt>负责人</dt><dd>Lin</dd></div>
+      <div><dt>下次更新</dt><dd>08:55</dd></div>
+      <div><dt>影响</dt><dd>约 4.8% 下单请求</dd></div>
+    </dl>
+  </header>
+
+  <div class="incident-layout">
+    <aside class="incident-side" aria-label="事故导航与范围">
+      <section class="nav-group">
+        <h2>响应视图</h2>
+        <a class="nav-link" href="#main" aria-current="page">现场时间线</a>
+        <a class="nav-link" href="#evidence">证据</a>
+        <a class="nav-link" href="#decision">决定与回执</a>
+      </section>
+      <section class="nav-group">
+        <h2>影响范围</h2>
+        <a class="nav-link" href="#evidence">checkout-api</a>
+        <a class="nav-link" href="#evidence">payment-bridge</a>
+        <a class="nav-link" href="#evidence">order-confirmation</a>
+      </section>
+      <section class="nav-group">
+        <h2>协作</h2>
+        <a class="nav-link" href="#decision">3 位响应者</a>
+        <a class="nav-link" href="#decision">7 条已确认事实</a>
+        <a class="nav-link" href="#decision">2 个待批准动作</a>
+      </section>
+    </aside>
+
+    <main class="incident-main" id="main">
+      <section class="summary-strip" aria-label="事故摘要">
+        <div><strong>4.8%</strong><span>失败请求，最近 7 分钟</span></div>
+        <div><strong>1,284</strong><span>受影响请求</span></div>
+        <div><strong>18m</strong><span>当前持续时间</span></div>
+      </section>
+
+      <section class="timeline-panel" aria-labelledby="timelineTitle">
+        <header class="panel-head">
+          <h2 id="timelineTitle">现场时间线</h2>
+          <span>所有结论都保留来源与时间</span>
+        </header>
+        <ol class="timeline">
+          <li class="timeline-event">
+            <time datetime="2026-11-17T08:35:00+08:00">08:35</time>
+            <h3>告警触发</h3>
+            <p>checkout-api 5xx 比例在 7 分钟内从 0.7% 升至 4.8%。来源：值班监控。</p>
+          </li>
+          <li class="timeline-event">
+            <time datetime="2026-11-17T08:37:00+08:00">08:37</time>
+            <h3>确认与发布相关</h3>
+            <p>Lin 确认 v184 灰度在 08:29 开始，涉及支付回调超时配置。</p>
+            <details>
+              <summary>查看变更证据</summary>
+              <p>部署单 example-deploy-184，30% 流量，配置差异 1 行。</p>
+            </details>
+          </li>
+          <li class="timeline-event">
+            <time datetime="2026-11-17T08:39:00+08:00">08:39</time>
+            <h3>AI 假设形成</h3>
+            <p>上游 800ms 超时触发重试风暴，与 504 日志和灰度时间一致。标记为假设，未当事实。</p>
+          </li>
+          <li class="timeline-event">
+            <time datetime="2026-11-17T08:42:00+08:00">08:42</time>
+            <h3>暂停灰度</h3>
+            <p>Wei 批准暂停 v184 rollout，回执 deploy/pause-8842，影响范围 30% 流量。</p>
+          </li>
+          <li class="timeline-event is-pending">
+            <time datetime="2026-11-17T08:53:00+08:00">08:53</time>
+            <h3>等待验证</h3>
+            <p>观察窗口还剩 7 分钟。错误率需连续 5 分钟低于 1%。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="evidence" class="evidence-grid" aria-label="当前证据">
+        <section class="evidence-panel">
+          <h3>错误率与发布窗口</h3>
+          <div class="chart" role="img" aria-label="发布后错误率快速上升，暂停后开始回落">
+            <span style="height: 9%"></span>
+            <span style="height: 8%"></span>
+            <span style="height: 11%"></span>
+            <span style="height: 10%"></span>
+            <span style="height: 18%"></span>
+            <span style="height: 26%"></span>
+            <span class="is-alert" style="height: 46%"></span>
+            <span class="is-alert" style="height: 62%"></span>
+            <span class="is-alert" style="height: 80%"></span>
+            <span class="is-alert" style="height: 94%"></span>
+            <span class="is-alert" style="height: 91%"></span>
+            <span style="height: 70%"></span>
+            <span style="height: 56%"></span>
+            <span style="height: 42%"></span>
+            <span style="height: 34%"></span>
+            <span style="height: 28%"></span>
+          </div>
+          <p class="chart-caption"><span>08:35</span><span>08:42 暂停灰度</span><span>08:53</span></p>
+        </section>
+        <section class="evidence-panel">
+          <h3>验证条件</h3>
+          <ul class="fact-list">
+            <li>5xx 低于 1%，连续 5 分钟。</li>
+            <li>p95 低于 500ms，连续 5 分钟。</li>
+            <li>无新增重试预算耗尽日志。</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <aside class="incident-aside" id="decision" aria-labelledby="decisionTitle">
+      <header class="inspector-head">
+        <h2 id="decisionTitle">AI 诊断与决定</h2>
+        <p>假设、证据和建议分开显示。</p>
+      </header>
+
+      <section class="inspector-section">
+        <h3>当前假设</h3>
+        <div class="hypothesis">
+          <header><h3>新超时阈值触发重试风暴</h3><span>76%</span></header>
+          <p>部署时间、504 日志与错误率上升时间一致，暂停后指标开始回落。</p>
+        </div>
+        <div class="hypothesis">
+          <header><h3>支付桥接层独立故障</h3><span>18%</span></header>
+          <p>尚未找到与发布无关的资源饱和或外部依赖告警。</p>
+        </div>
+      </section>
+
+      <section class="inspector-section">
+        <h3>待确认动作</h3>
+        <div class="action-card">
+          <p>将 v184 全部回退到 v182，并保留暂停时的指标快照。</p>
+          <code>deploy rollback checkout-api v182</code>
+          <div class="action-row">
+            <button class="button button-primary" type="button" data-open-dialog="incidentDialog">审查回退</button>
+            <button class="button button-quiet" type="button" data-empty-action>继续验证</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="inspector-section">
+        <h3>接班摘要</h3>
+        <ul class="fact-list">
+          <li>现状：错误率已从 4.8% 回落，但仍高于基线。</li>
+          <li>已做：暂停 v184 灰度，保留部署回执。</li>
+          <li>下一步：连续 5 分钟达标后恢复 5% 流量。</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <dialog class="dialog" id="incidentDialog" aria-labelledby="incidentDialogTitle">
+    <div class="dialog-body">
+      <h2 id="incidentDialogTitle">确认回退 checkout-api</h2>
+      <p>目标：checkout-api / v184 到 v182。操作会写入审计记录。此样张不会执行真实回退。</p>
+    </div>
+    <div class="dialog-actions">
+      <button class="button" type="button" data-close-dialog>继续观察</button>
+      <button class="button button-primary" type="button" data-close-dialog>关闭样张</button>
+    </div>
+  </dialog>
+
+  <div class="sr-only" role="status" aria-live="polite" id="liveStatus"></div>
+  <script src="ops.js"></script>
+</body>
+</html>
+

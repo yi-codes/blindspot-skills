@@ -32,25 +32,25 @@ colors:
 
 typography:
   title:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif"
+    fontFamily: "Avenir Next, 'Segoe UI Variable', 'PingFang SC', sans-serif"
     fontSize: 34px
     fontWeight: 650
     lineHeight: 1.12
     letterSpacing: -0.025em
   section:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif"
+    fontFamily: "Avenir Next, 'Segoe UI Variable', 'PingFang SC', sans-serif"
     fontSize: 26px
     fontWeight: 620
     lineHeight: 1.2
     letterSpacing: -0.015em
   body:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif"
+    fontFamily: "Avenir Next, 'Segoe UI Variable', 'PingFang SC', sans-serif"
     fontSize: 16px
     fontWeight: 380
     lineHeight: 1.62
     letterSpacing: 0
   label:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif"
+    fontFamily: "Avenir Next, 'Segoe UI Variable', 'PingFang SC', sans-serif"
     fontSize: 13px
     fontWeight: 500
     lineHeight: 1.4

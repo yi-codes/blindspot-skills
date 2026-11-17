@@ -119,6 +119,7 @@
   border: var(--lg-border);
   border-radius: var(--lg-radius-panel);
   background: var(--lg-surface);
+  color: var(--lg-ink);
 }
 
 :where(.ds-liquid-glass) :where(.ds-glass) {
@@ -133,7 +134,7 @@
 
 :where(.ds-liquid-glass) :where(.ds-tag) {
   display: inline-block;
-  padding: 3px 7px;
+  padding: 4px 8px;
   border-radius: 4px;
   background: var(--lg-accent-soft);
   color: var(--lg-accent-strong);

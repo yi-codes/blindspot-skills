@@ -20,7 +20,7 @@
   --ir-warning: #E0A458;
   --ir-danger: #D76E66;
 
-  --ir-font-ui: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  --ir-font-ui: "Avenir Next", "Segoe UI Variable", "PingFang SC", sans-serif;
   --ir-font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
 
   --ir-text-xs: 0.8125rem;
@@ -107,6 +107,7 @@
   border: var(--ir-border);
   border-radius: var(--ir-radius-panel);
   background: var(--ir-surface);
+  color: var(--ir-ink);
 }
 
 :where(.ds-incident-room) :where(.ds-timeline) {
@@ -142,7 +143,7 @@
 
 :where(.ds-incident-room) :where(.ds-tag) {
   display: inline-block;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border-radius: var(--ir-radius-sm);
   background: var(--ir-raised);
   color: var(--ir-ink-muted);

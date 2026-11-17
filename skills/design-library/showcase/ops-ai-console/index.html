@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="运维 AI 控制台三种界面样张：日常分诊、事故响应与 Agent 执行回放。">
+  <title>Meridian Ops · 样张总览</title>
+  <link rel="stylesheet" href="../../styles/liquid-glass/tokens.css">
+  <link rel="stylesheet" href="ops.css">
+</head>
+<body class="ds-liquid-glass ops-app" data-page="gallery">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <main class="gallery-main" id="main">
+    <header class="gallery-head">
+      <div>
+        <h1>三张运维 AI 控制台样张</h1>
+        <p>日常分诊、事故响应和 Agent 执行共用同一套证据逻辑，但界面密度、时间和安全边界各自不同。</p>
+      </div>
+      <p>三张都是可运行样张。所有指标、服务名与命令均为示例，不对应真实系统。点击标题进入完整页面。</p>
+    </header>
+
+    <ol class="gallery-list">
+      <li class="gallery-item">
+        <a href="daily.html" aria-label="打开日常告警分诊样张">
+          <img class="gallery-shot" src="screens/daily.png" width="1440" height="900" alt="深蓝色日常告警分诊界面">
+        </a>
+        <div>
+          <h2><a href="daily.html">日常告警分诊</a></h2>
+          <p>从当前信号进入证据，再把 AI 建议限制在右侧待批准区。适合值班台和交接。</p>
+          <span>Signal Console</span>
+        </div>
+      </li>
+      <li class="gallery-item">
+        <a href="incident.html" aria-label="打开重大事故响应样张">
+          <img class="gallery-shot" src="screens/incident.png" width="1440" height="900" alt="暖黑色事故时间线界面">
+        </a>
+        <div>
+          <h2><a href="incident.html">重大事故响应</a></h2>
+          <p>用连续时间线恢复现场，事实、假设、动作和验证分开记录，接班者不读聊天也能接手。</p>
+          <span>Incident Room</span>
+        </div>
+      </li>
+      <li class="gallery-item">
+        <a href="agent-replay.html" aria-label="打开 Agent 执行回放样张">
+          <img class="gallery-shot" src="screens/agent-replay.png" width="1440" height="900" alt="浅色玻璃质感的 Agent 执行回放界面">
+        </a>
+        <div>
+          <h2><a href="agent-replay.html">Agent 执行审批与回放</a></h2>
+          <p>把计划摘要、命令、文件、验证和待批准动作串起来，回放运行过程而不暴露隐藏推理。</p>
+          <span>Liquid Glass</span>
+        </div>
+      </li>
+    </ol>
+
+    <p class="page-note">实现规则来自 Design Library 的 signal-console、incident-room 与 liquid-glass；样张数据仅用于界面比较。</p>
+  </main>
+</body>
+</html>
+
