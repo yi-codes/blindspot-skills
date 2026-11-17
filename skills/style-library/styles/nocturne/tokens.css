@@ -1,0 +1,370 @@
+/* ============================================================
+   夜色舞台 · Nocturne Stage
+   用法：class="ds-nocturne"，可选 data-scene="cellar" / "chapel"
+   ------------------------------------------------------------
+   变量前缀 --nc-
+   三句话概括：
+     1. 一盏灯。四档底色不是层级，是到灯的距离。
+     2. 全哑光。没有镜面高光，也没有 box-shadow —— 顶光下没有可读的影子。
+     3. 换场景只换两个变量：主光色 + 受光面。版式不动。
+
+   ⚠ 破例说明（见 DESIGN.md「Do's and Don'ts」）：
+     这里有径向渐变，有比画布更暗的一档。两条都碰 principles.md 的 Floor rule。
+     渐变只用于"变暗"（光衰减、暗角），不用于提亮、不用于文字。
+   ============================================================ */
+
+:where(.ds-nocturne) {
+  /* ---------- 字体：分工由字号决定，不由"标题/正文"决定 ---------- */
+  --nc-font-serif: "Songti SC", "STSong", "Noto Serif SC", serif;
+  --nc-font-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --nc-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* 11 / 13 / 16 / 21 / 30 / 42 / 58，比例 1.32
+     宋体的下限是 30px，所以 title 及以上归宋体，lead 及以下归黑体。 */
+  --nc-text-micro:    0.6875rem;  /* 11 */
+  --nc-text-label:    0.8125rem;  /* 13 */
+  --nc-text-body:     1rem;       /* 16 */
+  --nc-text-lead:     1.3125rem;  /* 21 */
+  --nc-text-title:    1.875rem;   /* 30 —— 宋体从这里开始 */
+  --nc-text-headline: 2.625rem;   /* 42 */
+  --nc-text-display:  3.625rem;   /* 58 */
+
+  --nc-leading-tight: 1.18;
+  --nc-leading-snug:  1.32;
+  --nc-leading-body:  1.8;   /* 暗底要比浅底松，字距行距替模糊的轮廓补呼吸 */
+
+  --nc-weight-body: 400;
+  --nc-weight-strong: 700;   /* 只有两档：宋体没有 600，黑体 600 在暗底会和 400 分不清 */
+
+  /* 全部不超过 ±0.03em。超过就不是排字，是在拉条。 */
+  --nc-tracking-display: -0.01em;  /* 宋体字面偏松，收紧一点才有分量 */
+  --nc-tracking-body: 0.01em;      /* 暗底上正字距能抵消笔画渗色 */
+  --nc-tracking-label: 0.02em;
+
+  /* ---------- 间距：4 的倍数 ---------- */
+  --nc-space-1: 4px;
+  --nc-space-2: 8px;
+  --nc-space-3: 12px;
+  --nc-space-4: 16px;
+  --nc-space-5: 24px;
+  --nc-space-6: 32px;
+  --nc-space-7: 56px;
+
+  /* ---------- 形状：剧院的东西是纸、木、铜，边角是直的 ---------- */
+  --nc-radius-none: 0px;
+  --nc-radius-sm: 2px;    /* 票根、输入框 */
+  --nc-radius: 5px;       /* 卡片 */
+  --nc-radius-lg: 9px;    /* 主视觉面板 */
+  --nc-radius-pill: 999px;/* 只给状态，不给按钮 */
+
+  /* ---------- 四档距离：这不是层级，是离灯多远 ---------- */
+  --nc-surface-sunk:   #070606;  /* 比画布更暗：凹槽、输入框内部 */
+  --nc-surface:        #15120E;  /* 默认面板 */
+  --nc-surface-raised: #1F1A14;  /* 一级卡片 */
+  --nc-surface-lit:    #33291D;  /* 光锥正下方，一屏只用一次 */
+
+  /* ---------- 墨：所有灰都必须带暖，中性灰在这个画布上会显脏 ---------- */
+  --nc-canvas:      #0B0A09;
+  --nc-ink:         #EFE6D5;  /* 奶油白，纯白会发青 */
+  --nc-ink-muted:   #A99A82;
+  --nc-ink-faint:   #7A6C59;
+
+  /* ---------- 线：永远 1px，要更重就换色不加粗 ---------- */
+  --nc-hairline:        #2B2419;
+  --nc-hairline-strong: #443826;
+
+  /* ---------- 光：被钨丝灯照亮的白纸，不是金属铬 ---------- */
+  --nc-primary:      #E8B76A;
+  --nc-primary-soft: #2A2114;
+  --nc-primary-ink:  #1A1206;  /* 金底上的暖黑，纯黑像印刷错误 */
+  --nc-ember:        #E4572E;  /* 只用于"正在发生" */
+
+  /* ---------- 场景光：地板色 + 主光色，只有这两个变量换 ---------- */
+  --nc-key: #E8B76A;           /* 阁楼：暖金 */
+  --nc-surface-lit-cellar: #1B2A22;
+  --nc-key-cellar:  #84C4A6;   /* 地窖：苔绿 */
+  --nc-surface-lit-chapel: #212739;
+  --nc-key-chapel:  #9DBCF5;   /* 教堂：冷蓝 */
+
+  /* ---------- 暗角：整页的深度来源 ---------- */
+  --nc-vignette-start: 70%;
+  --nc-vignette-alpha: 0.62;   /* 只在 0.45–0.68 之间调 */
+
+  /* ---------- 动效：只有状态过渡，没有入场 ---------- */
+  --nc-dur: 150ms;
+  --nc-ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* ---- 换场景：只动两个变量 ---- */
+:where(.ds-nocturne[data-scene="cellar"]) {
+  --nc-key: var(--nc-key-cellar);
+  --nc-surface-lit: var(--nc-surface-lit-cellar);
+}
+:where(.ds-nocturne[data-scene="chapel"]) {
+  --nc-key: var(--nc-key-chapel);
+  --nc-surface-lit: var(--nc-surface-lit-chapel);
+}
+
+/* ---- 容器 ---- */
+:where(.ds-nocturne) {
+  position: relative;
+  background: var(--nc-canvas);
+  color: var(--nc-ink);
+  font-family: var(--nc-font-sans);
+  font-size: var(--nc-text-body);
+  line-height: var(--nc-leading-body);
+  letter-spacing: var(--nc-tracking-body);
+  line-break: strict;   /* 禁则：暗底上一行的末尾会顶进暗角，被裁掉的感觉特别明显 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 暗角有两种模式，默认是"框在容器里"。
+
+   ⚠ 默认必须用 absolute 而不是 fixed：一个组件级别的 class 不该往视口上盖东西。
+     如果在预览页里 fixed，这一块会把整页压黑——包括别人的风格。
+     整页要"镜头感"时，在页面根容器上再加 .ds-nocturne-page。 */
+:where(.ds-nocturne)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    120% 120% at 50% 42%,
+    rgba(0, 0, 0, 0) var(--nc-vignette-start),
+    rgba(0, 0, 0, calc(var(--nc-vignette-alpha) * 0.55)) 88%,
+    rgba(0, 0, 0, var(--nc-vignette-alpha)) 100%
+  );
+}
+/* 整页：fixed 才是镜头。挂在会滚动的元素上会跟着内容跑，那就不再是镜头了。 */
+:where(.ds-nocturne.ds-nocturne-page)::before {
+  position: fixed;
+  border-radius: 0;
+}
+
+/* ---- 字：≥30px 宋体，≤21px 黑体。中间没有过渡带 ---- */
+:where(.ds-nocturne) :where(h1, h2, h3, h4) {
+  font-family: var(--nc-font-serif);
+  font-weight: var(--nc-weight-strong);
+  letter-spacing: var(--nc-tracking-display);
+  margin: 0 0 var(--nc-space-4);
+  text-wrap: balance;
+}
+:where(.ds-nocturne) :where(h1) {
+  font-size: var(--nc-text-display);
+  line-height: var(--nc-leading-tight);
+}
+:where(.ds-nocturne) :where(h2) {
+  font-size: var(--nc-text-headline);
+  line-height: 1.24;
+}
+:where(.ds-nocturne) :where(h3) {
+  font-size: var(--nc-text-title);
+  line-height: var(--nc-leading-snug);
+  letter-spacing: 0;
+}
+:where(.ds-nocturne) :where(h4) {
+  font-family: var(--nc-font-sans);
+  font-size: var(--nc-text-lead);
+  letter-spacing: var(--nc-tracking-body);
+}
+
+:where(.ds-nocturne) :where(p) {
+  margin: 0 0 var(--nc-space-5);
+  max-width: 34em;   /* measure。⚠ 居中容器里要显式 max-width: none，理由见 tactile-3d 同条目 */
+  color: var(--nc-ink-muted);
+}
+:where(.ds-nocturne) :where(a) {
+  color: var(--nc-primary);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+:where(.ds-nocturne) :where(strong, b) { color: var(--nc-ink); font-weight: var(--nc-weight-strong); }
+:where(.ds-nocturne) :where(small, .ds-note) {
+  font-size: var(--nc-text-micro);
+  letter-spacing: var(--nc-tracking-label);
+  color: var(--nc-ink-faint);
+}
+:where(.ds-nocturne) :where(hr) {
+  border: 0;
+  border-top: 1px solid var(--nc-hairline);
+  margin: var(--nc-space-5) 0;
+}
+
+/* ---- 卡片：平涂 + 上沿受光。没有投影，没有渐变 ---- */
+:where(.ds-nocturne) :where(.ds-card) {
+  position: relative;
+  display: block;
+  background: var(--nc-surface);
+  border-radius: var(--nc-radius);
+  padding: var(--nc-space-5);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 183, 106, 0.06),  /* 上沿被光照到，这是唯一的"方向"线索 */
+    inset 0 0 0 1px var(--nc-hairline);
+  transition:
+    background-color var(--nc-dur) var(--nc-ease),
+    box-shadow var(--nc-dur) var(--nc-ease);
+}
+/* 悬停只做两件事：升一档底色、描边换重。
+   不动位置、不放大 —— 这张卡是在桌上的，不是浮起来的。 */
+:where(.ds-nocturne) :where(.ds-card):hover {
+  background: var(--nc-surface-raised);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 183, 106, 0.08),
+    inset 0 0 0 1px var(--nc-hairline-strong);
+}
+
+/* 最亮的一档：一屏只允许一个 */
+:where(.ds-nocturne) :where(.ds-card-lit) {
+  background: var(--nc-surface-lit);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 183, 106, 0.10),
+    inset 0 0 0 1px var(--nc-hairline-strong);
+}
+
+/* 凹下去的一档：输入框、代价、被排除的选项 */
+:where(.ds-nocturne) :where(.ds-well) {
+  background: var(--nc-surface-sunk);
+  border-radius: var(--nc-radius-sm);
+  padding: var(--nc-space-4);
+  box-shadow: inset 0 0 0 1px var(--nc-hairline);
+}
+
+/* ---- 票根：左侧撕口 + 右上编号 ---- */
+:where(.ds-nocturne) :where(.ds-ticket) {
+  position: relative;
+  background: var(--nc-surface-raised);
+  border-radius: var(--nc-radius-sm);
+  padding: var(--nc-space-4) var(--nc-space-4) var(--nc-space-4) var(--nc-space-5);
+  border-bottom: 1px solid var(--nc-hairline-strong);
+}
+/* 撕口：8px 实 + 6px 空。用 repeating 而不是 dashed —— dashed 的节奏由浏览器定，
+   不同字号下会变成间距不均的点，读起来像删除线。 */
+:where(.ds-nocturne) :where(.ds-ticket)::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: var(--nc-space-3);
+  bottom: var(--nc-space-3);
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--nc-hairline-strong) 0 8px,
+    transparent 8px 14px
+  );
+}
+:where(.ds-nocturne) :where(.ds-ticket-no) {
+  position: absolute;
+  top: var(--nc-space-3);
+  right: var(--nc-space-4);
+  font-family: var(--nc-font-mono);
+  font-size: var(--nc-text-micro);
+  letter-spacing: var(--nc-tracking-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--nc-ink-faint);
+}
+
+/* ---- 招牌：一屏一个 ---- */
+:where(.ds-nocturne) :where(.ds-marquee) {
+  font-family: var(--nc-font-serif);
+  font-size: var(--nc-text-display);
+  font-weight: var(--nc-weight-strong);
+  line-height: var(--nc-leading-tight);
+  letter-spacing: var(--nc-tracking-display);
+  color: var(--nc-ink);
+  text-align: left;
+  padding: var(--nc-space-5) 0;
+  border-top: 1px solid var(--nc-hairline);
+  border-bottom: 1px solid var(--nc-hairline);
+}
+:where(.ds-nocturne) :where(.ds-marquee) :where(small) {
+  display: block;
+  margin-top: var(--nc-space-3);
+  font-family: var(--nc-font-mono);
+  font-size: var(--nc-text-micro);
+  font-weight: var(--nc-weight-body);
+  letter-spacing: var(--nc-tracking-label);
+  color: var(--nc-ink-faint);
+}
+
+/* ---- 按钮：印在纸上的字，不是浮起来的糖 ---- */
+:where(.ds-nocturne) :where(button, .ds-btn) {
+  font-family: var(--nc-font-sans);
+  font-size: var(--nc-text-label);
+  letter-spacing: var(--nc-tracking-label);
+  padding: 0.9em 1.9em;
+  border: 0;
+  border-radius: var(--nc-radius-sm);
+  background: var(--nc-primary);
+  color: var(--nc-primary-ink);
+  cursor: pointer;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  transition:
+    background-color var(--nc-dur) var(--nc-ease),
+    color var(--nc-dur) var(--nc-ease),
+    outline-color var(--nc-dur) var(--nc-ease);
+}
+/* 悬停：不变亮，只是"被描了一圈"——像手指按上去的那一下 */
+:where(.ds-nocturne) :where(button, .ds-btn):hover {
+  outline-color: var(--nc-primary);
+}
+/* 按下：反色。这是"按进去了"，不是"变亮了" */
+:where(.ds-nocturne) :where(button, .ds-btn):active {
+  background: var(--nc-primary-soft);
+  color: var(--nc-primary);
+  outline-color: var(--nc-primary);
+}
+:where(.ds-nocturne) :where(button, .ds-btn):focus-visible {
+  outline: 1px solid var(--nc-ink);
+  outline-offset: 2px;
+}
+:where(.ds-nocturne) :where(button, .ds-btn):disabled {
+  background: var(--nc-surface-raised);
+  color: var(--nc-ink-faint);
+  outline-color: transparent;
+  cursor: not-allowed;
+}
+
+/* ---- 标签：只标记场景或章节，超过 6 个字就是小标题 ---- */
+:where(.ds-nocturne) :where(.ds-tag) {
+  display: inline-block;
+  font-family: var(--nc-font-mono);
+  font-size: var(--nc-text-micro);
+  letter-spacing: var(--nc-tracking-label);
+  padding: 3px 10px;
+  border-radius: var(--nc-radius-pill);
+  background: var(--nc-primary-soft);
+  /* 用 key 不用 primary：标签是"被照到的标记"，要跟着场景光变。
+     动作（按钮、链接）才用 primary —— 动作不随场景换色，否则同一个按钮在
+     地窖里是绿的、在教堂里是蓝的，用户点两次会以为换了功能。 */
+  color: var(--nc-key);
+}
+/* 唯一一处"正在发生" */
+:where(.ds-nocturne) :where(.ds-tag-live) {
+  background: transparent;
+  color: var(--nc-ember);
+  box-shadow: inset 0 0 0 1px var(--nc-ember);
+}
+
+:where(.ds-nocturne) :where(.ds-stat-value) {
+  font-family: var(--nc-font-serif);
+  font-size: var(--nc-text-title);
+  font-weight: var(--nc-weight-strong);
+  line-height: var(--nc-leading-snug);
+  letter-spacing: var(--nc-tracking-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--nc-key);  /* 数字跟着场景光走：换到地窖它就是绿的 */
+}
+:where(.ds-nocturne) :where(.ds-stat-label) {
+  font-size: var(--nc-text-micro);
+  letter-spacing: var(--nc-tracking-label);
+  color: var(--nc-ink-faint);
+}
+
+/* 尊重系统设置：减到 1ms，但保留底色变化——那是信息，不是动效 */
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-nocturne) :where(.ds-card),
+  :where(.ds-nocturne) :where(button, .ds-btn) { transition-duration: 1ms; }
+}

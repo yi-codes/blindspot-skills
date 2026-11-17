@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../styles/civic/tokens.css">
 <link rel="stylesheet" href="../styles/editorial-serif/tokens.css">
 <link rel="stylesheet" href="../styles/neobrutalist/tokens.css">
+<link rel="stylesheet" href="../styles/nocturne/tokens.css">
 <link rel="stylesheet" href="../styles/quiet-dark/tokens.css">
 <link rel="stylesheet" href="../styles/soft-pastel/tokens.css">
 <link rel="stylesheet" href="../styles/swiss-grid/tokens.css">
@@ -69,7 +70,7 @@
   <div class="hd">
     <h1>风格库 · 对照预览</h1>
     <p>
-      同一份内容，9 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
+      同一份内容，10 种风格。每块都是一份真实的 DOM，只靠容器上的一个 class 切换。
       新增风格后重跑 <code>scripts/build-preview.py</code> 就会多一块。
       本页由脚本生成，不要手改。
     </p>
@@ -204,6 +205,125 @@
           <div class="ds-stat-label">全文 3,400 字</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="demo-block">
+    <div class="demo-meta">
+      <span class="demo-name">夜色舞台</span>
+      <span class="demo-slug">nocturne</span>
+      <span class="demo-note">一盏灯，一圈黑。深度不来自投影，来自**离灯有多远**——四档底色就是四个距离。</span>
+    </div>
+    <div class="stage ds-nocturne"><style>
+  /* 静态快照：给 preview/index.html 的对照页用。
+     真实手感在 showcase/ 里（那一页有滚动、有场景切换）。 */
+  .nc-demo .ds-marquee { margin: 0 0 var(--nc-space-4); }
+  .nc-demo .nc-lead {
+    font-size: var(--nc-text-lead);
+    line-height: 1.6;
+    letter-spacing: var(--nc-tracking-body);
+    color: var(--nc-ink);
+    max-width: 30em;
+    margin: 0 0 var(--nc-space-6);
+  }
+  .nc-demo .nc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--nc-space-4);
+    margin-top: var(--nc-space-5);
+  }
+  .nc-demo .nc-grid .ds-card h3 {
+    font-size: var(--nc-text-lead);
+    letter-spacing: var(--nc-tracking-body);
+    margin: 0 0 var(--nc-space-2);
+  }
+  .nc-demo .nc-grid .ds-card p {
+    font-size: var(--nc-text-label);
+    line-height: var(--nc-leading-body);
+    color: var(--nc-ink-muted);
+    margin: 0;
+    max-width: none;   /* 卡片内的短句不受 measure 限制 */
+  }
+  /* 票根的字段区：标签在上、值在下，两列。
+     不用「·」把三件事串成一行 —— 那是元信息拼盘，不是票。 */
+  .nc-demo .nc-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--nc-space-3) var(--nc-space-4);
+    margin-top: var(--nc-space-3);
+    padding-top: var(--nc-space-3);
+    border-top: 1px solid var(--nc-hairline);
+    font-size: var(--nc-text-label);
+    color: var(--nc-ink-muted);
+  }
+  .nc-demo .nc-meta span {
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--nc-font-mono);
+    font-size: var(--nc-text-micro);
+    letter-spacing: var(--nc-tracking-label);
+    color: var(--nc-ink-faint);
+  }
+  /* 三套光：只改两个变量，版式一点不动 —— 这就是全部机制 */
+  .nc-demo .nc-scenes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--nc-space-3);
+    margin-top: var(--nc-space-4);
+  }
+  .nc-demo .nc-scenes .ds-card { padding: var(--nc-space-4); }
+  .nc-demo .nc-scenes .ds-stat-value { display: block; }
+</style>
+
+<div class="nc-demo">
+  <div class="ds-marquee">
+    午夜场
+    <small>第三幕 · 22:40 开场</small>
+  </div>
+
+  <p class="nc-lead">
+    深度不来自投影，来自离灯有多远。四档底色不是四个层级，是四个距离——所以这一页里，
+    「更重要」的写法永远是「更靠近灯」。
+  </p>
+
+  <div class="nc-grid">
+    <div class="ds-card ds-card-lit">
+      <h3>光锥正下方</h3>
+      <p>一屏只用一次。用两次，就没有「最亮」这件事了。</p>
+    </div>
+    <div class="ds-card">
+      <h3>默认面板</h3>
+      <p>大部分内容应该待在这一档。悬停只升一档底色，不动位置。</p>
+    </div>
+    <div class="ds-well">
+      <h3>沉下去</h3>
+      <p style="font-size:var(--nc-text-label);line-height:1.8;margin:0;color:var(--nc-ink-faint)">
+        比画布更暗：凹槽、输入框、已被排除的选项。
+      </p>
+    </div>
+  </div>
+
+  <div class="ds-ticket" style="margin-top:var(--nc-space-5)">
+    <div class="ds-ticket-no">NO. 003</div>
+    <div style="font-family:var(--nc-font-serif);font-size:var(--nc-text-lead)">第三幕 · 无名之屋</div>
+    <div class="nc-meta">
+      <div><span>入场</span>22:40，西门</div>
+      <div><span>备注</span>开场后不再入场</div>
+    </div>
+  </div>
+
+  <div class="nc-scenes">
+    <div class="ds-card"><span class="ds-tag">阁楼</span><span class="ds-stat-value">2700</span><span class="ds-stat-label">K 暖金</span></div>
+    <div class="ds-card" style="--nc-key: var(--nc-key-cellar)"><span class="ds-tag">地窖</span><span class="ds-stat-value">苔绿</span><span class="ds-stat-label">换一个变量</span></div>
+    <div class="ds-card" style="--nc-key: var(--nc-key-chapel)"><span class="ds-tag">教堂</span><span class="ds-stat-value">冷蓝</span><span class="ds-stat-label">版式不动</span></div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:var(--nc-space-3);align-items:center;margin-top:var(--nc-space-6)">
+    <button>取票</button>
+    <span class="ds-tag ds-tag-live">正在入场</span>
+    <span class="ds-tag">18 岁以上</span>
+  </div>
+</div>
     </div>
   </section>
 
