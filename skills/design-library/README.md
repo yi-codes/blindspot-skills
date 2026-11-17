@@ -99,6 +99,8 @@ python3 scripts/designlib.py check
 
 新增风格只动自己的目录；索引、目录数据和预览都由脚本生成。要不要新增的判断标准见 `principles.md` §8。
 
+从旧入口迁移的路径与命令映射见 [`docs/MIGRATION.md`](docs/MIGRATION.md)。
+
 ## 逐项检查
 
 ```bash
