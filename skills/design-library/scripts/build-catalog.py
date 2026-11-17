@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -15,7 +14,6 @@ OUT = ROOT / "catalog" / "data.js"
 def main() -> int:
     payload = json.loads(INDEX.read_text(encoding="utf-8"))
     data = {
-        "generatedAt": datetime.now().astimezone().strftime("%Y-%m-%d %H:%M"),
         "count": payload.get("count", len(payload.get("styles", []))),
         "styles": payload.get("styles", []),
     }

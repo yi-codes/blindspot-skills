@@ -491,7 +491,7 @@
   }
 
   function boot() {
-    elements.buildState.textContent = `${styles.length} 个风格 · ${payload.generatedAt || "未注明构建时间"}`;
+    elements.buildState.textContent = `${styles.length} 个风格 · 索引已同步`;
     hydrateFromUrl();
     bindEvents();
     render();
