@@ -34,6 +34,14 @@ references/
 | `fluent-2` | ③ 组件库 | → `adaptive-companion`（仅行为参考，许可待逐文件核验） |
 | `uswds` | ② 一手设计系统 | → `civic`（许可待逐文件核验） |
 | `geist` | ⑤ 字体资产 | → `developer-docs`（只吸收字体分工） |
+| `the-broad` | ① 二手（展陈网站分析） | → `gallery-wall` |
+| `awwwards` | ① 二手（获奖站点分析） | → `gallery-wall`（留白与图像策略） |
+| `wired` | ① 二手 DESIGN.md | → `newsprint-grid` |
+| `risograph-zine` | ① 二手（设计样本） | → `riso-zine` |
+| `papercss` | ③ 组件库（SCSS） | → `sketch-notes`（手绘边框实现） |
+| `rough` | ③ 组件库（JS） | → `sketch-notes`（roughness/bowing 参数） |
+| `nes-css` | ③ 组件库（SCSS） | → `pixel-arcade` |
+| `art-deco` | ① 二手（艺术风格分析） | → `deco-ceremony` |
 
 注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
 

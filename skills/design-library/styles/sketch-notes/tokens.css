@@ -1,0 +1,65 @@
+/* Sketch Notes · 手绘笔记；class="ds-sketch-notes"；前缀 --sk- */
+:where(.ds-sketch-notes) {
+  --sk-canvas: #F7F3E8;
+  --sk-surface: #FFFCF5;
+  --sk-ink: #343331;
+  --sk-ink-muted: #62666A;
+  --sk-ink-faint: #777C7A;
+  --sk-line: #B9B3A7;
+  --sk-primary: #0B74D5;
+  --sk-primary-soft: #E2EEF7;
+  --sk-highlight: #DDCD45;
+  --sk-on-primary: #FFFCF5;
+  --sk-font-display: "Patrick Hand SC", "Noto Sans SC", "PingFang SC", sans-serif;
+  --sk-font-body: Neucha, "PingFang SC", "Noto Sans SC", sans-serif;
+  --sk-text-label: 1rem;
+  --sk-text-md: 1.125rem;
+  --sk-text-lg: 1.5rem;
+  --sk-text-xl: 1.75rem;
+  --sk-text-display: 2.5rem;
+  --sk-leading-display: 1.2;
+  --sk-leading-headline: 1.3;
+  --sk-leading-body: 1.75;
+  --sk-leading-label: 1.5;
+  --sk-weight-body: 400;
+  --sk-space-1: 0.25rem;
+  --sk-space-2: 0.5rem;
+  --sk-space-3: 1rem;
+  --sk-space-4: 1.5rem;
+  --sk-space-5: 2rem;
+  --sk-space-6: 3rem;
+  --sk-measure: 34em;
+  --sk-radius-card: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --sk-radius-button: 15px 225px 15px 255px / 225px 15px 255px 15px;
+  --sk-radius-tag: 20px 115px 20px 105px / 15px 105px 25px 80px;
+  --sk-border: 2px solid var(--sk-ink);
+  --sk-border-soft: 1px solid var(--sk-line);
+  --sk-shadow: 10px 19px 17px -13px rgba(0, 0, 0, 0.20);
+  --sk-shadow-hover: 2px 8px 8px -5px rgba(0, 0, 0, 0.30);
+  --sk-duration: 160ms;
+  background: var(--sk-canvas);
+  color: var(--sk-ink);
+  font-family: var(--sk-font-body);
+  font-size: var(--sk-text-md);
+  font-weight: var(--sk-weight-body);
+  line-height: var(--sk-leading-body);
+}
+:where(.ds-sketch-notes) :where(h1, h2, h3, h4) { margin: 0 0 var(--sk-space-3); font-family: var(--sk-font-display); font-weight: var(--sk-weight-body); }
+:where(.ds-sketch-notes) :where(h1) { font-size: var(--sk-text-display); line-height: var(--sk-leading-display); }
+:where(.ds-sketch-notes) :where(h2) { font-size: var(--sk-text-xl); line-height: var(--sk-leading-headline); }
+:where(.ds-sketch-notes) :where(h3) { font-size: var(--sk-text-lg); line-height: var(--sk-leading-headline); }
+:where(.ds-sketch-notes) :where(p) { max-width: var(--sk-measure); margin: 0 0 var(--sk-space-3); color: var(--sk-ink-muted); }
+:where(.ds-sketch-notes) :where(a) { color: var(--sk-primary); text-decoration-thickness: 2px; text-underline-offset: var(--sk-space-1); }
+:where(.ds-sketch-notes) :where(hr) { border: 0; border-top: var(--sk-border-soft); margin: var(--sk-space-5) 0; }
+:where(.ds-sketch-notes) :where(.ds-card) { padding: var(--sk-space-4); border: var(--sk-border); border-radius: var(--sk-radius-card); background: var(--sk-surface); color: var(--sk-ink); box-shadow: var(--sk-shadow); }
+:where(.ds-sketch-notes) :where(button, .ds-btn) { padding: var(--sk-space-3) var(--sk-space-4); border: var(--sk-border); border-radius: var(--sk-radius-button); background: var(--sk-primary); color: var(--sk-on-primary); font-family: var(--sk-font-body); font-size: var(--sk-text-label); line-height: var(--sk-leading-label); cursor: pointer; transition: transform var(--sk-duration) ease-in-out, box-shadow var(--sk-duration) ease-in-out; }
+:where(.ds-sketch-notes) :where(button, .ds-btn):hover { transform: translateY(2px); box-shadow: var(--sk-shadow-hover); }
+:where(.ds-sketch-notes) :where(.ds-tag) { display: inline-block; padding: var(--sk-space-1) var(--sk-space-3); border: var(--sk-border-soft); border-radius: var(--sk-radius-tag); background: var(--sk-primary-soft); color: var(--sk-ink); font-size: var(--sk-text-label); line-height: var(--sk-leading-label); }
+:where(.ds-sketch-notes) :where(.ds-highlight) { background: linear-gradient(transparent 55%, var(--sk-highlight) 55%, var(--sk-highlight) 92%, transparent 92%); color: var(--sk-ink); }
+:where(.ds-sketch-notes) :where(.ds-lead) { color: var(--sk-ink); font-size: var(--sk-text-lg); }
+:where(.ds-sketch-notes) :where(.ds-stat-value) { color: var(--sk-primary); font-size: var(--sk-text-xl); font-variant-numeric: tabular-nums; }
+:where(.ds-sketch-notes) :where(.ds-stat-label) { color: var(--sk-ink-faint); font-size: var(--sk-text-label); }
+:where(.ds-sketch-notes) :where(a, button, .ds-btn):focus-visible { outline: 3px solid var(--sk-primary); outline-offset: var(--sk-space-1); }
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-sketch-notes) :where(*) { transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}

@@ -1,0 +1,62 @@
+/* Pixel Arcade · 像素街机；class="ds-pixel-arcade"；前缀 --pi- */
+:where(.ds-pixel-arcade) {
+  --pi-canvas: #F8F8F0;
+  --pi-surface: #FCFCF4;
+  --pi-ink: #212529;
+  --pi-ink-muted: #4E555B;
+  --pi-ink-faint: #6C7278;
+  --pi-line: #ADAFBC;
+  --pi-primary: #108DE0;
+  --pi-primary-soft: #D4EBFA;
+  --pi-highlight: #F7D51D;
+  --pi-on-primary: #212529;
+  --pi-font-display: "Press Start 2P", "PingFang SC", "Noto Sans SC", sans-serif;
+  --pi-font-body: "Press Start 2P", "PingFang SC", "Noto Sans SC", sans-serif;
+  --pi-text-xs: 0.75rem;
+  --pi-text-md: 1rem;
+  --pi-text-lg: 1.25rem;
+  --pi-text-display: 2rem;
+  --pi-leading-display: 1.35;
+  --pi-leading-headline: 1.5;
+  --pi-leading-body: 1.75;
+  --pi-leading-label: 1.5;
+  --pi-weight-body: 400;
+  --pi-space-1: 0.25rem;
+  --pi-space-2: 0.5rem;
+  --pi-space-3: 1rem;
+  --pi-space-4: 1.5rem;
+  --pi-space-5: 2rem;
+  --pi-space-6: 3rem;
+  --pi-measure: 36em;
+  --pi-radius-none: 0;
+  --pi-border-size: 4px;
+  --pi-border: var(--pi-border-size) solid var(--pi-ink);
+  --pi-shadow: 0 var(--pi-border-size) 0 var(--pi-line);
+  --pi-duration: 100ms;
+  background: var(--pi-canvas);
+  color: var(--pi-ink);
+  font-family: var(--pi-font-body);
+  font-size: var(--pi-text-md);
+  font-weight: var(--pi-weight-body);
+  line-height: var(--pi-leading-body);
+}
+:where(.ds-pixel-arcade) :where(h1, h2, h3, h4) { margin: 0 0 var(--pi-space-3); font-family: var(--pi-font-display); font-weight: var(--pi-weight-body); }
+:where(.ds-pixel-arcade) :where(h1) { font-size: var(--pi-text-display); line-height: var(--pi-leading-display); }
+:where(.ds-pixel-arcade) :where(h2) { font-size: var(--pi-text-lg); line-height: var(--pi-leading-headline); }
+:where(.ds-pixel-arcade) :where(h3) { font-size: var(--pi-text-md); line-height: var(--pi-leading-headline); }
+:where(.ds-pixel-arcade) :where(p) { max-width: var(--pi-measure); margin: 0 0 var(--pi-space-3); color: var(--pi-ink-muted); }
+:where(.ds-pixel-arcade) :where(a) { color: var(--pi-ink); text-decoration-color: var(--pi-primary); text-decoration-thickness: 2px; text-underline-offset: var(--pi-space-1); }
+:where(.ds-pixel-arcade) :where(img, canvas) { image-rendering: pixelated; }
+:where(.ds-pixel-arcade) :where(hr) { border: 0; border-top: var(--pi-border); margin: var(--pi-space-5) 0; }
+:where(.ds-pixel-arcade) :where(.ds-card) { padding: var(--pi-space-3); border: var(--pi-border); border-radius: var(--pi-radius-none); background: var(--pi-surface); color: var(--pi-ink); box-shadow: var(--pi-shadow); }
+:where(.ds-pixel-arcade) :where(button, .ds-btn) { min-height: 44px; padding: var(--pi-space-3) var(--pi-space-3); border: var(--pi-border); border-radius: var(--pi-radius-none); background: var(--pi-primary); color: var(--pi-on-primary); font-family: var(--pi-font-body); font-size: var(--pi-text-xs); line-height: var(--pi-leading-label); cursor: pointer; box-shadow: var(--pi-shadow); transition: transform var(--pi-duration) steps(2, end), box-shadow var(--pi-duration) steps(2, end); }
+:where(.ds-pixel-arcade) :where(button, .ds-btn):hover { background: var(--pi-primary-soft); }
+:where(.ds-pixel-arcade) :where(button, .ds-btn):active { transform: translateY(var(--pi-border-size)); box-shadow: none; }
+:where(.ds-pixel-arcade) :where(.ds-tag) { display: inline-block; padding: var(--pi-space-1) var(--pi-space-2); border: 2px solid var(--pi-ink); border-radius: var(--pi-radius-none); background: var(--pi-highlight); color: var(--pi-ink); font-size: var(--pi-text-xs); line-height: var(--pi-leading-label); }
+:where(.ds-pixel-arcade) :where(.ds-lead) { color: var(--pi-ink); font-size: var(--pi-text-lg); }
+:where(.ds-pixel-arcade) :where(.ds-stat-value) { padding: var(--pi-space-1) var(--pi-space-2); background: var(--pi-highlight); color: var(--pi-ink); font-size: var(--pi-text-lg); font-variant-numeric: tabular-nums; }
+:where(.ds-pixel-arcade) :where(.ds-stat-label) { color: var(--pi-ink-faint); font-size: var(--pi-text-xs); }
+:where(.ds-pixel-arcade) :where(a, button, .ds-btn):focus-visible { outline: 4px solid var(--pi-primary); outline-offset: var(--pi-space-1); }
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-pixel-arcade) :where(*) { transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}

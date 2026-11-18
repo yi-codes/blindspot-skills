@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **17** 个风格。
+当前 **23** 个风格。
 
 ## 决定表
 
@@ -34,9 +34,15 @@
 
 | 风格 | 层级 | 家族 | 来源 | 一句话 |
 |---|---|---|---|---|
+| **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | 变体 | ceremonial | — | 给精品酒店、晚宴、珠宝与颁奖典礼用的 Art Deco 页面。 |
+| **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
 | **Liquid Glass** `liquid-glass` | 变体 | operations | ui-styles-liquid-glass | 克制的半透明工作台。 |
+| **Newsprint Grid｜新闻纸网格** `newsprint-grid` | 变体 | editorial | — | 给真正拥有多条新闻的编辑首页：12 列、细线分栏、衬线标题与无衬线元信息， 首屏直接进入故事网格而非营销 Hero。 |
 | **夜色舞台** `nocturne` | 变体 | expressive | native | 一盏灯，一圈黑。 |
+| **Pixel Arcade｜像素街机** `pixel-arcade` | 变体 | retro | — | 面向复古游戏与轻量互动 demo 的 8-bit 界面。 |
 | **Quiet Dark** `quiet-dark` | 变体 | workbench | openai-desktop-client-observed、chatgpt-ios | 原生桌面应用的深色界面，附一套同源的浅色。 |
+| **Riso Zine｜孔版独立志** `riso-zine` | 变体 | zine | — | 用两种专色、1–3px 套印错位和可见纸纹做独立出版物。 |
+| **Sketch Notes｜手绘笔记** `sketch-notes` | 变体 | illustration | — | 面向解释、教学和工作坊的纸上草图风格。 |
 | **Soft Pastel** `soft-pastel` | 变体 | companion | catppuccin | 低对比柔色界面。 |
 | **Tactile 3D** `tactile-3d` | 技法 | expressive | atropos、react-bits | 会动的卡片。 |
 | **Terminal Mono** `terminal-mono` | 变体 | developer | native | 把命令行搬进正文。 |
@@ -49,15 +55,21 @@
 | **Adaptive Companion** `adaptive-companion` | stable | companion | 核心 | material-3、fluent-2 | 讲工具 | 双模 | 松 | 移动端 app、跨设备助理、陪伴型工具、个人日程、触控操作、渐进式引导、响应式产品 | 高密度管理后台、宽表格、事故指挥台、营销落地页、以打印为主的文档 | `#F1F3F4` |
 | **Civic** `civic` | stable | trusted-service | 核心 | govuk、uswds | 讲专业 | 浅色 | 中 | 政务/公共服务、表单密集的办事流程、需要无障碍合规、给不确定人群看的说明页、政策文件 | 品牌营销、需要"高级感"的官网、创意作品集、需要视觉冲击的页面 | `#FFFFFF` |
 | **Codex Workbench** `codex-workbench` | stable | workbench | 核心 | openai-codex-observed | 讲工具 | 双模 | 中 | Agent 任务工作台、产品方案页、设置页、插件面板、需要连续阅读和反复操作的工具页 | 营销落地页、强视觉叙事作品、数据密集型分析大屏、需要高密度多维图表的事故台 | `#F7F5F0` |
+| **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | beta | ceremonial | 变体 | — | 讲故事 | 深色 | 松 | 精品酒店、高级餐厅、珠宝与腕表、晚宴与典礼、电影节、会员制俱乐部、历史建筑与品牌纪念页 | 日常工具、数据后台、儿童产品、折扣电商、开发文档、密集表单、轻松亲民的消费 App | `#1A1A1A` |
 | **Developer Docs** `developer-docs` | stable | developer | 核心 | primer、geist、radix | 讲技术 | 双模 | 中 | 产品文档、API 参考、SDK 指南、开发者入门、版本迁移、代码示例密集的页面 | 终端模拟器、营销落地页、事故指挥台、纯打印论文、需要强情绪表达的页面 | `#F4F6F4` |
 | **Editorial Serif** `editorial-serif` | stable | reading | 核心 | native | 讲故事 | 浅色 | 松 | 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目 | 工具界面、高密度数据、桌面应用、需要速度感的场景 | `#F2F3F0` |
 | **Enterprise Data** `enterprise-data` | stable | enterprise-data | 核心 | carbon、radix | 讲专业 | 双模 | 紧 | 企业管理后台、数据表格、批量操作、权限与审计、订单账单、客户运营、B 端管理工作流 | 品牌营销页、长文阅读、移动优先消费产品、事故时间线、沉浸式展示 | `#EEF1F2` |
+| **Gallery Wall｜展陈画廊** `gallery-wall` | beta | gallery | 变体 | — | 讲故事 | 浅色 | 松 | 艺术展览、博物馆与画廊、摄影作品集、艺术家档案、拍卖目录、文化机构官网、图片主导的作品展示 | 高密度后台、长文正文、复杂表单、促销电商、数据看板、以操作为主的工具界面 | `#F3F3F0` |
 | **Incident Room** `incident-room` | stable | operations | 核心 | ui-styles-ops-console | 讲工具 | 深色 | 紧 | 正在发生的事故、事故响应、值班交接、故障复盘、重大变更回滚、需要统一事件叙事的跨团队协作 | 日常低风险监控、营销页、长期产品文档、需要同时比较多个无关信号的普通控制台 | `#1A1714` |
 | **Liquid Glass** `liquid-glass` | stable | operations | 变体 | ui-styles-liquid-glass | 讲工具 | 双模 | 紧 | 高频盯屏的控制台、任务指挥台、状态面板、需要保留环境上下文的工作界面、桌面与平板工具 | 营销落地页、需要强烈视觉冲击的作品集、大量并排比较的长表格、打印 | `#F1F4F7` |
 | **Neobrutalist** `neobrutalist` | stable | expressive | 核心 | neobrutalism | 讲故事 | 浅色 | 中 | 作品集、活动页、创意工具、需要"有态度"的产品官网、年轻用户、独立产品 | 金融/医疗/政务、长文阅读、需要效率感的工具界面、企业后台 | `#DCEBFE` |
+| **Newsprint Grid｜新闻纸网格** `newsprint-grid` | beta | editorial | 变体 | — | 讲故事 | 浅色 | 紧 | 新闻首页、科技杂志、每日简报、专题聚合、多栏目编辑页、需要快速扫读标题的内容流 | 单一产品营销页、作品集、工具后台、复杂表单、内容不足三条的页面、沉浸式品牌叙事 | `#F7F6F2` |
 | **夜色舞台** `nocturne` | stable | expressive | 变体 | native | 讲故事 | 深色 | 中 | 桌游/剧本杀的产品页与发行页、活动与票务、沉浸式叙事产品、需要悬念的落地页、夜间模式的展示型界面 | 白天阅读的长文、后台与表单、数据密集型列表、需要平等比较多个选项的界面、打印 | `#0B0A09` |
+| **Pixel Arcade｜像素街机** `pixel-arcade` | beta | retro | 变体 | — | 讲故事 | 浅色 | 中 | 复古游戏、浏览器小游戏、Game Jam、像素作品集、成就与徽章、轻量游戏化 demo、街机活动页 | 长文阅读、企业后台、金融医疗政务、复杂表单、高密度数据、正式品牌官网、关键生产工具 | `#F8F8F0` |
 | **Quiet Dark** `quiet-dark` | stable | workbench | 变体 | openai-desktop-client-observed、chatgpt-ios | 讲工具 | 深色 | 紧 | 桌面应用、编辑器面板、内部后台、Agent 对话界面、需要长时间注视的工具 | 营销落地页、长文阅读、品牌表达、打印 | `#0d0d0d` |
+| **Riso Zine｜孔版独立志** `riso-zine` | beta | zine | 变体 | — | 讲故事 | 浅色 | 中 | 独立杂志、音乐节与演出海报、独立出版、诗歌与小册子、艺术活动页、乐队与唱片、创意工作坊 | 企业年报、金融医疗政务、密集表单、数据看板、长文阅读、需要严肃可信的公共服务 | `#FDFBF6` |
 | **Signal Console** `signal-console` | stable | operations | 核心 | ui-styles-ops-console | 讲工具 | 深色 | 紧 | AI SRE 助手、告警分诊、日志指标追踪、服务拓扑、值班交接、日常可观测性控制台 | 营销页、长文报告、公开状态页、低频任务列表、正在发生重大事故时的统一事故时间线 | `#111820` |
+| **Sketch Notes｜手绘笔记** `sketch-notes` | beta | illustration | 变体 | — | 讲技术 | 浅色 | 中 | 教学解释、工作坊、知识卡片、概念图解、儿童教育、轻量 onboarding、创意原型、个人学习笔记 | 法律与合同、金融医疗、正式企业后台、精密数据表、长文出版、需要严肃权威的安全流程 | `#F7F3E8` |
 | **Soft Pastel** `soft-pastel` | stable | companion | 变体 | catppuccin | 讲工具 | 双模 | 松 | 消费级 app、陪伴型产品、笔记与阅读工具、社区、需要"温和不催促"的界面 | 数据看板、高密度后台、需要紧迫感的场景、对色觉障碍要求严格的场景 | `#EFF1F5` |
 | **Swiss Grid** `swiss-grid` | stable | professional | 核心 | native | 讲专业 | 浅色 | 中 | 落地页、产品页、案例研究、数据看板、B 端界面、需要显得专业的页面 | 长文阅读、需要情绪的场景、桌面应用外壳 | `#FFFFFF` |
 | **Tactile 3D** `tactile-3d` | stable | expressive | 技法 | atropos、react-bits | 讲故事 | 深色 | 松 | 游戏/影视产品页、硬件开箱、作品集、发布会主视觉、可拖拽的选择器、需要"手感"的展示型界面 | 长文阅读、表单、后台管理、需要快速扫读的列表、打印、任何以读字为主的地方 | `#0A0A0B` |

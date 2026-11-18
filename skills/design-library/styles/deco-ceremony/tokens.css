@@ -1,0 +1,71 @@
+/* Deco Ceremony · 装饰艺术典礼；class="ds-deco-ceremony"；前缀 --de- */
+:where(.ds-deco-ceremony) {
+  --de-canvas: #1A1A1A;
+  --de-surface: #242321;
+  --de-ink: #F5F0E8;
+  --de-ink-muted: #C8BFAE;
+  --de-ink-faint: #9B9283;
+  --de-line: #7B6838;
+  --de-primary: #D4AF37;
+  --de-primary-soft: #3A3221;
+  --de-on-primary: #1A1A1A;
+  --de-font-display: "Playfair Display", "Noto Serif SC", "Songti SC", serif;
+  --de-font-body: "Cormorant Garamond", "Noto Serif SC", "Songti SC", serif;
+  --de-text-xs: 0.75rem;
+  --de-text-md: 1.0625rem;
+  --de-text-lg: 1.5rem;
+  --de-text-display: 3rem;
+  --de-leading-display: 1.15;
+  --de-leading-headline: 1.3;
+  --de-leading-body: 1.75;
+  --de-leading-label: 1.5;
+  --de-weight-body: 350;
+  --de-weight-display: 400;
+  --de-tracking-display: 0.08em;
+  --de-tracking-headline: 0.04em;
+  --de-tracking-label: 0.04em;
+  --de-space-1: 0.5rem;
+  --de-space-2: 1rem;
+  --de-space-3: 1.5rem;
+  --de-space-4: 2rem;
+  --de-space-5: 3rem;
+  --de-space-6: 5rem;
+  --de-measure: 34em;
+  --de-radius-none: 0;
+  --de-border: 1px solid var(--de-primary);
+  --de-border-soft: 1px solid var(--de-line);
+  --de-double-frame: 0 0 0 1px var(--de-primary), 0 0 0 4px var(--de-canvas), 0 0 0 5px var(--de-primary);
+  --de-duration: 500ms;
+  --de-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--de-canvas);
+  color: var(--de-ink);
+  font-family: var(--de-font-body);
+  font-size: var(--de-text-md);
+  font-weight: var(--de-weight-body);
+  line-height: var(--de-leading-body);
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+:where(.ds-deco-ceremony) :where(h1, h2, h3, h4) { margin: 0 auto var(--de-space-3); font-family: var(--de-font-display); font-weight: var(--de-weight-display); text-wrap: balance; }
+:where(.ds-deco-ceremony) :where(h1) { max-width: var(--de-measure); font-size: var(--de-text-display); line-height: var(--de-leading-display); letter-spacing: var(--de-tracking-display); }
+:where(.ds-deco-ceremony) :where(h2) { font-size: var(--de-text-lg); line-height: var(--de-leading-headline); letter-spacing: var(--de-tracking-headline); }
+:where(.ds-deco-ceremony) :where(h3) { font-size: var(--de-text-md); line-height: var(--de-leading-headline); letter-spacing: var(--de-tracking-headline); }
+:where(.ds-deco-ceremony) :where(p) { max-width: var(--de-measure); margin: 0 auto var(--de-space-3); color: var(--de-ink-muted); }
+:where(.ds-deco-ceremony) :where(a) { color: var(--de-primary); text-underline-offset: var(--de-space-1); }
+:where(.ds-deco-ceremony) :where(hr) { width: var(--de-space-6); border: 0; border-top: var(--de-border); margin: var(--de-space-5) auto; }
+:where(.ds-deco-ceremony) :where(.ds-grid) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--de-space-4); }
+:where(.ds-deco-ceremony) :where(.ds-card) { padding: var(--de-space-4); border: var(--de-border); border-radius: var(--de-radius-none); background: var(--de-surface); color: var(--de-ink); box-shadow: var(--de-double-frame); }
+:where(.ds-deco-ceremony) :where(button, .ds-btn) { padding: var(--de-space-2) var(--de-space-4); border: var(--de-border); border-radius: var(--de-radius-none); background: var(--de-primary); color: var(--de-on-primary); font-family: var(--de-font-body); font-size: var(--de-text-xs); font-weight: var(--de-weight-display); line-height: var(--de-leading-label); letter-spacing: var(--de-tracking-label); cursor: pointer; transition: background var(--de-duration) var(--de-ease), color var(--de-duration) var(--de-ease); }
+:where(.ds-deco-ceremony) :where(button, .ds-btn):hover { background: var(--de-primary-soft); color: var(--de-primary); }
+:where(.ds-deco-ceremony) :where(.ds-tag) { display: inline-block; padding: var(--de-space-1) var(--de-space-2); border: var(--de-border); border-radius: var(--de-radius-none); background: var(--de-canvas); color: var(--de-primary); font-size: var(--de-text-xs); line-height: var(--de-leading-label); letter-spacing: var(--de-tracking-label); }
+:where(.ds-deco-ceremony) :where(.ds-lead) { color: var(--de-ink); font-size: var(--de-text-lg); }
+:where(.ds-deco-ceremony) :where(.ds-stat-value) { color: var(--de-primary); font-family: var(--de-font-display); font-size: var(--de-text-lg); font-variant-numeric: tabular-nums; }
+:where(.ds-deco-ceremony) :where(.ds-stat-label) { color: var(--de-ink-faint); font-size: var(--de-text-xs); }
+:where(.ds-deco-ceremony) :where(a, button, .ds-btn):focus-visible { outline: 2px solid var(--de-ink); outline-offset: var(--de-space-1); background: var(--de-primary-soft); }
+@media (max-width: 767px) {
+  :where(.ds-deco-ceremony) :where(.ds-grid) { grid-template-columns: 1fr; }
+  :where(.ds-deco-ceremony) :where(h1) { font-size: var(--de-text-lg); letter-spacing: var(--de-tracking-headline); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-deco-ceremony) :where(*) { transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}

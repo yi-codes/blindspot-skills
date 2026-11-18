@@ -1,0 +1,105 @@
+/* Newsprint Grid · 新闻纸网格；class="ds-newsprint-grid"；前缀 --ne- */
+:where(.ds-newsprint-grid) {
+  --ne-canvas: #F7F6F2;
+  --ne-surface: #FBFAF7;
+  --ne-ink: #171817;
+  --ne-ink-muted: #595B58;
+  --ne-ink-faint: #73766F;
+  --ne-line: #D9D8D2;
+  --ne-primary: #057DBC;
+  --ne-primary-soft: #E1EEF3;
+  --ne-on-primary: #FBFAF7;
+  --ne-font-display: Georgia, "Noto Serif SC", "Songti SC", serif;
+  --ne-font-body: Inter, "PingFang SC", "Noto Sans SC", sans-serif;
+  --ne-text-xs: 0.75rem;
+  --ne-text-sm: 0.875rem;
+  --ne-text-md: 1rem;
+  --ne-text-lg: 1.25rem;
+  --ne-text-xl: 1.75rem;
+  --ne-text-display: 3.5rem;
+  --ne-leading-display: 1.05;
+  --ne-leading-headline: 1.2;
+  --ne-leading-body: 1.75;
+  --ne-leading-meta: 1.5;
+  --ne-weight-display: 400;
+  --ne-weight-meta: 500;
+  --ne-weight-headline: 700;
+  --ne-tracking-display: -0.01em;
+  --ne-space-1: 0.25rem;
+  --ne-space-2: 0.5rem;
+  --ne-space-3: 0.75rem;
+  --ne-space-4: 1rem;
+  --ne-space-5: 1.5rem;
+  --ne-space-6: 2rem;
+  --ne-space-7: 3rem;
+  --ne-measure: 40em;
+  --ne-radius-none: 0;
+  --ne-radius-full: 999px;
+  --ne-border: 1px solid var(--ne-line);
+  --ne-border-strong: 2px solid var(--ne-ink);
+  --ne-duration: 120ms;
+  background: var(--ne-canvas);
+  color: var(--ne-ink);
+  font-family: var(--ne-font-body);
+  font-size: var(--ne-text-md);
+  line-height: var(--ne-leading-body);
+}
+:where(.ds-newsprint-grid) :where(h1, h2, h3, h4) {
+  font-family: var(--ne-font-display);
+  margin: 0 0 var(--ne-space-3);
+  text-wrap: balance;
+}
+:where(.ds-newsprint-grid) :where(h1) { font-size: var(--ne-text-display); font-weight: var(--ne-weight-display); line-height: var(--ne-leading-display); letter-spacing: var(--ne-tracking-display); }
+:where(.ds-newsprint-grid) :where(h2) { font-size: var(--ne-text-xl); font-weight: var(--ne-weight-headline); line-height: var(--ne-leading-headline); }
+:where(.ds-newsprint-grid) :where(h3) { font-size: var(--ne-text-lg); line-height: var(--ne-leading-headline); }
+:where(.ds-newsprint-grid) :where(p) { margin: 0 0 var(--ne-space-3); max-width: var(--ne-measure); color: var(--ne-ink-muted); }
+:where(.ds-newsprint-grid) :where(a) { color: var(--ne-primary); text-underline-offset: var(--ne-space-1); }
+:where(.ds-newsprint-grid) :where(img) { display: block; max-width: 100%; border-radius: var(--ne-radius-none); }
+:where(.ds-newsprint-grid) :where(hr) { border: 0; border-top: var(--ne-border); margin: var(--ne-space-4) 0; }
+:where(.ds-newsprint-grid) :where(.ds-grid) { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--ne-space-5); }
+:where(.ds-newsprint-grid) :where(.ds-card) {
+  padding: var(--ne-space-4);
+  border: 0;
+  border-top: var(--ne-border);
+  border-radius: var(--ne-radius-none);
+  background: var(--ne-canvas);
+  color: var(--ne-ink);
+}
+:where(.ds-newsprint-grid) :where(.ds-card h3) { font-family: var(--ne-font-display); }
+:where(.ds-newsprint-grid) :where(.ds-meta) { color: var(--ne-ink-faint); font-size: var(--ne-text-xs); font-weight: var(--ne-weight-meta); line-height: var(--ne-leading-meta); }
+:where(.ds-newsprint-grid) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--ne-space-1) 0;
+  border-top: 2px solid var(--ne-primary);
+  border-radius: var(--ne-radius-none);
+  background: var(--ne-canvas);
+  color: var(--ne-primary);
+  font-size: var(--ne-text-xs);
+  font-weight: var(--ne-weight-meta);
+  line-height: var(--ne-leading-meta);
+}
+:where(.ds-newsprint-grid) :where(button, .ds-btn) {
+  padding: var(--ne-space-3) var(--ne-space-4);
+  border: var(--ne-border-strong);
+  border-radius: var(--ne-radius-none);
+  background: var(--ne-ink);
+  color: var(--ne-on-primary);
+  font-family: var(--ne-font-body);
+  font-size: var(--ne-text-xs);
+  font-weight: var(--ne-weight-meta);
+  cursor: pointer;
+  transition: background var(--ne-duration) linear;
+}
+:where(.ds-newsprint-grid) :where(.ds-btn-secondary) { background: var(--ne-canvas); color: var(--ne-ink); }
+:where(.ds-newsprint-grid) :where(.ds-lead) { color: var(--ne-ink-muted); font-size: var(--ne-text-lg); line-height: var(--ne-leading-body); }
+:where(.ds-newsprint-grid) :where(.ds-stat-value) { font-family: var(--ne-font-display); font-size: var(--ne-text-xl); font-variant-numeric: tabular-nums; }
+:where(.ds-newsprint-grid) :where(.ds-stat-label) { color: var(--ne-ink-faint); font-size: var(--ne-text-xs); }
+:where(.ds-newsprint-grid) :where(.ds-avatar) { border-radius: var(--ne-radius-full); }
+:where(.ds-newsprint-grid) :where(a, button, .ds-btn):focus-visible { outline: 2px solid var(--ne-primary); outline-offset: var(--ne-space-1); background: var(--ne-primary-soft); }
+@media (max-width: 767px) {
+  :where(.ds-newsprint-grid) :where(.ds-grid) { grid-template-columns: 1fr; gap: var(--ne-space-4); }
+  :where(.ds-newsprint-grid) :where(h1) { font-size: var(--ne-text-xl); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-newsprint-grid) :where(*) { transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}
