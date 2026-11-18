@@ -19,6 +19,10 @@ styles/<slug>/
 └── prompt.md
 ```
 
+**开工前先读 [`LAYERS.md`](../LAYERS.md)。** 它定义页面的六层构成；
+`DESIGN.md` 的 front matter 必须包含 `elevation`（材质体积）、`media`（标识图像）、
+`motion`（动效交互）三组新字段，正文必须有对应的三节。只写色板和字号不算完成。
+
 `DESIGN.md` 的 front matter 必填：
 
 ```yaml

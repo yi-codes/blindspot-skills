@@ -74,6 +74,32 @@ components:
     typography: "{typography.label-caps}"
     rounded: "{rounded.sm}"
     padding: 12px 24px
+# ---------------------------------------------------------------- 六层契约（见 LAYERS.md）
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "0 1px 2px rgba(0,0,0,0.06)"
+  e2: "0 4px 12px rgba(0,0,0,0.10)"
+  e3: "0 12px 32px rgba(0,0,0,0.14)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.08)"
+  separator: border
+media:
+  logoType: wordmark
+  logoRule: "字标用 {typography.display}，右侧留 0.5em"
+  imageRadius: "{rounded.sm}"
+  imageRatio: "4:3"
+  imageTreatment: "none"
+  background: "纯色 {colors.canvas}，无纹理"
+  iconRule: "1.6px 描边，20px 基准，和正文同色"
+  emptyState: "淡底 + 一行说明，不放插画"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0"
+  focusRing: "3px solid {colors.primary}，offset 2px"
+  openTransition: "scaleY 0→1，transform-origin top"
+  reducedMotion: "全部过渡降到 1ms"
 ---
 
 ## Overview
@@ -122,6 +148,22 @@ components:
 圆角策略：统一一个值，还是分层（按钮 2px / 卡片 8px）。
 
 明确写出禁止的用法，例如"不许混用 2px 和 pill"。
+
+## Material & Elevation
+
+写清楚光从哪来（`{elevation.lightSource}`）、几级阶梯、每级用在哪里。
+深色写"层级靠明度 + 内描边"，浅色写阴影规格。主分隔手段只选一个。
+能指认光源才叫材质，指认不出来就是 slop。
+
+## Mark & Media
+
+logo 规则、图片比例/圆角/混色、背景处理、图标规格、空态。
+写规则不写品牌资产。每个处理写成可复现参数。
+
+## Motion & States
+
+过渡曲线、快/基准两档时长、hover/focus/展开过渡、reduced-motion。
+交互组件逐项列出 6 态（default/hover/focus/active/disabled/error）。
 
 ## Components
 

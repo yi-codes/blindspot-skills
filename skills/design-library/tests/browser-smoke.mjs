@@ -1,9 +1,12 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, resolve } from "node:path";
 import { spawn } from "node:child_process";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
+const index = JSON.parse(readFileSync(resolve(root, "styles/index.json"), "utf8"));
+const expectedStyles = index.styles.length;
+const expectedCore = index.styles.filter((s) => s.tier === "core").length;
 const chrome = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const mime = {
   ".css": "text/css; charset=utf-8",
@@ -45,6 +48,11 @@ const profile = `/tmp/design-library-chrome-${process.pid}`;
 const processHandle = spawn(chrome, [
   "--headless=new",
   "--disable-gpu",
+  "--disable-dev-shm-usage",
+  "--disable-extensions",
+  "--disable-background-networking",
+  "--single-process",
+  "--no-sandbox",
   "--hide-scrollbars",
   "--no-first-run",
   "--no-default-browser-check",
@@ -154,13 +162,13 @@ try {
     mobile: false
   });
   await call("Page.navigate", { url: `http://127.0.0.1:${port}/catalog/index.html` });
-  await waitFor("document.readyState === 'complete' && document.querySelectorAll('.style-row').length === 17", "catalog");
+  await waitFor(`document.readyState === 'complete' && document.querySelectorAll('.style-row').length === ${expectedStyles}`, "catalog");
 
-  check("desktop rows", await evaluate("document.querySelectorAll('.style-row').length") === 17);
+  check("desktop rows", await evaluate("document.querySelectorAll('.style-row').length") === expectedStyles);
   check("desktop preview", await evaluate("document.querySelector('#previewFrame').src.includes('/preview/')"));
   check("desktop no overflow", await evaluate("document.documentElement.scrollWidth <= innerWidth"));
   await evaluate("document.querySelector('input[name=\"tier\"][value=\"core\"]').click()");
-  check("core filter", await evaluate("document.querySelectorAll('.style-row').length") === 11);
+  check("core filter", await evaluate("document.querySelectorAll('.style-row').length") === expectedCore);
   await evaluate("document.querySelector('input[name=\"tier\"][value=\"all\"]').click()");
   await screenshot("/tmp/design-library-desktop.png");
 

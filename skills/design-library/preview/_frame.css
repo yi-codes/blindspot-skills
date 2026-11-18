@@ -9,7 +9,17 @@
   --frame-line-strong: #BEB8AB;
   --frame-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
   --frame-mono: "SF Mono", ui-monospace, monospace;
+  --frame-sep: 1px solid currentColor;
+  --frame-sep-gap: 1rem;
 }
+
+/* 分隔手段按职守分化：叙事靠留白，工具靠描边，数据靠底色差。
+   不再所有 frame 都是同一根 currentColor 线框。 */
+:where(.frame-story) { --frame-sep: none; --frame-sep-gap: 2rem; }
+:where(.frame-professional) { --frame-sep: 1px solid currentColor; }
+:where(.frame-technical) { --frame-sep: 1px dashed currentColor; }
+:where(.frame-task, .frame-toolbar) { --frame-sep: 1px solid currentColor; }
+:where(.frame-filterbar) { --frame-sep: 2px solid currentColor; }
 
 * {
   box-sizing: border-box;
@@ -44,7 +54,7 @@ time {
   align-items: center;
   gap: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid currentColor;
+  border-bottom: var(--frame-sep);
 }
 
 .frame-nav strong {
@@ -131,7 +141,7 @@ time {
   justify-content: space-between;
   gap: 1rem;
   padding-top: 0.6rem;
-  border-top: 1px solid currentColor;
+  border-top: var(--frame-sep);
 }
 
 .frame-stats dt,
@@ -161,7 +171,7 @@ time {
   flex-direction: column;
   gap: 1rem;
   padding-right: 1rem;
-  border-right: 1px solid currentColor;
+  border-right: var(--frame-sep);
 }
 
 .frame-side nav {
@@ -188,7 +198,7 @@ time {
   justify-content: space-between;
   gap: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid currentColor;
+  border-bottom: var(--frame-sep);
 }
 
 .frame-toolbar p {
@@ -202,7 +212,7 @@ time {
   align-items: center;
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid currentColor;
+  border-top: var(--frame-sep);
 }
 
 .frame-task h2 {
@@ -264,7 +274,7 @@ time {
   flex-direction: column;
   gap: 1rem;
   padding-right: 1rem;
-  border-right: 1px solid currentColor;
+  border-right: var(--frame-sep);
 }
 
 .frame-data-side nav {
@@ -286,8 +296,8 @@ time {
   gap: 0.5rem;
   margin: 0 0 1rem;
   padding: 0.6rem 0;
-  border-top: 1px solid currentColor;
-  border-bottom: 1px solid currentColor;
+  border-top: var(--frame-sep);
+  border-bottom: var(--frame-sep);
   font-size: 0.8125rem;
 }
 
@@ -304,7 +314,7 @@ time {
 
 .frame-data-main :where(th, td) {
   padding: 0.65rem 0.55rem;
-  border-bottom: 1px solid currentColor;
+  border-bottom: var(--frame-sep);
   text-align: left;
   white-space: nowrap;
 }
@@ -338,7 +348,7 @@ time {
   gap: 0.35rem;
   margin-top: 2rem;
   padding: 0.75rem 0;
-  border-top: 1px solid currentColor;
+  border-top: var(--frame-sep);
 }
 
 .frame-mobile-nav a {
@@ -391,7 +401,7 @@ time {
     padding-right: 0;
     padding-bottom: 0.75rem;
     border-right: 0;
-    border-bottom: 1px solid currentColor;
+    border-bottom: var(--frame-sep);
   }
 
   .frame-data-side nav {
@@ -406,7 +416,7 @@ time {
     padding-right: 0;
     padding-bottom: 1rem;
     border-right: 0;
-    border-bottom: 1px solid currentColor;
+    border-bottom: var(--frame-sep);
   }
 
   .frame-side nav {

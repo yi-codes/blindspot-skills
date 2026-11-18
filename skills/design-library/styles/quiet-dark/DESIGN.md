@@ -1,5 +1,4 @@
----
-version: alpha
+---version: alpha
 name: Quiet Dark
 description: >-
   原生桌面应用的深色界面，附一套同源的浅色。纯灰阶、无彩色相，靠明度差和 8% 白的
@@ -200,8 +199,36 @@ components:
     typography: "{typography.label-md}"
     rounded: "{rounded.md}"
     padding: 2px
----
 
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "inset 0 0 0 1px {colors.hairline}"
+  e2: "inset 0 0 0 1px {colors.hairline}, 0 1px 0 rgba(255,255,255,0.04)"
+  e3: "inset 0 0 0 1px {colors.hairline-strong}, 0 8px 24px rgba(0,0,0,0.32)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.06)"
+  borderLight: "{colors.hairline}"
+  borderDark: "{colors.hairline-strong}"
+  separator: border
+media:
+  logoType: combo
+  logoRule: "字标沿用显示字族，右侧留 0.5em；图形标只用单色 {colors.ink}，最小 24px"
+  imageRadius: "{rounded.md}"
+  imageRatio: "16:9"
+  imageTreatment: "去饱和 6%，不加投影；与底色相接处用 1px 描边收口"
+  background: "纯色 {colors.canvas}，无纹理、无氛围渐变"
+  iconRule: "1.6px 描边，20px 基准，与正文同色，不使用彩色图标"
+  emptyState: "淡底 + 一行说明文字，不放装饰插画和大号图标"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0；有阴影时抬高一级"
+  focusRing: "3px solid {colors.primary}，offset 2px，不被圆角裁切"
+  openTransition: "scaleY 0→1，transform-origin top，120ms"
+  reducedMotion: "全部过渡降到 1ms，去掉位移"
+  dragUsesSpring: true
+---
 ## Overview
 
 Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的风格。
@@ -533,3 +560,25 @@ Quiet Dark 是这套库里唯一一个**从真实产品反向工程出来**的�
 - 没有定义多选、下拉选择器（select 的原生外观还没做过）的定制样式。
 - 响应式只在"窗口缩放"这一个维度上成立。窄到 720px 以下时侧栏怎么收，没有规则。
 - 生图侧说明在 `prompt.md`——但这套风格本质是"界面"，生图只适合做氛围图，不适合做 UI 效果图（UI 请直接用 tokens.css 渲染）。
+
+
+## Material & Elevation
+
+光从 `{elevation.lightSource}` 来，固定这一个方位。共 `{elevation.steps}` 级：
+`{elevation.e1}` 贴面、`{elevation.e2}` 卡片、`{elevation.e3}` 浮层。
+深色上层级靠明度与内描边，浅色上靠带偏移的阴影——不做居中发光。
+主分隔手段是 `{elevation.separator}`，其余只做辅助。
+
+## Mark & Media
+
+标识：`{media.logoRule}`（`{media.logoType}`）。
+图片：比例 `{media.imageRatio}`、圆角 `{media.imageRadius}`、处理 `{media.imageTreatment}`。
+背景：`{media.background}`。图标：`{media.iconRule}`。空态：`{media.emptyState}`。
+只写规则不写品牌资产；图片处理都是可复现参数。
+
+## Motion & States
+
+过渡曲线 `{motion.easing}`，快档 `{motion.durationFast}`、基准 `{motion.durationBase}`。
+hover：`{motion.hover}`；焦点：`{motion.focusRing}`；展开：`{motion.openTransition}`。
+交互组件逐项覆盖 default / hover / focus-visible / active / disabled / error 六态。
+`prefers-reduced-motion` 时 `{motion.reducedMotion}`。

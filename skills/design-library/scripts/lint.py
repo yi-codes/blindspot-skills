@@ -63,9 +63,20 @@ REQUIRED_SECTIONS = [
     "Layout",
     "Elevation & Depth",
     "Shapes",
+    "Material & Elevation",
+    "Mark & Media",
+    "Motion & States",
     "Components",
     "Do's and Don'ts",
 ]
+
+# 六层契约：后三组是审美层，必须有值（LAYERS.md）
+LAYER_GROUPS = ("elevation", "media", "motion")
+LAYER_REQUIRED = {
+    "elevation": ("lightSource", "steps", "e1", "e2", "e3", "separator"),
+    "media": ("logoType", "logoRule", "imageRadius", "imageRatio", "imageTreatment", "background", "iconRule"),
+    "motion": ("easing", "durationFast", "durationBase", "hover", "focusRing", "openTransition", "reducedMotion"),
+}
 
 # 章节别名，允许写成这些
 SECTION_ALIASES = {
@@ -144,6 +155,21 @@ def lint_style(design_md: Path):
         "spacing": spacing,
         "components": components,
     }
+    # 六层新增组也纳入引用校验
+    for g in LAYER_GROUPS:
+        v = tokens.get(g)
+        if isinstance(v, dict):
+            groups[g] = v
+
+    # --- 六层契约必填（审美层，缺了就是半成品）---
+    for g in LAYER_GROUPS:
+        gv = tokens.get(g)
+        if not isinstance(gv, dict) or not gv:
+            add("E", f"缺六层契约的 `{g}` 组 —— 见 LAYERS.md，这是审美层的必填字段")
+            continue
+        for key in LAYER_REQUIRED[g]:
+            if not str(gv.get(key, "")).strip():
+                add("E", f"`{g}.{key}` 为空 —— 六层契约要求写全")
     # Iteration Guide / Known Gaps 里出现的 {xxx.yyy} 是元引用（在讲"怎么用引用"），不是真引用
     checkable = re.split(r"^##\s+(?:Iteration Guide|Known Gaps)\s*$", body, flags=re.MULTILINE)[0]
     for m in re.finditer(r"\{([\w-]+)\.([\w.-]+)\}", checkable):

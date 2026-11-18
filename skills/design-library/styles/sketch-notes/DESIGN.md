@@ -1,5 +1,4 @@
----
-version: alpha
+---version: alpha
 name: Sketch Notes｜手绘笔记
 description: >-
   面向解释、教学和工作坊的纸上草图风格。不规则双描边、20px 笔记字号、
@@ -81,8 +80,36 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.label}"
     rounded: "{rounded.tag}"
----
 
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "0 1px 2px rgba(15,23,42,0.06)"
+  e2: "0 4px 12px rgba(15,23,42,0.10)"
+  e3: "0 12px 32px rgba(15,23,42,0.14)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.60)"
+  borderLight: "{colors.hairline}"
+  borderDark: "{colors.ink-faint}"
+  separator: border
+media:
+  logoType: wordmark
+  logoRule: "字标沿用显示字族，右侧留 0.5em；图形标只用单色 {colors.ink}，最小 24px"
+  imageRadius: "{rounded.card}"
+  imageRatio: "16:10"
+  imageTreatment: "去饱和 6%，不加投影；与底色相接处用 1px 描边收口"
+  background: "纯色 {colors.canvas}，无纹理、无氛围渐变"
+  iconRule: "1.6px 描边，20px 基准，与正文同色，不使用彩色图标"
+  emptyState: "淡底 + 一行说明文字，不放装饰插画和大号图标"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0；有阴影时抬高一级"
+  focusRing: "3px solid {colors.primary}，offset 2px，不被圆角裁切"
+  openTransition: "scaleY 0→1，transform-origin top，120ms"
+  reducedMotion: "全部过渡降到 1ms，去掉位移"
+  dragUsesSpring: false
+---
 ## Overview
 
 给教学、概念解释、工作坊、学习笔记和轻量 onboarding 用。它传达的是“我画给你看”，不是“这是定稿规范”。适合允许涂改、箭头和批注的内容，不适合合同、支付和精密参数。
@@ -191,3 +218,25 @@ PaperCSS 提供可复现的组件形状、色彩和阴影；Rough.js 提供图�
 - PaperCSS 手写字体不覆盖中文，英文与中文灰度会有差异。
 - 未定义复杂表单、数据表和企业级错误流程。
 - 不规则边框可能放大点击区域外的视觉空白，需要实际触摸设备复核。
+
+
+## Material & Elevation
+
+光从 `{elevation.lightSource}` 来，固定这一个方位。共 `{elevation.steps}` 级：
+`{elevation.e1}` 贴面、`{elevation.e2}` 卡片、`{elevation.e3}` 浮层。
+深色上层级靠明度与内描边，浅色上靠带偏移的阴影——不做居中发光。
+主分隔手段是 `{elevation.separator}`，其余只做辅助。
+
+## Mark & Media
+
+标识：`{media.logoRule}`（`{media.logoType}`）。
+图片：比例 `{media.imageRatio}`、圆角 `{media.imageRadius}`、处理 `{media.imageTreatment}`。
+背景：`{media.background}`。图标：`{media.iconRule}`。空态：`{media.emptyState}`。
+只写规则不写品牌资产；图片处理都是可复现参数。
+
+## Motion & States
+
+过渡曲线 `{motion.easing}`，快档 `{motion.durationFast}`、基准 `{motion.durationBase}`。
+hover：`{motion.hover}`；焦点：`{motion.focusRing}`；展开：`{motion.openTransition}`。
+交互组件逐项覆盖 default / hover / focus-visible / active / disabled / error 六态。
+`prefers-reduced-motion` 时 `{motion.reducedMotion}`。

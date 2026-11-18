@@ -1,5 +1,4 @@
----
-version: beta
+---version: beta
 name: Signal Console
 description: >-
   日常运维信号台。先回答哪里不对劲、证据是什么、下一步是否安全，
@@ -82,8 +81,36 @@ components:
     textColor: "{colors.canvas}"
     rounded: "{rounded.control}"
     padding: 8px 12px
----
 
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "inset 0 0 0 1px {colors.line}"
+  e2: "inset 0 0 0 1px {colors.line}, 0 1px 0 rgba(255,255,255,0.04)"
+  e3: "inset 0 0 0 1px {colors.line-strong}, 0 8px 24px rgba(0,0,0,0.32)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.06)"
+  borderLight: "{colors.line}"
+  borderDark: "{colors.line-strong}"
+  separator: border
+media:
+  logoType: combo
+  logoRule: "字标沿用显示字族，右侧留 0.5em；图形标只用单色 {colors.ink}，最小 24px"
+  imageRadius: "{rounded.panel}"
+  imageRatio: "16:9"
+  imageTreatment: "去饱和 6%，不加投影；与底色相接处用 1px 描边收口"
+  background: "纯色 {colors.canvas}，无纹理、无氛围渐变"
+  iconRule: "1.6px 描边，20px 基准，与正文同色，不使用彩色图标"
+  emptyState: "淡底 + 一行说明文字，不放装饰插画和大号图标"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0；有阴影时抬高一级"
+  focusRing: "3px solid {colors.accent}，offset 2px，不被圆角裁切"
+  openTransition: "scaleY 0→1，transform-origin top，120ms"
+  reducedMotion: "全部过渡降到 1ms，去掉位移"
+  dragUsesSpring: true
+---
 ## Overview
 
 信号台只围绕一个当前信号展开。页面顶部锁定环境、服务范围、时间窗和数据新鲜度；中间是信号与证据；右侧是 AI 诊断，结构固定为事实、证据、建议、风险、待批准动作。AI 不另开聊天入口，也不与系统事实混排。
@@ -166,3 +193,24 @@ components:
 
 未覆盖三屏以上的大型数据墙与打印。复杂拓扑需要独立的交互与标签避让策略。
 
+
+## Material & Elevation
+
+光从 `{elevation.lightSource}` 来，固定这一个方位。共 `{elevation.steps}` 级：
+`{elevation.e1}` 贴面、`{elevation.e2}` 卡片、`{elevation.e3}` 浮层。
+深色上层级靠明度与内描边，浅色上靠带偏移的阴影——不做居中发光。
+主分隔手段是 `{elevation.separator}`，其余只做辅助。
+
+## Mark & Media
+
+标识：`{media.logoRule}`（`{media.logoType}`）。
+图片：比例 `{media.imageRatio}`、圆角 `{media.imageRadius}`、处理 `{media.imageTreatment}`。
+背景：`{media.background}`。图标：`{media.iconRule}`。空态：`{media.emptyState}`。
+只写规则不写品牌资产；图片处理都是可复现参数。
+
+## Motion & States
+
+过渡曲线 `{motion.easing}`，快档 `{motion.durationFast}`、基准 `{motion.durationBase}`。
+hover：`{motion.hover}`；焦点：`{motion.focusRing}`；展开：`{motion.openTransition}`。
+交互组件逐项覆盖 default / hover / focus-visible / active / disabled / error 六态。
+`prefers-reduced-motion` 时 `{motion.reducedMotion}`。

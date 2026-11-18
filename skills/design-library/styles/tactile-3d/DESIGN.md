@@ -1,5 +1,4 @@
----
-version: alpha
+---version: alpha
 name: Tactile 3D
 description: >-
   会动的卡片。透视 800px，倾角 12°，弹簧 ω=7.6/ζ=0.82——数值全部来自两个
@@ -93,8 +92,36 @@ components:
     backgroundColor: "{colors.surface-hi}"
     textColor: "{colors.ink-soft}"
     rounded: "{rounded.pill}"
----
 
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "inset 0 0 0 1px {colors.line}"
+  e2: "inset 0 0 0 1px {colors.line}, 0 1px 0 rgba(255,255,255,0.04)"
+  e3: "inset 0 0 0 1px {colors.ink-faint}, 0 8px 24px rgba(0,0,0,0.32)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.06)"
+  borderLight: "{colors.line}"
+  borderDark: "{colors.ink-faint}"
+  separator: shadow
+media:
+  logoType: wordmark
+  logoRule: "字标沿用显示字族，右侧留 0.5em；图形标只用单色 {colors.ink}，最小 24px"
+  imageRadius: "{rounded.md}"
+  imageRatio: "4:3"
+  imageTreatment: "去饱和 6%，不加投影；与底色相接处用 1px 描边收口"
+  background: "纯色 {colors.canvas}，无纹理、无氛围渐变"
+  iconRule: "1.6px 描边，20px 基准，与正文同色，不使用彩色图标"
+  emptyState: "淡底 + 一行说明文字，不放装饰插画和大号图标"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0；有阴影时抬高一级"
+  focusRing: "3px solid {colors.accent}，offset 2px，不被圆角裁切"
+  openTransition: "scaleY 0→1，transform-origin top，120ms"
+  reducedMotion: "全部过渡降到 1ms，去掉位移"
+  dragUsesSpring: false
+---
 ## Overview
 
 给需要"手感"的地方用：游戏和影视产品页、硬件开箱、作品集首页、发布会主视觉、可拖拽的选择器。**它不适合任何以读字为主的界面**——这套东西的全部力气都在让一个平面看起来有厚度，字越多越亏。
@@ -336,3 +363,25 @@ CSS-only 也能转：`--t3-spin` 一个角度变量即可。拖拽的数值接�
 - **但这个风格真正的上限不是面数，是遮挡。** 早期版本想在桌子上立九张牌，怎么调 z 都不对——牌和桌面是交叉遮挡关系，CSS 3D 处理不了。详见 Elevation & Depth ⑥。性能只是次要理由，排序模型才是硬边界。
 - **大面积的明暗衰减是预生成的。** 台座正面那道"越往下越暗"和台沿的收光边都写死在 CSS 里——它们只跟距离有关，与相机姿态无关。绕到接近俯视的极端角度时，这两处会和逐帧算出来的其它面有轻微不一致。要彻底解决得改用 WebGL 写 shader。
 - **动效参数没有在真机上标定过。** ω=7.6 是源库默认值在桌面浏览器的表现，iOS Safari 的 120Hz 屏上体感会更快。
+
+
+## Material & Elevation
+
+光从 `{elevation.lightSource}` 来，固定这一个方位。共 `{elevation.steps}` 级：
+`{elevation.e1}` 贴面、`{elevation.e2}` 卡片、`{elevation.e3}` 浮层。
+深色上层级靠明度与内描边，浅色上靠带偏移的阴影——不做居中发光。
+主分隔手段是 `{elevation.separator}`，其余只做辅助。
+
+## Mark & Media
+
+标识：`{media.logoRule}`（`{media.logoType}`）。
+图片：比例 `{media.imageRatio}`、圆角 `{media.imageRadius}`、处理 `{media.imageTreatment}`。
+背景：`{media.background}`。图标：`{media.iconRule}`。空态：`{media.emptyState}`。
+只写规则不写品牌资产；图片处理都是可复现参数。
+
+## Motion & States
+
+过渡曲线 `{motion.easing}`，快档 `{motion.durationFast}`、基准 `{motion.durationBase}`。
+hover：`{motion.hover}`；焦点：`{motion.focusRing}`；展开：`{motion.openTransition}`。
+交互组件逐项覆盖 default / hover / focus-visible / active / disabled / error 六态。
+`prefers-reduced-motion` 时 `{motion.reducedMotion}`。

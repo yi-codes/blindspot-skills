@@ -1,5 +1,4 @@
----
-version: alpha
+---version: alpha
 name: Swiss Grid
 description: >-
   理性的秩序感。纯白画布、无衬线一族到底、只留一个电蓝强调色，
@@ -124,8 +123,36 @@ components:
   overlay-pop:
     backgroundColor: "{colors.canvas}"
     rounded: "{rounded.sm}"
----
 
+elevation:
+  lightSource: top-left
+  steps: 3
+  e1: "0 1px 2px rgba(15,23,42,0.06)"
+  e2: "0 4px 12px rgba(15,23,42,0.10)"
+  e3: "0 12px 32px rgba(15,23,42,0.14)"
+  topHighlight: "inset 0 1px 0 rgba(255,255,255,0.60)"
+  borderLight: "{colors.hairline}"
+  borderDark: "{colors.hairline-strong}"
+  separator: border
+media:
+  logoType: combo
+  logoRule: "字标沿用显示字族，右侧留 0.5em；图形标只用单色 {colors.ink}，最小 24px"
+  imageRadius: "{rounded.sm}"
+  imageRatio: "3:2"
+  imageTreatment: "去饱和 6%，不加投影；与底色相接处用 1px 描边收口"
+  background: "纯色 {colors.canvas}，无纹理、无氛围渐变"
+  iconRule: "1.6px 描边，20px 基准，与正文同色，不使用彩色图标"
+  emptyState: "淡底 + 一行说明文字，不放装饰插画和大号图标"
+motion:
+  easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+  durationFast: 120ms
+  durationBase: 200ms
+  hover: "背景升一档明度，位移 0；有阴影时抬高一级"
+  focusRing: "3px solid {colors.primary}，offset 2px，不被圆角裁切"
+  openTransition: "scaleY 0→1，transform-origin top，120ms"
+  reducedMotion: "全部过渡降到 1ms，去掉位移"
+  dragUsesSpring: false
+---
 ## Overview
 
 Swiss Grid 是这套库里唯一一个**为信息而生**的风格。原型是 1950 年代的国际主义平面设计：网格先于内容，字重先于颜色，对齐先于装饰。
@@ -296,3 +323,25 @@ Swiss Grid 是这套库里唯一一个**为信息而生**的风格。原型是 1
 - 没有定义图表配色。做数据可视化时建议只用电蓝的单色明度阶，不要引入图表库默认的多色。
 - 深色模式未定义。这个风格是白底性格，硬做深色会变成 terminal-mono 的劣化版。
 - 生图侧说明在 `prompt.md`。
+
+
+## Material & Elevation
+
+光从 `{elevation.lightSource}` 来，固定这一个方位。共 `{elevation.steps}` 级：
+`{elevation.e1}` 贴面、`{elevation.e2}` 卡片、`{elevation.e3}` 浮层。
+深色上层级靠明度与内描边，浅色上靠带偏移的阴影——不做居中发光。
+主分隔手段是 `{elevation.separator}`，其余只做辅助。
+
+## Mark & Media
+
+标识：`{media.logoRule}`（`{media.logoType}`）。
+图片：比例 `{media.imageRatio}`、圆角 `{media.imageRadius}`、处理 `{media.imageTreatment}`。
+背景：`{media.background}`。图标：`{media.iconRule}`。空态：`{media.emptyState}`。
+只写规则不写品牌资产；图片处理都是可复现参数。
+
+## Motion & States
+
+过渡曲线 `{motion.easing}`，快档 `{motion.durationFast}`、基准 `{motion.durationBase}`。
+hover：`{motion.hover}`；焦点：`{motion.focusRing}`；展开：`{motion.openTransition}`。
+交互组件逐项覆盖 default / hover / focus-visible / active / disabled / error 六态。
+`prefers-reduced-motion` 时 `{motion.reducedMotion}`。
