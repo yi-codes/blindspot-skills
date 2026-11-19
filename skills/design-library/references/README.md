@@ -43,8 +43,13 @@ references/
 | `nes-css` | ③ 组件库（SCSS） | → `pixel-arcade` |
 | `art-deco` | ① 二手（艺术风格分析） | → `deco-ceremony` |
 | `bauhaus` | ① 二手（三份风格分析交叉验证） | → `bauhaus` |
+| `ai-design-workflow` | ① 二手（方法论 + 论文，非视觉样本） | `docs/EXPLORING.md`、`docs/REVIEW.md`、`LAYERS.md` §5 判据 |
 
 注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
+
+`ai-design-workflow` 是唯一没有色值、字号或组件尺寸的样本：它带来的是流程与判据，
+不催生任何风格，也不该挂到某个风格的 `sourceRefs` 上。它的"弃"栏比"取"栏长，
+记录的是为什么不把主观评分、随机种子和论文结论写进契约。
 
 许可与边界汇总见 [`SOURCES.md`](SOURCES.md)。`NOASSERTION` 来源在逐文件核验前只作行为参考，不复制实现。
 

@@ -2,7 +2,7 @@
 name: design-library
 description: 个人设计风格库与界面落地工作流。需要为网页、控制台、桌面应用、文档或生图选择视觉风格，比较现有风格，设计或重设计页面，审计风格一致性，或把新设计收进风格库时使用。把风格选择、token、实现骨架、预览、产物检查和扩展流程收在一个入口里。
 metadata:
-  version: 2.1.0
+  version: 2.2.0
 ---
 
 # Design Library
@@ -19,6 +19,11 @@ metadata:
 **一张页面由六层构成**——基础变量、排版、组件、材质体积、标识图像、动效交互。
 前两层本库原本就扎实，后四层是审美与完成度的来源，已全部写进
 [`LAYERS.md`](LAYERS.md) 的必填契约。设计或验收任何页面前，先读它。
+
+库是**契约路线**：固化风格 + lint 硬校验，保证跨页面跨会话不走样。
+它不负责"从 0 到 1 找方向"，也不负责"这张页面成不成立"。这两端分别由
+[`docs/EXPLORING.md`](docs/EXPLORING.md) 的发散和 [`docs/REVIEW.md`](docs/REVIEW.md) 的
+独立截图评审补上。三者是同一条流水线的上下游，不是三选一。
 
 每个风格还声明 `family`、`tier` 和 `sourceRefs`：
 
@@ -51,7 +56,19 @@ metadata:
 
 ---
 
-## 四个动作
+## 六个动作
+
+### explore（方向未定时先走）
+
+现有风格都不合适、或想试库外方向时才用。变化源必须来自模型之外：
+
+```bash
+python3 scripts/explore.py --task "独立开发者的作品集首页"
+```
+
+它输出结构不同的候选方向，**不实现页面**。选中的方向仍要填满六层字段、过 lint、
+过 `principles.md` §11 自查才配沉淀。种子是一次性燃料，不进 `DESIGN.md`。
+完整边界见 [`docs/EXPLORING.md`](docs/EXPLORING.md)。
 
 ### select
 
@@ -94,6 +111,13 @@ python3 scripts/designlib.py list --tier core
 
 报告问题，不擅自改代码，除非用户同时要求修复。
 
+### review（实现之后、交付之前）
+
+`designlib check` 证明的是字段齐全，不是设计成立。渲染真实截图，交给**新上下文**
+按 [`docs/REVIEW.md`](docs/REVIEW.md) 评 1–2 轮：只给截图和 brief，不给代码、历史意见
+或目标分数；量表就是六层合格线 + §11.2 十二条一眼假 + Specificity + §12 光源判据。
+审美评价与功能验证分开报告，评分只作内部收敛信号，不进 lint、不作上线门槛。
+
 ### collect
 
 只有“新场景必须违反现有风格的硬约束”时才新增风格。只是换颜色、换字号或想试试新感觉，应修改现有风格。
@@ -120,6 +144,7 @@ python3 scripts/designlib.py recommend "<页面任务>"
 python3 scripts/designlib.py build
 python3 scripts/designlib.py check
 python3 scripts/designlib.py new <slug> "<中文名>"
+python3 scripts/explore.py --task "<页面任务>"
 ```
 
 - `list`：紧凑列出全部风格
@@ -141,10 +166,11 @@ python3 scripts/designlib.py new <slug> "<中文名>"
 2. 确认首选风格不在自己的 `avoid` 场景里。
 3. 读首选风格的 `DESIGN.md` 与 `tokens.css`。
 4. 用该风格的 token 和结构骨架实现。
-5. 需要配图时读同一风格的 `prompt.md`。
-6. 运行 `designlib check`；交付时报告实际结果。
+5. 需要配图时读同一风格的 `prompt.md`，并过 `LAYERS.md` 第 5 层的删除测试。
+6. 实现后按 `docs/REVIEW.md` 做独立截图评审，按 1–3 个主要问题收敛。
+7. 运行 `designlib check`；交付时报告实际结果，并分开写审美评价与功能验证。
 
-全都排除了，说明这里需要新风格，不是硬套。
+全都排除了，说明这里需要新风格或需要先走 `explore`，不是硬套。
 
 ---
 
@@ -152,6 +178,8 @@ python3 scripts/designlib.py new <slug> "<中文名>"
 
 | 遇到什么 | 读什么 |
 |---|---|
+| 现有风格都不合适 / 想试库外方向 | `docs/EXPLORING.md` + 运行 `scripts/explore.py` |
+| 要判断"这张页面成不成立" | `docs/REVIEW.md` |
 | 不知道该选哪个 | `styles/INDEX.md` 或运行 `recommend` |
 | 要做 UI / 重设计 | 所选风格 `DESIGN.md` + `tokens.css` |
 | 中文排版出问题 | `principles.md` §6 + 风格里的 `Chinese Typography` |
@@ -168,4 +196,7 @@ python3 scripts/designlib.py new <slug> "<中文名>"
 - 不要为了“换个感觉”新开风格。
 - 不要用生图代替真实 UI 效果图；模型不懂精确圆角、行高和细边框。
 - 不要为了让检查变绿而隐藏问题；lint 是下限，不是设计目标。
+- 不要把主观评分（如 9/10）写进 lint、build 或验收门槛；它只是同一评审下的相对信号。
+- 不要把随机种子写进 `DESIGN.md` front matter，也不要把发散产物直接塞进 `styles/`。
+- 不要拿 SSoT 论文给"随机串能出好设计"背书；它只验证输出多样性，没验证审美。
 - 不要复制旧 `style-library` 或 `ui-styles` 的规则到新地方；本目录是唯一正本。
