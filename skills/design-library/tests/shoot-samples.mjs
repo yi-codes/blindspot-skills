@@ -133,6 +133,7 @@ async function screenshot(path) {
 
 const samples = [
   ["catalog", "catalog/index.html"],
+  ["bauhaus", "preview/bauhaus.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],

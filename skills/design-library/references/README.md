@@ -42,6 +42,7 @@ references/
 | `rough` | ③ 组件库（JS） | → `sketch-notes`（roughness/bowing 参数） |
 | `nes-css` | ③ 组件库（SCSS） | → `pixel-arcade` |
 | `art-deco` | ① 二手（艺术风格分析） | → `deco-ceremony` |
+| `bauhaus` | ① 二手（三份风格分析交叉验证） | → `bauhaus` |
 
 注意最后一列有两种写法：`→ 某风格` 表示这个样本**催生**了该风格；不带箭头表示只是**修了**已有风格。
 

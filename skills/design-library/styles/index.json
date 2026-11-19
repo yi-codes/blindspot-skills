@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 23,
+  "count": 24,
   "styles": [
     {
       "slug": "academic",
@@ -84,6 +84,48 @@
       "designPath": "styles/adaptive-companion/DESIGN.md",
       "tokensPath": "styles/adaptive-companion/tokens.css",
       "promptPath": "styles/adaptive-companion/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "bauhaus",
+      "name": "Bauhaus Grid｜包豪斯几何",
+      "description": "用三原色、圆方三角与不对称网格做构图的海报式页面。几何形状是结构而不是贴纸： 大红方块压住一屏的视觉重心，蓝圆与黄三角负责次级节奏，2px 黑色实线把网格显出来。 参数提炼自 aesthetic.fyi、vocab.design 与 stellae.design 的 Bauhaus 分析； 暖纸底色、对比度与中文排版由本库补齐。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "bauhaus"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "roomy",
+      "cues": [
+        "设计工作室与建筑事务所作品集",
+        "文化机构与美术馆页面",
+        "字体展示与设计教育",
+        "品牌发布与主视觉页",
+        "需要强烈设计主张的落地页"
+      ],
+      "avoid": [
+        "大目录电商",
+        "内容密集型新闻与博客",
+        "高密度后台与表单",
+        "需要温暖亲和的消费产品",
+        "金融医疗与政务",
+        "多人协作的复杂工具界面"
+      ],
+      "prefix": "--ba-*",
+      "className": "ds-bauhaus",
+      "canvas": "#F4F0E6",
+      "ink": "#1A1A1A",
+      "accent": "#D40000",
+      "previewUrl": "preview/bauhaus.html",
+      "designPath": "styles/bauhaus/DESIGN.md",
+      "tokensPath": "styles/bauhaus/tokens.css",
+      "promptPath": "styles/bauhaus/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

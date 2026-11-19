@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **23** 个风格。
+当前 **24** 个风格。
 
 ## 决定表
 
@@ -34,6 +34,7 @@
 
 | 风格 | 层级 | 家族 | 来源 | 一句话 |
 |---|---|---|---|---|
+| **Bauhaus Grid｜包豪斯几何** `bauhaus` | 变体 | expressive | bauhaus | 用三原色、圆方三角与不对称网格做构图的海报式页面。 |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | 变体 | ceremonial | — | 给精品酒店、晚宴、珠宝与颁奖典礼用的 Art Deco 页面。 |
 | **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
 | **Liquid Glass** `liquid-glass` | 变体 | operations | ui-styles-liquid-glass | 克制的半透明工作台。 |
@@ -53,6 +54,7 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | **Academic** `academic` | stable | reading | 核心 | latex-css | 讲技术 | 双模 | 松 | 论文、技术报告、规范文档、白皮书、有定理和证明的内容、需要打印的文档 | 产品落地页、工具界面、营销页、需要快速扫读的列表 | `#F9FAFB` |
 | **Adaptive Companion** `adaptive-companion` | stable | companion | 核心 | material-3、fluent-2 | 讲工具 | 双模 | 松 | 移动端 app、跨设备助理、陪伴型工具、个人日程、触控操作、渐进式引导、响应式产品 | 高密度管理后台、宽表格、事故指挥台、营销落地页、以打印为主的文档 | `#F1F3F4` |
+| **Bauhaus Grid｜包豪斯几何** `bauhaus` | beta | expressive | 变体 | bauhaus | 讲故事 | 浅色 | 松 | 设计工作室与建筑事务所作品集、文化机构与美术馆页面、字体展示与设计教育、品牌发布与主视觉页、需要强烈设计主张的落地页 | 大目录电商、内容密集型新闻与博客、高密度后台与表单、需要温暖亲和的消费产品、金融医疗与政务、多人协作的复杂工具界面 | `#F4F0E6` |
 | **Civic** `civic` | stable | trusted-service | 核心 | govuk、uswds | 讲专业 | 浅色 | 中 | 政务/公共服务、表单密集的办事流程、需要无障碍合规、给不确定人群看的说明页、政策文件 | 品牌营销、需要"高级感"的官网、创意作品集、需要视觉冲击的页面 | `#FFFFFF` |
 | **Codex Workbench** `codex-workbench` | stable | workbench | 核心 | openai-codex-observed | 讲工具 | 双模 | 中 | Agent 任务工作台、产品方案页、设置页、插件面板、需要连续阅读和反复操作的工具页 | 营销落地页、强视觉叙事作品、数据密集型分析大屏、需要高密度多维图表的事故台 | `#F7F5F0` |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | beta | ceremonial | 变体 | — | 讲故事 | 深色 | 松 | 精品酒店、高级餐厅、珠宝与腕表、晚宴与典礼、电影节、会员制俱乐部、历史建筑与品牌纪念页 | 日常工具、数据后台、儿童产品、折扣电商、开发文档、密集表单、轻松亲民的消费 App | `#1A1A1A` |

@@ -1,0 +1,225 @@
+/* Bauhaus Grid · 包豪斯几何；容器 class="ds-bauhaus"；前缀 --ba- */
+:where(.ds-bauhaus) {
+  --ba-canvas: #F4F0E6;
+  --ba-surface: #FBF8F0;
+  --ba-ink: #1A1A1A;
+  --ba-ink-muted: #5A5852;
+  --ba-ink-faint: #7C796F;
+  --ba-line: #CFC8B8;
+  --ba-primary: #D40000;
+  --ba-secondary: #003DA5;
+  --ba-accent: #FFD500;
+  --ba-on-primary: #FBF8F0;
+
+  --ba-font-display: "DM Sans", Futura, "PingFang SC", sans-serif;
+  --ba-font-body: Inter, "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --ba-text-display: 5rem;
+  --ba-text-headline: 2rem;
+  --ba-text-card: 1.5rem;
+  --ba-text-body: 1rem;
+  --ba-text-label: 0.75rem;
+  --ba-leading-display: 1;
+  --ba-leading-headline: 1.15;
+  --ba-leading-card: 1.2;
+  --ba-leading-body: 1.75;
+  --ba-leading-label: 1.5;
+  --ba-weight-display: 700;
+  --ba-weight-body: 400;
+  --ba-tracking-display: -0.04em;
+  --ba-tracking-headline: -0.02em;
+  --ba-tracking-card: -0.01em;
+  --ba-tracking-label: 0.08em;
+
+  --ba-space-1: 0.5rem;
+  --ba-space-2: 1rem;
+  --ba-space-3: 1.5rem;
+  --ba-space-4: 2.5rem;
+  --ba-space-5: 4rem;
+  --ba-space-6: 6rem;
+  --ba-measure: 36em;
+
+  --ba-radius-none: 0;
+  --ba-radius-circle: 50%;
+  --ba-rule: 2px solid var(--ba-ink);
+  --ba-rule-light: 1px solid var(--ba-line);
+
+  --ba-duration: 200ms;
+  --ba-duration-fast: 120ms;
+  --ba-ease: cubic-bezier(0.2, 0, 0.2, 1);
+
+  background: var(--ba-canvas);
+  color: var(--ba-ink);
+  font-family: var(--ba-font-body);
+  font-size: var(--ba-text-body);
+  font-weight: var(--ba-weight-body);
+  line-height: var(--ba-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 正文基线：几何感留给标题，正文用开放字腔的字族 ---- */
+:where(.ds-bauhaus) :where(h1, h2, h3, h4) {
+  font-family: var(--ba-font-display);
+  font-weight: var(--ba-weight-display);
+  margin: 0 0 var(--ba-space-2);
+  text-wrap: balance;
+}
+:where(.ds-bauhaus) :where(h1) {
+  font-size: var(--ba-text-display);
+  line-height: var(--ba-leading-display);
+  letter-spacing: var(--ba-tracking-display);
+}
+:where(.ds-bauhaus) :where(h2) {
+  font-size: var(--ba-text-headline);
+  line-height: var(--ba-leading-headline);
+  letter-spacing: var(--ba-tracking-headline);
+}
+:where(.ds-bauhaus) :where(h3) {
+  font-size: var(--ba-text-card);
+  line-height: var(--ba-leading-card);
+  letter-spacing: var(--ba-tracking-card);
+}
+:where(.ds-bauhaus) :where(p) { margin: 0 0 var(--ba-space-2); max-width: var(--ba-measure); }
+:where(.ds-bauhaus) :where(a) { color: var(--ba-primary); text-decoration-thickness: 2px; text-underline-offset: var(--ba-space-1); }
+:where(.ds-bauhaus) :where(img) { display: block; max-width: 100%; border-radius: var(--ba-radius-none); }
+:where(.ds-bauhaus) :where(hr) { border: 0; border-top: var(--ba-rule); margin: var(--ba-space-5) 0; }
+
+/* ---- 主按钮：红色直角矩形，一屏一个 ---- */
+:where(.ds-bauhaus) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--ba-space-2) var(--ba-space-4);
+  border: var(--ba-rule);
+  border-radius: var(--ba-radius-none);
+  background: var(--ba-primary);
+  color: var(--ba-on-primary);
+  font-family: var(--ba-font-display);
+  font-size: var(--ba-text-label);
+  font-weight: var(--ba-weight-display);
+  letter-spacing: var(--ba-tracking-label);
+  line-height: var(--ba-leading-label);
+  cursor: pointer;
+  transition: background var(--ba-duration) var(--ba-ease), transform var(--ba-duration-fast) var(--ba-ease);
+}
+:where(.ds-bauhaus) :where(button, .ds-btn):hover { background: var(--ba-ink); transform: translate(4px, -4px); }
+
+/* ---- 卡片与标签：直角 + 2px 实线，靠面积而非投影分层 ---- */
+:where(.ds-bauhaus) :where(.ds-card) {
+  position: relative;
+  overflow: hidden;
+  background: var(--ba-surface);
+  color: var(--ba-ink);
+  border: var(--ba-rule);
+  border-radius: var(--ba-radius-none);
+  padding: var(--ba-space-3);
+}
+:where(.ds-bauhaus) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--ba-space-1) var(--ba-space-2);
+  border: var(--ba-rule);
+  border-radius: var(--ba-radius-none);
+  background: var(--ba-accent);
+  color: var(--ba-ink);
+  font-family: var(--ba-font-display);
+  font-size: var(--ba-text-label);
+  font-weight: var(--ba-weight-display);
+  letter-spacing: var(--ba-tracking-label);
+  line-height: var(--ba-leading-label);
+}
+
+/* ---- 预览外壳：让同一份内容在 Bauhaus 里变成一张海报 ---- */
+.ds-bauhaus .frame-nav {
+  padding-bottom: var(--ba-space-2);
+  border-bottom: var(--ba-rule);
+  font-family: var(--ba-font-display);
+  letter-spacing: var(--ba-tracking-label);
+}
+.ds-bauhaus .frame-nav strong {
+  font-size: var(--ba-text-headline);
+  font-weight: var(--ba-weight-display);
+  letter-spacing: var(--ba-tracking-headline);
+}
+.ds-bauhaus .frame-nav strong::before {
+  content: "";
+  display: inline-block;
+  width: var(--ba-space-3);
+  height: var(--ba-space-3);
+  margin-right: var(--ba-space-2);
+  background: var(--ba-primary);
+  vertical-align: -2px;
+}
+.ds-bauhaus .frame-nav span { opacity: 1; color: var(--ba-ink-muted); font-size: var(--ba-text-label); }
+.ds-bauhaus .frame-actions a {
+  display: inline-block;
+  padding: var(--ba-space-2) var(--ba-space-4);
+  border: var(--ba-rule);
+  color: var(--ba-ink);
+  font-family: var(--ba-font-display);
+  font-size: var(--ba-text-label);
+  font-weight: var(--ba-weight-display);
+  letter-spacing: var(--ba-tracking-label);
+  text-decoration: none;
+}
+
+.ds-bauhaus .frame-story { position: relative; padding-top: var(--ba-space-5); }
+.ds-bauhaus .frame-story::before {
+  content: "";
+  position: absolute;
+  top: var(--ba-space-4);
+  right: 0;
+  width: var(--ba-space-5);
+  height: var(--ba-space-5);
+  border-radius: var(--ba-radius-circle);
+  background: var(--ba-secondary);
+}
+.ds-bauhaus .frame-story h1 { position: relative; max-width: 14ch; }
+.ds-bauhaus .frame-story h1::before {
+  content: "";
+  display: block;
+  width: var(--ba-space-5);
+  height: var(--ba-space-3);
+  margin-bottom: var(--ba-space-3);
+  background: var(--ba-primary);
+}
+.ds-bauhaus .frame-context { opacity: 1; color: var(--ba-ink-faint); font-size: var(--ba-text-label); letter-spacing: var(--ba-tracking-label); }
+.ds-bauhaus .frame-lede { opacity: 1; color: var(--ba-ink-muted); font-size: var(--ba-text-card); line-height: var(--ba-leading-label); }
+
+.ds-bauhaus .frame-grid {
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: var(--ba-space-3);
+  margin-top: var(--ba-space-4);
+  padding-top: var(--ba-space-3);
+  border-top: var(--ba-rule);
+}
+.ds-bauhaus .frame-grid h2 { font-size: var(--ba-text-card); line-height: var(--ba-leading-card); letter-spacing: var(--ba-tracking-card); }
+.ds-bauhaus .frame-grid p { opacity: 1; }
+.ds-bauhaus .frame-grid .ds-card:first-child { padding-right: var(--ba-space-5); background: var(--ba-primary); color: var(--ba-on-primary); }
+.ds-bauhaus .frame-grid .ds-card:first-child h2,
+.ds-bauhaus .frame-grid .ds-card:first-child p { color: var(--ba-on-primary); }
+.ds-bauhaus .frame-grid .ds-card:first-child::after {
+  content: "";
+  position: absolute;
+  top: var(--ba-space-2);
+  right: var(--ba-space-2);
+  width: var(--ba-space-5);
+  height: var(--ba-space-5);
+  background: var(--ba-accent);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* ---- 交互状态：方形焦点环，展开靠 clip-path ---- */
+:where(.ds-bauhaus) :where(a, button, .ds-btn):focus-visible {
+  outline: 3px solid var(--ba-secondary);
+  outline-offset: 2px;
+  border-radius: var(--ba-radius-none);
+}
+:where(.ds-bauhaus) :where(button, .ds-btn):disabled { background: var(--ba-line); color: var(--ba-ink-muted); cursor: not-allowed; transform: none; }
+
+@media (max-width: 767px) {
+  :where(.ds-bauhaus) :where(h1) { font-size: var(--ba-text-headline); }
+  .ds-bauhaus .frame-grid { grid-template-columns: 1fr; }
+  .ds-bauhaus .frame-story::before { top: var(--ba-space-2); width: var(--ba-space-4); height: var(--ba-space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-bauhaus) :where(*) { scroll-behavior: auto; transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}
