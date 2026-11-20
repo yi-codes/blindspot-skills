@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 24,
+  "count": 25,
   "styles": [
     {
       "slug": "academic",
@@ -126,6 +126,47 @@
       "designPath": "styles/bauhaus/DESIGN.md",
       "tokensPath": "styles/bauhaus/tokens.css",
       "promptPath": "styles/bauhaus/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "bento-grid",
+      "name": "Bento Grid｜便当格",
+      "description": "用大小不等、圆角一致的卡片紧密拼成一屏，每格只装一个信息点，卡片跨度代表信息优先级。 是产品功能墙、发布会规格页与作品集首屏的默认布局：先排阅读顺序，再定格子大小。 参数提炼自 cusps.net 的 Bento Grid 趋势指南、vibe-hub.org 的风格卡与 awesomeskills.dev 的 bento-grid-ui 硬护栏（三份交叉验证）；中性灰阶梯、 对比度修正与中文排版由本库补齐。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "bento-grid"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "产品功能总览与发布会规格墙",
+        "SaaS 营销落地页与作品集首屏",
+        "App 仪表盘首页与设置总览",
+        "需要一屏并列展示多个同级能力"
+      ],
+      "avoid": [
+        "长表单与密集数据表格",
+        "必须从上到下线性阅读的流程",
+        "少于五格的内容",
+        "长篇散文与论文",
+        "需要严肃权威气质的金融医疗政务",
+        "打印为主的单栏文档"
+      ],
+      "prefix": "--be-*",
+      "className": "ds-bento-grid",
+      "canvas": "#F4F4F5",
+      "ink": "#18181B",
+      "accent": "#4F46E5",
+      "previewUrl": "preview/bento-grid.html",
+      "designPath": "styles/bento-grid/DESIGN.md",
+      "tokensPath": "styles/bento-grid/tokens.css",
+      "promptPath": "styles/bento-grid/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

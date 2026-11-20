@@ -1,0 +1,208 @@
+/* Bento Grid · 便当格；容器 class="ds-bento-grid"；前缀 --be- */
+:where(.ds-bento-grid) {
+  --be-canvas: #F4F4F5;
+  --be-surface: #FFFFFF;
+  --be-surface-alt: #E8E8EC;
+  --be-ink: #18181B;
+  --be-ink-muted: #52525B;
+  --be-ink-faint: #71717A;
+  --be-line: #E4E4E7;
+  --be-line-strong: #D4D4D8;
+  --be-primary: #4F46E5;
+  --be-accent: #F59E0B;
+  --be-on-primary: #FFFFFF;
+
+  --be-font-display: "Plus Jakarta Sans", Inter, "PingFang SC", sans-serif;
+  --be-font-body: Inter, "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --be-text-display: 4rem;
+  --be-text-headline: 2rem;
+  --be-text-card: 1.5rem;
+  --be-text-body: 1rem;
+  --be-text-label: 0.75rem;
+  --be-leading-display: 1.05;
+  --be-leading-headline: 1.15;
+  --be-leading-card: 1.25;
+  --be-leading-body: 1.75;
+  --be-leading-label: 1.5;
+  --be-weight-display: 700;
+  --be-weight-body: 400;
+  --be-tracking-display: -0.03em;
+  --be-tracking-headline: -0.02em;
+  --be-tracking-card: -0.01em;
+  --be-tracking-body: 0;
+  --be-tracking-label: 0.06em;
+
+  --be-space-1: 0.5rem;
+  --be-space-2: 0.75rem;
+  --be-space-3: 1rem;
+  --be-space-4: 1.5rem;
+  --be-space-5: 2.5rem;
+  --be-space-6: 4rem;
+  --be-measure: 34em;
+
+  --be-radius-card: 1.5rem;
+  --be-radius-button: 0.875rem;
+  --be-radius-tag: 0.5rem;
+
+  --be-e1: 0 1px 2px rgba(24, 24, 27, 0.04);
+  --be-e2: 0 2px 8px rgba(24, 24, 27, 0.06);
+  --be-e3: 0 12px 32px rgba(24, 24, 27, 0.12);
+  --be-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  --be-duration-fast: 120ms;
+  --be-duration-base: 220ms;
+  --be-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  background: var(--be-canvas);
+  color: var(--be-ink);
+  font-family: var(--be-font-body);
+  font-size: var(--be-text-body);
+  font-weight: var(--be-weight-body);
+  line-height: var(--be-leading-body);
+  letter-spacing: var(--be-tracking-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 正文基线：几何无衬线管标题，开放字腔字族管阅读 ---- */
+:where(.ds-bento-grid) :where(h1, h2, h3, h4) {
+  font-family: var(--be-font-display);
+  font-weight: var(--be-weight-display);
+  line-height: var(--be-leading-headline);
+  letter-spacing: var(--be-tracking-display);
+  margin: 0 0 var(--be-space-2);
+  text-wrap: balance;
+}
+:where(.ds-bento-grid) :where(h1) { font-size: var(--be-text-display); line-height: var(--be-leading-display); }
+:where(.ds-bento-grid) :where(h2) { font-size: var(--be-text-card); line-height: var(--be-leading-card); letter-spacing: var(--be-tracking-card); }
+:where(.ds-bento-grid) :where(p) { margin: 0 0 var(--be-space-2); max-width: var(--be-measure); }
+:where(.ds-bento-grid) :where(a) { color: var(--be-primary); text-underline-offset: var(--be-space-1); }
+
+/* ---- 主按钮：靛蓝圆角，一屏一个 ---- */
+:where(.ds-bento-grid) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--be-space-2) var(--be-space-4);
+  border: 0;
+  border-radius: var(--be-radius-button);
+  background: var(--be-primary);
+  color: var(--be-on-primary);
+  font-family: var(--be-font-body);
+  font-size: var(--be-text-label);
+  font-weight: var(--be-weight-display);
+  letter-spacing: var(--be-tracking-label);
+  line-height: var(--be-leading-label);
+  cursor: pointer;
+  box-shadow: var(--be-e1);
+  transition: transform var(--be-duration-fast) var(--be-ease), box-shadow var(--be-duration-base) var(--be-ease);
+}
+:where(.ds-bento-grid) :where(button, .ds-btn):hover { transform: translateY(-2px); box-shadow: var(--be-e2); }
+:where(.ds-bento-grid) :where(button, .ds-btn):disabled { background: var(--be-surface-alt); color: var(--be-ink-faint); cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ---- bento 格：白底、统一圆角、极淡投影，格距是唯一分组手段 ---- */
+:where(.ds-bento-grid) :where(.ds-card) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  padding: var(--be-space-4);
+  background: var(--be-surface);
+  color: var(--be-ink);
+  border-radius: var(--be-radius-card);
+  box-shadow: var(--be-e1), var(--be-highlight);
+  transition: transform var(--be-duration-fast) var(--be-ease), box-shadow var(--be-duration-base) var(--be-ease);
+}
+:where(.ds-bento-grid) :where(.ds-card):hover { transform: translateY(-2px); box-shadow: var(--be-e2), var(--be-highlight); }
+:where(.ds-bento-grid) :where(.ds-card)::before {
+  content: "";
+  display: block;
+  width: var(--be-space-4);
+  height: var(--be-space-4);
+  margin-bottom: var(--be-space-3);
+  border-radius: var(--be-radius-tag);
+  background: var(--be-surface-alt);
+}
+:where(.ds-bento-grid) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--be-space-1) var(--be-space-2);
+  border-radius: var(--be-radius-tag);
+  background: var(--be-surface-alt);
+  color: var(--be-ink-muted);
+  font-size: var(--be-text-label);
+  font-weight: var(--be-weight-display);
+  letter-spacing: var(--be-tracking-label);
+  line-height: var(--be-leading-label);
+}
+:where(.ds-bento-grid) :where(.ds-stat-value) {
+  font-size: var(--be-text-headline);
+  line-height: var(--be-leading-headline);
+  font-weight: var(--be-weight-display);
+  font-variant-numeric: tabular-nums;
+}
+:where(.ds-bento-grid) :where(.ds-stat-label) { color: var(--be-ink-faint); font-size: var(--be-text-label); letter-spacing: var(--be-tracking-label); }
+
+/* ---- 预览外壳：把同一份内容排成一屏 bento ---- */
+.ds-bento-grid .frame-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--be-space-3);
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: var(--be-space-4) var(--be-space-2);
+}
+.ds-bento-grid .frame-nav strong {
+  font-family: var(--be-font-display);
+  font-size: var(--be-text-headline);
+  font-weight: var(--be-weight-display);
+  letter-spacing: var(--be-tracking-headline);
+}
+.ds-bento-grid .frame-nav span { color: var(--be-ink-faint); font-size: var(--be-text-label); letter-spacing: var(--be-tracking-label); }
+.ds-bento-grid .frame-nav a { margin-left: auto; color: var(--be-primary); font-size: var(--be-text-label); font-weight: var(--be-weight-display); text-decoration: none; }
+
+.ds-bento-grid .frame-story { max-width: 80rem; margin: 0 auto; padding: var(--be-space-2) var(--be-space-2) var(--be-space-6); }
+.ds-bento-grid .frame-context { color: var(--be-ink-faint); font-size: var(--be-text-label); letter-spacing: var(--be-tracking-label); }
+.ds-bento-grid .frame-story h1 { max-width: 20ch; margin: var(--be-space-3) 0 var(--be-space-4); }
+.ds-bento-grid .frame-lede { color: var(--be-ink-muted); font-size: var(--be-text-card); line-height: var(--be-leading-card); max-width: 46ch; }
+.ds-bento-grid .frame-actions { display: flex; flex-wrap: wrap; gap: var(--be-space-3); margin: var(--be-space-4) 0 var(--be-space-5); }
+.ds-bento-grid .frame-actions a {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--be-space-2) var(--be-space-4);
+  border: 1px solid var(--be-line-strong);
+  border-radius: var(--be-radius-button);
+  color: var(--be-ink);
+  font-size: var(--be-text-label);
+  font-weight: var(--be-weight-display);
+  letter-spacing: var(--be-tracking-label);
+  text-decoration: none;
+}
+
+.ds-bento-grid .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(10rem, auto);
+  gap: var(--be-space-3);
+}
+.ds-bento-grid .frame-grid .ds-card:nth-child(1) { grid-column: span 6; grid-row: span 2; }
+.ds-bento-grid .frame-grid .ds-card:nth-child(2) { grid-column: span 6; }
+.ds-bento-grid .frame-grid .ds-card:nth-child(3) { grid-column: span 6; }
+.ds-bento-grid .frame-grid .ds-card:nth-child(1) { background: var(--be-primary); color: var(--be-on-primary); justify-content: space-between; }
+.ds-bento-grid .frame-grid .ds-card:nth-child(1)::before { background: var(--be-accent); }
+.ds-bento-grid .frame-grid .ds-card:nth-child(1) h2,
+.ds-bento-grid .frame-grid .ds-card:nth-child(1) p { color: var(--be-on-primary); }
+
+/* ---- 交互状态 ---- */
+:where(.ds-bento-grid) :where(a, button, .ds-btn):focus-visible { outline: 3px solid var(--be-primary); outline-offset: 2px; }
+
+@media (max-width: 767px) {
+  .ds-bento-grid .frame-story h1 { font-size: var(--be-text-headline); }
+  .ds-bento-grid .frame-nav { padding: var(--be-space-3) var(--be-space-2); }
+  .ds-bento-grid .frame-grid { grid-template-columns: repeat(2, 1fr); }
+  .ds-bento-grid .frame-grid .ds-card:nth-child(1),
+  .ds-bento-grid .frame-grid .ds-card:nth-child(2),
+  .ds-bento-grid .frame-grid .ds-card:nth-child(3) { grid-column: span 2; grid-row: span 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-bento-grid) :where(*) { scroll-behavior: auto; transition-duration: 1ms; animation-duration: 1ms; animation-iteration-count: 1; }
+}
