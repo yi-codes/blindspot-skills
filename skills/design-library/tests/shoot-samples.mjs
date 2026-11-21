@@ -135,6 +135,7 @@ const samples = [
   ["catalog", "catalog/index.html"],
   ["bauhaus", "preview/bauhaus.html"],
   ["bento-grid", "preview/bento-grid.html"],
+  ["vaporwave", "preview/vaporwave.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],

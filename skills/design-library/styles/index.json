@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 25,
+  "count": 26,
   "styles": [
     {
       "slug": "academic",
@@ -1039,6 +1039,49 @@
       "designPath": "styles/terminal-mono/DESIGN.md",
       "tokensPath": "styles/terminal-mono/tokens.css",
       "promptPath": "styles/terminal-mono/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "vaporwave",
+      "name": "Vaporwave｜蒸汽波",
+      "description": "把 1980–90 年代消费电子与早期互联网的记忆做成一场慢速霓虹梦：深紫黑底上粉与青两束霓虹、 退向地平线的透视网格、条纹落日与轻微色差 glitch。用于音乐与演出、创意作品集、游戏与活动落地页， 追求情绪冲击而非企业式清晰。参数提炼自 designmd.app 两份 vaporwave 风格卡、designforai.dev 的 UI prompt、stealthis.dev 的风格页与 chrislemke 设计参考页的交叉验证；标为 beta/variant， 且为符合本库 The Floor，把来源里标志性的紫粉渐变与渐变文字改造成粉青渐变加霓虹 text-shadow。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "retro",
+      "tier": "variant",
+      "sourceRefs": [
+        "vaporwave"
+      ],
+      "register": "story",
+      "surface": "dark",
+      "density": "medium",
+      "cues": [
+        "音乐人与专辑/演出落地页",
+        "synthwave 与 retrowave 活动页",
+        "创意作品集首屏",
+        "复古游戏与 Game Jam 页面",
+        "潮流服饰与周边",
+        "需要强情绪与怀旧感的展示型界面"
+      ],
+      "avoid": [
+        "企业官网与后台",
+        "表单密集的办事流程",
+        "金融医疗政务",
+        "长文阅读与论文",
+        "需要严肃权威与高信息效率的界面",
+        "打印为主的单栏文档"
+      ],
+      "prefix": "--va-*",
+      "className": "ds-vaporwave",
+      "canvas": "#1A0B2E",
+      "ink": "#FFFBFC",
+      "accent": "#FF71CE",
+      "previewUrl": "preview/vaporwave.html",
+      "designPath": "styles/vaporwave/DESIGN.md",
+      "tokensPath": "styles/vaporwave/tokens.css",
+      "promptPath": "styles/vaporwave/prompt.md",
       "has_prompt": true,
       "has_css": true
     }

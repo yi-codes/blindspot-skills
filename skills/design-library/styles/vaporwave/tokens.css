@@ -1,0 +1,290 @@
+/* Vaporwave｜蒸汽波；容器 class="ds-vaporwave"；前缀 --va- */
+:where(.ds-vaporwave) {
+  --va-canvas: #1A0B2E;
+  --va-surface: #2D1B4E;
+  --va-surface-alt: #3D2566;
+  --va-ink: #FFFBFC;
+  --va-ink-muted: #C4B7C9;
+  --va-ink-faint: #8B7E96;
+  --va-line: #5B3A8C;
+  --va-line-strong: #B967FF;
+  --va-primary: #FF71CE;
+  --va-secondary: #01CDFE;
+  --va-accent: #05FFA1;
+  --va-highlight: #FFFB96;
+  --va-on-primary: #1A0B2E;
+
+  --va-font-display: Orbitron, "PingFang SC", sans-serif;
+  --va-font-title: "Cormorant Garamond", "PingFang SC", serif;
+  --va-font-body: "Space Mono", "PingFang SC", "Noto Sans SC", monospace;
+
+  --va-text-display: 80px;
+  --va-text-headline: 40px;
+  --va-text-card: 28px;
+  --va-text-body: 20px;
+  --va-text-label: 14px;
+  --va-leading-display: 1.05;
+  --va-leading-headline: 1.15;
+  --va-leading-card: 1.25;
+  --va-leading-body: 1.7;
+  --va-leading-label: 1.5;
+  --va-weight-display: 700;
+  --va-weight-body: 400;
+  --va-tracking-display: 0.12em;
+  --va-tracking-headline: 0.08em;
+  --va-tracking-card: 0.02em;
+  --va-tracking-label: 0.18em;
+
+  --va-space-1: 8px;
+  --va-space-2: 12px;
+  --va-space-3: 16px;
+  --va-space-4: 24px;
+  --va-space-5: 40px;
+  --va-space-6: 64px;
+  --va-measure: 36em;
+
+  --va-radius-card: 4px;
+  --va-radius-button: 2px;
+  --va-radius-tag: 0px;
+
+  --va-e1: inset 0 1px 0 rgba(255, 113, 206, 0.18);
+  --va-e2: 0 6px 18px rgba(1, 205, 254, 0.10);
+  --va-e3: 0 12px 32px rgba(185, 103, 255, 0.18);
+  --va-top-highlight: inset 0 1px 0 rgba(255, 251, 252, 0.10);
+  --va-rule: 1px solid var(--va-line);
+  --va-rule-strong: 1px solid var(--va-line-strong);
+
+  --va-duration: 480ms;
+  --va-duration-fast: 160ms;
+  --va-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  background: var(--va-canvas);
+  color: var(--va-ink);
+  font-family: var(--va-font-body);
+  font-size: var(--va-text-body);
+  font-weight: var(--va-weight-body);
+  line-height: var(--va-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 标题：霓虹几何 + 古典衬线错位，辉光只给标题 ---- */
+:where(.ds-vaporwave) :where(h1, h2, h3, h4) {
+  font-family: var(--va-font-display);
+  font-weight: var(--va-weight-display);
+  margin: 0 0 var(--va-space-3);
+  text-wrap: balance;
+}
+/* slop-ok S3: 宽字距全大写霓虹标题是 vaporwave 原生语法；字号 80px，非小标签 */
+:where(.ds-vaporwave) :where(h1) {
+  font-family: var(--va-font-display);
+  font-size: var(--va-text-display);
+  line-height: var(--va-leading-display);
+  letter-spacing: var(--va-tracking-display);
+  text-transform: uppercase;
+  color: var(--va-primary);
+  text-shadow: 0 0 8px var(--va-primary), 2px 2px 0 var(--va-secondary);
+}
+/* slop-ok S3: h2 同样按 40px 霓虹标题处理，全大写是本风格原生语法而非小标签 */
+:where(.ds-vaporwave) :where(h2) {
+  font-size: var(--va-text-headline);
+  line-height: var(--va-leading-headline);
+  letter-spacing: var(--va-tracking-headline);
+  text-transform: uppercase;
+}
+:where(.ds-vaporwave) :where(h3) {
+  font-family: var(--va-font-title);
+  font-size: var(--va-text-card);
+  line-height: var(--va-leading-card);
+  letter-spacing: var(--va-tracking-card);
+}
+:where(.ds-vaporwave) :where(p) { margin: 0 0 var(--va-space-3); max-width: var(--va-measure); }
+:where(.ds-vaporwave) :where(a) {
+  color: var(--va-secondary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--va-space-1);
+  transition: color var(--va-duration-fast) var(--va-ease), text-shadow var(--va-duration-fast) var(--va-ease);
+}
+:where(.ds-vaporwave) :where(a):hover { text-shadow: 0 0 10px var(--va-secondary); }
+:where(.ds-vaporwave) :where(img) { display: block; max-width: 100%; border-radius: var(--va-radius-card); }
+:where(.ds-vaporwave) :where(hr) { border: 0; border-top: var(--va-rule); margin: var(--va-space-5) 0; }
+
+/* ---- 主按钮：粉底深字硬边，霓虹辉光 ---- */
+:where(.ds-vaporwave) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--va-space-2) var(--va-space-4);
+  border: 1px solid var(--va-primary);
+  border-radius: var(--va-radius-button);
+  background: var(--va-primary);
+  color: var(--va-on-primary);
+  font-family: var(--va-font-body);
+  font-size: var(--va-text-label);
+  font-weight: var(--va-weight-display);
+  letter-spacing: var(--va-tracking-label);
+  line-height: var(--va-leading-label);
+  cursor: pointer;
+  box-shadow: var(--va-e1);
+  transition: transform var(--va-duration-fast) var(--va-ease), box-shadow var(--va-duration) var(--va-ease);
+}
+:where(.ds-vaporwave) :where(button, .ds-btn):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--va-e1), var(--va-e2);
+}
+
+/* ---- 卡片与标签：明度分层 + 霓虹内描边 ---- */
+:where(.ds-vaporwave) :where(.ds-card) {
+  position: relative;
+  overflow: hidden;
+  padding: var(--va-space-4);
+  background: var(--va-surface);
+  color: var(--va-ink);
+  border: var(--va-rule);
+  border-radius: var(--va-radius-card);
+  box-shadow: var(--va-e1);
+  transition: background var(--va-duration) var(--va-ease), box-shadow var(--va-duration) var(--va-ease);
+}
+:where(.ds-vaporwave) :where(.ds-card):hover {
+  background: var(--va-surface-alt);
+  box-shadow: var(--va-e1), var(--va-e2);
+}
+:where(.ds-vaporwave) :where(.ds-tag) {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--va-surface-alt);
+  color: var(--va-secondary);
+  border-radius: var(--va-radius-tag);
+  font-family: var(--va-font-body);
+  font-size: var(--va-text-label);
+  font-weight: var(--va-weight-display);
+  letter-spacing: var(--va-tracking-label);
+  line-height: var(--va-leading-label);
+}
+
+/* ---- 透视网格底：青线退向地平线，向上淡出，只作背景 ---- */
+.ds-vaporwave.preview-root { position: relative; isolation: isolate; }
+.ds-vaporwave.preview-root::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 140vw;
+  height: 35%;
+  transform: translateX(-50%) perspective(320px) rotateX(62deg);
+  transform-origin: bottom center;
+  background-image:
+    linear-gradient(to right, var(--va-secondary) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--va-secondary) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 85%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 85%);
+  opacity: 0.28;
+  z-index: -1;
+  pointer-events: none;
+}
+/* ---- 条纹落日：横纹用背景色挖空，不用渐变字 ---- */
+.ds-vaporwave .frame-sun {
+  width: var(--va-text-display);
+  height: var(--va-text-display);
+  border-radius: 50%;
+  background: var(--va-primary);
+  box-shadow: var(--va-e3);
+  position: relative;
+  overflow: hidden;
+}
+.ds-vaporwave .frame-sun::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--va-canvas) 0 3px,
+    transparent 3px 10px
+  );
+}
+
+/* ---- 预览外壳：让同一份内容在蒸汽波里变成一张梦核海报 ---- */
+.ds-vaporwave .frame-nav {
+  padding-bottom: var(--va-space-3);
+  border-bottom: var(--va-rule);
+  font-family: var(--va-font-body);
+  letter-spacing: var(--va-tracking-label);
+}
+.ds-vaporwave .frame-nav strong {
+  font-family: var(--va-font-display);
+  font-size: var(--va-text-headline);
+  letter-spacing: var(--va-tracking-headline);
+  color: var(--va-primary);
+  text-shadow: 1px 1px 0 var(--va-secondary);
+}
+.ds-vaporwave .frame-nav span { color: var(--va-ink-muted); font-size: var(--va-text-label); }
+.ds-vaporwave .frame-actions a {
+  display: inline-block;
+  padding: var(--va-space-2) var(--va-space-4);
+  border: var(--va-rule-strong);
+  border-radius: var(--va-radius-button);
+  color: var(--va-secondary);
+  font-family: var(--va-font-body);
+  font-size: var(--va-text-label);
+  letter-spacing: var(--va-tracking-label);
+  text-decoration: none;
+}
+
+.ds-vaporwave .frame-story { padding-top: var(--va-space-5); }
+.ds-vaporwave .frame-context { color: var(--va-ink-faint); font-size: var(--va-text-label); letter-spacing: var(--va-tracking-label); }
+.ds-vaporwave .frame-lede { color: var(--va-ink-muted); font-size: var(--va-text-card); line-height: var(--va-leading-label); }
+
+.ds-vaporwave .frame-grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--va-space-3);
+  margin-top: var(--va-space-4);
+  padding-top: var(--va-space-3);
+  border-top: var(--va-rule);
+}
+/* 卡片标题走古典衬线，与几何 Display 标题形成年代错位 */
+.ds-vaporwave :where(.ds-card) :where(h2, h3) {
+  font-family: var(--va-font-title);
+  font-size: var(--va-text-card);
+  line-height: var(--va-leading-card);
+  letter-spacing: var(--va-tracking-card);
+}
+.ds-vaporwave .frame-grid .ds-card:first-child { border-color: var(--va-primary); }
+
+/* ---- 交互状态：青色焦点环，禁用与错误态不新增颜色 ---- */
+:where(.ds-vaporwave) :where(a, button, .ds-btn):focus-visible {
+  outline: 3px solid var(--va-secondary);
+  outline-offset: 2px;
+  border-radius: var(--va-radius-button);
+}
+:where(.ds-vaporwave) :where(button, .ds-btn):disabled {
+  background: transparent;
+  color: var(--va-ink-faint);
+  border-color: var(--va-line);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  :where(.ds-vaporwave) :where(h1) { font-size: var(--va-text-headline); letter-spacing: var(--va-tracking-headline); }
+  .ds-vaporwave .frame-grid { grid-template-columns: 1fr; }
+  .ds-vaporwave .frame-sun { width: var(--va-text-headline); height: var(--va-text-headline); }
+}
+
+/* ---- glitch：只抖标题，且可随 reduced-motion 关闭 ---- */
+@keyframes va-glitch {
+  0%, 92%, 100% { text-shadow: 0 0 8px var(--va-primary), 2px 2px 0 var(--va-secondary); }
+  94% { text-shadow: -3px 1px 0 var(--va-secondary), 3px -1px 0 var(--va-primary); }
+  96% { text-shadow: 3px 0 0 var(--va-secondary), -2px 2px 0 var(--va-primary); }
+}
+.ds-vaporwave .frame-story h1 { animation: va-glitch 6s steps(1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-vaporwave) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+  .ds-vaporwave .frame-story h1 { text-shadow: 0 0 8px var(--va-primary), 2px 2px 0 var(--va-secondary); }
+  .ds-vaporwave.preview-root::before { -webkit-mask-image: none; mask-image: none; opacity: 0.18; }
+}

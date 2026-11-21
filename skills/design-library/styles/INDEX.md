@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **25** 个风格。
+当前 **26** 个风格。
 
 ## 决定表
 
@@ -48,6 +48,7 @@
 | **Soft Pastel** `soft-pastel` | 变体 | companion | catppuccin | 低对比柔色界面。 |
 | **Tactile 3D** `tactile-3d` | 技法 | expressive | atropos、react-bits | 会动的卡片。 |
 | **Terminal Mono** `terminal-mono` | 变体 | developer | native | 把命令行搬进正文。 |
+| **Vaporwave｜蒸汽波** `vaporwave` | 变体 | retro | vaporwave | 把 1980–90 年代消费电子与早期互联网的记忆做成一场慢速霓虹梦：深紫黑底上粉与青两束霓虹、 退向地平线的透视网格、条纹落日与轻微色差 glitch。 |
 
 ## 全表
 
@@ -78,6 +79,7 @@
 | **Swiss Grid** `swiss-grid` | stable | professional | 核心 | native | 讲专业 | 浅色 | 中 | 落地页、产品页、案例研究、数据看板、B 端界面、需要显得专业的页面 | 长文阅读、需要情绪的场景、桌面应用外壳 | `#FFFFFF` |
 | **Tactile 3D** `tactile-3d` | stable | expressive | 技法 | atropos、react-bits | 讲故事 | 深色 | 松 | 游戏/影视产品页、硬件开箱、作品集、发布会主视觉、可拖拽的选择器、需要"手感"的展示型界面 | 长文阅读、表单、后台管理、需要快速扫读的列表、打印、任何以读字为主的地方 | `#0A0A0B` |
 | **Terminal Mono** `terminal-mono` | stable | developer | 变体 | native | 讲技术 | 深色 | 紧 | 技术文档、开发者工具、CLI 配套界面、以日志和代码为主体的页面 | 消费级产品、品牌表达、需要温度的场景 | `#0E1116` |
+| **Vaporwave｜蒸汽波** `vaporwave` | beta | retro | 变体 | vaporwave | 讲故事 | 深色 | 中 | 音乐人与专辑/演出落地页、synthwave 与 retrowave 活动页、创意作品集首屏、复古游戏与 Game Jam 页面、潮流服饰与周边、需要强情绪与怀旧感的展示型界面 | 企业官网与后台、表单密集的办事流程、金融医疗政务、长文阅读与论文、需要严肃权威与高信息效率的界面、打印为主的单栏文档 | `#1A0B2E` |
 
 ## 用法速查
 
