@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **26** 个风格。
+当前 **27** 个风格。
 
 ## 决定表
 
@@ -37,6 +37,7 @@
 | **Bauhaus Grid｜包豪斯几何** `bauhaus` | 变体 | expressive | bauhaus | 用三原色、圆方三角与不对称网格做构图的海报式页面。 |
 | **Bento Grid｜便当格** `bento-grid` | 变体 | expressive | bento-grid | 用大小不等、圆角一致的卡片紧密拼成一屏，每格只装一个信息点，卡片跨度代表信息优先级。 |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | 变体 | ceremonial | — | 给精品酒店、晚宴、珠宝与颁奖典礼用的 Art Deco 页面。 |
+| **Frutiger Aero｜晴空拟物** `frutiger-aero` | 变体 | retro | frutiger-aero | 把 2004–2013 年"科技与自然和谐相处"的乐观想象做成一套可直接用的界面语言： 天蓝到草绿的通透渐变、带高光条的玻璃按钮、气泡与水滴、人文无衬线字。 |
 | **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
 | **Liquid Glass** `liquid-glass` | 变体 | operations | ui-styles-liquid-glass | 克制的半透明工作台。 |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | 变体 | editorial | — | 给真正拥有多条新闻的编辑首页：12 列、细线分栏、衬线标题与无衬线元信息， 首屏直接进入故事网格而非营销 Hero。 |
@@ -64,6 +65,7 @@
 | **Developer Docs** `developer-docs` | stable | developer | 核心 | primer、geist、radix | 讲技术 | 双模 | 中 | 产品文档、API 参考、SDK 指南、开发者入门、版本迁移、代码示例密集的页面 | 终端模拟器、营销落地页、事故指挥台、纯打印论文、需要强情绪表达的页面 | `#F4F6F4` |
 | **Editorial Serif** `editorial-serif` | stable | reading | 核心 | native | 讲故事 | 浅色 | 松 | 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目 | 工具界面、高密度数据、桌面应用、需要速度感的场景 | `#F2F3F0` |
 | **Enterprise Data** `enterprise-data` | stable | enterprise-data | 核心 | carbon、radix | 讲专业 | 双模 | 紧 | 企业管理后台、数据表格、批量操作、权限与审计、订单账单、客户运营、B 端管理工作流 | 品牌营销页、长文阅读、移动优先消费产品、事故时间线、沉浸式展示 | `#EEF1F2` |
+| **Frutiger Aero｜晴空拟物** `frutiger-aero` | beta | retro | 变体 | frutiger-aero | 讲故事 | 浅色 | 中 | 怀旧科技与 Y2K 品牌活动页、消费电子与饮品官网、音乐与媒体播放器、健康与天气类工具 App、游戏启动器、需要乐观亲和气的展示型界面 | 数据密集型后台与大表格、扁平/极简/单色品牌、需要严肃权威的金融医疗政务、长文与论文阅读、表单密集的办事流程、以打印为主的文档 | `#EAF6FF` |
 | **Gallery Wall｜展陈画廊** `gallery-wall` | beta | gallery | 变体 | — | 讲故事 | 浅色 | 松 | 艺术展览、博物馆与画廊、摄影作品集、艺术家档案、拍卖目录、文化机构官网、图片主导的作品展示 | 高密度后台、长文正文、复杂表单、促销电商、数据看板、以操作为主的工具界面 | `#F3F3F0` |
 | **Incident Room** `incident-room` | stable | operations | 核心 | ui-styles-ops-console | 讲工具 | 深色 | 紧 | 正在发生的事故、事故响应、值班交接、故障复盘、重大变更回滚、需要统一事件叙事的跨团队协作 | 日常低风险监控、营销页、长期产品文档、需要同时比较多个无关信号的普通控制台 | `#1A1714` |
 | **Liquid Glass** `liquid-glass` | stable | operations | 变体 | ui-styles-liquid-glass | 讲工具 | 双模 | 紧 | 高频盯屏的控制台、任务指挥台、状态面板、需要保留环境上下文的工作界面、桌面与平板工具 | 营销落地页、需要强烈视觉冲击的作品集、大量并排比较的长表格、打印 | `#F1F4F7` |

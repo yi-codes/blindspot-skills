@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 26,
+  "count": 27,
   "styles": [
     {
       "slug": "academic",
@@ -420,6 +420,49 @@
       "designPath": "styles/enterprise-data/DESIGN.md",
       "tokensPath": "styles/enterprise-data/tokens.css",
       "promptPath": "styles/enterprise-data/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "frutiger-aero",
+      "name": "Frutiger Aero｜晴空拟物",
+      "description": "把 2004–2013 年\"科技与自然和谐相处\"的乐观想象做成一套可直接用的界面语言： 天蓝到草绿的通透渐变、带高光条的玻璃按钮、气泡与水滴、人文无衬线字。 用于怀旧品牌活动页、消费电子与饮品官网、音乐与媒体播放器、健康与工具类 App 的展示型界面。 参数提炼自 chrislemke 设计参考库、designmd.app 风格卡、design-ontology 与 anti-boring 四份来源的交叉验证； 标为 beta/variant。为符合本库 The Floor，把来源里\"纯白背景\"\"全盘发光\"\"品牌专属拟物图标\"改造成偏主色的浅蓝底、 有偏移的柔和阴影与可复现的 CSS 气泡。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "retro",
+      "tier": "variant",
+      "sourceRefs": [
+        "frutiger-aero"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "怀旧科技与 Y2K 品牌活动页",
+        "消费电子与饮品官网",
+        "音乐与媒体播放器",
+        "健康与天气类工具 App",
+        "游戏启动器",
+        "需要乐观亲和气的展示型界面"
+      ],
+      "avoid": [
+        "数据密集型后台与大表格",
+        "扁平/极简/单色品牌",
+        "需要严肃权威的金融医疗政务",
+        "长文与论文阅读",
+        "表单密集的办事流程",
+        "以打印为主的文档"
+      ],
+      "prefix": "--fr-*",
+      "className": "ds-frutiger-aero",
+      "canvas": "#EAF6FF",
+      "ink": "#0B2A4A",
+      "accent": "#0288D1",
+      "previewUrl": "preview/frutiger-aero.html",
+      "designPath": "styles/frutiger-aero/DESIGN.md",
+      "tokensPath": "styles/frutiger-aero/tokens.css",
+      "promptPath": "styles/frutiger-aero/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

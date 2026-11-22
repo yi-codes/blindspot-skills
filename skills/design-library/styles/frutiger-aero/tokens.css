@@ -1,0 +1,301 @@
+/* Frutiger Aero｜晴空拟物；容器 class="ds-frutiger-aero"；前缀 --fr- */
+:where(.ds-frutiger-aero) {
+  --fr-canvas: #EAF6FF;
+  --fr-surface: #F5FBFF;
+  --fr-surface-alt: #DDF1FF;
+  --fr-ink: #0B2A4A;
+  --fr-ink-muted: #2F6B57;
+  --fr-ink-faint: #3F6678;
+  --fr-line: #8FD3FF;
+  --fr-line-strong: #0288D1;
+  --fr-primary: #0288D1;
+  --fr-secondary: #43A047;
+  --fr-accent: #7ED957;
+  --fr-highlight: #FFD54F;
+  --fr-water: #00BCD4;
+  --fr-deep: #0A4C8C;
+  --fr-on-primary: #0B2A4A;
+
+  --fr-font-display: Nunito, "PingFang SC", sans-serif;
+  --fr-font-body: "Nunito Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --fr-text-display: 64px;
+  --fr-text-headline: 40px;
+  --fr-text-card: 28px;
+  --fr-text-body: 20px;
+  --fr-text-label: 16px;
+  --fr-leading-display: 1.08;
+  --fr-leading-headline: 1.15;
+  --fr-leading-card: 1.25;
+  --fr-leading-body: 1.7;
+  --fr-leading-label: 1.5;
+  --fr-weight-display: 700;
+  --fr-weight-body: 400;
+  --fr-tracking-display: -0.02em;
+  --fr-tracking-headline: -0.01em;
+  --fr-tracking-card: 0;
+  --fr-tracking-label: 0.02em;
+
+  --fr-space-1: 8px;
+  --fr-space-2: 12px;
+  --fr-space-3: 16px;
+  --fr-space-4: 24px;
+  --fr-space-5: 40px;
+  --fr-space-6: 64px;
+  --fr-measure: 36em;
+
+  --fr-radius-tag: 8px;
+  --fr-radius-card: 16px;
+  --fr-radius-panel: 24px;
+  --fr-radius-button: 999px;
+
+  --fr-e1: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 4px 12px rgba(10, 76, 140, 0.12);
+  --fr-e2: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 20px rgba(10, 76, 140, 0.18);
+  --fr-e3: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 32px rgba(10, 76, 140, 0.22);
+  --fr-top-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --fr-rule: 1px solid var(--fr-line);
+  --fr-rule-strong: 1px solid var(--fr-line-strong);
+
+  --fr-duration: 480ms;
+  --fr-duration-fast: 160ms;
+  --fr-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  background: var(--fr-canvas);
+  color: var(--fr-ink);
+  font-family: var(--fr-font-body);
+  font-size: var(--fr-text-body);
+  font-weight: var(--fr-weight-body);
+  line-height: var(--fr-leading-body);
+  letter-spacing: var(--fr-tracking-card);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 基础排版 ---- */
+:where(.ds-frutiger-aero) :where(h1, h2, h3, h4) {
+  font-family: var(--fr-font-display);
+  font-weight: var(--fr-weight-display);
+  margin: 0 0 var(--fr-space-3);
+  text-wrap: balance;
+}
+:where(.ds-frutiger-aero) :where(h1) {
+  font-size: var(--fr-text-display);
+  line-height: var(--fr-leading-display);
+  letter-spacing: var(--fr-tracking-display);
+}
+:where(.ds-frutiger-aero) :where(h2) {
+  font-size: var(--fr-text-headline);
+  line-height: var(--fr-leading-headline);
+  letter-spacing: var(--fr-tracking-headline);
+}
+:where(.ds-frutiger-aero) :where(h3) {
+  font-size: var(--fr-text-card);
+  line-height: var(--fr-leading-card);
+  letter-spacing: var(--fr-tracking-card);
+}
+:where(.ds-frutiger-aero) :where(p) { margin: 0 0 var(--fr-space-3); max-width: var(--fr-measure); }
+:where(.ds-frutiger-aero) :where(a) {
+  color: var(--fr-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--fr-space-1);
+  transition: color var(--fr-duration-fast) var(--fr-ease);
+}
+:where(.ds-frutiger-aero) :where(a):hover { color: var(--fr-deep); }
+:where(.ds-frutiger-aero) :where(img) { display: block; max-width: 100%; border-radius: var(--fr-radius-card); }
+:where(.ds-frutiger-aero) :where(hr) { border: 0; border-top: var(--fr-rule); margin: var(--fr-space-5) 0; }
+
+/* ---- 主按钮：浅蓝玻璃填充 + 顶部高光条 + 深字胶囊 ---- */
+:where(.ds-frutiger-aero) :where(button, .ds-btn) {
+  position: relative;
+  display: inline-block;
+  padding: var(--fr-space-2) var(--fr-space-4);
+  border: var(--fr-rule-strong);
+  border-radius: var(--fr-radius-button);
+  background: var(--fr-line);
+  color: var(--fr-on-primary);
+  font-family: var(--fr-font-body);
+  font-size: var(--fr-text-label);
+  font-weight: var(--fr-weight-display);
+  letter-spacing: var(--fr-tracking-label);
+  line-height: var(--fr-leading-label);
+  cursor: pointer;
+  box-shadow: var(--fr-e1);
+  overflow: hidden;
+  transition: transform var(--fr-duration-fast) var(--fr-ease), box-shadow var(--fr-duration) var(--fr-ease);
+}
+:where(.ds-frutiger-aero) :where(button, .ds-btn)::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.1));
+  pointer-events: none;
+}
+:where(.ds-frutiger-aero) :where(button, .ds-btn):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fr-e2);
+}
+
+/* ---- 玻璃卡与标签 ---- */
+/* slop-ok S7: Aero Glass 的磨砂透明是本风格定义性材质，blur 只作用于玻璃面板、强度固定且可降级 */
+:where(.ds-frutiger-aero) :where(.ds-card) {
+  /* slop-ok S7: 玻璃面板的磨砂质感来自 blur，非氛围光斑，已提供 reduced-motion 降级 */
+  backdrop-filter: blur(10px);
+  position: relative;
+  padding: var(--fr-space-4);
+  background: var(--fr-surface);
+  color: var(--fr-ink);
+  border: var(--fr-rule);
+  border-radius: var(--fr-radius-card);
+  box-shadow: var(--fr-e1);
+  transition: border-color var(--fr-duration) var(--fr-ease), box-shadow var(--fr-duration) var(--fr-ease);
+}
+:where(.ds-frutiger-aero) :where(.ds-card):hover {
+  border-color: var(--fr-line-strong);
+  box-shadow: var(--fr-e2);
+}
+:where(.ds-frutiger-aero) :where(.ds-tag) {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--fr-surface-alt);
+  color: var(--fr-deep);
+  border: var(--fr-rule);
+  border-radius: var(--fr-radius-tag);
+  font-family: var(--fr-font-body);
+  font-size: var(--fr-text-label);
+  font-weight: var(--fr-weight-display);
+  letter-spacing: var(--fr-tracking-label);
+  line-height: var(--fr-leading-label);
+}
+
+/* ---- 全幅晴空渐变：天蓝 → 草绿，光从左上，气泡作环境装饰 ---- */
+.ds-frutiger-aero.preview-root {
+  position: relative;
+  isolation: isolate;
+  padding: var(--fr-space-5) var(--fr-space-6);
+  background: linear-gradient(180deg, var(--fr-canvas) 0%, var(--fr-line) 52%, var(--fr-accent) 100%);
+}
+.ds-frutiger-aero.preview-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.75) 0 18px, transparent 20px),
+    radial-gradient(circle at 24% 60%, rgba(255, 255, 255, 0.45) 0 10px, transparent 12px),
+    radial-gradient(circle at 86% 26%, rgba(255, 255, 255, 0.6) 0 26px, transparent 28px),
+    radial-gradient(circle at 74% 78%, rgba(255, 255, 255, 0.4) 0 14px, transparent 16px),
+    radial-gradient(circle at 50% 92%, rgba(255, 255, 255, 0.35) 0 20px, transparent 22px);
+  pointer-events: none;
+  z-index: -1;
+}
+.ds-frutiger-aero.preview-root::after {
+  content: "";
+  position: absolute;
+  top: -8%;
+  left: -6%;
+  width: 42%;
+  height: 45%;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.55), transparent 65%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---- 预览外壳 ---- */
+.ds-frutiger-aero .frame-nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--fr-space-3);
+  padding: var(--fr-space-3) var(--fr-space-4);
+  background: var(--fr-surface);
+  border: var(--fr-rule);
+  border-radius: var(--fr-radius-panel);
+  box-shadow: var(--fr-e1);
+}
+.ds-frutiger-aero .frame-nav strong {
+  font-family: var(--fr-font-display);
+  font-size: var(--fr-text-card);
+  font-weight: var(--fr-weight-display);
+  color: var(--fr-deep);
+}
+.ds-frutiger-aero .frame-nav span { color: var(--fr-ink-muted); font-size: var(--fr-text-label); }
+
+.ds-frutiger-aero .frame-story {
+  margin-top: var(--fr-space-5);
+  padding: var(--fr-space-5);
+  background: var(--fr-surface);
+  border: var(--fr-rule);
+  border-radius: var(--fr-radius-panel);
+  box-shadow: var(--fr-e2);
+}
+.ds-frutiger-aero .frame-context { color: var(--fr-ink-faint); font-size: var(--fr-text-label); }
+.ds-frutiger-aero .frame-lede { color: var(--fr-ink-muted); font-size: var(--fr-text-card); line-height: var(--fr-leading-card); }
+
+.ds-frutiger-aero .frame-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--fr-space-3);
+  margin-bottom: var(--fr-space-4);
+}
+.ds-frutiger-aero .frame-actions a {
+  display: inline-block;
+  padding: var(--fr-space-2) var(--fr-space-4);
+  border: var(--fr-rule-strong);
+  border-radius: var(--fr-radius-button);
+  color: var(--fr-primary);
+  font-family: var(--fr-font-body);
+  font-size: var(--fr-text-label);
+  text-decoration: none;
+}
+
+.ds-frutiger-aero .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--fr-space-3);
+  margin-top: var(--fr-space-4);
+  padding-top: var(--fr-space-4);
+  border-top: var(--fr-rule);
+}
+.ds-frutiger-aero :where(.ds-card) :where(h2, h3) {
+  font-family: var(--fr-font-display);
+  font-size: var(--fr-text-card);
+  font-weight: var(--fr-weight-display);
+  line-height: var(--fr-leading-card);
+  letter-spacing: var(--fr-tracking-card);
+}
+.ds-frutiger-aero .frame-grid .ds-card:first-child { border-color: var(--fr-line-strong); }
+
+/* ---- 交互状态：深青焦点环，禁用与错误态不新增颜色 ---- */
+:where(.ds-frutiger-aero) :where(a, button, .ds-btn):focus-visible {
+  outline: 3px solid var(--fr-primary);
+  outline-offset: 2px;
+}
+:where(.ds-frutiger-aero) :where(button, .ds-btn):disabled {
+  background: transparent;
+  color: var(--fr-ink-faint);
+  border-color: var(--fr-line);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  :where(.ds-frutiger-aero) :where(h1) { font-size: var(--fr-text-headline); letter-spacing: var(--fr-tracking-headline); }
+  .ds-frutiger-aero.preview-root { padding: var(--fr-space-4); }
+  .ds-frutiger-aero .frame-grid { grid-template-columns: 1fr; }
+  .ds-frutiger-aero .frame-nav { flex-wrap: wrap; }
+}
+
+/* ---- 气泡缓慢浮动，只作用于装饰层 ---- */
+@keyframes fr-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.ds-frutiger-aero.preview-root::before { animation: fr-float 9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-frutiger-aero) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}
