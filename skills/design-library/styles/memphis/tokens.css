@@ -1,0 +1,334 @@
+/* ============================================================
+   Memphis｜孟菲斯海报；容器 class="ds-memphis"；前缀 --me-
+   参数来源：designmd.app Memphis 风格卡 + liuyutao.com 中文风格词典
+   3px 描边 / 6px 无模糊硬影 / 奶白底 / 四色撞色 / 角落图案
+   ============================================================ */
+
+:where(.ds-memphis) {
+  /* ---- 颜色：与 DESIGN.md front matter 一一对应 ---- */
+  --me-canvas: #FFF8EC;
+  --me-surface: #FFFDF5;
+  --me-surface-alt: #FFF1D6;
+  --me-ink: #111111;
+  --me-ink-muted: #3D3D3D;
+  --me-ink-faint: #6A6A6A;
+  --me-line: #111111;
+  --me-primary: #5B5BD6;
+  --me-secondary: #3BCEAC;
+  --me-accent: #FF5C8A;
+  --me-highlight: #FFD23F;
+  --me-on-primary: #FFF8EC;
+  --me-on-accent: #111111;
+
+  --me-font-display: "Archivo Black", "PingFang SC", sans-serif;
+  --me-font-body: "Poppins", "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --me-text-display: 56px;
+  --me-text-headline: 36px;
+  --me-text-card: 28px;
+  --me-text-body: 20px;
+  --me-text-label: 16px;
+  --me-leading-display: 1.05;
+  --me-leading-headline: 1.15;
+  --me-leading-card: 1.2;
+  --me-leading-body: 1.7;
+  --me-leading-label: 1.5;
+  --me-weight-display: 700;
+  --me-weight-body: 400;
+  --me-weight-label: 700;
+  --me-tracking-display: -0.01em;
+  --me-tracking-label: 0.02em;
+
+  /* ---- 间距：8px 基数 ---- */
+  --me-space-base: 8px;
+  --me-space-xs: 8px;
+  --me-space-sm: 16px;
+  --me-space-md: 24px;
+  --me-space-lg: 32px;
+  --me-space-xl: 48px;
+  --me-space-section: 64px;
+  --me-measure: 36em;
+
+  /* ---- 形状：容器方角，主按钮胶囊 ---- */
+  --me-radius-card: 0px;
+  --me-radius-tag: 0px;
+  --me-radius-button: 999px;
+  --me-rule: 3px solid var(--me-line);
+  --me-rule-strong: 3px solid var(--me-ink);
+
+  /* ---- 硬影：模糊半径恒为 0，光从左上 ---- */
+  --me-e1: 3px 3px 0 var(--me-ink);
+  --me-e2: 6px 6px 0 var(--me-ink);
+  --me-e3: 10px 10px 0 var(--me-ink);
+
+  --me-duration: 320ms;
+  --me-duration-fast: 160ms;
+  --me-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  background: var(--me-canvas);
+  color: var(--me-ink);
+  font-family: var(--me-font-body);
+  font-size: var(--me-text-body);
+  font-weight: var(--me-weight-body);
+  line-height: var(--me-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 基础排版：标题黑体字面，正文人文无衬线 ---- */
+:where(.ds-memphis) :where(h1, h2, h3, h4) {
+  font-family: var(--me-font-display);
+  font-weight: var(--me-weight-display);
+  margin: 0 0 var(--me-space-md);
+  line-height: var(--me-leading-headline);
+  letter-spacing: var(--me-tracking-display);
+  text-wrap: balance;
+}
+:where(.ds-memphis) :where(h1) {
+  font-size: var(--me-text-display);
+  line-height: var(--me-leading-display);
+}
+:where(.ds-memphis) :where(h2) { font-size: var(--me-text-headline); }
+:where(.ds-memphis) :where(h3) { font-size: var(--me-text-card); }
+:where(.ds-memphis) :where(p) {
+  margin: 0 0 var(--me-space-sm);
+  max-width: var(--me-measure);
+}
+:where(.ds-memphis) :where(a) {
+  color: var(--me-primary);
+  font-weight: var(--me-weight-label);
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--me-space-xs);
+  transition: color var(--me-duration-fast) var(--me-ease);
+}
+:where(.ds-memphis) :where(a):hover { color: var(--me-ink); }
+:where(.ds-memphis) :where(img) {
+  display: block;
+  max-width: 100%;
+  border: var(--me-rule);
+  border-radius: var(--me-radius-card);
+}
+:where(.ds-memphis) :where(hr) {
+  border: 0;
+  border-top: var(--me-rule);
+  margin: var(--me-space-xl) 0;
+}
+
+/* ---- 主按钮：玫红胶囊 + 3px 墨黑描边 + 3px 硬影 ---- */
+:where(.ds-memphis) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--me-space-xs) var(--me-space-md);
+  border: var(--me-rule-strong);
+  border-radius: var(--me-radius-button);
+  background: var(--me-accent);
+  color: var(--me-on-accent);
+  font-family: var(--me-font-body);
+  font-size: var(--me-text-label);
+  font-weight: var(--me-weight-label);
+  line-height: var(--me-leading-label);
+  letter-spacing: 0;
+  cursor: pointer;
+  box-shadow: var(--me-e1);
+  transition: transform var(--me-duration-fast) var(--me-ease),
+              box-shadow var(--me-duration-fast) var(--me-ease);
+}
+:where(.ds-memphis) :where(button, .ds-btn):hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 var(--me-ink);
+}
+:where(.ds-memphis) :where(button, .ds-btn):active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--me-ink);
+}
+
+/* ---- 卡片：方角、3px 描边、6px 硬影，三色轮换 ---- */
+:where(.ds-memphis) :where(.ds-card) {
+  position: relative;
+  padding: var(--me-space-md);
+  background: var(--me-surface);
+  color: var(--me-ink);
+  border: var(--me-rule);
+  border-radius: var(--me-radius-card);
+  box-shadow: var(--me-e2);
+  transform: rotate(-2deg);
+  transition: transform var(--me-duration) var(--me-ease),
+              box-shadow var(--me-duration) var(--me-ease);
+}
+:where(.ds-memphis) :where(.ds-card):hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: var(--me-e3);
+}
+:where(.ds-memphis) :where(.ds-card) :where(h2, h3) {
+  font-family: var(--me-font-display);
+  font-size: var(--me-text-card);
+  font-weight: var(--me-weight-display);
+  line-height: var(--me-leading-card);
+}
+
+/* ---- 标签：柠檬黄方牌，3px 描边 ---- */
+:where(.ds-memphis) :where(.ds-tag) {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--me-highlight);
+  color: var(--me-ink);
+  border: var(--me-rule);
+  border-radius: var(--me-radius-tag);
+  font-family: var(--me-font-body);
+  font-size: var(--me-text-label);
+  font-weight: var(--me-weight-label);
+  line-height: var(--me-leading-label);
+  letter-spacing: 0;
+}
+
+/* ---- 角落图案：靛蓝斜纹 + 薄荷圆点，只做装饰，不进正文 ---- */
+.ds-memphis.preview-root {
+  position: relative;
+  isolation: isolate;
+  padding: var(--me-space-xl) var(--me-space-lg) var(--me-space-section);
+  background: var(--me-canvas);
+  overflow: hidden;
+}
+.ds-memphis.preview-root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26%;
+  height: 34%;
+  background: repeating-linear-gradient(-45deg,
+    var(--me-primary) 0 5px, transparent 5px 11px);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
+.ds-memphis.preview-root::after {
+  content: "";
+  position: absolute;
+  right: 3%;
+  bottom: 4%;
+  width: 24%;
+  height: 30%;
+  background: radial-gradient(circle, var(--me-secondary) 3px, transparent 3.5px) 0 0 / 14px 14px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---- 预览骨架：错落的两栏首屏 + 不等宽三卡 ---- */
+.ds-memphis .frame-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--me-space-md);
+  padding: var(--me-space-sm) var(--me-space-md);
+  background: var(--me-highlight);
+  border: var(--me-rule-strong);
+  box-shadow: var(--me-e1);
+}
+.ds-memphis .frame-nav strong {
+  font-family: var(--me-font-display);
+  font-size: var(--me-text-card);
+  font-weight: var(--me-weight-display);
+  color: var(--me-ink);
+}
+.ds-memphis .frame-nav span {
+  font-size: var(--me-text-label);
+  color: var(--me-ink-muted);
+}
+
+.ds-memphis .frame-story {
+  position: relative;
+  margin-top: var(--me-space-xl);
+  padding: var(--me-space-xl) var(--me-space-lg);
+  background: var(--me-surface);
+  border: var(--me-rule-strong);
+  box-shadow: var(--me-e2);
+}
+.ds-memphis .frame-context {
+  color: var(--me-ink-faint);
+  font-size: var(--me-text-label);
+  margin-bottom: var(--me-space-sm);
+}
+.ds-memphis .frame-story h1 { max-width: 14em; }
+.ds-memphis .frame-lede {
+  color: var(--me-ink-muted);
+  font-size: var(--me-text-body);
+  line-height: var(--me-leading-body);
+  max-width: var(--me-measure);
+}
+.ds-memphis .frame-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--me-space-md);
+  margin: var(--me-space-lg) 0 var(--me-space-xl);
+}
+.ds-memphis .frame-actions a {
+  padding-bottom: var(--me-space-xs);
+  border-bottom: var(--me-rule);
+  text-decoration: none;
+}
+
+.ds-memphis .frame-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 0.8fr;
+  gap: var(--me-space-md);
+  margin-top: var(--me-space-xl);
+  padding-top: var(--me-space-lg);
+  border-top: var(--me-rule);
+}
+.ds-memphis .frame-grid .ds-card:nth-child(1) {
+  background: var(--me-highlight);
+  transform: rotate(-3deg);
+}
+.ds-memphis .frame-grid .ds-card:nth-child(2) {
+  background: var(--me-surface);
+  transform: rotate(2deg) translateY(var(--me-space-sm));
+}
+.ds-memphis .frame-grid .ds-card:nth-child(3) {
+  background: var(--me-secondary);
+  transform: rotate(-1deg);
+}
+
+/* ---- 焦点 / 禁用 / 错误：不新增颜色 ---- */
+:where(.ds-memphis) :where(a, button, .ds-btn):focus-visible {
+  outline: 3px solid var(--me-primary);
+  outline-offset: 2px;
+}
+:where(.ds-memphis) :where(button, .ds-btn):disabled {
+  background: var(--me-surface-alt);
+  color: var(--me-ink-faint);
+  border-color: var(--me-ink-faint);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+:where(.ds-memphis) :where([aria-invalid="true"]) {
+  border: 3px solid var(--me-primary);
+}
+
+@media (max-width: 767px) {
+  :where(.ds-memphis) :where(h1) {
+    font-size: var(--me-text-headline);
+    line-height: var(--me-leading-headline);
+  }
+  .ds-memphis.preview-root { padding: var(--me-space-md); }
+  .ds-memphis .frame-nav { flex-wrap: wrap; }
+  .ds-memphis .frame-grid { grid-template-columns: 1fr; }
+  .ds-memphis .frame-grid .ds-card:nth-child(n) {
+    transform: rotate(0deg);
+  }
+}
+
+/* ---- 只让装饰摇摆，正文不参与 ---- */
+@keyframes me-wobble {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(-1deg); }
+}
+.ds-memphis .frame-grid .ds-card:nth-child(1) { animation: me-wobble 6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-memphis) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}

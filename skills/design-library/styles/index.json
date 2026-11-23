@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 27,
+  "count": 28,
   "styles": [
     {
       "slug": "academic",
@@ -586,6 +586,48 @@
       "designPath": "styles/liquid-glass/DESIGN.md",
       "tokensPath": "styles/liquid-glass/tokens.css",
       "promptPath": "styles/liquid-glass/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "memphis",
+      "name": "Memphis｜孟菲斯海报",
+      "description": "把 1981 年米兰 Memphis Group 的后现代装饰语言做成一套可直接用的展示型界面： 奶白底、玫红/柠檬黄/薄荷/靛蓝四色撞色、3px 墨黑描边、6px 无模糊硬投影， 波点与 45° 斜纹只待在角落，圆/方/三角/波浪线故意错落。 用于儿童与文创品牌、展览活动、创意市集、社交媒体视觉和需要强烈 80 年代态度的落地页。 参数提炼自 designmd.app 的 Memphis 风格卡与 liuyutao.com 的中文风格词典（两份都给出显式数值）交叉验证； 标为 beta/variant。为符合本库 The Floor，把来源的纯白画布改为奶白、把来源的 Poppins 正文 16px/1.6 提到 20px/1.7， 并把 designmd.app 的模糊软影换成词典里明确写出的硬投影。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "memphis"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "儿童教育与玩具文具品牌站",
+        "展览与创意市集活动页",
+        "音乐与时尚编辑页面",
+        "社交媒体封面与包装插画",
+        "需要强烈 80 年代后现代态度的展示型落地页"
+      ],
+      "avoid": [
+        "金融法律医疗等严肃场景",
+        "长文阅读与产品文档",
+        "需要极简克制品牌气质的产品",
+        "高密度后台与长表单",
+        "需要精确扫读的数据页",
+        "政务与公共服务"
+      ],
+      "prefix": "--me-*",
+      "className": "ds-memphis",
+      "canvas": "#FFF8EC",
+      "ink": "#111111",
+      "accent": "#5B5BD6",
+      "previewUrl": "preview/memphis.html",
+      "designPath": "styles/memphis/DESIGN.md",
+      "tokensPath": "styles/memphis/tokens.css",
+      "promptPath": "styles/memphis/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

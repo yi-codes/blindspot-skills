@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **27** 个风格。
+当前 **28** 个风格。
 
 ## 决定表
 
@@ -40,6 +40,7 @@
 | **Frutiger Aero｜晴空拟物** `frutiger-aero` | 变体 | retro | frutiger-aero | 把 2004–2013 年"科技与自然和谐相处"的乐观想象做成一套可直接用的界面语言： 天蓝到草绿的通透渐变、带高光条的玻璃按钮、气泡与水滴、人文无衬线字。 |
 | **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
 | **Liquid Glass** `liquid-glass` | 变体 | operations | ui-styles-liquid-glass | 克制的半透明工作台。 |
+| **Memphis｜孟菲斯海报** `memphis` | 变体 | expressive | memphis | 把 1981 年米兰 Memphis Group 的后现代装饰语言做成一套可直接用的展示型界面： 奶白底、玫红/柠檬黄/薄荷/靛蓝四色撞色、3px 墨黑描边、6px 无模糊硬投影， 波点与 45° 斜纹只待在角落，圆/方/三角/波浪线故意错落。 |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | 变体 | editorial | — | 给真正拥有多条新闻的编辑首页：12 列、细线分栏、衬线标题与无衬线元信息， 首屏直接进入故事网格而非营销 Hero。 |
 | **夜色舞台** `nocturne` | 变体 | expressive | native | 一盏灯，一圈黑。 |
 | **Pixel Arcade｜像素街机** `pixel-arcade` | 变体 | retro | — | 面向复古游戏与轻量互动 demo 的 8-bit 界面。 |
@@ -69,6 +70,7 @@
 | **Gallery Wall｜展陈画廊** `gallery-wall` | beta | gallery | 变体 | — | 讲故事 | 浅色 | 松 | 艺术展览、博物馆与画廊、摄影作品集、艺术家档案、拍卖目录、文化机构官网、图片主导的作品展示 | 高密度后台、长文正文、复杂表单、促销电商、数据看板、以操作为主的工具界面 | `#F3F3F0` |
 | **Incident Room** `incident-room` | stable | operations | 核心 | ui-styles-ops-console | 讲工具 | 深色 | 紧 | 正在发生的事故、事故响应、值班交接、故障复盘、重大变更回滚、需要统一事件叙事的跨团队协作 | 日常低风险监控、营销页、长期产品文档、需要同时比较多个无关信号的普通控制台 | `#1A1714` |
 | **Liquid Glass** `liquid-glass` | stable | operations | 变体 | ui-styles-liquid-glass | 讲工具 | 双模 | 紧 | 高频盯屏的控制台、任务指挥台、状态面板、需要保留环境上下文的工作界面、桌面与平板工具 | 营销落地页、需要强烈视觉冲击的作品集、大量并排比较的长表格、打印 | `#F1F4F7` |
+| **Memphis｜孟菲斯海报** `memphis` | beta | expressive | 变体 | memphis | 讲故事 | 浅色 | 中 | 儿童教育与玩具文具品牌站、展览与创意市集活动页、音乐与时尚编辑页面、社交媒体封面与包装插画、需要强烈 80 年代后现代态度的展示型落地页 | 金融法律医疗等严肃场景、长文阅读与产品文档、需要极简克制品牌气质的产品、高密度后台与长表单、需要精确扫读的数据页、政务与公共服务 | `#FFF8EC` |
 | **Neobrutalist** `neobrutalist` | stable | expressive | 核心 | neobrutalism | 讲故事 | 浅色 | 中 | 作品集、活动页、创意工具、需要"有态度"的产品官网、年轻用户、独立产品 | 金融/医疗/政务、长文阅读、需要效率感的工具界面、企业后台 | `#DCEBFE` |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | beta | editorial | 变体 | — | 讲故事 | 浅色 | 紧 | 新闻首页、科技杂志、每日简报、专题聚合、多栏目编辑页、需要快速扫读标题的内容流 | 单一产品营销页、作品集、工具后台、复杂表单、内容不足三条的页面、沉浸式品牌叙事 | `#F7F6F2` |
 | **夜色舞台** `nocturne` | stable | expressive | 变体 | native | 讲故事 | 深色 | 中 | 桌游/剧本杀的产品页与发行页、活动与票务、沉浸式叙事产品、需要悬念的落地页、夜间模式的展示型界面 | 白天阅读的长文、后台与表单、数据密集型列表、需要平等比较多个选项的界面、打印 | `#0B0A09` |

@@ -137,6 +137,7 @@ const samples = [
   ["bento-grid", "preview/bento-grid.html"],
   ["vaporwave", "preview/vaporwave.html"],
   ["frutiger-aero", "preview/frutiger-aero.html"],
+  ["memphis", "preview/memphis.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],
