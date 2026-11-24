@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **28** 个风格。
+当前 **29** 个风格。
 
 ## 决定表
 
@@ -36,6 +36,7 @@
 |---|---|---|---|---|
 | **Bauhaus Grid｜包豪斯几何** `bauhaus` | 变体 | expressive | bauhaus | 用三原色、圆方三角与不对称网格做构图的海报式页面。 |
 | **Bento Grid｜便当格** `bento-grid` | 变体 | expressive | bento-grid | 用大小不等、圆角一致的卡片紧密拼成一屏，每格只装一个信息点，卡片跨度代表信息优先级。 |
+| **Constructivism｜构成主义海报** `constructivism` | 变体 | expressive | constructivism | 把 1910–30 年代构成主义海报的视觉语法做成展示型网页： 泛黄纸底 #F2E8D5、革命红 #CC0000 与暖墨 #1A1A1A 三色硬边， -2° 倾斜的号令式大标题、-12° 斜切红楔与 4px 墨线， 按钮用「色块侵入」横扫与红黑反转制造机械感。 |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | 变体 | ceremonial | — | 给精品酒店、晚宴、珠宝与颁奖典礼用的 Art Deco 页面。 |
 | **Frutiger Aero｜晴空拟物** `frutiger-aero` | 变体 | retro | frutiger-aero | 把 2004–2013 年"科技与自然和谐相处"的乐观想象做成一套可直接用的界面语言： 天蓝到草绿的通透渐变、带高光条的玻璃按钮、气泡与水滴、人文无衬线字。 |
 | **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
@@ -62,6 +63,7 @@
 | **Bento Grid｜便当格** `bento-grid` | beta | expressive | 变体 | bento-grid | 讲故事 | 浅色 | 中 | 产品功能总览与发布会规格墙、SaaS 营销落地页与作品集首屏、App 仪表盘首页与设置总览、需要一屏并列展示多个同级能力 | 长表单与密集数据表格、必须从上到下线性阅读的流程、少于五格的内容、长篇散文与论文、需要严肃权威气质的金融医疗政务、打印为主的单栏文档 | `#F4F4F5` |
 | **Civic** `civic` | stable | trusted-service | 核心 | govuk、uswds | 讲专业 | 浅色 | 中 | 政务/公共服务、表单密集的办事流程、需要无障碍合规、给不确定人群看的说明页、政策文件 | 品牌营销、需要"高级感"的官网、创意作品集、需要视觉冲击的页面 | `#FFFFFF` |
 | **Codex Workbench** `codex-workbench` | stable | workbench | 核心 | openai-codex-observed | 讲工具 | 双模 | 中 | Agent 任务工作台、产品方案页、设置页、插件面板、需要连续阅读和反复操作的工具页 | 营销落地页、强视觉叙事作品、数据密集型分析大屏、需要高密度多维图表的事故台 | `#F7F5F0` |
+| **Constructivism｜构成主义海报** `constructivism` | beta | expressive | 变体 | constructivism | 讲故事 | 浅色 | 中 | 文化活动与展览活动页、产品/影片/演出发布页、主张鲜明的宣言式落地页、体育与音乐赛事宣传页、需要一屏建立强烈态度的作品集首屏 | 长文阅读与论文、产品文档与帮助中心、高密度后台与数据表格、表单密集的办事流程、金融医疗法律等需要克制可信的场景、政务与官方公告、需要平等比较多个选项的页面 | `#F2E8D5` |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | beta | ceremonial | 变体 | — | 讲故事 | 深色 | 松 | 精品酒店、高级餐厅、珠宝与腕表、晚宴与典礼、电影节、会员制俱乐部、历史建筑与品牌纪念页 | 日常工具、数据后台、儿童产品、折扣电商、开发文档、密集表单、轻松亲民的消费 App | `#1A1A1A` |
 | **Developer Docs** `developer-docs` | stable | developer | 核心 | primer、geist、radix | 讲技术 | 双模 | 中 | 产品文档、API 参考、SDK 指南、开发者入门、版本迁移、代码示例密集的页面 | 终端模拟器、营销落地页、事故指挥台、纯打印论文、需要强情绪表达的页面 | `#F4F6F4` |
 | **Editorial Serif** `editorial-serif` | stable | reading | 核心 | native | 讲故事 | 浅色 | 松 | 长文、博客、白皮书、品牌故事、需要慢慢读的页面、杂志式栏目 | 工具界面、高密度数据、桌面应用、需要速度感的场景 | `#F2F3F0` |

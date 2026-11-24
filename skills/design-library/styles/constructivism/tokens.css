@@ -1,0 +1,359 @@
+/* ============================================================
+   Constructivism｜构成主义海报；容器 class="ds-constructivism"；前缀 --co-
+   参数来源：luckymaomi 风格卡（显式 CSS 变量与交互规则）
+            + indexstyle.org 辞典与 design.md（三色规格与构图规则）
+            + stylekit.top 动力学构成主义卡（字阶、间距与动效禁令）
+   三色封顶：纸 #F2E8D5 / 墨 #1A1A1A / 红 #CC0000
+   4px 墨线 / 2-4-6px 零模糊硬影 / -2deg 倾斜 / -12deg 红楔 / 100ms linear 侵入
+   ============================================================ */
+
+:where(.ds-constructivism) {
+  /* ---- 颜色：与 DESIGN.md front matter 一一对应 ---- */
+  --co-canvas: #F2E8D5;
+  --co-surface: #F7F0E1;
+  --co-surface-alt: #E7D7B8;
+  --co-ink: #1A1A1A;
+  --co-ink-muted: #4A433A;
+  --co-ink-faint: #6B6255;
+  --co-line: #1A1A1A;
+  --co-primary: #CC0000;
+  --co-on-primary: #F2E8D5;
+
+  /* ---- 字体：窄黑体做号令，Arial 做正文 ---- */
+  --co-font-display: Impact, Haettenschweiler, "Arial Narrow", "PingFang SC", sans-serif;
+  --co-font-body: Arial, "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --co-text-display: 72px;
+  --co-text-headline: 36px;
+  --co-text-card: 24px;
+  --co-text-body: 18px;
+  --co-text-label: 14px;
+  --co-leading-display: 0.95;
+  --co-leading-headline: 1;
+  --co-leading-card: 1.1;
+  --co-leading-body: 1.7;
+  --co-leading-label: 1.5;
+  --co-weight-display: 900;
+  --co-weight-body: 700;
+  --co-tracking-display: -0.03em;
+  --co-tracking-headline: 0.02em;
+  --co-tracking-label: 0.08em;
+
+  /* ---- 间距：8px 基数，96px 区块 ---- */
+  --co-space-base: 8px;
+  --co-space-xs: 8px;
+  --co-space-sm: 16px;
+  --co-space-md: 24px;
+  --co-space-lg: 40px;
+  --co-space-xl: 64px;
+  --co-space-section: 96px;
+  --co-measure: 34em;
+
+  /* ---- 形状：全直角，4px 墨线 ---- */
+  --co-radius-card: 0px;
+  --co-radius-tag: 0px;
+  --co-radius-button: 0px;
+  --co-rule: 4px solid var(--co-line);
+  --co-rule-strong: 4px solid var(--co-ink);
+  --co-rule-accent: 4px solid var(--co-primary);
+
+  /* ---- 版画压印：零模糊，光从左上 ---- */
+  --co-e1: 2px 2px 0 var(--co-ink);
+  --co-e2: 4px 4px 0 var(--co-ink);
+  --co-e3: 6px 6px 0 var(--co-ink);
+
+  /* ---- 机械动效：75/100ms linear ---- */
+  --co-duration-fast: 75ms;
+  --co-duration-base: 100ms;
+  --co-ease: linear;
+
+  background: var(--co-canvas);
+  color: var(--co-ink);
+  font-family: var(--co-font-body);
+  font-size: var(--co-text-body);
+  font-weight: var(--co-weight-body);
+  line-height: var(--co-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 基础排版：窄黑体做号令，正文保持可读 ---- */
+:where(.ds-constructivism) :where(h1, h2, h3, h4) {
+  font-family: var(--co-font-display);
+  font-weight: var(--co-weight-display);
+  margin: 0 0 var(--co-space-md);
+  line-height: var(--co-leading-headline);
+  letter-spacing: var(--co-tracking-headline);
+}
+:where(.ds-constructivism) :where(h1) {
+  font-size: var(--co-text-display);
+  line-height: var(--co-leading-display);
+  letter-spacing: var(--co-tracking-display);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+:where(.ds-constructivism) :where(h2) { font-size: var(--co-text-headline); }
+:where(.ds-constructivism) :where(h3) { font-size: var(--co-text-card); }
+:where(.ds-constructivism) :where(p) {
+  margin: 0 0 var(--co-space-sm);
+  max-width: var(--co-measure);
+}
+:where(.ds-constructivism) :where(a) {
+  color: var(--co-primary);
+  font-weight: var(--co-weight-body);
+  text-decoration-thickness: 4px;
+  text-underline-offset: var(--co-space-xs);
+  transition: color var(--co-duration-base) var(--co-ease);
+}
+:where(.ds-constructivism) :where(a):hover { color: var(--co-ink); }
+:where(.ds-constructivism) :where(img) {
+  display: block;
+  max-width: 100%;
+  border: var(--co-rule-strong);
+  border-radius: var(--co-radius-card);
+}
+:where(.ds-constructivism) :where(hr) {
+  border: 0;
+  border-top: var(--co-rule);
+  margin: var(--co-space-xl) 0;
+}
+
+/* ---- 主按钮：红底纸字 + 4px 墨边 + 色块侵入横扫 ---- */
+:where(.ds-constructivism) :where(button, .ds-btn) {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  border: var(--co-rule-strong);
+  border-radius: var(--co-radius-button);
+  background-color: var(--co-primary);
+  background-image: linear-gradient(to right,
+    var(--co-ink) 0 50%, var(--co-primary) 50% 100%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  color: var(--co-on-primary);
+  font-family: var(--co-font-body);
+  font-size: var(--co-text-label);
+  font-weight: var(--co-weight-body);
+  line-height: var(--co-leading-label);
+  letter-spacing: var(--co-tracking-label);
+  cursor: pointer;
+  box-shadow: var(--co-e2);
+  transition: background-position var(--co-duration-base) var(--co-ease),
+              transform var(--co-duration-base) var(--co-ease),
+              box-shadow var(--co-duration-base) var(--co-ease),
+              color var(--co-duration-fast) var(--co-ease);
+}
+:where(.ds-constructivism) :where(button, .ds-btn):hover {
+  background-position: 0 0;
+  transform: translate(4px, 4px);
+  box-shadow: var(--co-e1);
+}
+:where(.ds-constructivism) :where(button, .ds-btn):active {
+  background-image: none;
+  background-color: var(--co-ink);
+  color: var(--co-primary);
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ---- 卡片：4px 墨线 + 4px 硬影，第一张静态倾斜 ---- */
+:where(.ds-constructivism) :where(.ds-card) {
+  position: relative;
+  padding: var(--co-space-md);
+  background: var(--co-surface);
+  color: var(--co-ink);
+  border: var(--co-rule);
+  border-radius: var(--co-radius-card);
+  box-shadow: var(--co-e2);
+  transition: transform var(--co-duration-base) var(--co-ease),
+              box-shadow var(--co-duration-base) var(--co-ease);
+}
+:where(.ds-constructivism) :where(.ds-card):hover {
+  transform: translate(4px, 4px);
+  box-shadow: var(--co-e1);
+}
+:where(.ds-constructivism) :where(.ds-card) :where(h2, h3) {
+  font-family: var(--co-font-display);
+  color: var(--co-primary);
+  font-size: var(--co-text-card);
+  font-weight: var(--co-weight-display);
+  line-height: var(--co-leading-card);
+}
+
+/* ---- 标签：墨底纸字方牌 ---- */
+:where(.ds-constructivism) :where(.ds-tag) {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--co-ink);
+  color: var(--co-canvas);
+  border: var(--co-rule-strong);
+  border-radius: var(--co-radius-tag);
+  font-family: var(--co-font-body);
+  font-size: var(--co-text-label);
+  font-weight: var(--co-weight-body);
+  line-height: var(--co-leading-label);
+  letter-spacing: var(--co-tracking-label);
+}
+
+/* ---- 首屏骨架：红楔 + -2deg 墨线 + 右侧粗网点 ---- */
+.ds-constructivism.preview-root {
+  position: relative;
+  isolation: isolate;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--co-space-md);
+  background: var(--co-canvas);
+  overflow: hidden;
+}
+.ds-constructivism.preview-root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 62%;
+  background: var(--co-primary);
+  clip-path: polygon(0 0, 100% 0, 62% 100%, 0 100%);
+  transform: skewX(-12deg);
+  z-index: -1;
+  pointer-events: none;
+}
+.ds-constructivism.preview-root::after {
+  content: "";
+  position: absolute;
+  top: 58%;
+  left: -10%;
+  width: 120%;
+  height: var(--co-space-xs);
+  background: var(--co-ink);
+  transform: rotate(-2deg);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ds-constructivism .frame-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--co-space-md);
+  padding: var(--co-space-sm) var(--co-space-md);
+  background: var(--co-ink);
+  color: var(--co-canvas);
+  border-bottom: var(--co-rule-accent);
+}
+.ds-constructivism .frame-nav strong {
+  font-family: var(--co-font-display);
+  font-size: var(--co-text-card);
+  font-weight: var(--co-weight-display);
+  color: var(--co-canvas);
+}
+.ds-constructivism .frame-nav span,
+.ds-constructivism .frame-nav a {
+  font-size: var(--co-text-label);
+  letter-spacing: var(--co-tracking-label);
+}
+.ds-constructivism .frame-nav a { color: var(--co-canvas); }
+
+.ds-constructivism .frame-story {
+  position: relative;
+  isolation: isolate;
+  margin-top: var(--co-space-xl);
+  padding: var(--co-space-xl) var(--co-space-lg);
+  background: var(--co-surface);
+  border: var(--co-rule-strong);
+  box-shadow: var(--co-e3);
+}
+.ds-constructivism .frame-story::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  background: radial-gradient(circle, var(--co-ink) 1px, transparent 1.2px) 0 0 / 4px 4px;
+  opacity: 0.28;
+  z-index: -1;
+  pointer-events: none;
+}
+.ds-constructivism .frame-context {
+  color: var(--co-ink-faint);
+  font-size: var(--co-text-label);
+  letter-spacing: var(--co-tracking-label);
+  margin-bottom: var(--co-space-sm);
+}
+.ds-constructivism .frame-story h1 {
+  max-width: 14em;
+  color: var(--co-ink);
+}
+.ds-constructivism .frame-lede {
+  color: var(--co-ink-muted);
+  font-size: var(--co-text-body);
+  line-height: var(--co-leading-body);
+  max-width: var(--co-measure);
+}
+.ds-constructivism .frame-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--co-space-md);
+  margin: var(--co-space-lg) 0 var(--co-space-xl);
+}
+.ds-constructivism .frame-actions a {
+  padding-bottom: var(--co-space-xs);
+  border-bottom: var(--co-rule-accent);
+  text-decoration: none;
+}
+
+.ds-constructivism .frame-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: var(--co-space-md);
+  margin-top: var(--co-space-xl);
+  padding-top: var(--co-space-lg);
+  border-top: var(--co-rule-strong);
+}
+.ds-constructivism .frame-grid .ds-card:nth-child(1) {
+  transform: rotate(-2deg);
+  background: var(--co-surface-alt);
+}
+.ds-constructivism .frame-grid .ds-card:nth-child(1):hover {
+  transform: translate(4px, 4px);
+}
+
+/* ---- 焦点 / 禁用 / 错误：不新增颜色 ---- */
+:where(.ds-constructivism) :where(a, button, .ds-btn):focus-visible {
+  outline: 2px solid var(--co-primary);
+  outline-offset: 2px;
+}
+:where(.ds-constructivism) :where(button, .ds-btn):disabled {
+  background-image: none;
+  background: var(--co-surface-alt);
+  color: var(--co-ink-faint);
+  border-color: var(--co-ink-faint);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+:where(.ds-constructivism) :where([aria-invalid="true"]) {
+  border: var(--co-rule-accent);
+}
+
+@media (max-width: 767px) {
+  :where(.ds-constructivism) :where(h1) {
+    font-size: var(--co-text-headline);
+    line-height: var(--co-leading-headline);
+    transform: rotate(-2deg);
+  }
+  .ds-constructivism.preview-root { padding: var(--co-space-sm); }
+  .ds-constructivism .frame-nav { flex-wrap: wrap; }
+  .ds-constructivism .frame-story { padding: var(--co-space-md); }
+  .ds-constructivism .frame-grid { grid-template-columns: 1fr; }
+  .ds-constructivism .frame-grid .ds-card:nth-child(n) { transform: rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-constructivism) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}

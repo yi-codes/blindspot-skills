@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 28,
+  "count": 29,
   "styles": [
     {
       "slug": "academic",
@@ -248,6 +248,49 @@
       "designPath": "styles/codex-workbench/DESIGN.md",
       "tokensPath": "styles/codex-workbench/tokens.css",
       "promptPath": "styles/codex-workbench/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "constructivism",
+      "name": "Constructivism｜构成主义海报",
+      "description": "把 1910–30 年代构成主义海报的视觉语法做成展示型网页： 泛黄纸底 #F2E8D5、革命红 #CC0000 与暖墨 #1A1A1A 三色硬边， -2° 倾斜的号令式大标题、-12° 斜切红楔与 4px 墨线， 按钮用「色块侵入」横扫与红黑反转制造机械感。 用于行动号召强烈的活动页、文化展览、发布页与宣言式落地页。 参数提炼自 luckymaomi 风格卡的显式 CSS 变量与交互规则、indexstyle 辞典条目的三色规格、 stylekit 动力学构成主义卡的完整字阶与动效禁令；标为 beta/variant。 为符合本库 The Floor，把来源 font-black 收进 900/700 两档、正文提到 18px/1.7， 并把来源的金/棕/群青等补充色全部去掉，只保留红、墨、纸三色。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "constructivism"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "文化活动与展览活动页",
+        "产品/影片/演出发布页",
+        "主张鲜明的宣言式落地页",
+        "体育与音乐赛事宣传页",
+        "需要一屏建立强烈态度的作品集首屏"
+      ],
+      "avoid": [
+        "长文阅读与论文",
+        "产品文档与帮助中心",
+        "高密度后台与数据表格",
+        "表单密集的办事流程",
+        "金融医疗法律等需要克制可信的场景",
+        "政务与官方公告",
+        "需要平等比较多个选项的页面"
+      ],
+      "prefix": "--co-*",
+      "className": "ds-constructivism",
+      "canvas": "#F2E8D5",
+      "ink": "#1A1A1A",
+      "accent": "#CC0000",
+      "previewUrl": "preview/constructivism.html",
+      "designPath": "styles/constructivism/DESIGN.md",
+      "tokensPath": "styles/constructivism/tokens.css",
+      "promptPath": "styles/constructivism/prompt.md",
       "has_prompt": true,
       "has_css": true
     },
