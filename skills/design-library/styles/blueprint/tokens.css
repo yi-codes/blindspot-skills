@@ -1,0 +1,357 @@
+/* ============================================================
+   Blueprint｜工程蓝图；容器 class="ds-blueprint"；前缀 --bl-
+   参数来源：liuyutao 工程蓝图风格卡（显式色板与提示词）
+            + StyleKit 工程蓝图卡（CSS 变量、字阶、组件规格）
+            + Blueprint / Wireframe UI（连接区块、虚线与编号规则）
+   三色关系：蓝晒蓝 #0B3D91 / 图纸白 #E8F1FF / 标注黄 #FFD36A
+   20px 白线网格 / 1px 线框 / 0px 圆角 / 零投影 / 120ms linear
+   ============================================================ */
+
+:where(.ds-blueprint) {
+  /* ---- 颜色：与 DESIGN.md front matter 一一对应 ---- */
+  --bl-canvas: #0B3D91;
+  --bl-surface: #0E4AA8;
+  --bl-surface-alt: #092F73;
+  --bl-ink: #E8F1FF;
+  --bl-ink-muted: #9EC1FF;
+  --bl-ink-faint: #8BB8F5;
+  --bl-hairline: rgba(232, 241, 255, 0.30);
+  --bl-line: #E8F1FF;
+  --bl-primary: #FFD36A;
+  --bl-on-primary: #0B3D91;
+
+  /* ---- 字体：全站等宽，中文回退系统黑体 ---- */
+  --bl-font-mono: "JetBrains Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+
+  --bl-text-display: 56px;
+  --bl-text-headline: 32px;
+  --bl-text-card: 24px;
+  --bl-text-body: 18px;
+  --bl-text-label: 14px;
+  --bl-leading-display: 1.15;
+  --bl-leading-headline: 1.2;
+  --bl-leading-card: 1.3;
+  --bl-leading-body: 1.7;
+  --bl-leading-label: 1.4;
+  --bl-weight-body: 400;
+  --bl-weight-strong: 700;
+  --bl-tracking-display: 0.08em;
+  --bl-tracking-card: 0.04em;
+  --bl-tracking-label: 0.16em;
+
+  /* ---- 间距：4px 基数，20px 图纸网格 ---- */
+  --bl-space-base: 4px;
+  --bl-space-xs: 8px;
+  --bl-space-sm: 12px;
+  --bl-space-md: 24px;
+  --bl-space-lg: 32px;
+  --bl-space-xl: 48px;
+  --bl-space-section: 96px;
+  --bl-measure: 34em;
+  --bl-grid: 20px;
+
+  /* ---- 形状：全直角，1px 线框 ---- */
+  --bl-radius-card: 0px;
+  --bl-radius-tag: 0px;
+  --bl-radius-button: 0px;
+  --bl-rule: 1px solid var(--bl-hairline);
+  --bl-rule-strong: 1px solid var(--bl-line);
+  --bl-rule-dashed: 1px dashed var(--bl-hairline);
+
+  /* ---- 线框阶梯：图纸是平的，零模糊 ---- */
+  --bl-e2: 0 0 0 1px rgba(232, 241, 255, 0.30);
+  --bl-e3: 0 0 0 1px rgba(232, 241, 255, 0.60);
+
+  /* ---- 机械动效：75/120ms linear ---- */
+  --bl-duration-fast: 75ms;
+  --bl-duration-base: 120ms;
+  --bl-ease: linear;
+
+  background: var(--bl-canvas);
+  color: var(--bl-ink);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-body);
+  font-weight: var(--bl-weight-body);
+  line-height: var(--bl-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 基础排版 ---- */
+:where(.ds-blueprint) :where(h1, h2, h3, h4) {
+  font-family: var(--bl-font-mono);
+  font-weight: var(--bl-weight-strong);
+  margin: 0 0 var(--bl-space-md);
+  line-height: var(--bl-leading-headline);
+  letter-spacing: var(--bl-tracking-card);
+}
+:where(.ds-blueprint) :where(h1) {
+  font-size: var(--bl-text-display);
+  line-height: var(--bl-leading-display);
+  letter-spacing: var(--bl-tracking-display);
+  color: var(--bl-ink);
+}
+:where(.ds-blueprint) :where(h2) { font-size: var(--bl-text-headline); }
+:where(.ds-blueprint) :where(h3) { font-size: var(--bl-text-card); }
+:where(.ds-blueprint) :where(p) {
+  margin: 0 0 var(--bl-space-sm);
+  max-width: var(--bl-measure);
+}
+:where(.ds-blueprint) :where(a) {
+  color: var(--bl-ink-muted);
+  border-bottom: var(--bl-rule-dashed);
+  text-decoration: none;
+  transition: color var(--bl-duration-fast) var(--bl-ease);
+}
+:where(.ds-blueprint) :where(a):hover { color: var(--bl-primary); }
+:where(.ds-blueprint) :where(img) {
+  display: block;
+  max-width: 100%;
+  border: var(--bl-rule);
+  border-radius: var(--bl-radius-card);
+}
+:where(.ds-blueprint) :where(hr) {
+  border: 0;
+  border-top: var(--bl-rule-dashed);
+  margin: var(--bl-space-xl) 0;
+}
+
+/* ---- 图面骨架：20px 白线网格 + 角落十字准星 ---- */
+.ds-blueprint.preview-root {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--bl-space-xl) var(--bl-space-lg);
+  background: var(--bl-canvas);
+}
+.ds-blueprint.preview-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(232, 241, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(232, 241, 255, 0.12) 1px, transparent 1px);
+  background-size: var(--bl-grid) var(--bl-grid);
+  z-index: -1;
+  pointer-events: none;
+}
+.ds-blueprint.preview-root::after {
+  content: "+";
+  position: absolute;
+  top: var(--bl-space-sm);
+  right: var(--bl-space-sm);
+  color: var(--bl-ink-muted);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-card);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ---- 导航：共享边框，标签按图纸编号处理 ---- */
+.ds-blueprint .frame-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bl-space-md);
+  padding: var(--bl-space-sm) var(--bl-space-md);
+  background: var(--bl-surface-alt);
+  border: var(--bl-rule);
+  border-bottom: var(--bl-rule-strong);
+}
+.ds-blueprint .frame-nav strong {
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-card);
+  font-weight: var(--bl-weight-strong);
+  color: var(--bl-ink);
+}
+.ds-blueprint .frame-nav span {
+  /* slop-ok S3: 图纸区块标签按制图惯例全大写，是功能性图例不是装饰序言 */
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  font-weight: var(--bl-weight-strong);
+  letter-spacing: var(--bl-tracking-label);
+  text-transform: uppercase;
+  color: var(--bl-ink-muted);
+}
+.ds-blueprint .frame-nav a { font-size: var(--bl-text-label); }
+
+/* ---- 技术页：图块编号 + 尺寸标注 ---- */
+.ds-blueprint .frame-technical {
+  position: relative;
+  margin-top: var(--bl-space-section);
+  padding: var(--bl-space-lg) var(--bl-space-md) var(--bl-space-xl);
+  border-left: var(--bl-rule);
+  border-right: var(--bl-rule);
+}
+.ds-blueprint .frame-technical header {
+  position: relative;
+  padding-bottom: var(--bl-space-md);
+  border-bottom: var(--bl-rule-dashed);
+}
+.ds-blueprint .frame-technical header::after {
+  content: "DWG. 01 / SCALE 1:1";
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  letter-spacing: var(--bl-tracking-label);
+  color: var(--bl-primary);
+}
+.ds-blueprint .frame-technical h1 {
+  max-width: 18em;
+  font-size: var(--bl-text-headline);
+  line-height: var(--bl-leading-headline);
+  letter-spacing: var(--bl-tracking-card);
+}
+.ds-blueprint .frame-technical pre {
+  padding: var(--bl-space-sm);
+  background: var(--bl-surface-alt);
+  color: var(--bl-ink);
+  border: var(--bl-rule-dashed);
+  border-radius: var(--bl-radius-card);
+  font-size: var(--bl-text-body);
+  line-height: var(--bl-leading-body);
+}
+.ds-blueprint .frame-technical .frame-grid {
+  position: relative;
+  margin-top: var(--bl-space-xl);
+  padding-top: var(--bl-space-lg);
+  counter-reset: fig;
+}
+.ds-blueprint .frame-technical .frame-grid::before {
+  content: "max-width: 1120px";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: var(--bl-space-xs);
+  border-top: var(--bl-rule-dashed);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  letter-spacing: var(--bl-tracking-label);
+  color: var(--bl-primary);
+}
+
+/* ---- 卡片：共用边框、零间隙、零投影 ---- */
+.ds-blueprint :where(.ds-card) {
+  position: relative;
+  padding: var(--bl-space-md);
+  background: var(--bl-surface);
+  color: var(--bl-ink);
+  border: var(--bl-rule);
+  border-radius: var(--bl-radius-card);
+  box-shadow: none;
+  transition: border-color var(--bl-duration-fast) var(--bl-ease);
+}
+.ds-blueprint :where(.ds-card):hover {
+  box-shadow: var(--bl-e3);
+  border-color: var(--bl-line);
+}
+.ds-blueprint :where(.ds-card) :where(h2, h3) {
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-card);
+  font-weight: var(--bl-weight-strong);
+  line-height: var(--bl-leading-card);
+  color: var(--bl-ink);
+}
+.ds-blueprint .frame-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 0;
+  border: var(--bl-rule);
+}
+.ds-blueprint .frame-grid .ds-card {
+  border-right: var(--bl-rule);
+  border-bottom: 0;
+}
+.ds-blueprint .frame-grid .ds-card:last-child { border-right: 0; }
+.ds-blueprint .frame-grid .ds-card::before {
+  counter-increment: fig;
+  content: "FIG. 0" counter(fig);
+  display: block;
+  margin-bottom: var(--bl-space-sm);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  font-weight: var(--bl-weight-strong);
+  letter-spacing: var(--bl-tracking-label);
+  color: var(--bl-primary);
+}
+
+/* ---- 主按钮：线框黄字，按下黄底蓝字 ---- */
+:where(.ds-blueprint) :where(button, .ds-btn) {
+  /* slop-ok S3: 图纸按钮标签按制图惯例全大写，是功能性图例不是装饰序言 */
+  display: inline-block;
+  padding: var(--bl-space-sm) var(--bl-space-md);
+  border: 1px solid var(--bl-primary);
+  border-radius: var(--bl-radius-button);
+  background: transparent;
+  color: var(--bl-primary);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  font-weight: var(--bl-weight-strong);
+  line-height: var(--bl-leading-label);
+  letter-spacing: var(--bl-tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--bl-duration-fast) var(--bl-ease),
+              color var(--bl-duration-fast) var(--bl-ease);
+}
+:where(.ds-blueprint) :where(button, .ds-btn):hover {
+  background: var(--bl-primary);
+  color: var(--bl-on-primary);
+}
+:where(.ds-blueprint) :where(button, .ds-btn):active {
+  background: var(--bl-on-primary);
+  color: var(--bl-primary);
+}
+
+/* ---- 标签：深蓝底浅蓝字，虚线框 ---- */
+:where(.ds-blueprint) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--bl-space-xs) var(--bl-space-sm);
+  background: var(--bl-surface-alt);
+  color: var(--bl-ink-muted);
+  border: var(--bl-rule-dashed);
+  border-radius: var(--bl-radius-tag);
+  font-family: var(--bl-font-mono);
+  font-size: var(--bl-text-label);
+  font-weight: var(--bl-weight-strong);
+  line-height: var(--bl-leading-label);
+}
+
+/* ---- 焦点 / 禁用 / 错误：不新增颜色 ---- */
+:where(.ds-blueprint) :where(a, button, .ds-btn):focus-visible {
+  outline: 2px solid var(--bl-primary);
+  outline-offset: 2px;
+}
+:where(.ds-blueprint) :where(button, .ds-btn):disabled {
+  background: var(--bl-surface-alt);
+  color: var(--bl-ink-faint);
+  border-style: dashed;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+:where(.ds-blueprint) :where([aria-invalid="true"]) {
+  border: 1px dashed var(--bl-primary);
+}
+
+@media (max-width: 767px) {
+  .ds-blueprint.preview-root { padding: var(--bl-space-md) var(--bl-space-sm); }
+  .ds-blueprint .frame-nav { flex-wrap: wrap; }
+  .ds-blueprint .frame-technical { margin-top: var(--bl-space-xl); padding: var(--bl-space-md); }
+  .ds-blueprint .frame-technical header::after { position: static; display: block; margin-bottom: var(--bl-space-sm); }
+  .ds-blueprint .frame-grid { grid-template-columns: 1fr; }
+  .ds-blueprint .frame-grid .ds-card { border-right: 0; border-bottom: var(--bl-rule); }
+  .ds-blueprint .frame-grid .ds-card:last-child { border-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-blueprint) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}

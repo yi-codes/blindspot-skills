@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 29,
+  "count": 30,
   "styles": [
     {
       "slug": "academic",
@@ -167,6 +167,48 @@
       "designPath": "styles/bento-grid/DESIGN.md",
       "tokensPath": "styles/bento-grid/tokens.css",
       "promptPath": "styles/bento-grid/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "blueprint",
+      "name": "Blueprint｜工程蓝图",
+      "description": "把氰版晒图的工程图纸语法搬进网页：蓝晒蓝 #0B3D91 底上铺 20px 白线网格， 1px 图纸白线框把区块连成一张图，尺寸虚线、十字准星和 FIG. 编号说明每块是什么， 标注黄 #FFD36A 只给关键数字与主行动。用于建筑/硬件项目页、技术发布会、开发者活动 和需要「先给结构，再给细节」的规格展示页。参数取自 liuyutao 风格词典的显式色板与提示词、 StyleKit 工程蓝图卡的 CSS 变量与组件规格、Blueprint / Wireframe UI 的边缘与连接规则； 标为 beta/variant。为符合本库 The Floor，把来源 13px 正文提到 18px/1.7、 字重收进 400/700 两档，并弃用黑底、紫标与暖橙高亮。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "developer",
+      "tier": "variant",
+      "sourceRefs": [
+        "blueprint"
+      ],
+      "register": "technical",
+      "surface": "dark",
+      "density": "medium",
+      "cues": [
+        "建筑与硬件项目页",
+        "开发者大会与黑客松活动页",
+        "众筹产品结构展示专题",
+        "技术方案与规格说明页",
+        "需要展示「未建成图纸」感的作品集"
+      ],
+      "avoid": [
+        "温馨消费品牌主站",
+        "长篇散文与小说阅读",
+        "需要柔和亲和插画的消费 App",
+        "无障碍要求下的长表单默认皮",
+        "金融医疗政务等需要权威稳重的页面",
+        "打印为主的单栏文档"
+      ],
+      "prefix": "--bl-*",
+      "className": "ds-blueprint",
+      "canvas": "#0B3D91",
+      "ink": "#E8F1FF",
+      "accent": "#FFD36A",
+      "previewUrl": "preview/blueprint.html",
+      "designPath": "styles/blueprint/DESIGN.md",
+      "tokensPath": "styles/blueprint/tokens.css",
+      "promptPath": "styles/blueprint/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **29** 个风格。
+当前 **30** 个风格。
 
 ## 决定表
 
@@ -36,6 +36,7 @@
 |---|---|---|---|---|
 | **Bauhaus Grid｜包豪斯几何** `bauhaus` | 变体 | expressive | bauhaus | 用三原色、圆方三角与不对称网格做构图的海报式页面。 |
 | **Bento Grid｜便当格** `bento-grid` | 变体 | expressive | bento-grid | 用大小不等、圆角一致的卡片紧密拼成一屏，每格只装一个信息点，卡片跨度代表信息优先级。 |
+| **Blueprint｜工程蓝图** `blueprint` | 变体 | developer | blueprint | 把氰版晒图的工程图纸语法搬进网页：蓝晒蓝 #0B3D91 底上铺 20px 白线网格， 1px 图纸白线框把区块连成一张图，尺寸虚线、十字准星和 FIG. 编号说明每块是什么， 标注黄 #FFD36A 只给关键数字与主行动。 |
 | **Constructivism｜构成主义海报** `constructivism` | 变体 | expressive | constructivism | 把 1910–30 年代构成主义海报的视觉语法做成展示型网页： 泛黄纸底 #F2E8D5、革命红 #CC0000 与暖墨 #1A1A1A 三色硬边， -2° 倾斜的号令式大标题、-12° 斜切红楔与 4px 墨线， 按钮用「色块侵入」横扫与红黑反转制造机械感。 |
 | **Deco Ceremony｜装饰艺术典礼** `deco-ceremony` | 变体 | ceremonial | — | 给精品酒店、晚宴、珠宝与颁奖典礼用的 Art Deco 页面。 |
 | **Frutiger Aero｜晴空拟物** `frutiger-aero` | 变体 | retro | frutiger-aero | 把 2004–2013 年"科技与自然和谐相处"的乐观想象做成一套可直接用的界面语言： 天蓝到草绿的通透渐变、带高光条的玻璃按钮、气泡与水滴、人文无衬线字。 |
@@ -61,6 +62,7 @@
 | **Adaptive Companion** `adaptive-companion` | stable | companion | 核心 | material-3、fluent-2 | 讲工具 | 双模 | 松 | 移动端 app、跨设备助理、陪伴型工具、个人日程、触控操作、渐进式引导、响应式产品 | 高密度管理后台、宽表格、事故指挥台、营销落地页、以打印为主的文档 | `#F1F3F4` |
 | **Bauhaus Grid｜包豪斯几何** `bauhaus` | beta | expressive | 变体 | bauhaus | 讲故事 | 浅色 | 松 | 设计工作室与建筑事务所作品集、文化机构与美术馆页面、字体展示与设计教育、品牌发布与主视觉页、需要强烈设计主张的落地页 | 大目录电商、内容密集型新闻与博客、高密度后台与表单、需要温暖亲和的消费产品、金融医疗与政务、多人协作的复杂工具界面 | `#F4F0E6` |
 | **Bento Grid｜便当格** `bento-grid` | beta | expressive | 变体 | bento-grid | 讲故事 | 浅色 | 中 | 产品功能总览与发布会规格墙、SaaS 营销落地页与作品集首屏、App 仪表盘首页与设置总览、需要一屏并列展示多个同级能力 | 长表单与密集数据表格、必须从上到下线性阅读的流程、少于五格的内容、长篇散文与论文、需要严肃权威气质的金融医疗政务、打印为主的单栏文档 | `#F4F4F5` |
+| **Blueprint｜工程蓝图** `blueprint` | beta | developer | 变体 | blueprint | 讲技术 | 深色 | 中 | 建筑与硬件项目页、开发者大会与黑客松活动页、众筹产品结构展示专题、技术方案与规格说明页、需要展示「未建成图纸」感的作品集 | 温馨消费品牌主站、长篇散文与小说阅读、需要柔和亲和插画的消费 App、无障碍要求下的长表单默认皮、金融医疗政务等需要权威稳重的页面、打印为主的单栏文档 | `#0B3D91` |
 | **Civic** `civic` | stable | trusted-service | 核心 | govuk、uswds | 讲专业 | 浅色 | 中 | 政务/公共服务、表单密集的办事流程、需要无障碍合规、给不确定人群看的说明页、政策文件 | 品牌营销、需要"高级感"的官网、创意作品集、需要视觉冲击的页面 | `#FFFFFF` |
 | **Codex Workbench** `codex-workbench` | stable | workbench | 核心 | openai-codex-observed | 讲工具 | 双模 | 中 | Agent 任务工作台、产品方案页、设置页、插件面板、需要连续阅读和反复操作的工具页 | 营销落地页、强视觉叙事作品、数据密集型分析大屏、需要高密度多维图表的事故台 | `#F7F5F0` |
 | **Constructivism｜构成主义海报** `constructivism` | beta | expressive | 变体 | constructivism | 讲故事 | 浅色 | 中 | 文化活动与展览活动页、产品/影片/演出发布页、主张鲜明的宣言式落地页、体育与音乐赛事宣传页、需要一屏建立强烈态度的作品集首屏 | 长文阅读与论文、产品文档与帮助中心、高密度后台与数据表格、表单密集的办事流程、金融医疗法律等需要克制可信的场景、政务与官方公告、需要平等比较多个选项的页面 | `#F2E8D5` |

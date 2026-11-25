@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Blueprint｜工程蓝图 的真实 token 渲染预览。">
+  <title>Blueprint｜工程蓝图 · Design Library Preview</title>
+  <link rel="stylesheet" href="_frame.css">
+  <link rel="stylesheet" href="../styles/blueprint/tokens.css">
+</head>
+<body>
+  <div class="ds-blueprint preview-root">
+
+      <nav class="frame-nav">
+        <strong>runtime-kit</strong>
+        <span>Guide</span>
+        <a href="#sample-main">API reference</a>
+      </nav>
+      <main id="sample-main" class="frame-technical">
+        <header>
+          <h1>从一个可验证的最小任务开始</h1>
+          <p class="frame-lede">技术页面的首要任务不是显得复杂，而是让读者能复现结果、定位失败并继续前进。</p>
+        </header>
+        <section class="frame-grid">
+          <article class="ds-card">
+            <h2>安装</h2>
+            <pre><code>npm install runtime-kit</code></pre>
+            <p>列出唯一需要的命令，不混入可选步骤。</p>
+          </article>
+          <article class="ds-card">
+            <h2>运行</h2>
+            <pre><code>runtime-kit check --strict</code></pre>
+            <p>成功与失败都要给出下一步，而不是只抛错误。</p>
+          </article>
+          <article class="ds-card">
+            <h2>验证</h2>
+            <pre><code>0 errors, 0 warnings</code></pre>
+            <p>用可观察结果结束，不写“配置完成”却无法验证。</p>
+          </article>
+        </section>
+      </main>
+
+  </div>
+</body>
+</html>

@@ -139,6 +139,7 @@ const samples = [
   ["frutiger-aero", "preview/frutiger-aero.html"],
   ["memphis", "preview/memphis.html"],
   ["constructivism", "preview/constructivism.html"],
+  ["blueprint", "preview/blueprint.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],
