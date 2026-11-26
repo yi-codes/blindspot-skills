@@ -140,6 +140,7 @@ const samples = [
   ["memphis", "preview/memphis.html"],
   ["constructivism", "preview/constructivism.html"],
   ["blueprint", "preview/blueprint.html"],
+  ["art-nouveau", "preview/art-nouveau.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],

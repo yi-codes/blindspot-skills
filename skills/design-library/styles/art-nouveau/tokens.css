@@ -1,0 +1,362 @@
+/* ============================================================
+   Art Nouveau｜新艺术曲线；容器 class="ds-art-nouveau"；前缀 --ar-
+   参数来源：StyleKit 新艺术卡（显式色板 / Playfair Display 字阶 /
+             32·999·48px 圆角 / 500–700ms ease-in-out / 组件与禁令）
+            + aesthetic.fyi（Mucha 海报四色 / 60% 40% 55% 45% 鞭状圆角）
+            + 风格谱（70/25/5 面积比 / 非对称垂直延展 + 整体装饰框架）
+            + StyleUI Liberty（金色焦点 / 展开态）
+   色板：奶油纸 #F5EFE0 / 软象牙 #FAF7EF / 深绿 #2D5016 / 烫金 #C9A227 / 酒红 #8B2252
+   注意：金色只走 1px 线与边框（对纸底 2.11:1），不进正文；阴影全部带偏移。
+   ============================================================ */
+
+:where(.ds-art-nouveau) {
+  /* ---- 颜色：与 DESIGN.md front matter 一一对应 ---- */
+  --ar-canvas: #F5EFE0;
+  --ar-surface: #FAF7EF;
+  --ar-surface-alt: #2D5016;
+  --ar-ink: #2D5016;
+  --ar-ink-muted: #3F6B35;
+  --ar-ink-faint: #6B7B3C;
+  --ar-leaf: #4A7C3F;
+  --ar-hairline: rgba(201, 162, 39, 0.35);
+  --ar-line: #C9A227;
+  --ar-primary: #2D5016;
+  --ar-on-primary: #F5EFE0;
+  --ar-accent: #8B2252;
+
+  /* ---- 字体：一族到底，中文回退宋体类 ---- */
+  --ar-font-serif: "Playfair Display", Georgia, "Songti SC", "Noto Serif CJK SC", "STSong", serif;
+
+  --ar-text-display: 60px;
+  --ar-text-heading-lg: 48px;
+  --ar-text-heading: 36px;
+  --ar-text-subheading: 26px;
+  --ar-text-body: 20px;
+  --ar-text-label: 16px;
+  --ar-leading-display: 1.1;
+  --ar-leading-heading-lg: 1.15;
+  --ar-leading-heading: 1.25;
+  --ar-leading-subheading: 1.35;
+  --ar-leading-body: 1.8;
+  --ar-leading-label: 1.5;
+  --ar-weight-body: 400;
+  --ar-weight-strong: 700;
+  --ar-tracking-display: 0.01em;
+  --ar-tracking-label: 0.12em;
+
+  /* ---- 间距：8px 基数，36px 卡片内边距，128px 章节间距 ---- */
+  --ar-space-base: 8px;
+  --ar-space-xs: 16px;
+  --ar-space-sm: 24px;
+  --ar-space-md: 36px;
+  --ar-space-lg: 48px;
+  --ar-space-xl: 64px;
+  --ar-space-section: 128px;
+  --ar-wavelength: 120px;
+  --ar-ornament: 32px;
+  --ar-measure: 34em;
+
+  /* ---- 形状：拱形与鞭状曲线，无直角 ---- */
+  --ar-radius-card: 32px;
+  --ar-radius-button: 999px;
+  --ar-radius-tag: 999px;
+  --ar-radius-frame: 48px;
+  --ar-radius-image: 8px;
+  --ar-radius-whiplash: 60% 40% 55% 45%;
+  --ar-rule: 1px solid var(--ar-hairline);
+  --ar-rule-gold: 1px solid var(--ar-line);
+
+  /* ---- 材质：三级带偏移柔影，左上受光 ---- */
+  --ar-e1: 0 4px 15px rgba(45, 80, 22, 0.20);
+  --ar-e2: 0 8px 25px rgba(201, 162, 39, 0.40);
+  --ar-e3: 0 12px 32px rgba(45, 80, 22, 0.28);
+  --ar-top-highlight: inset 0 1px 0 rgba(201, 162, 39, 0.35);
+
+  /* ---- 动效：植物生长节奏，500/700ms ease-in-out ---- */
+  --ar-duration-fast: 500ms;
+  --ar-duration-base: 700ms;
+  --ar-ease: ease-in-out;
+
+  background: var(--ar-canvas);
+  color: var(--ar-ink);
+  font-family: var(--ar-font-serif);
+  font-size: var(--ar-text-body);
+  font-weight: var(--ar-weight-body);
+  line-height: var(--ar-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 基础排版 ---- */
+:where(.ds-art-nouveau) :where(h1, h2, h3, h4) {
+  font-family: var(--ar-font-serif);
+  font-weight: var(--ar-weight-strong);
+  font-style: italic;
+  color: var(--ar-ink);
+  margin: 0 0 var(--ar-space-xs);
+  line-height: var(--ar-leading-heading);
+  text-wrap: balance;
+}
+:where(.ds-art-nouveau) :where(h1) {
+  font-size: var(--ar-text-display);
+  line-height: var(--ar-leading-display);
+  letter-spacing: var(--ar-tracking-display);
+}
+:where(.ds-art-nouveau) :where(h2) { font-size: var(--ar-text-heading); }
+:where(.ds-art-nouveau) :where(h3) {
+  font-size: var(--ar-text-subheading);
+  line-height: var(--ar-leading-subheading);
+  font-weight: var(--ar-weight-body);
+}
+:where(.ds-art-nouveau) :where(p) {
+  margin: 0 0 var(--ar-space-xs);
+  max-width: var(--ar-measure);
+}
+:where(.ds-art-nouveau) :where(a) {
+  color: var(--ar-ink);
+  border-bottom: var(--ar-rule-gold);
+  text-decoration: none;
+  transition: color var(--ar-duration-fast) var(--ar-ease),
+              border-color var(--ar-duration-fast) var(--ar-ease);
+}
+:where(.ds-art-nouveau) :where(a):hover { color: var(--ar-accent); border-bottom-color: var(--ar-accent); }
+:where(.ds-art-nouveau) :where(img) {
+  display: block;
+  max-width: 100%;
+  border: var(--ar-rule-gold);
+  border-radius: var(--ar-radius-image);
+}
+:where(.ds-art-nouveau) :where(hr) {
+  border: 0;
+  border-top: var(--ar-rule-gold);
+  margin: var(--ar-space-xl) 0;
+}
+
+/* ---- 整体装饰框架：拱形金框 + 左上鞭状曲线 ---- */
+.ds-art-nouveau.preview-root {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--ar-space-xl) var(--ar-space-sm) var(--ar-space-section);
+  background: var(--ar-canvas);
+}
+.ds-art-nouveau.preview-root::before {
+  content: "";
+  position: absolute;
+  inset: var(--ar-space-xs);
+  border: var(--ar-rule);
+  border-radius: var(--ar-radius-button) var(--ar-radius-button) var(--ar-radius-image) var(--ar-radius-image);
+  box-shadow: var(--ar-top-highlight);
+  z-index: -1;
+  pointer-events: none;
+}
+.ds-art-nouveau.preview-root::after {
+  content: "";
+  position: absolute;
+  top: var(--ar-space-base);
+  left: calc(-1 * var(--ar-space-xl));
+  width: 240px;
+  height: 180px;
+  border: 1px solid var(--ar-line);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: var(--ar-radius-whiplash);
+  transform: rotate(-12deg);
+  opacity: 0.55;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---- 导航：胶囊金框，字标是衬线斜体 ---- */
+.ds-art-nouveau .frame-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ar-space-sm);
+  margin-bottom: var(--ar-space-xl);
+  padding: var(--ar-space-xs) var(--ar-space-lg);
+  background: var(--ar-surface);
+  border: var(--ar-rule);
+  border-radius: var(--ar-radius-button);
+  box-shadow: var(--ar-e1);
+}
+.ds-art-nouveau .frame-nav strong {
+  font-family: var(--ar-font-serif);
+  font-size: var(--ar-text-subheading);
+  font-weight: var(--ar-weight-strong);
+  font-style: italic;
+  color: var(--ar-ink);
+}
+.ds-art-nouveau .frame-nav span {
+  font-size: var(--ar-text-label);
+  letter-spacing: var(--ar-tracking-label);
+  color: var(--ar-ink-muted);
+}
+.ds-art-nouveau .frame-nav a { font-size: var(--ar-text-label); }
+
+/* ---- 故事页：非对称动线，标题下压一道金线 ---- */
+.ds-art-nouveau .frame-story h1 {
+  max-width: 18em;
+  padding-bottom: var(--ar-space-sm);
+  border-bottom: var(--ar-rule-gold);
+}
+.ds-art-nouveau .frame-context {
+  font-size: var(--ar-text-label);
+  letter-spacing: var(--ar-tracking-label);
+  color: var(--ar-ink-faint);
+}
+.ds-art-nouveau .frame-lede {
+  font-size: var(--ar-text-subheading);
+  line-height: var(--ar-leading-subheading);
+  color: var(--ar-ink-muted);
+  max-width: 30em;
+}
+.ds-art-nouveau .frame-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ar-space-xs);
+  margin: var(--ar-space-md) 0 var(--ar-space-xl);
+}
+.ds-art-nouveau .frame-actions a { font-size: var(--ar-text-label); }
+
+/* ---- 主按钮：深绿胶囊 + 1px 金边 + 带偏移柔影 ---- */
+:where(.ds-art-nouveau) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--ar-space-xs) var(--ar-space-md);
+  border: var(--ar-rule-gold);
+  border-radius: var(--ar-radius-button);
+  background: var(--ar-primary);
+  color: var(--ar-on-primary);
+  box-shadow: var(--ar-e1);
+  font-family: var(--ar-font-serif);
+  font-size: var(--ar-text-label);
+  font-weight: var(--ar-weight-strong);
+  line-height: var(--ar-leading-label);
+  letter-spacing: var(--ar-tracking-label);
+  cursor: pointer;
+  transition: background-color var(--ar-duration-fast) var(--ar-ease),
+              color var(--ar-duration-fast) var(--ar-ease),
+              box-shadow var(--ar-duration-fast) var(--ar-ease),
+              transform var(--ar-duration-fast) var(--ar-ease);
+}
+:where(.ds-art-nouveau) :where(button, .ds-btn):hover {
+  background: var(--ar-line);
+  color: var(--ar-ink);
+  box-shadow: var(--ar-e2);
+  transform: translateY(-1px);
+}
+:where(.ds-art-nouveau) :where(button, .ds-btn):active {
+  transform: scale(0.98);
+  box-shadow: var(--ar-e1);
+}
+
+/* ---- 卡片：柔象牙 + 32px 圆角 + 藤蔓沿边生长 ---- */
+.ds-art-nouveau :where(.ds-card) {
+  position: relative;
+  padding: var(--ar-space-md);
+  background: var(--ar-surface);
+  color: var(--ar-ink);
+  border: var(--ar-rule);
+  border-radius: var(--ar-radius-card);
+  box-shadow: var(--ar-e1);
+  transition: border-color var(--ar-duration-base) var(--ar-ease),
+              box-shadow var(--ar-duration-base) var(--ar-ease);
+}
+.ds-art-nouveau :where(.ds-card)::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: var(--ar-space-sm);
+  width: 180px;
+  height: 60px;
+  border-top: 1px solid var(--ar-leaf);
+  border-radius: var(--ar-radius-whiplash);
+  transform: rotate(-6deg);
+  transition: transform var(--ar-duration-base) var(--ar-ease);
+  pointer-events: none;
+}
+.ds-art-nouveau :where(.ds-card)::after {
+  content: "";
+  position: absolute;
+  top: var(--ar-space-xs);
+  left: 140px;
+  width: var(--ar-ornament);
+  height: 12px;
+  border: 1px solid var(--ar-leaf);
+  border-radius: var(--ar-radius-whiplash);
+  transform: rotate(24deg);
+  pointer-events: none;
+}
+.ds-art-nouveau :where(.ds-card):hover {
+  border-color: var(--ar-line);
+  box-shadow: var(--ar-e2);
+}
+.ds-art-nouveau :where(.ds-card):hover::before { transform: rotate(-3deg); }
+.ds-art-nouveau :where(.ds-card) :where(h2, h3) {
+  color: var(--ar-ink);
+  margin-top: var(--ar-space-xs);
+}
+.ds-art-nouveau :where(.ds-card) :where(p) {
+  font-size: var(--ar-text-body);
+  line-height: var(--ar-leading-body);
+}
+
+/* ---- 非对称网格：第一张跨两行，第三张跨两列 ---- */
+.ds-art-nouveau .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ar-space-sm);
+  margin-top: var(--ar-space-xl);
+}
+.ds-art-nouveau .frame-grid > :first-child { grid-row: span 2; }
+.ds-art-nouveau .frame-grid > :last-child { grid-column: span 2; }
+
+/* ---- 标签：酒红印章胶囊 ---- */
+:where(.ds-art-nouveau) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--ar-space-base) var(--ar-space-xs);
+  background: var(--ar-surface);
+  color: var(--ar-accent);
+  border: var(--ar-rule);
+  border-radius: var(--ar-radius-tag);
+  font-family: var(--ar-font-serif);
+  font-size: var(--ar-text-label);
+  line-height: var(--ar-leading-label);
+}
+
+/* ---- 焦点 / 禁用 / 错误：金色焦点环，不新增颜色 ---- */
+:where(.ds-art-nouveau) :where(a, button, .ds-btn):focus-visible {
+  outline: 2px solid var(--ar-line);
+  outline-offset: 2px;
+}
+:where(.ds-art-nouveau) :where(button, .ds-btn):disabled {
+  background: var(--ar-surface);
+  color: var(--ar-ink-faint);
+  border-style: dashed;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+:where(.ds-art-nouveau) :where([aria-invalid="true"]) {
+  border: 1px solid var(--ar-accent);
+}
+
+@media (max-width: 767px) {
+  .ds-art-nouveau.preview-root { padding: var(--ar-space-md) var(--ar-space-xs) var(--ar-space-xl); }
+  .ds-art-nouveau.preview-root::before { inset: var(--ar-space-base); }
+  .ds-art-nouveau.preview-root::after { width: 160px; height: 120px; }
+  .ds-art-nouveau .frame-nav { flex-wrap: wrap; padding: var(--ar-space-xs) var(--ar-space-sm); }
+  .ds-art-nouveau .frame-grid { grid-template-columns: 1fr; }
+  .ds-art-nouveau .frame-grid > :first-child,
+  .ds-art-nouveau .frame-grid > :last-child { grid-column: auto; grid-row: auto; }
+  .ds-art-nouveau :where(.ds-card)::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-art-nouveau) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}

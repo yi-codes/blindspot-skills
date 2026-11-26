@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 30,
+  "count": 31,
   "styles": [
     {
       "slug": "academic",
@@ -84,6 +84,49 @@
       "designPath": "styles/adaptive-companion/DESIGN.md",
       "tokensPath": "styles/adaptive-companion/tokens.css",
       "promptPath": "styles/adaptive-companion/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "art-nouveau",
+      "name": "Art Nouveau｜新艺术曲线",
+      "description": "把 1890–1910 年新艺术运动的海报语法搬进网页：奶油纸底上的鞭状曲线、拱形画框、 1px 烫金描边与高对比衬线标题，深绿负责正文和主行动，酒红只留在印章级强调。 显式参数取自 StyleKit 新艺术风格卡（色板、Playfair Display 字阶、32/999/48px 圆角、 500–700ms ease-in-out、组件与禁令）、aesthetic.fyi 的 Mucha 海报四色与 60% 40% 55% 45% 不对称圆角、风格谱的 70/25/5 面积比与「非对称垂直延展 + 整体装饰框架」、 以及 StyleUI Liberty 的金色焦点与展开态；标为 beta/variant。 为符合本库 The Floor，把来源 16px 正文提到 20px/1.8、字重收进 400/700 两档， 弃用紫藤色、亮绿与霓虹饱和色，阴影只保留来源里带偏移的柔影。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "expressive",
+      "tier": "variant",
+      "sourceRefs": [
+        "art-nouveau"
+      ],
+      "register": "story",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "美术馆与画廊展览页",
+        "精品酒店与珠宝腕表品牌页",
+        "剧院演出与婚礼请柬",
+        "插画师作品集与主视觉",
+        "需要手工装饰感的品牌发布页"
+      ],
+      "avoid": [
+        "开发者工具与技术文档",
+        "数据看板与密集表格",
+        "高频交易与监控台",
+        "移动优先的工具型 App",
+        "快速新闻流",
+        "无障碍优先的长表单默认皮",
+        "打印为主的单栏正文"
+      ],
+      "prefix": "--ar-*",
+      "className": "ds-art-nouveau",
+      "canvas": "#F5EFE0",
+      "ink": "#2D5016",
+      "accent": "#2D5016",
+      "previewUrl": "preview/art-nouveau.html",
+      "designPath": "styles/art-nouveau/DESIGN.md",
+      "tokensPath": "styles/art-nouveau/tokens.css",
+      "promptPath": "styles/art-nouveau/prompt.md",
       "has_prompt": true,
       "has_css": true
     },
