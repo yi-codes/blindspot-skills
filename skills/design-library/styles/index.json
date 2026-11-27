@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 31,
+  "count": 32,
   "styles": [
     {
       "slug": "academic",
@@ -879,6 +879,49 @@
       "designPath": "styles/nocturne/DESIGN.md",
       "tokensPath": "styles/nocturne/tokens.css",
       "promptPath": "styles/nocturne/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "os-desktop",
+      "name": "桌面窗口｜OS Desktop",
+      "description": "把浏览器当作一台电脑：青绿墙纸上浮着带标题栏、斜边和任务栏的窗口，每个区块是一个「应用」而不是一张卡片。 显式参数取自 aesthetic.fyi 的 OS Desktop 风格页（青绿 #008080、标题栏灰渐变、系统字体栈、任务栏、图标网格、 Good For / Not For）、IndexStyle 的 Windows 95 Interface 辞典（四色刻边、内外双线、4px 间隙、单一字号与粗体强调、 按下明暗对调、禁圆角与柔影）、Win95 Web Designer 技能卡（11 色调色板、Tahoma 11px、28px 任务栏、 32×32 图标、2px 4px 8px 间距阶与反模式）与 98.css 所引 Microsoft Windows User Experience（75×23px 按钮、 焦点虚线内缩 4px、按下斜边反转）。为符合本库 The Floor，窗口内容用暖纸白而非纯白，标题栏浅蓝端调深到 #0A5FA8 保证 11px 浅字 5.83:1，中文正文提到 18px/1.7，标为 beta/variant。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "retro",
+      "tier": "variant",
+      "sourceRefs": [
+        "os-desktop"
+      ],
+      "register": "tool",
+      "surface": "mixed",
+      "density": "medium",
+      "cues": [
+        "复古计算与数字博物馆展页",
+        "开发者个人站与作品集",
+        "怀旧活动与游戏化产品页",
+        "需要展示多窗口工作状态的实验界面",
+        "计算史教学页面"
+      ],
+      "avoid": [
+        "企业 SaaS 与业务后台",
+        "移动优先的消费 App",
+        "电商与结算流程",
+        "极简品牌官网",
+        "长文新闻与文档",
+        "无障碍优先的长表单",
+        "需要精确扫读的数据表格"
+      ],
+      "prefix": "--os-*",
+      "className": "ds-os-desktop",
+      "canvas": "#F4F2EA",
+      "ink": "#1A1A1A",
+      "accent": "#000080",
+      "previewUrl": "preview/os-desktop.html",
+      "designPath": "styles/os-desktop/DESIGN.md",
+      "tokensPath": "styles/os-desktop/tokens.css",
+      "promptPath": "styles/os-desktop/prompt.md",
       "has_prompt": true,
       "has_css": true
     },

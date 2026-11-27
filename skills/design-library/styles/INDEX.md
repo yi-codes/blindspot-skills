@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **31** 个风格。
+当前 **32** 个风格。
 
 ## 决定表
 
@@ -46,6 +46,7 @@
 | **Memphis｜孟菲斯海报** `memphis` | 变体 | expressive | memphis | 把 1981 年米兰 Memphis Group 的后现代装饰语言做成一套可直接用的展示型界面： 奶白底、玫红/柠檬黄/薄荷/靛蓝四色撞色、3px 墨黑描边、6px 无模糊硬投影， 波点与 45° 斜纹只待在角落，圆/方/三角/波浪线故意错落。 |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | 变体 | editorial | — | 给真正拥有多条新闻的编辑首页：12 列、细线分栏、衬线标题与无衬线元信息， 首屏直接进入故事网格而非营销 Hero。 |
 | **夜色舞台** `nocturne` | 变体 | expressive | native | 一盏灯，一圈黑。 |
+| **桌面窗口｜OS Desktop** `os-desktop` | 变体 | retro | os-desktop | 把浏览器当作一台电脑：青绿墙纸上浮着带标题栏、斜边和任务栏的窗口，每个区块是一个「应用」而不是一张卡片。 |
 | **Pixel Arcade｜像素街机** `pixel-arcade` | 变体 | retro | — | 面向复古游戏与轻量互动 demo 的 8-bit 界面。 |
 | **Quiet Dark** `quiet-dark` | 变体 | workbench | openai-desktop-client-observed、chatgpt-ios | 原生桌面应用的深色界面，附一套同源的浅色。 |
 | **Riso Zine｜孔版独立志** `riso-zine` | 变体 | zine | — | 用两种专色、1–3px 套印错位和可见纸纹做独立出版物。 |
@@ -80,6 +81,7 @@
 | **Neobrutalist** `neobrutalist` | stable | expressive | 核心 | neobrutalism | 讲故事 | 浅色 | 中 | 作品集、活动页、创意工具、需要"有态度"的产品官网、年轻用户、独立产品 | 金融/医疗/政务、长文阅读、需要效率感的工具界面、企业后台 | `#DCEBFE` |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | beta | editorial | 变体 | — | 讲故事 | 浅色 | 紧 | 新闻首页、科技杂志、每日简报、专题聚合、多栏目编辑页、需要快速扫读标题的内容流 | 单一产品营销页、作品集、工具后台、复杂表单、内容不足三条的页面、沉浸式品牌叙事 | `#F7F6F2` |
 | **夜色舞台** `nocturne` | stable | expressive | 变体 | native | 讲故事 | 深色 | 中 | 桌游/剧本杀的产品页与发行页、活动与票务、沉浸式叙事产品、需要悬念的落地页、夜间模式的展示型界面 | 白天阅读的长文、后台与表单、数据密集型列表、需要平等比较多个选项的界面、打印 | `#0B0A09` |
+| **桌面窗口｜OS Desktop** `os-desktop` | beta | retro | 变体 | os-desktop | 讲工具 | 双模 | 中 | 复古计算与数字博物馆展页、开发者个人站与作品集、怀旧活动与游戏化产品页、需要展示多窗口工作状态的实验界面、计算史教学页面 | 企业 SaaS 与业务后台、移动优先的消费 App、电商与结算流程、极简品牌官网、长文新闻与文档、无障碍优先的长表单、需要精确扫读的数据表格 | `#F4F2EA` |
 | **Pixel Arcade｜像素街机** `pixel-arcade` | beta | retro | 变体 | — | 讲故事 | 浅色 | 中 | 复古游戏、浏览器小游戏、Game Jam、像素作品集、成就与徽章、轻量游戏化 demo、街机活动页 | 长文阅读、企业后台、金融医疗政务、复杂表单、高密度数据、正式品牌官网、关键生产工具 | `#F8F8F0` |
 | **Quiet Dark** `quiet-dark` | stable | workbench | 变体 | openai-desktop-client-observed、chatgpt-ios | 讲工具 | 深色 | 紧 | 桌面应用、编辑器面板、内部后台、Agent 对话界面、需要长时间注视的工具 | 营销落地页、长文阅读、品牌表达、打印 | `#0d0d0d` |
 | **Riso Zine｜孔版独立志** `riso-zine` | beta | zine | 变体 | — | 讲故事 | 浅色 | 中 | 独立杂志、音乐节与演出海报、独立出版、诗歌与小册子、艺术活动页、乐队与唱片、创意工作坊 | 企业年报、金融医疗政务、密集表单、数据看板、长文阅读、需要严肃可信的公共服务 | `#FDFBF6` |

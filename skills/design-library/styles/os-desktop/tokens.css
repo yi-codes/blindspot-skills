@@ -1,0 +1,416 @@
+/* ============================================================
+   桌面窗口｜OS Desktop；容器 class="ds-os-desktop"；前缀 --os-
+   参数来源：aesthetic.fyi OS Desktop（青绿墙纸 / 标题栏 / 任务栏 / 图标网格）
+            + IndexStyle Windows 95 Interface（四色刻边 / 内外双线 / 4px 间隙）
+            + Win95 Web Designer 技能卡（调色板 / Tahoma / 28px 任务栏 / 反模式）
+            + 98.css 所引 Microsoft Windows User Experience（按钮尺寸 / 焦点虚线）
+   注意：斜边只走 token 色，纯白与纯黑只出现在 1px 边线与 2px 硬投影；无圆角、无柔影。
+   ============================================================ */
+
+:where(.ds-os-desktop) {
+  /* ---- 颜色：与 DESIGN.md front matter 一一对应 ---- */
+  --os-canvas: #F4F2EA;
+  --os-surface: #DFDFDF;
+  --os-surface-alt: #C0C0C0;
+  --os-desktop: #008080;
+  --os-ink: #1A1A1A;
+  --os-ink-muted: #3D4A4A;
+  --os-ink-faint: #5C6A6A;
+  --os-primary: #000080;
+  --os-on-primary: #F4F2EA;
+  --os-title-light: #0A5FA8;
+  --os-title-inactive: #808080;
+  --os-highlight: #FFFFFF;
+  --os-shadow: #808080;
+  --os-dark-shadow: #000000;
+
+  /* ---- 字体：系统无衬线一族到底，中文回退黑体 ---- */
+  --os-font-ui: Tahoma, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  /* ---- 字号阶：11 / 14 / 18 / 24 / 32 / 44，模数 ≥1.25 ---- */
+  --os-text-display: 44px;
+  --os-text-heading-lg: 32px;
+  --os-text-heading: 24px;
+  --os-text-subheading: 18px;
+  --os-text-body: 18px;
+  --os-text-label: 14px;
+  --os-text-micro: 11px;
+  --os-leading-display: 1.15;
+  --os-leading-heading-lg: 1.2;
+  --os-leading-heading: 1.25;
+  --os-leading-subheading: 1.4;
+  --os-leading-body: 1.7;
+  --os-leading-label: 1.5;
+
+  /* ---- 间距：4px 基数，任务栏 28px ---- */
+  --os-space-micro: 2px;
+  --os-space-xs: 4px;
+  --os-space-sm: 8px;
+  --os-space-md: 12px;
+  --os-space-lg: 16px;
+  --os-space-xl: 24px;
+  --os-space-xxl: 32px;
+  --os-space-bar: 28px;
+  --os-space-section: 56px;
+  --os-sidebar-width: 224px;
+  --os-page-width: 1080px;
+  --os-measure: 34em;
+
+  /* ---- 形状：无任何圆角 ---- */
+  --os-radius-control: 0px;
+
+  /* ---- 材质：凸起 / 内凹斜边与 2px 硬投影 ---- */
+  --os-bevel-raised: inset -1px -1px 0 var(--os-dark-shadow),
+                     inset 1px 1px 0 var(--os-highlight),
+                     inset -2px -2px 0 var(--os-shadow),
+                     inset 2px 2px 0 var(--os-surface);
+  --os-bevel-sunken: inset 1px 1px 0 var(--os-shadow),
+                     inset -1px -1px 0 var(--os-highlight),
+                     inset 2px 2px 0 var(--os-dark-shadow),
+                     inset -2px -2px 0 var(--os-surface-alt);
+  --os-bevel-inner: inset 1px 1px 0 var(--os-surface),
+                    inset -1px -1px 0 var(--os-shadow);
+  --os-shadow-window: 2px 2px 0 var(--os-dark-shadow);
+  --os-title-gradient: linear-gradient(90deg, var(--os-primary), var(--os-title-light));
+
+  /* ---- 动效：即时重绘，无缓动无位移 ---- */
+  --os-duration-fast: 0ms;
+  --os-duration-base: 100ms;
+  --os-ease: linear;
+
+  background: var(--os-canvas);
+  color: var(--os-ink);
+  font-family: var(--os-font-ui);
+  font-size: var(--os-text-body);
+  font-weight: 400;
+  line-height: var(--os-leading-body);
+  letter-spacing: 0;
+}
+
+/* ---- 基础排版 ---- */
+:where(.ds-os-desktop) :where(h1, h2, h3, h4) {
+  font-family: var(--os-font-ui);
+  font-weight: 700;
+  line-height: var(--os-leading-heading);
+  color: var(--os-ink);
+  margin: 0 0 var(--os-space-xs);
+  text-wrap: balance;
+}
+:where(.ds-os-desktop) :where(h1) {
+  font-size: var(--os-text-heading);
+  line-height: var(--os-leading-heading);
+}
+:where(.ds-os-desktop) :where(h2) { font-size: var(--os-text-subheading); }
+:where(.ds-os-desktop) :where(h3) { font-size: var(--os-text-label); }
+:where(.ds-os-desktop) :where(p) {
+  margin: 0 0 var(--os-space-xs);
+  max-width: var(--os-measure);
+  font-size: var(--os-text-body);
+  line-height: var(--os-leading-body);
+}
+:where(.ds-os-desktop) :where(a) {
+  color: var(--os-primary);
+  text-decoration: underline;
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+  transition: background-color var(--os-duration-fast) var(--os-ease),
+              color var(--os-duration-fast) var(--os-ease);
+}
+:where(.ds-os-desktop) :where(a):hover {
+  background: var(--os-primary);
+  color: var(--os-on-primary);
+}
+:where(.ds-os-desktop) :where(hr) {
+  border: 0;
+  border-top: 2px solid var(--os-shadow);
+  border-bottom: 2px solid var(--os-highlight);
+  margin: var(--os-space-lg) 0;
+}
+:where(.ds-os-desktop) :where(img) {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--os-radius-control);
+}
+
+/* ---- 青绿墙纸与两件固定装饰：桌面图标网格、底部任务栏 ---- */
+.ds-os-desktop.preview-root {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: var(--os-space-section) var(--os-space-xl) var(--os-space-section);
+  background: var(--os-desktop);
+  color: var(--os-ink);
+  font-family: var(--os-font-ui);
+  font-size: var(--os-text-body);
+  line-height: var(--os-leading-body);
+}
+.ds-os-desktop.preview-root::before {
+  content: "▣   ▣\A▣   ▣";
+  position: absolute;
+  top: var(--os-space-md);
+  left: var(--os-space-md);
+  white-space: pre;
+  font-size: var(--os-text-heading-lg);
+  line-height: var(--os-leading-heading-lg);
+  color: var(--os-canvas);
+  text-shadow: 2px 2px 0 var(--os-dark-shadow);
+  pointer-events: none;
+  z-index: -1;
+}
+.ds-os-desktop.preview-root::after {
+  content: "开始    文件管理器    系统设置    14:32";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--os-space-bar);
+  padding: 0 var(--os-space-sm);
+  background: var(--os-surface-alt);
+  border-top: 2px solid var(--os-highlight);
+  box-shadow: var(--os-bevel-inner);
+  font-size: var(--os-text-label);
+  line-height: var(--os-space-bar);
+  color: var(--os-ink);
+  white-space: pre;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ---- 桌面工作区：左侧程序窗口 + 右侧主窗口 ---- */
+.ds-os-desktop .frame-app {
+  display: grid;
+  grid-template-columns: var(--os-sidebar-width) minmax(0, 1fr);
+  gap: var(--os-space-xl);
+  align-items: start;
+  max-width: var(--os-page-width);
+  margin: 0 auto;
+}
+.ds-os-desktop .frame-side,
+.ds-os-desktop .frame-workspace {
+  min-width: 0;
+  background: var(--os-canvas);
+  border: 2px solid;
+  border-color: var(--os-highlight) var(--os-dark-shadow) var(--os-dark-shadow) var(--os-highlight);
+  box-shadow: var(--os-bevel-inner), var(--os-shadow-window);
+  border-radius: var(--os-radius-control);
+}
+
+/* ---- 程序窗口：灰色非活动标题栏 + 列表视图导航 ---- */
+.ds-os-desktop .frame-side::before {
+  content: "程序管理器";
+  display: block;
+  padding: var(--os-space-xs) var(--os-space-sm);
+  background: var(--os-title-inactive);
+  color: var(--os-canvas);
+  font-size: var(--os-text-label);
+  font-weight: 700;
+  line-height: var(--os-leading-label);
+}
+.ds-os-desktop .frame-side > strong {
+  display: block;
+  padding: var(--os-space-xs) var(--os-space-sm);
+  font-size: var(--os-text-label);
+  font-weight: 700;
+}
+.ds-os-desktop .frame-side nav {
+  display: grid;
+  gap: var(--os-space-xs);
+  padding: var(--os-space-xs) var(--os-space-sm);
+}
+.ds-os-desktop .frame-side nav a {
+  display: block;
+  padding: var(--os-space-micro) var(--os-space-xs);
+  color: var(--os-ink);
+  text-decoration: none;
+  font-size: var(--os-text-label);
+}
+.ds-os-desktop .frame-side nav a[aria-current="page"] {
+  background: var(--os-primary);
+  color: var(--os-on-primary);
+}
+.ds-os-desktop .frame-muted {
+  margin: 0;
+  padding: var(--os-space-xs) var(--os-space-sm);
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+  color: var(--os-ink-muted);
+}
+
+/* ---- 主窗口：活动标题栏 + 三枚窗口控制方块 ---- */
+.ds-os-desktop .frame-toolbar {
+  position: relative;
+  padding: var(--os-space-xs) var(--os-space-xxl) var(--os-space-xs) var(--os-space-sm);
+  background: var(--os-title-gradient);
+  border-bottom: 2px solid var(--os-shadow);
+  color: var(--os-on-primary);
+}
+.ds-os-desktop .frame-toolbar::after {
+  content: "_  □  ×";
+  position: absolute;
+  top: var(--os-space-xs);
+  right: var(--os-space-sm);
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+  color: var(--os-on-primary);
+  pointer-events: none;
+}
+.ds-os-desktop .frame-toolbar h1 {
+  margin: 0;
+  color: var(--os-on-primary);
+  font-size: var(--os-text-heading);
+  line-height: var(--os-leading-heading);
+}
+.ds-os-desktop .frame-toolbar p {
+  margin: var(--os-space-xs) 0 0;
+  color: var(--os-on-primary);
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+}
+
+/* ---- 主内容：列表视图三格 + 状态栏 ---- */
+.ds-os-desktop .frame-workspace > .frame-grid,
+.ds-os-desktop .frame-workspace > .frame-task {
+  margin-left: var(--os-space-lg);
+  margin-right: var(--os-space-lg);
+}
+.ds-os-desktop .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--os-space-sm);
+  margin-top: var(--os-space-lg);
+  margin-bottom: var(--os-space-lg);
+}
+.ds-os-desktop :where(.ds-card) {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: var(--os-space-md);
+  background: var(--os-canvas);
+  color: var(--os-ink);
+  border: 2px solid;
+  border-color: var(--os-shadow) var(--os-highlight) var(--os-highlight) var(--os-shadow);
+  box-shadow: var(--os-bevel-sunken);
+  border-radius: var(--os-radius-control);
+}
+.ds-os-desktop :where(.ds-card)::before {
+  content: "▣";
+  display: block;
+  margin-bottom: var(--os-space-xs);
+  color: var(--os-primary);
+  font-size: var(--os-text-heading-lg);
+  line-height: var(--os-leading-heading-lg);
+}
+.ds-os-desktop :where(.ds-card) :where(h2, h3) {
+  margin-top: 0;
+  color: var(--os-ink);
+  font-size: var(--os-text-subheading);
+  line-height: var(--os-leading-subheading);
+}
+.ds-os-desktop :where(.ds-card) :where(p) {
+  margin-bottom: 0;
+  font-size: var(--os-text-body);
+  line-height: var(--os-leading-body);
+}
+.ds-os-desktop .frame-task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--os-space-sm);
+  padding: var(--os-space-sm) var(--os-space-lg);
+  background: var(--os-surface-alt);
+  border-top: 2px solid var(--os-shadow);
+  border-bottom: 2px solid var(--os-highlight);
+  box-shadow: var(--os-bevel-inner);
+}
+.ds-os-desktop .frame-task h2 {
+  margin: 0;
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+}
+.ds-os-desktop .frame-task p {
+  margin: 0;
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+  color: var(--os-ink-muted);
+}
+.ds-os-desktop .frame-actions {
+  display: flex;
+  gap: var(--os-space-sm);
+  flex-wrap: wrap;
+}
+
+/* ---- 主按钮：75px 起的凸起方块，按下明暗对调 ---- */
+:where(.ds-os-desktop) :where(button, .ds-btn) {
+  min-width: 75px;
+  padding: var(--os-space-xs) var(--os-space-md);
+  background: var(--os-surface);
+  color: var(--os-ink);
+  border: 2px solid;
+  border-color: var(--os-highlight) var(--os-dark-shadow) var(--os-dark-shadow) var(--os-highlight);
+  border-radius: var(--os-radius-control);
+  box-shadow: var(--os-bevel-raised);
+  font-family: var(--os-font-ui);
+  font-size: var(--os-text-label);
+  font-weight: 700;
+  line-height: var(--os-leading-label);
+  cursor: pointer;
+  transition: background-color var(--os-duration-fast) var(--os-ease),
+              color var(--os-duration-fast) var(--os-ease),
+              box-shadow var(--os-duration-fast) var(--os-ease);
+}
+:where(.ds-os-desktop) :where(button, .ds-btn):hover {
+  background: var(--os-surface-alt);
+}
+:where(.ds-os-desktop) :where(button, .ds-btn):active {
+  border-color: var(--os-dark-shadow) var(--os-highlight) var(--os-highlight) var(--os-dark-shadow);
+  box-shadow: var(--os-bevel-sunken);
+  background: var(--os-surface-alt);
+}
+
+/* ---- 标签：系统灰底 + 1px 内凹线 ---- */
+:where(.ds-os-desktop) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--os-space-micro) var(--os-space-sm);
+  background: var(--os-surface-alt);
+  color: var(--os-ink);
+  border: 1px solid var(--os-shadow);
+  border-radius: var(--os-radius-control);
+  font-family: var(--os-font-ui);
+  font-size: var(--os-text-label);
+  line-height: var(--os-leading-label);
+}
+
+/* ---- 焦点 / 禁用 / 错误：内缩虚线，不新增颜色 ---- */
+:where(.ds-os-desktop) :where(a, button, .ds-btn):focus-visible {
+  outline: 1px dotted var(--os-ink);
+  outline-offset: -4px;
+}
+:where(.ds-os-desktop) :where(button, .ds-btn):disabled {
+  background: var(--os-surface-alt);
+  color: var(--os-ink-faint);
+  cursor: not-allowed;
+}
+:where(.ds-os-desktop) :where([aria-invalid="true"]) {
+  border: 1px solid var(--os-primary);
+}
+
+@media (max-width: 767px) {
+  .ds-os-desktop.preview-root {
+    padding: var(--os-space-xl) var(--os-space-sm) var(--os-space-section);
+  }
+  .ds-os-desktop.preview-root::before { display: none; }
+  .ds-os-desktop .frame-app { grid-template-columns: 1fr; }
+  .ds-os-desktop .frame-grid { grid-template-columns: 1fr; }
+  .ds-os-desktop .frame-toolbar h1 { font-size: var(--os-text-subheading); }
+  .ds-os-desktop .frame-task { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-os-desktop) :where(*) {
+    scroll-behavior: auto;
+    transition-duration: 0ms;
+    animation-duration: 0ms;
+    animation-iteration-count: 1;
+  }
+}
