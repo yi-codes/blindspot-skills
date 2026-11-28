@@ -20,6 +20,11 @@ metadata:
 前两层本库原本就扎实，后四层是审美与完成度的来源，已全部写进
 [`LAYERS.md`](LAYERS.md) 的必填契约。设计或验收任何页面前，先读它。
 
+**风格只回答"长什么样"，不回答"信息怎么站队"。** 后者由
+[`compositions/`](compositions/INDEX.md) 承担：6 个与风格正交的构图骨架，
+每个锚定真实结构类、写清主角与视线、密度、挂载点和禁用项。
+选页面时**先选骨架，再选风格**；反过来会让骨架迁就配色。
+
 库是**契约路线**：固化风格 + lint 硬校验，保证跨页面跨会话不走样。
 它不负责"从 0 到 1 找方向"，也不负责"这张页面成不成立"。这两端分别由
 [`docs/EXPLORING.md`](docs/EXPLORING.md) 的发散和 [`docs/REVIEW.md`](docs/REVIEW.md) 的
@@ -74,6 +79,12 @@ python3 scripts/explore.py --task "独立开发者的作品集首页"
 
 先描述**用户要完成什么**，不要从“想换个感觉”开始。
 
+**第一步先定骨架**：读 [`compositions/INDEX.md`](compositions/INDEX.md) 的对照表，
+按用户要完成的动作选一个骨架，再读该骨架文件的「主角与视线」「网格与密度」「禁用项」。
+骨架决定了谁先被看到、占多大，这部分不能靠风格 token 补。
+
+**第二步再定风格**：
+
 ```bash
 python3 scripts/designlib.py recommend "内部 Agent 控制台，任务运行状态和待确认操作"
 ```
@@ -84,6 +95,7 @@ python3 scripts/designlib.py recommend "内部 Agent 控制台，任务运行状
 2. `styles/<slug>/tokens.css`
 
 不要同时读多套风格；读多了会互相污染。
+密度要与骨架对齐：`sparse` 骨架别配 `dense` 风格，冲突时以骨架为准。
 
 想先只看主入口：
 
@@ -98,7 +110,9 @@ python3 scripts/designlib.py list --tier core
 <div class="ds-<slug>"> … </div>
 ```
 
-先确定这一屏最显眼的东西，让它就是用户最该先看到的东西。布局与组件从所选 `DESIGN.md` 的硬约束推导，不从别的风格借用。
+结构按所选骨架的 `frame-*` 类搭，视觉一律走所选风格的 token。骨架文件里已经写死
+「唯一主角是谁、视线从哪到哪、每块挂什么组件」，不要临场另发明布局。
+配色、字族、圆角、材质从 `DESIGN.md` 的硬约束推导，不从别的风格借用。
 
 ### audit
 
@@ -162,10 +176,10 @@ python3 scripts/explore.py --task "<页面任务>"
 
 ## 使用顺序
 
-1. 运行 `recommend`，或读 `styles/INDEX.md`。
-2. 确认首选风格不在自己的 `avoid` 场景里。
+1. 读 `compositions/INDEX.md`，按任务选骨架，读该骨架的禁用项。
+2. 运行 `recommend`，或读 `styles/INDEX.md`，确认风格不在自己的 `avoid` 场景里。
 3. 读首选风格的 `DESIGN.md` 与 `tokens.css`。
-4. 用该风格的 token 和结构骨架实现。
+4. 用骨架的 `frame-*` 结构类 + 该风格的 token 实现。
 5. 需要配图时读同一风格的 `prompt.md`，并过 `LAYERS.md` 第 5 层的删除测试。
 6. 实现后按 `docs/REVIEW.md` 做独立截图评审，按 1–3 个主要问题收敛。
 7. 运行 `designlib check`；交付时报告实际结果，并分开写审美评价与功能验证。
@@ -180,8 +194,9 @@ python3 scripts/explore.py --task "<页面任务>"
 |---|---|
 | 现有风格都不合适 / 想试库外方向 | `docs/EXPLORING.md` + 运行 `scripts/explore.py` |
 | 要判断"这张页面成不成立" | `docs/REVIEW.md` |
-| 不知道该选哪个 | `styles/INDEX.md` 或运行 `recommend` |
-| 要做 UI / 重设计 | 所选风格 `DESIGN.md` + `tokens.css` |
+| **不知道信息怎么排 / 谁先被看到** | `compositions/INDEX.md` + 所选骨架文件 |
+| 不知道该选哪个风格 | `styles/INDEX.md` 或运行 `recommend` |
+| 要做 UI / 重设计 | 骨架文件 + 所选风格 `DESIGN.md` + `tokens.css` |
 | 中文排版出问题 | `principles.md` §6 + 风格里的 `Chinese Typography` |
 | 页面有 AI 味儿 | `principles.md` §11 |
 | 想新增风格 | `principles.md` §8 + `docs/ADDING-A-STYLE.md` |
