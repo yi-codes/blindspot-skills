@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="新拟态｜Neumorphism 的真实 token 渲染预览。">
+  <title>新拟态｜Neumorphism · Design Library Preview</title>
+  <link rel="stylesheet" href="_frame.css">
+  <link rel="stylesheet" href="../styles/neumorphism/tokens.css">
+</head>
+<body>
+  <div class="ds-neumorphism preview-root">
+
+      <div class="frame-app">
+        <aside class="frame-side">
+          <strong>Workbench</strong>
+          <nav>
+            <a href="#sample-main" aria-current="page">当前任务</a>
+            <a href="#sample-cards">运行记录</a>
+            <a href="#sample-actions">连接</a>
+          </nav>
+          <p class="frame-muted">最近同步 2 分钟前</p>
+        </aside>
+        <main id="sample-main" class="frame-workspace">
+          <header class="frame-toolbar">
+            <div>
+              <h1>整理发布前检查</h1>
+              <p class="frame-muted">有 3 个检查通过，1 个需要确认。</p>
+            </div>
+            <button type="button">继续执行</button>
+          </header>
+          <section class="frame-grid" id="sample-cards">
+            <article class="ds-card">
+              <h2>代码检查</h2>
+              <p>全部通过。最近一次运行于 14:32。</p>
+              <span class="ds-tag">通过</span>
+            </article>
+            <article class="ds-card">
+              <h2>预览构建</h2>
+              <p>产物已生成，等待人工确认移动端布局。</p>
+              <span class="ds-tag">待确认</span>
+            </article>
+            <article class="ds-card">
+              <h2>发布说明</h2>
+              <p>已从本次变更生成，没有发现未登记卡片。</p>
+              <span class="ds-tag">通过</span>
+            </article>
+          </section>
+          <section class="frame-task" id="sample-actions">
+            <div>
+              <h2>当前需要你决定</h2>
+              <p>预览中的移动端筛选栏可以折叠为按钮。批准后将进入发布步骤。</p>
+            </div>
+            <div class="frame-actions">
+              <button type="button">批准并继续</button>
+              <button type="button">查看差异</button>
+            </div>
+          </section>
+        </main>
+      </div>
+
+  </div>
+</body>
+</html>

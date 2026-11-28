@@ -4,7 +4,7 @@
 >
 > 重建：`python3 scripts/designlib.py build`
 
-当前 **32** 个风格。
+当前 **33** 个风格。
 
 ## 决定表
 
@@ -44,6 +44,7 @@
 | **Gallery Wall｜展陈画廊** `gallery-wall` | 变体 | gallery | — | 让作品而不是界面成为主角的展陈系统。 |
 | **Liquid Glass** `liquid-glass` | 变体 | operations | ui-styles-liquid-glass | 克制的半透明工作台。 |
 | **Memphis｜孟菲斯海报** `memphis` | 变体 | expressive | memphis | 把 1981 年米兰 Memphis Group 的后现代装饰语言做成一套可直接用的展示型界面： 奶白底、玫红/柠檬黄/薄荷/靛蓝四色撞色、3px 墨黑描边、6px 无模糊硬投影， 波点与 45° 斜纹只待在角落，圆/方/三角/波浪线故意错落。 |
+| **新拟态｜Neumorphism** `neumorphism` | 变体 | companion | neumorphism | 把 2019–2021 年的 Soft UI / Neumorphism 做成一套可直接用的触控界面语言：单色暖灰底上，控件与底同色， 靠左上高光与右下暗影这一对双向投影把按钮、卡片「压」出底面、「按」回凹槽，没有边框也没有彩色描边。 |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | 变体 | editorial | — | 给真正拥有多条新闻的编辑首页：12 列、细线分栏、衬线标题与无衬线元信息， 首屏直接进入故事网格而非营销 Hero。 |
 | **夜色舞台** `nocturne` | 变体 | expressive | native | 一盏灯，一圈黑。 |
 | **桌面窗口｜OS Desktop** `os-desktop` | 变体 | retro | os-desktop | 把浏览器当作一台电脑：青绿墙纸上浮着带标题栏、斜边和任务栏的窗口，每个区块是一个「应用」而不是一张卡片。 |
@@ -79,6 +80,7 @@
 | **Liquid Glass** `liquid-glass` | stable | operations | 变体 | ui-styles-liquid-glass | 讲工具 | 双模 | 紧 | 高频盯屏的控制台、任务指挥台、状态面板、需要保留环境上下文的工作界面、桌面与平板工具 | 营销落地页、需要强烈视觉冲击的作品集、大量并排比较的长表格、打印 | `#F1F4F7` |
 | **Memphis｜孟菲斯海报** `memphis` | beta | expressive | 变体 | memphis | 讲故事 | 浅色 | 中 | 儿童教育与玩具文具品牌站、展览与创意市集活动页、音乐与时尚编辑页面、社交媒体封面与包装插画、需要强烈 80 年代后现代态度的展示型落地页 | 金融法律医疗等严肃场景、长文阅读与产品文档、需要极简克制品牌气质的产品、高密度后台与长表单、需要精确扫读的数据页、政务与公共服务 | `#FFF8EC` |
 | **Neobrutalist** `neobrutalist` | stable | expressive | 核心 | neobrutalism | 讲故事 | 浅色 | 中 | 作品集、活动页、创意工具、需要"有态度"的产品官网、年轻用户、独立产品 | 金融/医疗/政务、长文阅读、需要效率感的工具界面、企业后台 | `#DCEBFE` |
+| **新拟态｜Neumorphism** `neumorphism` | beta | companion | 变体 | neumorphism | 讲工具 | 浅色 | 中 | 智能家居与硬件伴侣 App、音频播放器与可调旋钮界面、趣味小工具与计算器、需要温柔触感隐喻的展示型页面、健康与睡眠类 calm 界面 | 信息密集后台与长表格、长文阅读与论文、需要精确扫读的数据看板、表单密集的办事流程、无障碍优先的长表单默认皮、高对比导向的金融医疗政务、打印为主的单栏文档 | `#E7E5E4` |
 | **Newsprint Grid｜新闻纸网格** `newsprint-grid` | beta | editorial | 变体 | — | 讲故事 | 浅色 | 紧 | 新闻首页、科技杂志、每日简报、专题聚合、多栏目编辑页、需要快速扫读标题的内容流 | 单一产品营销页、作品集、工具后台、复杂表单、内容不足三条的页面、沉浸式品牌叙事 | `#F7F6F2` |
 | **夜色舞台** `nocturne` | stable | expressive | 变体 | native | 讲故事 | 深色 | 中 | 桌游/剧本杀的产品页与发行页、活动与票务、沉浸式叙事产品、需要悬念的落地页、夜间模式的展示型界面 | 白天阅读的长文、后台与表单、数据密集型列表、需要平等比较多个选项的界面、打印 | `#0B0A09` |
 | **桌面窗口｜OS Desktop** `os-desktop` | beta | retro | 变体 | os-desktop | 讲工具 | 双模 | 中 | 复古计算与数字博物馆展页、开发者个人站与作品集、怀旧活动与游戏化产品页、需要展示多窗口工作状态的实验界面、计算史教学页面 | 企业 SaaS 与业务后台、移动优先的消费 App、电商与结算流程、极简品牌官网、长文新闻与文档、无障碍优先的长表单、需要精确扫读的数据表格 | `#F4F2EA` |

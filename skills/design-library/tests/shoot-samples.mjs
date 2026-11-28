@@ -142,6 +142,7 @@ const samples = [
   ["blueprint", "preview/blueprint.html"],
   ["art-nouveau", "preview/art-nouveau.html"],
   ["os-desktop", "preview/os-desktop.html"],
+  ["neumorphism", "preview/neumorphism.html"],
   ["gallery-wall", "preview/gallery-wall.html"],
   ["newsprint-grid", "preview/newsprint-grid.html"],
   ["riso-zine", "preview/riso-zine.html"],

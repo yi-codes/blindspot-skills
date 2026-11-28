@@ -1,0 +1,217 @@
+/* Neumorphism｜新拟态；容器 class="ds-neumorphism"；前缀 --ne- */
+/* 单色暖灰底，控件与底同色；层级全靠一对方向相反的双向投影：凸起 e2 / 凹陷 e3。 */
+:where(.ds-neumorphism) {
+  --ne-canvas: #E7E5E4;
+  --ne-surface: #E7E5E4;
+  --ne-surface-alt: #DAD7D3;
+  --ne-ink: #1E2938;
+  --ne-ink-muted: #4A515C;
+  --ne-ink-faint: #6B7280;
+  --ne-primary: #006666;
+  --ne-on-primary: #F4F2EA;
+  --ne-accent: #0B7A32;
+  --ne-shadow-dark: #B9B6B3;
+  --ne-shadow-light: #FFFFFF;
+
+  --ne-font-body: Inter, "PingFang SC", "Noto Sans SC", sans-serif;
+
+  --ne-text-display: 44px;
+  --ne-text-heading: 32px;
+  --ne-text-subheading: 24px;
+  --ne-text-body: 18px;
+  --ne-text-label: 14px;
+  --ne-text-micro: 11px;
+  --ne-leading-display: 1.15;
+  --ne-leading-heading: 1.2;
+  --ne-leading-subheading: 1.3;
+  --ne-leading-body: 1.7;
+  --ne-leading-label: 1.5;
+  --ne-leading-micro: 1.4;
+  --ne-weight-bold: 700;
+  --ne-weight-regular: 400;
+  --ne-tracking-display: -0.02em;
+  --ne-tracking-heading: -0.01em;
+  --ne-tracking-label: 0.02em;
+  --ne-tracking-micro: 0.02em;
+
+  --ne-space-xs: 4px;
+  --ne-space-sm: 8px;
+  --ne-space-md: 12px;
+  --ne-space-lg: 16px;
+  --ne-space-xl: 24px;
+  --ne-space-xxl: 32px;
+  --ne-section: 56px;
+  --ne-sidebar: 224px;
+  --ne-page: 1080px;
+  --ne-measure: 34em;
+
+  --ne-radius-none: 0;
+  --ne-radius-sm: 8px;
+  --ne-radius-md: 16px;
+  --ne-radius-card: 22px;
+  --ne-radius-pill: 999px;
+
+  /* 双向阴影阶梯：凸起为正偏移、凹陷为 inset；光源固定 top-left。 */
+  --ne-e1: 6px 6px 12px var(--ne-shadow-dark), -6px -6px 12px var(--ne-shadow-light);
+  --ne-e2: 12px 12px 24px var(--ne-shadow-dark), -12px -12px 24px var(--ne-shadow-light);
+  --ne-e3: inset 5px 5px 10px var(--ne-shadow-dark), inset -5px -5px 10px var(--ne-shadow-light);
+
+  --ne-duration: 200ms;
+  --ne-duration-fast: 120ms;
+  --ne-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* 预览外壳的描边在新拟态里全部退场，分隔只靠阴影。 */
+  --frame-sep: none;
+
+  background: var(--ne-canvas);
+  color: var(--ne-ink);
+  font-family: var(--ne-font-body);
+  font-size: var(--ne-text-body);
+  font-weight: var(--ne-weight-regular);
+  line-height: var(--ne-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 排版基线 ---- */
+:where(.ds-neumorphism) :where(h1, h2, h3, h4) {
+  font-family: var(--ne-font-body);
+  font-weight: var(--ne-weight-bold);
+  color: var(--ne-ink);
+  margin: 0 0 var(--ne-space-sm);
+  text-wrap: balance;
+}
+:where(.ds-neumorphism) :where(h1) {
+  font-size: var(--ne-text-display);
+  line-height: var(--ne-leading-display);
+  letter-spacing: var(--ne-tracking-display);
+}
+:where(.ds-neumorphism) :where(h2) {
+  font-size: var(--ne-text-subheading);
+  line-height: var(--ne-leading-subheading);
+}
+:where(.ds-neumorphism) :where(h3) {
+  font-size: var(--ne-text-body);
+  line-height: var(--ne-leading-body);
+}
+:where(.ds-neumorphism) :where(p) {
+  margin: 0 0 var(--ne-space-sm);
+  max-width: var(--ne-measure);
+  color: var(--ne-ink-muted);
+}
+:where(.ds-neumorphism) :where(a) {
+  color: var(--ne-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--ne-space-xs);
+}
+:where(.ds-neumorphism) :where(strong) { font-weight: var(--ne-weight-bold); color: var(--ne-ink); }
+:where(.ds-neumorphism) :where(img) { display: block; max-width: 100%; border-radius: var(--ne-radius-card); }
+
+/* ---- 主按钮：同色凸起胶囊，按下翻成凹槽 ---- */
+:where(.ds-neumorphism) :where(button, .ds-btn) {
+  display: inline-block;
+  padding: var(--ne-space-md) var(--ne-space-xl);
+  border: 0;
+  border-radius: var(--ne-radius-pill);
+  background: var(--ne-surface);
+  color: var(--ne-primary);
+  font-family: var(--ne-font-body);
+  font-size: var(--ne-text-label);
+  font-weight: var(--ne-weight-bold);
+  line-height: var(--ne-leading-label);
+  letter-spacing: var(--ne-tracking-label);
+  box-shadow: var(--ne-e1);
+  cursor: pointer;
+  transition: box-shadow var(--ne-duration) var(--ne-ease);
+}
+:where(.ds-neumorphism) :where(button, .ds-btn):hover { box-shadow: var(--ne-e2); }
+:where(.ds-neumorphism) :where(button, .ds-btn):active { box-shadow: var(--ne-e3); }
+:where(.ds-neumorphism) :where(button, .ds-btn):disabled {
+  color: var(--ne-ink-faint);
+  cursor: not-allowed;
+  box-shadow: var(--ne-e1);
+}
+
+/* ---- 卡片：凸起 e2；标签：凹槽 e3 ---- */
+:where(.ds-neumorphism) :where(.ds-card) {
+  position: relative;
+  background: var(--ne-surface);
+  color: var(--ne-ink);
+  border: 0;
+  border-radius: var(--ne-radius-card);
+  padding: var(--ne-space-xl);
+  box-shadow: var(--ne-e2);
+}
+:where(.ds-neumorphism) :where(.ds-tag) {
+  display: inline-block;
+  padding: var(--ne-space-sm) var(--ne-space-md);
+  border-radius: var(--ne-radius-pill);
+  background: var(--ne-surface-alt);
+  color: var(--ne-ink-muted);
+  font-family: var(--ne-font-body);
+  font-size: var(--ne-text-micro);
+  font-weight: var(--ne-weight-regular);
+  line-height: var(--ne-leading-micro);
+  letter-spacing: var(--ne-tracking-micro);
+  box-shadow: var(--ne-e3);
+}
+
+/* ---- 焦点环：画在双向阴影之外，不被阴影吞掉 ---- */
+:where(.ds-neumorphism) :where(a, button, .ds-btn, [tabindex]):focus-visible {
+  outline: 2px solid var(--ne-primary);
+  outline-offset: 3px;
+  border-radius: var(--ne-radius-sm);
+}
+
+/* ---- 预览外壳：tool 模板 ---- */
+.ds-neumorphism .frame-app { gap: var(--ne-space-xl); max-width: var(--ne-page); margin: 0 auto; }
+.ds-neumorphism .frame-side {
+  gap: var(--ne-space-md);
+  padding: var(--ne-space-xl);
+  border: 0;
+  border-radius: var(--ne-radius-card);
+  background: var(--ne-surface-alt);
+  box-shadow: var(--ne-e3);
+}
+.ds-neumorphism .frame-side nav { gap: var(--ne-space-xs); }
+.ds-neumorphism .frame-side nav a {
+  padding: var(--ne-space-sm) var(--ne-space-md);
+  border-radius: var(--ne-radius-pill);
+  color: var(--ne-ink-muted);
+  text-decoration: none;
+}
+.ds-neumorphism .frame-side nav a[aria-current="page"] {
+  color: var(--ne-primary);
+  font-weight: var(--ne-weight-bold);
+  box-shadow: var(--ne-e1);
+}
+.ds-neumorphism .frame-side .frame-muted { font-size: var(--ne-text-micro); color: var(--ne-ink-faint); }
+.ds-neumorphism .frame-workspace { min-width: 0; }
+.ds-neumorphism .frame-toolbar { padding-bottom: var(--ne-space-xl); border: 0; }
+.ds-neumorphism .frame-toolbar h1 { font-size: var(--ne-text-heading); }
+.ds-neumorphism .frame-toolbar .frame-muted { font-size: var(--ne-text-label); color: var(--ne-ink-faint); }
+.ds-neumorphism .frame-grid { gap: var(--ne-space-md); margin-top: var(--ne-space-lg); }
+.ds-neumorphism .frame-grid h2 { font-size: var(--ne-text-body); line-height: var(--ne-leading-body); }
+.ds-neumorphism .frame-grid p { font-size: var(--ne-text-label); line-height: var(--ne-leading-label); }
+.ds-neumorphism .frame-grid .ds-card:first-child h2 { color: var(--ne-accent); }
+.ds-neumorphism .frame-task {
+  gap: var(--ne-space-lg);
+  margin-top: var(--ne-space-xl);
+  padding: var(--ne-space-xl);
+  border: 0;
+  border-radius: var(--ne-radius-card);
+  background: var(--ne-surface-alt);
+  box-shadow: var(--ne-e3);
+}
+.ds-neumorphism .frame-task h2 { font-size: var(--ne-text-body); }
+.ds-neumorphism .frame-task p { font-size: var(--ne-text-label); }
+.ds-neumorphism .frame-muted { opacity: 1; }
+
+@media (max-width: 767px) {
+  :where(.ds-neumorphism) :where(h1) { font-size: var(--ne-text-heading); }
+  .ds-neumorphism .frame-app { grid-template-columns: 1fr; }
+  .ds-neumorphism .frame-toolbar { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ds-neumorphism) :where(*) { transition-duration: 1ms; animation-duration: 1ms; }
+}

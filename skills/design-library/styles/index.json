@@ -1,6 +1,6 @@
 {
   "generatedFrom": "styles/*/DESIGN.md",
-  "count": 32,
+  "count": 33,
   "styles": [
     {
       "slug": "academic",
@@ -797,6 +797,49 @@
       "designPath": "styles/neobrutalist/DESIGN.md",
       "tokensPath": "styles/neobrutalist/tokens.css",
       "promptPath": "styles/neobrutalist/prompt.md",
+      "has_prompt": true,
+      "has_css": true
+    },
+    {
+      "slug": "neumorphism",
+      "name": "新拟态｜Neumorphism",
+      "description": "把 2019–2021 年的 Soft UI / Neumorphism 做成一套可直接用的触控界面语言：单色暖灰底上，控件与底同色， 靠左上高光与右下暗影这一对双向投影把按钮、卡片「压」出底面、「按」回凹槽，没有边框也没有彩色描边。 色值取 bergside/awesome-design-skills 的 neumorphism DESIGN.md（surface #E7E5E4、text #1E2938、primary #006666、 success #00A63D）与 stitchprompt 中文风格卡（#F1F2F5 底、左上高光右下暗影的定义、4/8/12px 圆角、8/12/24px 间距、 Inter 字族、Good/Not-Good），圆角基准与字体分工取 opendesigner 的 Neumorphism 系统（22px 圆角、Inter/SF Mono、 16px base）；阴影的偏移—模糊关系由 neumorphism.io 官方生成器默认参数（20px 偏移 / 60px 模糊、双向异色）标定。 为符合本库 The Floor，纯白高光只走阴影不走背景、纯绿 #00A63D 调深到 #0B7A32、中文正文上提到 18px/1.7、 等宽不当正文戏服、色板收敛到「一族中性 + 青 + 绿」三族，标为 beta/variant。",
+      "version": "alpha",
+      "status": "beta",
+      "previewVariant": "",
+      "family": "companion",
+      "tier": "variant",
+      "sourceRefs": [
+        "neumorphism"
+      ],
+      "register": "tool",
+      "surface": "light",
+      "density": "medium",
+      "cues": [
+        "智能家居与硬件伴侣 App",
+        "音频播放器与可调旋钮界面",
+        "趣味小工具与计算器",
+        "需要温柔触感隐喻的展示型页面",
+        "健康与睡眠类 calm 界面"
+      ],
+      "avoid": [
+        "信息密集后台与长表格",
+        "长文阅读与论文",
+        "需要精确扫读的数据看板",
+        "表单密集的办事流程",
+        "无障碍优先的长表单默认皮",
+        "高对比导向的金融医疗政务",
+        "打印为主的单栏文档"
+      ],
+      "prefix": "--ne-*",
+      "className": "ds-neumorphism",
+      "canvas": "#E7E5E4",
+      "ink": "#1E2938",
+      "accent": "#006666",
+      "previewUrl": "preview/neumorphism.html",
+      "designPath": "styles/neumorphism/DESIGN.md",
+      "tokensPath": "styles/neumorphism/tokens.css",
+      "promptPath": "styles/neumorphism/prompt.md",
       "has_prompt": true,
       "has_css": true
     },
