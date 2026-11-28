@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>奇想局 · 不可能物品档案馆</title>
+<link rel="stylesheet" href="assets/memphis.css">
+<style>
+  * { box-sizing: border-box; }
+  body.ds-memphis.preview-root { overflow: visible; min-height: 100vh; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--me-space-lg) var(--me-space-section); position: relative; z-index: 1; }
+
+  /* ── 导航 ───────────────────────────────── */
+  .nav {
+    display: flex; align-items: center; gap: var(--me-space-md);
+    padding: var(--me-space-sm) var(--me-space-md); margin-bottom: var(--me-space-xl);
+    background: var(--me-highlight); border: var(--me-rule-strong); box-shadow: var(--me-e1);
+  }
+  .nav-mark { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 auto; background: var(--me-accent); border: var(--me-rule); border-radius: 50%; color: var(--me-on-accent); font-family: var(--me-font-display); font-size: 22px; }
+  .nav-name { font-family: var(--me-font-display); font-size: var(--me-text-card); line-height: 1.1; }
+  .nav-sub { font-size: var(--me-text-label); color: var(--me-ink-muted); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: var(--me-space-sm); }
+  .nav-search { width: 230px; height: 38px; padding: 0 var(--me-space-md); border: var(--me-rule); background: var(--me-surface); color: var(--me-ink); font-size: var(--me-text-label); outline: none; }
+  .nav-search:focus { box-shadow: var(--me-e1); }
+  .nav-search::placeholder { color: var(--me-ink-faint); }
+
+  .ticker { display: flex; align-items: center; gap: var(--me-space-md); margin-bottom: var(--me-space-lg); padding: var(--me-space-xs) var(--me-space-md); border: var(--me-rule); background: var(--me-surface); box-shadow: var(--me-e1); transform: rotate(.4deg); }
+  .ticker b { flex: 0 0 auto; padding: 4px 10px; background: var(--me-primary); color: var(--me-on-primary); font-family: var(--me-font-display); font-size: 14px; }
+  .ticker span { font-size: var(--me-text-label); color: var(--me-ink-muted); }
+
+  /* ── 首屏 ───────────────────────────────── */
+  .hero { display: grid; grid-template-columns: 1.3fr .7fr; gap: var(--me-space-lg); align-items: stretch; margin-bottom: var(--me-space-xl); }
+  .hero-main { position: relative; padding: var(--me-space-xl); background: var(--me-surface); border: var(--me-rule-strong); box-shadow: var(--me-e2); }
+  .hero-main::after { content: "?!"; position: absolute; top: -22px; right: 24px; width: 62px; height: 62px; display: grid; place-items: center; background: var(--me-accent); color: var(--me-on-accent); border: var(--me-rule-strong); border-radius: 50%; font-family: var(--me-font-display); font-size: 24px; box-shadow: var(--me-e1); transform: rotate(12deg); }
+  .kicker { display: inline-block; padding: 4px 10px; border: var(--me-rule); background: var(--me-secondary); font-size: var(--me-text-label); font-weight: 700; margin-bottom: var(--me-space-md); }
+  .hero h1 { font-size: var(--me-text-display); max-width: 12em; margin-bottom: var(--me-space-md); }
+  .hero h1 em { font-style: normal; color: var(--me-accent); }
+  .hero .lede { max-width: 34em; font-size: var(--me-text-body); line-height: var(--me-leading-body); }
+  .hero-actions { display: flex; gap: var(--me-space-md); margin-top: var(--me-space-lg); flex-wrap: wrap; }
+  .hero-side { display: flex; flex-direction: column; gap: var(--me-space-md); }
+  .stat { flex: 1; padding: var(--me-space-md); background: var(--me-surface); border: var(--me-rule); box-shadow: var(--me-e1); }
+  .stat:nth-child(1) { background: var(--me-highlight); }
+  .stat:nth-child(2) { background: var(--me-secondary); }
+  .stat:nth-child(3) { background: var(--me-primary); color: var(--me-on-primary); }
+  .stat-num { font-family: var(--me-font-display); font-size: 40px; line-height: 1; }
+  .stat-label { font-size: var(--me-text-label); font-weight: 700; }
+
+  /* ── 筛选 ───────────────────────────────── */
+  .filters { display: flex; align-items: center; gap: var(--me-space-sm); margin-bottom: var(--me-space-lg); flex-wrap: wrap; }
+  .filters-label { font-family: var(--me-font-display); font-size: 20px; margin-right: var(--me-space-xs); }
+  .chip { padding: 6px 14px !important; font-size: var(--me-text-label) !important; font-family: var(--me-font-body) !important; font-weight: 700 !important; background: var(--me-surface) !important; }
+  .chip.on { background: var(--me-primary) !important; color: var(--me-on-primary) !important; }
+  .count-note { margin-left: auto; font-family: var(--me-font-display); font-size: 20px; }
+
+  /* ── 藏品网格 ───────────────────────────── */
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--me-space-lg); }
+  .artifact { position: relative; display: flex; flex-direction: column; min-height: 300px; padding: 0 !important; overflow: hidden; cursor: pointer; text-align: left; width: 100%; }
+  .artifact:nth-child(3n+1) { transform: rotate(-2deg); }
+  .artifact:nth-child(3n+2) { transform: rotate(1.5deg); }
+  .artifact:nth-child(3n) { transform: rotate(-1deg); }
+  .artifact:hover { transform: rotate(0) translateY(-6px); }
+  .artifact-fig { position: relative; height: 148px; flex: 0 0 auto; border-bottom: var(--me-rule); overflow: hidden; }
+  .artifact-body { padding: var(--me-space-md); flex: 1; display: flex; flex-direction: column; }
+  .artifact-id { position: absolute; top: 10px; left: 10px; z-index: 2; padding: 3px 8px; background: var(--me-ink); color: var(--me-canvas); font-family: var(--me-font-mono, monospace); font-size: 12px; font-weight: 700; letter-spacing: .05em; }
+  .artifact h3 { margin: 0 0 6px; font-size: var(--me-text-card); line-height: 1.2; }
+  .artifact p { margin: 0 0 var(--me-space-md); font-size: var(--me-text-label); line-height: 1.6; color: var(--me-ink-muted); flex: 1; }
+  .artifact-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--me-space-sm); }
+  .status { display: inline-block; padding: 3px 9px; border: 2px solid var(--me-ink); font-size: 13px; font-weight: 700; }
+  .status.in { background: var(--me-secondary); }
+  .status.out { background: var(--me-accent); color: var(--me-on-accent); }
+  .status.fix { background: var(--me-highlight); }
+  .more { font-family: var(--me-font-display); font-size: 16px; }
+
+  /* 藏品插图：纯 CSS 几何，颜色全走 token */
+  .fig { position: absolute; inset: 0; }
+  .fig-dusk { background: var(--me-highlight); }
+  .fig-dusk::before { content: ""; position: absolute; left: 50%; top: 50%; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 50%; background: var(--me-accent); border: var(--me-rule); }
+  .fig-dusk::after { content: ""; position: absolute; left: 50%; top: 50%; width: 108px; height: 4px; margin: -2px 0 0 -54px; background: var(--me-ink); transform: rotate(-18deg); box-shadow: 0 16px 0 var(--me-ink), 0 -16px 0 var(--me-ink); }
+  .fig-hour { background: var(--me-primary); }
+  .fig-hour::before { content: "25"; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: var(--me-font-display); font-size: 78px; color: var(--me-on-primary); }
+  .fig-hour::after { content: ""; position: absolute; left: 50%; top: 50%; width: 104px; height: 104px; margin: -52px 0 0 -52px; border: var(--me-rule); border-radius: 50%; background: transparent; }
+  .fig-shoe { background: var(--me-secondary); }
+  .fig-shoe::before { content: "↑"; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: var(--me-font-display); font-size: 82px; color: var(--me-ink); }
+  .fig-shoe::after { content: ""; position: absolute; right: 22px; bottom: 18px; width: 46px; height: 10px; background: var(--me-ink); box-shadow: 0 14px 0 var(--me-ink); }
+  .fig-echo { background: var(--me-accent); }
+  .fig-echo::before { content: ""; position: absolute; left: 50%; top: 50%; width: 54px; height: 78px; margin: -39px 0 0 -27px; border: var(--me-rule); background: var(--me-highlight); border-radius: 6px 6px 10px 10px; }
+  .fig-echo::after { content: "))"; position: absolute; right: 24px; top: 44px; font-family: var(--me-font-display); font-size: 42px; color: var(--me-ink); }
+  .fig-map { background: var(--me-surface-alt); }
+  .fig-map::before { content: ""; position: absolute; left: 50%; top: 50%; width: 110px; height: 80px; margin: -40px 0 0 -55px; background: var(--me-surface); border: var(--me-rule); transform: rotate(-8deg); box-shadow: var(--me-e1); }
+  .fig-map::after { content: "×   ×   ×"; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-8deg); font-family: var(--me-font-mono, monospace); font-size: 28px; color: var(--me-primary); letter-spacing: 8px; }
+  .fig-stone { background: var(--me-primary); }
+  .fig-stone::before { content: ""; position: absolute; left: 50%; top: 50%; width: 88px; height: 84px; margin: -42px 0 0 -44px; background: var(--me-canvas); border: var(--me-rule); border-radius: 48% 52% 44% 56%; animation: breathe 4s ease-in-out infinite; }
+  .fig-stone::after { content: "～"; position: absolute; right: 26px; top: 34px; font-size: 44px; color: var(--me-highlight); font-family: var(--me-font-display); }
+  @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.14); } }
+
+  .empty { grid-column: 1 / -1; padding: var(--me-space-xl); background: var(--me-surface); border: var(--me-rule-strong); box-shadow: var(--me-e2); text-align: center; font-family: var(--me-font-display); font-size: var(--me-text-card); transform: rotate(-1deg); }
+
+  /* ── 详情 / 确认 / 反馈 ─────────────────── */
+  .veil { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: var(--me-space-lg); opacity: 0; visibility: hidden; transition: opacity 180ms ease, visibility 180ms; }
+  .veil.open { opacity: 1; visibility: visible; }
+  .veil-bg { position: absolute; inset: 0; background: rgba(17,17,17,.55); }
+  .detail { position: relative; z-index: 1; width: min(860px, 100%); max-height: 88vh; overflow-y: auto; background: var(--me-canvas); border: var(--me-rule-strong); box-shadow: 12px 12px 0 var(--me-ink); transform: rotate(-1deg) translateY(10px); transition: transform 240ms cubic-bezier(.2,.8,.2,1); }
+  .veil.open .detail { transform: rotate(0) translateY(0); }
+  .detail-top { display: flex; align-items: center; justify-content: space-between; padding: var(--me-space-md) var(--me-space-lg); background: var(--me-highlight); border-bottom: var(--me-rule-strong); }
+  .detail-top b { font-family: var(--me-font-display); font-size: 18px; }
+  .x { width: 34px; height: 34px; padding: 0 !important; display: grid; place-items: center; background: var(--me-accent) !important; border-radius: 50% !important; font-family: var(--me-font-display) !important; font-size: 16px !important; }
+  .detail-grid { display: grid; grid-template-columns: 280px 1fr; }
+  .detail-fig { position: relative; min-height: 300px; border-right: var(--me-rule-strong); }
+  .detail-body { padding: var(--me-space-lg); }
+  .detail-body h2 { font-size: var(--me-text-headline); margin-bottom: var(--me-space-md); }
+  .detail-body .desc { font-size: var(--me-text-body); line-height: var(--me-leading-body); margin-bottom: var(--me-space-lg); }
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--me-space-sm); margin-bottom: var(--me-space-lg); }
+  .fact { padding: var(--me-space-sm); border: var(--me-rule); background: var(--me-surface); }
+  .fact dt { font-size: 13px; color: var(--me-ink-faint); font-weight: 700; }
+  .fact dd { margin: 2px 0 0; font-family: var(--me-font-display); font-size: 16px; }
+  .log { padding: var(--me-space-md); background: var(--me-surface-alt); border-left: 6px solid var(--me-primary); }
+  .log h4 { margin: 0 0 6px; font-family: var(--me-font-display); font-size: 16px; }
+  .log p { margin: 0; font-size: var(--me-text-label); line-height: 1.7; }
+  .detail-foot { display: flex; align-items: center; gap: var(--me-space-md); padding: var(--me-space-md) var(--me-space-lg); border-top: var(--me-rule-strong); }
+  .detail-foot .note { font-size: 14px; color: var(--me-ink-faint); margin-right: auto; }
+
+  .confirm { position: relative; z-index: 1; width: min(440px, 100%); padding: var(--me-space-xl); background: var(--me-surface); border: var(--me-rule-strong); box-shadow: var(--me-e3); transform: rotate(2deg); }
+  .confirm h2 { font-size: var(--me-text-card); margin-bottom: var(--me-space-md); }
+  .confirm p { font-size: var(--me-text-label); line-height: 1.7; }
+  .confirm-foot { display: flex; gap: var(--me-space-md); margin-top: var(--me-space-lg); justify-content: flex-end; }
+
+  .toast { position: fixed; right: var(--me-space-lg); bottom: var(--me-space-lg); z-index: 60; display: flex; align-items: center; gap: var(--me-space-sm); padding: var(--me-space-md) var(--me-space-lg); background: var(--me-primary); color: var(--me-on-primary); border: var(--me-rule-strong); box-shadow: var(--me-e2); font-family: var(--me-font-display); font-size: var(--me-text-label); opacity: 0; visibility: hidden; transform: translateY(14px) rotate(-2deg); transition: opacity 200ms ease, transform 200ms ease, visibility 200ms; }
+  .toast.show { opacity: 1; visibility: visible; transform: translateY(0) rotate(-2deg); }
+
+  @media (max-width: 900px) {
+    .hero, .detail-grid { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .detail-fig { border-right: 0; border-bottom: var(--me-rule-strong); }
+  }
+  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } .nav-search { width: 140px; } }
+  @media (prefers-reduced-motion: reduce) { .fig-stone::before { animation: none; } }
+</style>
+</head>
+<body class="ds-memphis preview-root">
+<div class="wrap">
+  <nav class="nav">
+    <div class="nav-mark">奇</div>
+    <div><div class="nav-name">奇想局</div><div class="nav-sub">不可能物品档案馆 · 第七号库房</div></div>
+    <div class="nav-right">
+      <input class="nav-search" id="search" placeholder="搜编号 / 名称 / 发现地…" aria-label="搜索藏品">
+      <button class="ds-btn" id="aboutBtn">关于本馆</button>
+    </div>
+  </nav>
+
+  <div class="ticker"><b>今日异象</b><span>003 号库房的温度在无人进入时下降了 4℃，已记录为第 19 次。展品不受影响。</span></div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <span class="kicker">档案公开 · 限内部阅览</span>
+      <h1>我们保管<br><em>不存在</em>的东西。</h1>
+      <p class="lede">奇想局成立于 1987 年，专门收容那些"不应该存在但被确实记录过"的物品。每一件都附有发现地、保管人和一段无法解释的保管日志。我们不解释它们——只负责让它们继续被认真对待。</p>
+      <div class="hero-actions">
+        <button class="ds-btn" id="browseBtn">浏览全部藏品 →</button>
+        <button class="ds-btn" id="rulesBtn">借阅规则</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="stat"><div class="stat-num">06</div><div class="stat-label">在册藏品</div></div>
+      <div class="stat"><div class="stat-num">03</div><div class="stat-label">异常事件 / 周</div></div>
+      <div class="stat"><div class="stat-num">1987</div><div class="stat-label">建馆年份</div></div>
+    </div>
+  </section>
+
+  <div class="filters" id="filters">
+    <span class="filters-label">按类别</span>
+    <button class="ds-btn chip on" data-cat="all">全部</button>
+    <button class="ds-btn chip" data-cat="时间">时间类</button>
+    <button class="ds-btn chip" data-cat="空间">空间类</button>
+    <button class="ds-btn chip" data-cat="感官">感官类</button>
+    <span class="count-note" id="countNote">共 6 件</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="veil" id="detailVeil">
+  <div class="veil-bg" data-close></div>
+  <div class="detail" role="dialog" aria-modal="true">
+    <div class="detail-top"><b id="dTop">档案编号</b><button class="ds-btn x" id="dClose" aria-label="关闭">✕</button></div>
+    <div class="detail-grid">
+      <div class="detail-fig"><div class="fig" id="dFig"></div></div>
+      <div class="detail-body">
+        <h2 id="dTitle"></h2>
+        <p class="desc" id="dDesc"></p>
+        <dl class="facts" id="dFacts"></dl>
+        <div class="log"><h4>保管日志 · 最新一条</h4><p id="dLog"></p></div>
+      </div>
+    </div>
+    <div class="detail-foot">
+      <span class="note" id="dNote">借阅需二级确认，记录将写入档案。</span>
+      <button class="ds-btn" id="dCancel">取消</button>
+      <button class="ds-btn" id="dBorrow">申请借阅 →</button>
+    </div>
+  </div>
+</div>
+
+<div class="veil" id="confirmVeil">
+  <div class="veil-bg" data-close-confirm></div>
+  <div class="confirm" role="alertdialog" aria-modal="true">
+    <span class="kicker">二级确认</span>
+    <h2 id="cTitle">确认提交借阅申请？</h2>
+    <p id="cDesc"></p>
+    <div class="confirm-foot">
+      <button class="ds-btn" id="cCancel">再想想</button>
+      <button class="ds-btn" id="cYes">确认提交</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toastText"></span></div>
+
+<script>
+const artifacts = [
+  {
+    id: "IMP-001", name: "折叠的黄昏", cat: "时间", status: "in", fig: "fig-dusk",
+    place: "京都 · 旧书店夹层", keeper: "林雾", since: "1987/11/03",
+    desc: "一张可以反复折叠的黄昏。完全展开时是 17:42 的光，折三折后变成一枚橙色邮票。禁止在雨天展开——上一次有人这么做，屋里所有钟都慢了七分钟。",
+    log: "09:12 巡查：折痕完好，色温未变。窗边的影子比昨天短了 2 厘米，原因不明。"
+  },
+  {
+    id: "IMP-002", name: "第 25 小时", cat: "时间", status: "out", fig: "fig-hour",
+    place: "格陵兰 · 废弃计时站", keeper: "周砚", since: "1961/02/14",
+    desc: "每天 24:00 到 25:00 之间确实存在的一小时，已被封存于特制钟面内。开启需两名保管员同时在场。馆内规定：不得在周一开启，因为那天的第 25 小时总是挂在树上。",
+    log: "14:30 借出：研究组申请复核时差数据。借出期间钟面读数保持 24:59，未前进。"
+  },
+  {
+    id: "IMP-003", name: "失重鞋", cat: "空间", status: "in", fig: "fig-shoe",
+    place: "月球背面 · 无寄件人邮包", keeper: "陈拓", since: "2004/07/21",
+    desc: "穿上后每走一步都会向上偏离约 3 厘米。试穿者普遍报告「像被地面轻轻拒绝」。仅限室内试穿，且必须穿袜子——不穿袜子时偏离量会变成 30 厘米。",
+    log: "11:05 试穿记录：研究员步行 12 步，累计离地 36 厘米，天花板留下 1 处鞋印。"
+  },
+  {
+    id: "IMP-004", name: "回声罐头", cat: "感官", status: "in", fig: "fig-echo",
+    place: "里斯本 · 停业电台", keeper: "林湄", since: "1998/04/12",
+    desc: "打开后能听到十年前的同一段对话：两个人在讨论天气，其中一个人始终没说话。罐身标签写着「1998/04/12，雨」。开启后 72 小时内不可再次开启，否则会听到未来。",
+    log: "08:40 抽检：罐体无锈蚀，内容物声音正常。本次听到的是雨声，不是对话——属首次。"
+  },
+  {
+    id: "IMP-005", name: "遗忘地图", cat: "空间", status: "fix", fig: "fig-map",
+    place: "撒哈拉 · 废弃巴士", keeper: "顾淮", since: "1979/09/08",
+    desc: "标注了所有「曾经存在但已被抹去」的地点。纸上有 37 个坐标，现场核对后无一存在。地图会自行修改坐标，平均每周改动 2 处。修复中：上一处坐标变成了本馆地址。",
+    log: "16:20 修复：第 12 号坐标由海床移至本市。已用镇纸固定，暂不再变动。"
+  },
+  {
+    id: "IMP-006", name: "会呼吸的石头", cat: "感官", status: "in", fig: "fig-stone",
+    place: "深海 4000 米", keeper: "林雾", since: "2012/01/30",
+    desc: "每 4 分钟膨胀收缩一次，与人的平静呼吸频率完全一致。靠近时会让人不自觉放慢呼吸。禁止带入会议室——上一次带进去，整场会议没有人说话，也没有人反对。",
+    log: "13:15 观察：室内 6 人，平均呼吸频率从 18 降至 11 次/分钟，离开房间后恢复。"
+  }
+];
+const statusText = { in: "在库", out: "借出中", fix: "修复中" };
+const $ = (s) => document.querySelector(s);
+let cat = "all", q = "", current = null;
+
+function render() {
+  const list = artifacts.filter(a => (cat === "all" || a.cat === cat) &&
+    (!q || (a.id + a.name + a.place + a.keeper).toLowerCase().includes(q.toLowerCase())));
+  $("#countNote").textContent = `共 ${list.length} 件`;
+  $("#grid").innerHTML = list.length ? list.map(a => `
+    <button class="ds-card artifact" data-id="${a.id}">
+      <div class="artifact-fig"><span class="artifact-id">${a.id}</span><div class="fig ${a.fig}"></div></div>
+      <div class="artifact-body">
+        <h3>${a.name}</h3>
+        <p>${a.desc.slice(0, 46)}…</p>
+        <div class="artifact-foot"><span class="status ${a.status}">${statusText[a.status]}</span><span class="more">查看档案 →</span></div>
+      </div>
+    </button>`).join("") : `<div class="empty">没有符合条件的藏品。<br>也许它本来就不存在。</div>`;
+}
+
+function openDetail(id) {
+  const a = artifacts.find(x => x.id === id);
+  current = a;
+  $("#dTop").textContent = `档案编号 ${a.id} · ${a.cat}类`;
+  $("#dTitle").textContent = a.name;
+  $("#dDesc").textContent = a.desc;
+  $("#dFig").className = `fig ${a.fig}`;
+  $("#dFacts").innerHTML = `
+    <div class="fact"><dt>发现地</dt><dd>${a.place}</dd></div>
+    <div class="fact"><dt>保管人</dt><dd>${a.keeper}</dd></div>
+    <div class="fact"><dt>入馆日期</dt><dd>${a.since}</dd></div>
+    <div class="fact"><dt>当前状态</dt><dd>${statusText[a.status]}</dd></div>`;
+  $("#dLog").textContent = a.log;
+  $("#dBorrow").disabled = a.status !== "in";
+  $("#dNote").textContent = a.status === "in" ? "借阅需二级确认，记录将写入档案。" : "此藏品当前不可借阅。";
+  $("#detailVeil").classList.add("open");
+}
+function closeDetail() { $("#detailVeil").classList.remove("open"); }
+function openConfirm() {
+  $("#cDesc").textContent = `将对「${current.name}」（${current.id}）提交借阅申请。提交后状态变为"借出中"，保管日志会新增一条记录，需由另一名保管员复核。`;
+  $("#confirmVeil").classList.add("open");
+}
+function closeConfirm() { $("#confirmVeil").classList.remove("open"); }
+function toast(msg) {
+  $("#toastText").textContent = msg;
+  $("#toast").classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => $("#toast").classList.remove("show"), 3200);
+}
+
+$("#filters").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  cat = b.dataset.cat;
+  $("#filters").querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  render();
+});
+$("#search").addEventListener("input", e => { q = e.target.value; render(); });
+$("#grid").addEventListener("click", e => {
+  const c = e.target.closest(".artifact"); if (c) openDetail(c.dataset.id);
+});
+$("#dClose").addEventListener("click", closeDetail);
+$("#dCancel").addEventListener("click", closeDetail);
+$("[data-close]").addEventListener("click", closeDetail);
+$("#dBorrow").addEventListener("click", openConfirm);
+$("#cCancel").addEventListener("click", closeConfirm);
+$("[data-close-confirm]").addEventListener("click", closeConfirm);
+$("#cYes").addEventListener("click", () => {
+  current.status = "out";
+  current.log = `${new Date().toLocaleDateString('zh-CN')} 借阅申请已提交，由 ${current.keeper} 受理，等待第二保管员复核。`;
+  closeConfirm(); closeDetail(); render();
+  toast(`借阅申请已提交 · ${current.id} 状态更新为借出中`);
+});
+$("#browseBtn").addEventListener("click", () => { document.querySelector(".grid").scrollIntoView({ behavior: "smooth" }); });
+$("#rulesBtn").addEventListener("click", () => toast("借阅规则：二级确认 / 双人复核 / 72 小时内归还"));
+$("#aboutBtn").addEventListener("click", () => toast("奇想局：保管不存在的东西，认真地。"));
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeConfirm(); closeDetail(); } });
+
+render();
+</script>
+</body>
+</html>
