@@ -89,6 +89,7 @@ media:
   imageRadius: "{rounded.sm}"
   imageRatio: "4:3"
   imageTreatment: "none"
+  drawingRule: "none"   # 用绘画时写手段与画风，见 LAYERS.md 第 5 层
   background: "纯色 {colors.canvas}，无纹理"
   iconRule: "1.6px 描边，20px 基准，和正文同色"
   emptyState: "淡底 + 一行说明，不放插画"
